@@ -11,9 +11,9 @@ export default function Cart({
   return (
     <div
       className={`
-      rounded-lg flex flex-col gap-3 h-full w-full
-      ${!withoutBorder ? "bg-[#F7FAFC] border border-[#DBDBDB] p-4" : ""}
-    `}
+        bg-white text-black rounded-lg shadow p-4 w-full h-full flex flex-col gap-3
+        ${!withoutBorder ? "border border-[#DBDBDB]" : ""}
+      `}
     >
       {isIcon ? (
         <img
@@ -25,13 +25,12 @@ export default function Cart({
         <img
           src={imgSrc}
           alt={imgAlt}
-          className="w-full h-[196px] rounded-lg object-cover text-[#141414]"
+          className="w-full h-[180px] object-cover rounded mb-2"
         />
       )}
 
-      <h3 className="text-base font-bold text-[#141414] ">{title}</h3>
-
-      <p className="text-sm text-[#737373] ">{desc}</p>
+      <h3 className="text-lg font-bold">{title}</h3>
+      <p className="text-sm text-gray-700">{desc}</p>
     </div>
   );
 }
