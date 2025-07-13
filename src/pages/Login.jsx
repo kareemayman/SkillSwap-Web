@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import logo from "../assets/images/skill.png"
@@ -5,12 +6,15 @@ import { validateEmail, validatePassword } from "../utils/validation"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth, signInWithGoogle } from "../firebase"
 
+
 export const Login = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [emailValidError, setEmailValidError] = useState("")
-  const [passwordValidError, setPasswordValidError] = useState("")
-  const [triedSubmit, setTriedSubmit] = useState(false)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailValidError, setEmailValidError] = useState("");
+  const [passwordValidError, setPasswordValidError] = useState("");
+  const [triedSubmit, setTriedSubmit] = useState(false);
+
+  
 
   useEffect(() => {
     if (triedSubmit) {
@@ -20,22 +24,23 @@ export const Login = () => {
   }, [email, password, triedSubmit])
 
   function handleSubmit(e) {
-    e.preventDefault()
-    setTriedSubmit(true)
+    e.preventDefault();
+    setTriedSubmit(true);
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user
+        const user = userCredential.user;
         // ...
-        alert("Login successful")
+        alert("Login successful");
       })
       .catch((error) => {
-        const errorCode = error.code
-        const errorMessage = error.message
-        alert("Login failed, " + errorMessage)
-      })
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert("Login failed, " + errorMessage);
+      });
   }
+
 
   function handleSignInWithGoogle() {
     signInWithGoogle().then(res => {
@@ -45,6 +50,7 @@ export const Login = () => {
       console.log(error)
     }) 
   }
+
 
   return (
     <>
@@ -58,16 +64,13 @@ export const Login = () => {
       <main className="flex flex-col justify-center items-center mx-auto pt-16 container">
         <h1 className="font-normal text-3xl text-center">Welcome to SkillSwap</h1>
 
-        <form
-          className="flex flex-col mt-8 mb-6 min-w-[80%] sm:min-w-3/4 lg:min-w-[500px]"
-          onSubmit={(e) => handleSubmit(e)}
-        >
+        <form className="flex flex-col mt-8 mb-6 min-w-[80%] sm:min-w-3/4 lg:min-w-[500px]" onSubmit={(e) => handleSubmit(e)}>
           <input
             type="text"
             placeholder="Email"
             value={email}
             onChange={(e) => {
-              setEmail(e.target.value)
+              setEmail(e.target.value);
             }}
             className="mx-3 p-3 border-[#CFDBE8] border-2 border-solid rounded-md outline-[#6A8FD9] placeholder:text-[#4A739C] transition-all duration-300"
           />
@@ -79,7 +82,7 @@ export const Login = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => {
-              setPassword(e.target.value)
+              setPassword(e.target.value);
             }}
             className="mx-3 p-3 border-[#CFDBE8] border-2 border-solid rounded-md outline-[#6A8FD9] placeholder:text-[#4A739C] transition-all duration-300"
           />
@@ -93,10 +96,7 @@ export const Login = () => {
           />
         </form>
 
-        <Link
-          to="/forgot-password"
-          className="mb-3 text-[#4A739C] hover:text-[#0D80F2] underline transition-all duration-300"
-        >
+        <Link to="/forgot-password" className="mb-3 text-[#4A739C] hover:text-[#0D80F2] underline transition-all duration-300">
           Forgot Password?
         </Link>
 
@@ -109,13 +109,10 @@ export const Login = () => {
           Continue with Google
         </button>
 
-        <Link
-          to="/register"
-          className="mb-3 text-[#4A739C] hover:text-[#0D80F2] underline transition-all duration-300"
-        >
+        <Link to="/register" className="mb-3 text-[#4A739C] hover:text-[#0D80F2] underline transition-all duration-300">
           Don't have an account? Sign up
         </Link>
       </main>
     </>
-  )
-}
+  );
+};
