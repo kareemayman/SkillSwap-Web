@@ -5,7 +5,7 @@ import logo from "../assets/images/skill.png"
 import { validateEmail, validatePassword } from "../utils/validation"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth, signInWithGoogle } from "../firebase"
-
+import left from "../assets/images/left.svg"
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -54,6 +54,14 @@ export const Login = () => {
 
   return (
     <>
+        <div className="relative min-h-screen bg-[#F7FAFC] overflow-hidden">
+      <img
+        src={left}
+        alt="right illustration"
+        className="absolute bottom-5 right-5 w-40 md:w-60 pointer-events-none animate-rotate-slow"
+      />
+
+
       <header className="border-[#E5E8EB] border-b-2 border-solid">
         <div className="py-3 mx-auto container px-4 sm:px-0 flex gap-1 items-end">
           <img src={logo} alt="logo" className="w-8 h-8" />
@@ -113,6 +121,7 @@ export const Login = () => {
           Don't have an account? Sign up
         </Link>
       </main>
+      </div>
     </>
   );
 };
