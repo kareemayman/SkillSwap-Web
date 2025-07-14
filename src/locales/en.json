@@ -8,9 +8,49 @@
     "title": "Success Stories",
     "description": "See how SkillSwap has transformed lives by enabling skill sharing and personal growth."
   },
+  "SuccessStoriesCards": {
+    "card1": {
+      "title": "Photography Enthusiast",
+      "description": "Sarah, a passionate photographer, taught her skills to aspiring artists and gained new perspectives in return."
+    },
+    "card2": {
+      "title": "Coding Mentor",
+      "description": "Mark, an experienced software developer, mentored beginners and enhanced his teaching abilities."
+    },
+    "card3": {
+      "title": "Yoga Instructor",
+      "description": "Emily, a certified yoga instructor, expanded her reach and connected with students globally."
+    },
+    "card4": {
+      "title": "Painting Passion",
+      "description": "Layla shared her love for watercolor painting, helping beginners express themselves creatively."
+    },
+    "card5": {
+      "title": "Guitar Guru",
+      "description": "Omar offered beginner guitar lessons to fellow learners and got free singing tips from vocalists on SkillSwap."
+    },
+    "card6": {
+      "title": "Swimming Coach",
+      "description": "Kareem taught swimming techniques online and received nutritional coaching in exchange to improve his fitness routine."
+    }
+  },
   "HowWorkSection": {
     "title": "How SkillSwap Works",
     "description": "Our platform connects individuals eager to share their expertise with those seeking to learn. It's a community-driven exchange where skills are valued and shared freely."
+  },
+  "HowWorksCards": {
+    "card1": {
+      "title": "Connect with Experts",
+      "description": "Find skilled individuals ready to share their knowledge in various fields."
+    },
+    "card2": {
+      "title": "Explore Diverse Skills",
+      "description": "From coding to cooking, discover a wide range of skills to learn and master."
+    },
+    "card3": {
+      "title": "Collaborate and Grow",
+      "description": "Engage in collaborative learning experiences that foster growth and development."
+    }
   },
   "LandingSection": {
     "title": "Ready to Start Your Skill Sharing Journey?",

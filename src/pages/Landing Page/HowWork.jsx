@@ -22,8 +22,8 @@ export default function HowWorkSection() {
           <Cart
             imgSrc={icon1}
             imgAlt="icon 1"
-            title="Connect with Experts"
-            desc="Find skilled individuals ready to share their knowledge in various fields."
+            title={t("HowWorksCards.card1.title")}
+            desc={t("HowWorksCards.card1.description")}
             isIcon
           />
         </div>
@@ -31,8 +31,8 @@ export default function HowWorkSection() {
           <Cart
             imgSrc={icon2}
             imgAlt="icon 2"
-            title="Explore Diverse Skills"
-            desc="From coding to cooking, discover a wide range of skills to learn and master."
+            title={t("HowWorksCards.card2.title")}
+            desc={t("HowWorksCards.card2.description")}
             isIcon
           />
         </div>
@@ -40,8 +40,8 @@ export default function HowWorkSection() {
           <Cart
             imgSrc={icon3}
             imgAlt="icon 3"
-            title="Collaborate and Grow"
-            desc="Engage in collaborative learning experiences that foster growth and development."
+            title={t("HowWorksCards.card3.title")}
+            desc={t("HowWorksCards.card3.description")}
             isIcon
           />
         </div>
