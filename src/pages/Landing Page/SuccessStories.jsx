@@ -9,9 +9,9 @@ import Cart from "./components/Cart";
 import img1 from "../../assets/images/card-1.png";
 import img2 from "../../assets/images/card-2.png";
 import img3 from "../../assets/images/card-3.png";
-import img4 from "../../assets/images/paint.jpg";
-import img5 from "../../assets/images/guitar.jpg";
-import img6 from "../../assets/images/swim (1).jpg";
+import img4 from "../../assets/images/img4.jpg";
+import img5 from "../../assets/images/img6.jpg";
+import img6 from "../../assets/images/img5.jpg";
 
 export default function SuccessStories() {
   const stories = [
@@ -36,12 +36,12 @@ export default function SuccessStories() {
       desc: "Layla shared her love for watercolor painting, helping beginners express themselves creatively.",
     },
     {
-      imgSrc: img5,
+      imgSrc: img6,
       title: "Guitar Guru",
       desc: "Omar offered beginner guitar lessons to fellow learners and got free singing tips from vocalists on SkillSwap.",
     },
     {
-      imgSrc: img6,
+      imgSrc: img5,
       title: "Swimming Coach",
       desc: "Kareem taught swimming techniques online and received nutritional coaching in exchange to improve his fitness routine.",
     },
