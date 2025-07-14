@@ -1,37 +1,28 @@
 import React from "react";
-import heroVideo from "../../assets/videos/8199326-hd_1920_1080_25fps.mp4"; // Make sure this path is correct
-
+import heroImg from "../../assets/images/hero.png";
+import { useTranslation } from "react-i18next";
 function HeroSection() {
-  return (
-    <section className="relative w-full h-[480px] overflow-hidden rounded-[8px]">
-      {/* Background Video */}
-      <video
-        className="absolute top-0 left-0 w-full h-full object-cover"
-        src={heroVideo}
-        autoPlay
-        loop
-        muted
-        playsInline
-      />
+  const { t } = useTranslation();
 
-      {/* Overlay */}
-      <div className="relative z-10 w-full h-full flex items-center justify-center text-white text-center px-4 bg-black/40">
-        <div>
-          <h1 className="text-[36px] md:text-[48px] leading-[60px] tracking-[-2px] mb-4">
-            Unlock Your Potential Through Skill Sharing
-          </h1>
-          <p className="text-[16px] leading-[24px] mb-6 max-w-xl mx-auto">
-            Connect with a vibrant community of learners and experts. Share your
-            skills, learn new ones, and grow together.
-          </p>
-          <button className="relative overflow-hidden px-4 py-2 font-semibold text-black bg-white rounded-md shadow group">
-            <span className="relative z-10 transition duration-1000 group-hover:text-white">
-              Get Started
-            </span>
-            <span className="absolute left-0 top-0 h-full w-0 bg-black transition-all duration-[800ms] ease-in-out group-hover:w-full"></span>
-          </button>
-        </div>
-      </div>
+  return (
+    <section
+      className="relative w-full h-[480px] bg-cover bg-center flex items-center justify-center text-white text-center rounded-[8px]"
+      style={{ backgroundImage: `url(${heroImg})` }}
+    >
+      {/* <div className="absolute inset-0 hero-gradient-overlay"></div> */}
+      <div className="relative z-10 px-4 md:px-0">
+        <h1 className="text-[48px] leading-[60px] tracking-[-2px] text-white mb-4">
+          {t("HeroSection.title")}
+        </h1>
+
+        <p className="font-normal text-[16px] leading-[24px] tracking-normal text-white mb-8 max-w-2xl mx-auto">
+          {t("HeroSection.description")}
+        </p>
+
+        <button className="font-manrope bg-black text-white py-3 px-5 rounded-lg shadow-md hover:bg-gray-800 transition duration-300">
+          {t("HeroSection.button")}
+        </button>
+      </div>{" "}
     </section>
   );
 }

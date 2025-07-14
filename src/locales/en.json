@@ -1,0 +1,26 @@
+{
+  "HeroSection": {
+    "title": "Unlock Your Potential Through Skill Sharing",
+    "description": "Connect with a vibrant community of learners and experts. Share your skills, learn new ones, and grow together.",
+    "button": "Get Started"
+  },
+  "SuccessStoriesSection": {
+    "title": "Success Stories",
+    "description": "See how SkillSwap has transformed lives by enabling skill sharing and personal growth."
+  },
+  "HowWorkSection": {
+    "title": "How SkillSwap Works",
+    "description": "Our platform connects individuals eager to share their expertise with those seeking to learn. It's a community-driven exchange where skills are valued and shared freely."
+  },
+  "LandingSection": {
+    "title": "Ready to Start Your Skill Sharing Journey?",
+    "button": "Get Started"
+  },
+  "Footer": {
+    "about": "About",
+    "contact": "Contact",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "copyright": "© 2023 SkillSwap. All rights reserved."
+  }
+}
