@@ -9,50 +9,58 @@ import Cart from "./components/Cart";
 import img1 from "../../assets/images/card-1.png";
 import img2 from "../../assets/images/card-2.png";
 import img3 from "../../assets/images/card-3.png";
-import img4 from "../../assets/images/img4.jpg";
-import img5 from "../../assets/images/img6.jpg";
-import img6 from "../../assets/images/img5.jpg";
+import img4 from "../../assets/images/paint.jpg";
+import img5 from "../../assets/images/guitar.jpg";
+import img6 from "../../assets/images/swim (1).jpg";
+
+import { useTranslation } from "react-i18next";
+
+const stories = [
+  {
+    imgSrc: img1,
+    title: "Photography Enthusiast",
+    desc: "Sarah, a passionate photographer, taught her skills to aspiring artists and gained new perspectives in return.",
+  },
+  {
+    imgSrc: img2,
+    title: "Coding Mentor",
+    desc: "Mark, an experienced software developer, mentored beginners and enhanced his teaching abilities.",
+  },
+  {
+    imgSrc: img3,
+    title: "Yoga Instructor",
+    desc: "Emily, a certified yoga instructor, expanded her reach and connected with students globally.",
+  },
+  {
+    imgSrc: img4,
+    title: "Painting Passion",
+    desc: "Layla shared her love for watercolor painting, helping beginners express themselves creatively.",
+  },
+  {
+    imgSrc: img5,
+    title: "Guitar Guru",
+    desc: "Omar offered beginner guitar lessons to fellow learners and got free singing tips from vocalists on SkillSwap.",
+  },
+  {
+    imgSrc: img6,
+    title: "Swimming Coach",
+    desc: "Kareem taught swimming techniques online and received nutritional coaching in exchange to improve his fitness routine.",
+  },
+];
 
 export default function SuccessStories() {
-  const stories = [
-    {
-      imgSrc: img1,
-      title: "Photography Enthusiast",
-      desc: "Sarah, a passionate photographer, taught her skills to aspiring artists and gained new perspectives in return.",
-    },
-    {
-      imgSrc: img2,
-      title: "Coding Mentor",
-      desc: "Mark, an experienced software developer, mentored beginners and enhanced his teaching abilities.",
-    },
-    {
-      imgSrc: img3,
-      title: "Yoga Instructor",
-      desc: "Emily, a certified yoga instructor, expanded her reach and connected with students globally.",
-    },
-    {
-      imgSrc: img4,
-      title: "Painting Passion",
-      desc: "Layla shared her love for watercolor painting, helping beginners express themselves creatively.",
-    },
-    {
-      imgSrc: img6,
-      title: "Guitar Guru",
-      desc: "Omar offered beginner guitar lessons to fellow learners and got free singing tips from vocalists on SkillSwap.",
-    },
-    {
-      imgSrc: img5,
-      title: "Swimming Coach",
-      desc: "Kareem taught swimming techniques online and received nutritional coaching in exchange to improve his fitness routine.",
-    },
-  ];
+
+  const { t } = useTranslation();
 
   return (
     <section className="text-[#141414] flex flex-col gap-10 px-4 py-10">
       <div className="flex flex-col gap-4">
-        <h2 className="text-4xl font-extrabold">Success Stories</h2>
+        <h2 className="text-4xl font-extrabold">
+          {t("SuccessStoriesSection.title")}
+        </h2>
+
         <p className="text-base max-w-[720px]">
-          See how SkillSwap has transformed lives by enabling skill sharing and personal growth.
+          {t("SuccessStoriesSection.description")}
         </p>
       </div>
 
