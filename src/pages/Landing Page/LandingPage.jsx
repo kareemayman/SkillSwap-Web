@@ -8,7 +8,7 @@ export default function LandingPage() {
   return (
     <>
       <div className="w-full bg-white">
-          <HeroSection />
+        <HeroSection />
         <div className="container max-w-[1000px] mx-auto">
           <HowWorkSection />
           <SuccessStories />
@@ -18,8 +18,11 @@ export default function LandingPage() {
               Ready to Start Your Skill Sharing Journey?
             </h2>
             <div className="text-center">
-              <button className="font-manrope bg-black text-white py-3 px-5 rounded-lg shadow-md hover:bg-gray-800 transition duration-300">
-                Get Started
+              <button className="relative overflow-hidden px-4 py-2 font-semibold text-white bg-black rounded-md shadow group">
+                <span className="relative z-10 transition duration-1000 group-hover:text-black">
+                  Get Started
+                </span>
+                <span className="absolute left-0 top-0 h-full w-0 bg-white transition-all duration-[800ms] ease-in-out group-hover:w-full"></span>
               </button>
             </div>
           </section>
