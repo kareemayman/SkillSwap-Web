@@ -66,7 +66,7 @@ export const Login = () => {
 
         <form className="flex flex-col mt-8 mb-6 min-w-[80%] sm:min-w-3/4 lg:min-w-[500px]" onSubmit={(e) => handleSubmit(e)}>
           <input
-            type="text"
+            type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => {
@@ -96,7 +96,7 @@ export const Login = () => {
           />
         </form>
 
-        <Link to="/forgot-password" className="mb-3 text-[#4A739C] hover:text-[#0D80F2] underline transition-all duration-300">
+        <Link to="/resetPassword" className="mb-3 text-[#4A739C] hover:text-[#0D80F2] underline transition-all duration-300">
           Forgot Password?
         </Link>
 
