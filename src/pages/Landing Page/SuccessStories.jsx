@@ -9,9 +9,9 @@ import Cart from "./components/Cart";
 import img1 from "../../assets/images/card-1.png";
 import img2 from "../../assets/images/card-2.png";
 import img3 from "../../assets/images/card-3.png";
-import img4 from "../../assets/images/paint.jpg";
-import img5 from "../../assets/images/guitar.jpg";
-import img6 from "../../assets/images/swim (1).jpg";
+import img4 from "../../assets/images/img4.jpg";
+import img5 from "../../assets/images/img6.jpg";
+import img6 from "../../assets/images/img5.jpg";
 
 import { useTranslation } from "react-i18next";
 
