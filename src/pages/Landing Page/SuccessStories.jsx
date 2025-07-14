@@ -3,16 +3,20 @@ import Cart from "./components/Cart";
 import img1 from "../../assets/images/card-1.png";
 import img2 from "../../assets/images/card-2.png";
 import img3 from "../../assets/images/card-3.png";
+import { useTranslation } from "react-i18next";
 
 export default function SuccessStories() {
+  const { t } = useTranslation();
+
   return (
     <section className="text-[#141414] flex flex-col gap-10 px-4 py-10 ">
       <div className="flex flex-col gap-4">
-        <h2 className="text-4xl font-extrabold">Success Stories</h2>
+        <h2 className="text-4xl font-extrabold">
+          {t("SuccessStoriesSection.title")}
+        </h2>
 
         <p className="text-base max-w-[720px]">
-          See how SkillSwap has transformed lives by enabling skill sharing and
-          personal growth.
+          {t("SuccessStoriesSection.description")}
         </p>
       </div>
 
