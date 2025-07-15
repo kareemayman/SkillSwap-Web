@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import useAuth from "../../hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,8 @@ export default function Register() {
   const { user, error, loading, signInWithGoogle, signUp } = useAuth();
 
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (user) {
@@ -45,7 +48,9 @@ export default function Register() {
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <div className="mb-8">
-              <h3 className="text-center text-xl font-semibold text-gray-900">Join our community</h3>
+              <h3 className="text-center text-xl font-semibold text-gray-900">
+                {t("Register.title")}
+              </h3>
             </div>
 
             <div className="space-y-6">
@@ -55,7 +60,7 @@ export default function Register() {
                   name="name"
                   type="text"
                   className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md  sm:text-sm"
-                  placeholder="Name"
+                  placeholder={t("name")}
                   value={formData.name}
                   onChange={handleInputChange}
                 />
@@ -68,7 +73,7 @@ export default function Register() {
                   type="email"
                   autoComplete="email"
                   className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md  sm:text-sm"
-                  placeholder="Email"
+                  placeholder={t("email")}
                   value={formData.email}
                   onChange={handleInputChange}
                 />
@@ -81,7 +86,7 @@ export default function Register() {
                   type="password"
                   autoComplete="new-password"
                   className="appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md  sm:text-sm"
-                  placeholder="Password"
+                  placeholder={t("password")}
                   value={formData.password}
                   onChange={handleInputChange}
                 />
@@ -93,7 +98,7 @@ export default function Register() {
                   onClick={handleSubmit}
                   className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-md text-white bg-black hover:bg-black/90 hover:cursor-pointer active:scale-95 active:bg-black"
                 >
-                  Sign Up
+                  {t("Register.button")}
                 </button>
               </div>
             </div>
@@ -101,9 +106,12 @@ export default function Register() {
             <div className="mt-6">
               <div className="text-center">
                 <span className="text-gray-600 text-sm">
-                  Already have an account?{" "}
-                  <Link to="/login" className="font-medium text-blue-500 hover:text-blue-700">
-                    Log in
+                  {t("Register.footer")}{" "}
+                  <Link
+                    to="/login"
+                    className="font-medium text-blue-500 hover:text-blue-700"
+                  >
+                    {t("Register.link")}
                   </Link>
                 </span>
               </div>
@@ -115,7 +123,9 @@ export default function Register() {
                   <div className="w-full border-t border-gray-300" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">Or sign up with</span>
+                  <span className="px-2 bg-white text-gray-500">
+                    {t("Register.alternative")}
+                  </span>
                 </div>
               </div>
 
@@ -143,7 +153,7 @@ export default function Register() {
                       d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                     />
                   </svg>
-                  Continue with Google
+                  {t("Register.google")}
                 </button>
               </div>
             </div>

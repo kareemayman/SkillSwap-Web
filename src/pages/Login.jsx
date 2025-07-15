@@ -1,11 +1,11 @@
-
-import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-import logo from "../assets/images/skill.png"
-import { validateEmail, validatePassword } from "../utils/validation"
-import { signInWithEmailAndPassword } from "firebase/auth"
-import { auth, signInWithGoogle } from "../firebase"
-import left from "../assets/images/left.svg"
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import logo from "../assets/images/skill.png";
+import { validateEmail, validatePassword } from "../utils/validation";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, signInWithGoogle } from "../firebase";
+import left from "../assets/images/left.svg";
+import { useTranslation } from "react-i18next";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,15 +13,14 @@ export const Login = () => {
   const [emailValidError, setEmailValidError] = useState("");
   const [passwordValidError, setPasswordValidError] = useState("");
   const [triedSubmit, setTriedSubmit] = useState(false);
-
-  
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (triedSubmit) {
-      setEmailValidError(validateEmail(email))
-      setPasswordValidError(validatePassword(password))
+      setEmailValidError(validateEmail(email));
+      setPasswordValidError(validatePassword(password));
     }
-  }, [email, password, triedSubmit])
+  }, [email, password, triedSubmit]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -41,86 +40,96 @@ export const Login = () => {
       });
   }
 
-
   function handleSignInWithGoogle() {
-    signInWithGoogle().then(res => {
-      const user = res.user
-      console.log('Signed In as ' + user.displayName)
-    }).catch(error => {
-      console.log(error)
-    }) 
+    signInWithGoogle()
+      .then((res) => {
+        const user = res.user;
+        console.log("Signed In as " + user.displayName);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
-
 
   return (
     <>
-        <div className="relative min-h-screen bg-[#F7FAFC] overflow-hidden">
-      <img
-        src={left}
-        alt="right illustration"
-        className="absolute bottom-5 right-5 w-40 md:w-60 pointer-events-none animate-rotate-slow"
-      />
+      <div className="relative min-h-screen bg-[#F7FAFC] overflow-hidden">
+        <img
+          src={left}
+          alt="right illustration"
+          className="absolute bottom-5 right-5 w-40 md:w-60 pointer-events-none animate-rotate-slow"
+        />
 
+        <header className="border-[#E5E8EB] border-b-2 border-solid">
+          <div className="py-3 mx-auto container px-4 sm:px-0 flex gap-1 items-end">
+            <img src={logo} alt="logo" className="w-8 h-8" />
+            <h1 className="font-bold text-2xl">SkillSwap</h1>
+          </div>
+        </header>
 
-      <header className="border-[#E5E8EB] border-b-2 border-solid">
-        <div className="py-3 mx-auto container px-4 sm:px-0 flex gap-1 items-end">
-          <img src={logo} alt="logo" className="w-8 h-8" />
-          <h1 className="font-bold text-2xl">SkillSwap</h1>
-        </div>
-      </header>
+        <main className="flex flex-col justify-center items-center mx-auto pt-16 container">
+          <h1 className="font-normal text-3xl text-center">
+            {t("Login.title")}
+          </h1>
 
-      <main className="flex flex-col justify-center items-center mx-auto pt-16 container">
-        <h1 className="font-normal text-3xl text-center">Welcome to SkillSwap</h1>
+          <form
+            className="flex flex-col mt-8 mb-6 min-w-[80%] sm:min-w-3/4 lg:min-w-[500px]"
+            onSubmit={(e) => handleSubmit(e)}
+          >
+            <input
+              type="email"
+              placeholder={t("email")}
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              className="mx-3 p-3 border-[#CFDBE8] border-2 border-solid rounded-md outline-[#6A8FD9] placeholder:text-[#4A739C] transition-all duration-300"
+            />
 
-        <form className="flex flex-col mt-8 mb-6 min-w-[80%] sm:min-w-3/4 lg:min-w-[500px]" onSubmit={(e) => handleSubmit(e)}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            className="mx-3 p-3 border-[#CFDBE8] border-2 border-solid rounded-md outline-[#6A8FD9] placeholder:text-[#4A739C] transition-all duration-300"
-          />
+            <p className="text-red-500 mb-6 mx-3">{emailValidError}</p>
 
-          <p className="text-red-500 mb-6 mx-3">{emailValidError}</p>
+            <input
+              type="password"
+              placeholder={t("password")}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              className="mx-3 p-3 border-[#CFDBE8] border-2 border-solid rounded-md outline-[#6A8FD9] placeholder:text-[#4A739C] transition-all duration-300"
+            />
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            className="mx-3 p-3 border-[#CFDBE8] border-2 border-solid rounded-md outline-[#6A8FD9] placeholder:text-[#4A739C] transition-all duration-300"
-          />
+            <p className="text-red-500 mb-6 mx-3">{passwordValidError}</p>
 
-          <p className="text-red-500 mb-6 mx-3">{passwordValidError}</p>
+            <input
+              type="submit"
+              value={t("Login.button")}
+              className="bg-[#0D80F2] hover:shadow-md p-2 rounded-md w-full text-[#F7FAFC] transition-all duration-300 cursor-pointer"
+            />
+          </form>
 
-          <input
-            type="submit"
-            value="Log In"
-            className="bg-[#0D80F2] hover:shadow-md p-2 rounded-md w-full text-[#F7FAFC] transition-all duration-300 cursor-pointer"
-          />
-        </form>
+          <Link
+            to="/resetPassword"
+            className="mb-3 text-[#4A739C] hover:text-[#0D80F2] underline transition-all duration-300"
+          >
+            {t("Login.forget")}
+          </Link>
 
-        <Link to="/resetPassword" className="mb-3 text-[#4A739C] hover:text-[#0D80F2] underline transition-all duration-300">
-          Forgot Password?
-        </Link>
+          <p className="mb-6 text-[#4A739C]">{t("Login.alternative")}</p>
 
-        <p className="mb-6 text-[#4A739C]">Or log in with</p>
+          <button
+            onClick={handleSignInWithGoogle}
+            className="bg-[#0D80F2] hover:shadow-md mb-6 p-2 rounded-md min-w-[80%] sm:min-w-3/4 lg:min-w-[500px] text-[#F7FAFC] transition-all duration-300 cursor-pointer"
+          >
+            {t("Login.google")}
+          </button>
 
-        <button
-          onClick={handleSignInWithGoogle}
-          className="bg-[#0D80F2] hover:shadow-md mb-6 p-2 rounded-md min-w-[80%] sm:min-w-3/4 lg:min-w-[500px] text-[#F7FAFC] transition-all duration-300 cursor-pointer"
-        >
-          Continue with Google
-        </button>
-
-        <Link to="/register" className="mb-3 text-[#4A739C] hover:text-[#0D80F2] underline transition-all duration-300">
-          Don't have an account? Sign up
-        </Link>
-      </main>
+          <Link
+            to="/register"
+            className="mb-3 text-[#4A739C] hover:text-[#0D80F2] underline transition-all duration-300"
+          >
+            {t("Login.footer")} {t("Login.link")}
+          </Link>
+        </main>
       </div>
     </>
   );

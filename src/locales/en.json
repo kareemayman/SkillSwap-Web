@@ -62,5 +62,25 @@
     "terms": "Terms of Service",
     "privacy": "Privacy Policy",
     "copyright": "© 2023 SkillSwap. All rights reserved."
-  }
+  },
+  "Register": {
+    "title": "Join our community",
+    "button": "Sign Up",
+    "footer": "Already have an account?",
+    "link": "Sign In",
+    "alternative": "or continue with",
+    "google": "Continue with Google"
+  },
+  "Login": {
+    "title": "Welcome to SkillSwap",
+    "button": "Sign In",
+    "forget": "Forgot Password?",
+    "footer": "Don't have an account?",
+    "link": "Sign Up",
+    "alternative": "or continue with",
+    "google": "Continue with Google"
+  },
+  "name": "Name",
+  "email": "Email",
+  "password": "Password"
 }

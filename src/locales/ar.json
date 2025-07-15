@@ -62,5 +62,25 @@
     "terms": "شروط الخدمة",
     "privacy": "سياسة الخصوصية",
     "copyright": " SkillSwap 2023. جميع الحقوق محفوظة."
-  }
+  },
+  "Register": {
+    "title": "انضم إلى مجتمعنا",
+    "button": "سجل الآن",
+    "footer": "هل لديك حساب بالفعل؟",
+    "link": "تسجيل الدخول",
+    "alternative": "أو استمر مع",
+    "google": "استمر مع Google"
+  },
+  "Login": {
+    "title": "مرحبا بكم في SkillSwap",
+    "button": "سجل الدخول",
+    "forget": "نسيت كلمة المرور",
+    "footer": "ليس لديك حساب؟",
+    "link": "سجل الآن",
+    "alternative": "أو استمر مع",
+    "google": "استمر مع Google"
+  },
+  "name": "الاسم",
+  "email": "البريد الالكتروني",
+  "password": "كلمة المرور"
 }
