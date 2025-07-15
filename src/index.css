@@ -4,16 +4,11 @@
 
 /* Optional: Flowbite components */
 @import "flowbite";
-
-:root {
-  --bg-color: #f7fafc;
-}
-
 /* swiper-button in landing page */
 .custom-swiper-nav .swiper-button-next,
 .custom-swiper-nav .swiper-button-prev {
-  color: #000; 
-  font-size: 16px; 
+  color: #000;
+  font-size: 16px;
   width: 24px;
   height: 24px;
   transition: color 0.3s ease;
@@ -37,11 +32,6 @@
   animation: rotate-slow 20s linear infinite;
 }
 
-
-
-
-
-
 @font-face {
   font-family: "Manrope";
   src: url("./assets/fonts/Manrope-Regular.ttf") format("woff2");
@@ -63,7 +53,43 @@
   font-style: normal;
 }
 
-body {
-  font-family: manrope, sans-serif;
-  background-color: var(--bg-color);
+
+:root {
+  /* Background colors */
+  /* --color-bg-gradient-start: #F5EEE6;
+  --color-bg-gradient-mid: #DEDBD9;
+  --color-bg-gradient-end: #e9ccb1ad;
+   */
+  /* Text colors */
+  --color-text-primary: black;
+  --color-text-secondary: #201f1eb4;
+  --color-text-light: #FFFFFF;
+  
+  /* Card colors */
+  --color-card-border: rgba(175, 143, 114, 0.4);
+  --color-card-bg: transparent;
+  --color-card-content-bg: rgba(255, 255, 255, 0.5);
+  --color-card-content-border: rgba(161, 134, 111, 0.3);
+  
+  /* Skill tag colors */
+  --color-skill-learn-bg: #D9C4B1;
+  --color-skill-teach-bg: #F5EFE6;
+  
+  /* Button colors */
+  --color-btn-back-bg: transparent;
+  --color-btn-back-hover: #F5EFE6;
+  --color-btn-submit-bg: #5a3123;
+  --color-btn-submit-hover: #D9C4B1;
+  
+  
+}
+body{
+  min-height: 100vh;
+  background-color: white;
+  /* background: linear-gradient(
+    to bottom right,
+    var(--color-bg-gradient-start),
+    var(--color-bg-gradient-mid),
+  ); */
+
 }

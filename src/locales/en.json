@@ -11,7 +11,7 @@
   "SuccessStoriesCards": {
     "card1": {
       "title": "Photography Enthusiast",
-      "description": "Sarah, a passionate photographer, taught her skills to aspiring artists and gained new perspectives in return."
+      "description": "Sarah, a passionate photographer, taught her skills to aspiring artists and gained new perspectives ."
     },
     "card2": {
       "title": "Coding Mentor",
@@ -27,11 +27,11 @@
     },
     "card5": {
       "title": "Guitar Guru",
-      "description": "Omar offered beginner guitar lessons to fellow learners and got free singing tips from vocalists on SkillSwap."
+      "description": "Omar offered beginner guitar lessons to fellow learners and got free singing tips from vocalists ."
     },
     "card6": {
       "title": "Swimming Coach",
-      "description": "Kareem taught swimming techniques online and received nutritional coaching in exchange to improve his fitness routine."
+      "description": "Kareem taught swimming techniques online and received nutritional coaching in exchange."
     }
   },
   "HowWorkSection": {
