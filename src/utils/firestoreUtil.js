@@ -8,3 +8,8 @@ export const fetchSkillsList = async () => {
     ...doc.data()
   }));
 };
+
+// export const getSkillById = async (id) => {
+//   const qSnap = await getDocs(collection(db, "skills"));
+//   return qSnap.docs.find(doc => doc.id === id);
+// };
