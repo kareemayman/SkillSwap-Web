@@ -53,7 +53,7 @@ export const Login = () => {
 
   return (
     <>
-      <div className="relative min-h-screen bg-[#F7FAFC] overflow-hidden">
+      <div className="relative min-h-screen overflow-hidden">
         <img
           src={left}
           alt="right illustration"
@@ -73,7 +73,7 @@ export const Login = () => {
           </h1>
 
           <form
-            className="flex flex-col mt-8 mb-6 min-w-[80%] sm:min-w-3/4 lg:min-w-[500px]"
+            className="flex flex-col mt-8 mb-6 min-w-[80%] sm:min-w-3/4 lg:min-w-[500px] "
             onSubmit={(e) => handleSubmit(e)}
           >
             <input
@@ -83,7 +83,7 @@ export const Login = () => {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              className="mx-3 p-3 border-[#CFDBE8] border-2 border-solid rounded-md outline-[#6A8FD9] placeholder:text-[#4A739C] transition-all duration-300"
+              className="mx-3 p-3 border-[var(--color-card-content-border)] border-2 border-solid rounded-md outline-[#6A8FD9] placeholder:text-[var(--color-card-content-bg)] transition-all duration-300"
             />
 
             <p className="text-red-500 mb-6 mx-3">{emailValidError}</p>
@@ -95,7 +95,7 @@ export const Login = () => {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
-              className="mx-3 p-3 border-[#CFDBE8] border-2 border-solid rounded-md outline-[#6A8FD9] placeholder:text-[#4A739C] transition-all duration-300"
+              className="mx-3 p-3 border-[var(--color-card-content-border)] border-2 border-solid rounded-md outline-[#6A8FD9] placeholder:text-[var(--color-card-content-bg)] transition-all duration-300"
             />
 
             <p className="text-red-500 mb-6 mx-3">{passwordValidError}</p>
@@ -103,7 +103,7 @@ export const Login = () => {
             <input
               type="submit"
               value={t("Login.button")}
-              className="bg-[#0D80F2] hover:shadow-md p-2 rounded-md w-full text-[#F7FAFC] transition-all duration-300 cursor-pointer"
+              className="bg-[var(--color-btn-submit-bg)] hover:shadow-md p-2 rounded-md w-full text-[#F7FAFC] transition-all duration-300 cursor-pointer"
             />
           </form>
 
@@ -118,7 +118,7 @@ export const Login = () => {
 
           <button
             onClick={handleSignInWithGoogle}
-            className="bg-[#0D80F2] hover:shadow-md mb-6 p-2 rounded-md min-w-[80%] sm:min-w-3/4 lg:min-w-[500px] text-[#F7FAFC] transition-all duration-300 cursor-pointer"
+            className="bg-[var(--color-btn-submit-bg)] hover:shadow-md mb-6 p-2 rounded-md min-w-[80%] sm:min-w-3/4 lg:min-w-[500px] text-[#F7FAFC] transition-all duration-300 cursor-pointer"
           >
             {t("Login.google")}
           </button>
