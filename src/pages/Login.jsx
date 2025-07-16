@@ -100,7 +100,7 @@ export const Login = () => {
             <input
               type="submit"
               value={t("Login.button")}
-              className="bg-[var(--color-btn-submit-bg)] hover:shadow-md p-2 rounded-md w-full text-[#F7FAFC] transition-all duration-300 cursor-pointer"
+              className="bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] hover:shadow-md p-2 rounded-md w-full text-[#F7FAFC] transition-all duration-300 cursor-pointer"
             />
           </form>
 
@@ -115,7 +115,7 @@ export const Login = () => {
 
           <button
             onClick={handleSignInWithGoogle}
-            className="bg-[var(--color-btn-submit-bg)] hover:shadow-md mb-6 p-2 rounded-md min-w-[80%] sm:min-w-3/4 lg:min-w-[500px] text-[#F7FAFC] transition-all duration-300 cursor-pointer"
+            className="bg-[var(--color-btn-submit-bg)] hover:shadow-md hover:bg-[var(--color-btn-submit-hover)] mb-6 p-2 rounded-md min-w-[80%] sm:min-w-3/4 lg:min-w-[500px] text-[#F7FAFC] transition-all duration-300 cursor-pointer"
           >
             {t("Login.google")}
           </button>

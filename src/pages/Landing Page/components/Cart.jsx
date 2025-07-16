@@ -17,10 +17,10 @@ export default function Cart({
         backdrop-blur-md
         shadow-lg
       `}
-      // style={{ backgroundColor: 'var(--color-card-content-bg)' }}
+      style={{ backgroundColor: 'var(--color-card-content-bg)' }}
     >
       {isIcon ? (
-        <div className="p-3 bg-[var(--color-skill-teach-bg)] rounded-full w-12 h-12 flex items-center justify-center">
+        <div className="p-3 bg-[var(--color-skill-learn-bg)] rounded-full w-12 h-12 flex items-center justify-center">
           <img
             src={imgSrc}
             alt={imgAlt}
@@ -41,7 +41,7 @@ export default function Cart({
       </p>
 
       <div className="mt-auto pt-4">
-        <button className="px-4 py-2 bg-[var(--color-btn-submit-bg)] text-[var(--color-text-light)] font-medium rounded-lg hover:shadow transition duration-200 text-sm">
+        <button className="px-4 py-2 bg-[var(--color-btn-submit-bg)] text-[var(--color-text-light)] font-medium rounded-lg hover:shadow hover:bg-[var(--color-btn-submit-hover)] transition duration-200 text-sm">
           Learn More
         </button>
       </div>
