@@ -6,6 +6,7 @@ import { auth, signInWithGoogle } from "../firebase";
 import left from "../assets/images/left.svg";
 import { useTranslation } from "react-i18next";
 import Header from "../components/Header";
+import { createUserDoc } from "../utils/firestoreUtil";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -45,6 +46,7 @@ export const Login = () => {
       .then((res) => {
         const user = res.user;
         console.log("Signed In as " + user.displayName);
+        createUserDoc(user);
       })
       .catch((error) => {
         console.log(error);
