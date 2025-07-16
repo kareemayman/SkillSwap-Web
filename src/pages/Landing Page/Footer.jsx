@@ -1,16 +1,14 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import img from "../../assets/images/wavy.svg";
+import img from "../../assets/images/wave3.svg";
 
 export default function LandingFooter() {
   const { t } = useTranslation();
 
   return (
     <div className="relative w-full  mt-20">
-      {/* Content Container */}
       <div className="relative z-10 max-w-[1000px] mx-auto px-5 py-12">
-        {/* Links Row */}
         <div className="flex flex-wrap justify-center gap-8 mb-6">
           <Link 
             to="#" 
@@ -38,13 +36,11 @@ export default function LandingFooter() {
           </Link>
         </div>
         
-        {/* Copyright */}
         <p className="text-center text-[var(--color-text-secondary)]">
           {t("Footer.copyright")}
         </p>
       </div>
 
-      {/* Wave Image - positioned absolutely at bottom */}
       <div className="absolute bottom-0 left-0 w-full z-0">
         <img 
           src={img} 
