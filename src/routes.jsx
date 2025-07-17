@@ -1,3 +1,4 @@
+import { Explore } from "./pages/Explore/Explore";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import LandingPage from "./pages/Landing Page/LandingPage";
 import { Login } from "./pages/Login";
@@ -11,6 +12,7 @@ const routes = [
   { path: "landing", element: <LandingPage /> },
   { path: "resetPassword", element: <ForgotPassword /> },
   { path: "profileReview", element: <ProfileReview /> },
+  { path: "explore", element: <Explore></Explore>}
 ];
 
 export default routes;
