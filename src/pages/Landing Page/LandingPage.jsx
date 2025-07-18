@@ -35,7 +35,7 @@ export default function LandingPage() {
         
 
         <HeroSection />
-        <div className="container max-w-[1000px] mx-auto">
+        <div className="container max-w-[1300px] mx-auto">
           <HowWorkSection />
           <SuccessStories />
 
