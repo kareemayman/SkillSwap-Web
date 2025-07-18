@@ -4,62 +4,47 @@ const Button = ({
   onPress = () => {},
   disabled = false,
   value = "Button",
+  customColors = {},
 }) => {
-  const baseStyle = `
-    group relative overflow-hidden py-2 px-6 rounded-lg font-semibold
-    transition-all duration-300 ease-linear text-center
-    ${disabled ? "opacity-50 cursor-not-allowed" : ""}
-  `;
-
-  const primaryStyle = `text-white border bg-blue-500`;
-  const secondaryStyle = `text-black border bg-gray-300`;
-
-  const slideFillColor = variant === "primary" ? "bg-black" : "bg-blue-400";
-
-  const iconColor = variant === "primary" ? "text-white" : "text-black";
+  const {
+    textColor = "var(--color-text-dark)",
+    bgColor = "var(--color-skill-teach-bg)",
+    hoverFillColor = "var(--color-btn-submit-bg)",
+    hoverTextColor = "var(--color-text-light)",
+  } = customColors;
 
   return (
     <button
-      className={`${baseStyle} ${
-        variant === "primary" ? primaryStyle : secondaryStyle
-      }`}
       onClick={onPress}
       disabled={disabled}
+      className={`relative overflow-hidden px-6 py-3 font-semibold rounded-lg shadow-lg group 
+        ${disabled ? "opacity-50 cursor-not-allowed" : ""}
+      `}
+      style={{
+        color: textColor,
+        backgroundColor: bgColor,
+      }}
     >
-      {/* Slide-fill effect background */}
+<span
+  className="relative z-10 transition duration-1000 group-hover:text-inherit"
+  style={{
+    color: textColor,
+    transition: "color 0.3s ease-in-out",
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.color = hoverTextColor;
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.color = textColor;
+  }}
+>
+  {value}
+</span>
+
       <span
-        className={`
-          absolute inset-0 -left-full
-          w-full h-full ${slideFillColor}
-          transition-transform duration-300 ease-in-out
-          transform group-hover:translate-x-full
-          z-0
-        `}
+        className="absolute left-0 top-0 h-full w-0 transition-all duration-[800ms] ease-in-out group-hover:w-full"
+        style={{ backgroundColor: hoverFillColor }}
       ></span>
-
-      {/* Text sliding left */}
-      <span
-        className={`
-          relative z-10 block transition-transform duration-300 ease-linear
-          ${icon ? `group-hover:-translate-x-3` : ``}
-        `}
-      >
-        {value}
-      </span>
-
-      {/* Arrow icon slides in */}
-      {icon && (
-        <span
-          className={`
-          absolute top-1/2 right-4 transform -translate-y-1/2 translate-x-2 opacity-0
-          transition-all duration-300 ease-linear
-          group-hover:opacity-100 group-hover:translate-x-0
-          ${iconColor} z-10
-        `}
-        >
-          {icon}
-        </span>
-      )}
     </button>
   );
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import { TabItem, Tabs } from "flowbite-react";
 import MsgCart from "./components/MsgCart";
+import Header from "../../components/Header";
 export default function Messages() {
   const staticdata = [
     {
@@ -20,8 +21,9 @@ export default function Messages() {
   ];
   return (
     <>
-       
-      <div className="container max-w-[1300px] mx-auto ">
+      <Header></Header>
+
+      <div className="container mx-auto py-6 px-4 md:px-16 ">
         <h1 className="text-[var(--color-text-primary)] text-3xl font-bold mb-4">
           Messages
         </h1>
@@ -30,7 +32,7 @@ export default function Messages() {
           exchange, and schedule sessions.
         </p>
         <Tabs aria-label="Tabs with underline" variant="underline">
-          <TabItem active title="All" ></TabItem>
+          <TabItem active title="All"></TabItem>
           <TabItem title="Unread"></TabItem>
         </Tabs>
 
