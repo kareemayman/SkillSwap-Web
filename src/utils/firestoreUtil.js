@@ -30,3 +30,15 @@ export const createUserDoc = async (user) => {
     console.error("Error creating user document:", error);
   }
 };
+
+export const getUserById = async (id) => {
+  const qSnap = await getDocs(collection(db, "users"));
+  return qSnap.docs.find(doc => doc.id === id);
+};
+
+export const getAllUsers = async () => {
+  const qSnap = await getDocs(collection(db, "users"));
+  return qSnap.docs.map(doc => ({
+    ...doc.data()
+  }));
+};
