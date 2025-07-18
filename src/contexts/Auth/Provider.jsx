@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import { AuthContext } from "./context";
+import { createUserDoc2 } from "../../utils/firestoreUtil";
 
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -18,7 +19,7 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log("@onAuthStateChanged ---- user =", user);
+      // console.log("@onAuthStateChanged ---- user =", user);
       setUser(user);
       setLoading(false);
     });
@@ -27,14 +28,9 @@ export default function AuthProvider({ children }) {
   }, []);
 
   async function setDisplayName(userObject, name) {
-    try {
-      console.log("@setDisplayName() ---- will try updating displayName of user =", user?.email, "with value =", name);
-      const res = await updateProfile(userObject, { displayName: name });
-      console.log("@setDisplayName() ---- updating displayName success ---- res =", res);
-    } catch (error) {
-      console.log("@setDisplayName() ---- updating displayName failed ---- res =", error);
-      throw error;
-    }
+    // console.log("@setDisplayName() ---- will try updating displayName of user =", user?.email, "with value =", name);
+    await updateProfile(userObject, { displayName: name });
+    // console.log("@setDisplayName() ---- updating displayName success");
   }
 
   async function signUp(email, password, name) {
@@ -43,15 +39,17 @@ export default function AuthProvider({ children }) {
       setLoading(true);
       // setUser(null);
       const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
-      console.log("@signUp() @AuthProvider ---- sign up success ---- userCredentials =", userCredentials);
+      // console.log("@signUp() @AuthProvider ---- sign up success ---- userCredentials =", userCredentials);
       // set user and end loading
-      const { user: registeredUser } = userCredentials;
-      await setDisplayName(registeredUser, name);
-      // setUser(registeredUser);
-      // setUser((({ user:registeredUser } = userCredentials), registeredUser));
+      const { user } = userCredentials;
+      await setDisplayName(user, name);
+
+      await createUserDoc2(user);
+      // setUser(user);
+      // setUser((({ user:user } = userCredentials), user));
     } catch (error) {
-      console.log("@signUp() @AuthProvider ---- sign up failure ---- error.code =", error.code, "---- error.message =", error.message);
-      console.log("@signUp() @AuthProvider ---- sign up failure ---- error =", error);
+      // console.log("@signUp() @AuthProvider ---- sign up failure ---- error.code =", error.code, "---- error.message =", error.message);
+      // console.log("@signUp() @AuthProvider ---- sign up failure ---- error =", error);
       setError(getErrorMessage(error.code));
     } finally {
       setLoading(false);
@@ -64,12 +62,12 @@ export default function AuthProvider({ children }) {
       setLoading(true);
       // setUser(null);
       const userCredentials = await signInWithEmailAndPassword(auth, email, password);
-      console.log("@logIn() @AuthProvider ---- log in success ---- userCredentials =", userCredentials);
+      // console.log("@logIn() @AuthProvider ---- log in success ---- userCredentials =", userCredentials);
       // setUser(userCredentials.user);
       // setUser((({ user:loggedUser } = userCredentials), loggedUser));
     } catch (error) {
-      console.log("@logIn() @AuthProvider ---- log in failure ---- error.code =", error.code, "---- error.message =", error.message);
-      console.log("@logIn() @AuthProvider ---- log in failure ---- error =", error);
+      // console.log("@logIn() @AuthProvider ---- log in failure ---- error.code =", error.code, "---- error.message =", error.message);
+      // console.log("@logIn() @AuthProvider ---- log in failure ---- error =", error);
       setError(getErrorMessage(error.code));
     } finally {
       setLoading(false);
@@ -81,11 +79,11 @@ export default function AuthProvider({ children }) {
       setError(null);
       setLoading(true);
       await signOut(auth);
-      console.log("@logOut() @AuthProvider ---- log out success");
+      // console.log("@logOut() @AuthProvider ---- log out success");
       // setUser(null);
     } catch (error) {
-      console.log("@logOut() @AuthProvider ---- log out failure ---- error.code =", error.code, "---- error.message =", error.message);
-      console.log("@logOut() @AuthProvider ---- log out failure ---- error =", error);
+      // console.log("@logOut() @AuthProvider ---- log out failure ---- error.code =", error.code, "---- error.message =", error.message);
+      // console.log("@logOut() @AuthProvider ---- log out failure ---- error =", error);
       setError(getErrorMessage(error.code));
     } finally {
       setLoading(false);
@@ -94,17 +92,20 @@ export default function AuthProvider({ children }) {
 
   async function signInWithGoogle() {
     try {
-      console.log("@signInWithGoogle ---- will start signin with google");
+      // console.log("@signInWithGoogle ---- will start signin with google");
       setLoading(true);
       setError(null);
       // setUser(null);
       const googleProvider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, googleProvider);
-      console.log("@signInWithGoogle ---- signin with google success ---- result =", result);
-      console.log("@signInWithGoogle ---- signin with google success ---- user =", result.user);
+      const { user } = result;
+      // console.log("@signInWithGoogle ---- signin with google success ---- result =", result);
+      // console.log("@signInWithGoogle ---- signin with google success ---- user =", user);
+      await createUserDoc2(user);
+      // await setDisplayName(result.user, name);
       // setUser(result.user);
     } catch (error) {
-      console.log("@signInWithGoogle ---- signin with google failed ---- error =", error);
+      // console.log("@signInWithGoogle ---- signin with google failed ---- error =", error);
       setError(getErrorMessage(error.code));
     } finally {
       setLoading(false);
