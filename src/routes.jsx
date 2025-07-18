@@ -4,6 +4,7 @@ import LandingPage from "./pages/Landing Page/LandingPage";
 import { Login } from "./pages/Login";
 import Messages from "./pages/messages/Messages";
 import ProfileReview from "./pages/Profile Review/ProfileReview";
+import RateExperience from "./pages/rating/RateExperience";
 import Register from "./pages/Register/Register";
 
 const routes = [
@@ -14,7 +15,8 @@ const routes = [
   { path: "resetPassword", element: <ForgotPassword /> },
   { path: "profileReview", element: <ProfileReview /> },
   { path: "messages", element: <Messages /> },
-  { path: "explore", element: <Explore></Explore>}
+  { path: "explore", element: <Explore></Explore> },
+  { path: "rate/:userId", element: <RateExperience /> }
 ];
 
 export default routes;

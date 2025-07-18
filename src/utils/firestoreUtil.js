@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import { collection, doc, getDocs, getDoc, serverTimestamp, setDoc, updateDoc, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 
 export const fetchSkillsList = async () => {
@@ -71,4 +71,46 @@ export const createUserDoc2 = async (user) => {
   } catch (error) {
     console.error("Error creating user document:", error);
   }
+};
+
+
+
+
+
+export const submitRating = async (ratingData) => {
+  try {
+    // Only create one document when submitting
+    const ratingRef = doc(collection(db, "ratings"));
+    await setDoc(ratingRef, {
+      ...ratingData,
+      createdAt: serverTimestamp(),  // Use server timestamp
+    });
+    return ratingRef.id;
+  } catch (error) {
+    console.error("Error submitting rating:", error);
+    throw error;
+  }
+};
+export const getUserRatings = async (userId) => {
+  const q = query(collection(db, "ratings"), where("revieweeId", "==", userId));
+  const qSnap = await getDocs(q);
+  return qSnap.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+};
+
+export const updateUserRatingStats = async (userId) => {
+  const ratings = await getUserRatings(userId);
+  const totalRatings = ratings.length;
+  
+  if (totalRatings === 0) return;
+  
+  const averageRating = ratings.reduce((sum, rating) => sum + rating.overallRating, 0) / totalRatings;
+  
+  const userRef = doc(db, "users", userId);
+  await updateDoc(userRef, {
+    rating: averageRating,
+    totalSessions: totalRatings,
+  });
 };
