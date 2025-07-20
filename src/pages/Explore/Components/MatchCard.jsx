@@ -1,14 +1,8 @@
 import { useEffect, useState } from 'react';
 import Avat from '../../../assets/images/avat.png'
-import { getUserById } from '../../../utils/firestoreUtil';
 
-export const MatchCard = ({ userId }) => {
-  const [user, setUser] = useState([]);
+export const MatchCard = ({ user }) => {
   const [userSkills, setUserSkills] = useState([]);
-
-  useEffect(() => {
-    getUserById(userId).then((res) => setUser(res.data()))
-  }, [])
 
   useEffect(() => {
     if (user) {

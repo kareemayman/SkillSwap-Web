@@ -69,11 +69,11 @@ export const Explore = () => {
 
         {matches &&
           matches.map((match) => {
-            if (user.uid !== match) return <MatchCard key={match} userId={match} />
+            if (user.uid !== match.uid) return <MatchCard key={match.uid} user={match} />
           })}
 
-        {isError && (
-          <p className="pt-2 text-[var(--color-text-secondary)]">
+        {(isError || matches?.length === 0) && (
+          <p className="pt-2 text-red-800 font-bold text-lg">
             Oopsie! Our super-smart AI seems to be on a coffee break and couldn't find any
             skill-tastic matches. Try again later!
           </p>
