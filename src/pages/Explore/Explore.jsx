@@ -12,6 +12,8 @@ export const Explore = () => {
   const [primaryUser, setPrimaryUser] = useState(null)
   const [allUsers, setAllUsers] = useState(null)
   const [matches, setMatches] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [isError, setIsError] = useState(false)
 
   useEffect(() => {
     if (user) {
@@ -29,8 +31,13 @@ export const Explore = () => {
         .then((res) => {
           res = res.replace("```json", "").replace("```", "")
           setMatches(JSON.parse(res))
+          setIsLoading(false)
         })
-        .catch((err) => console.error(err))
+        .catch((err) => {
+          setIsError(true)
+          setIsLoading(false)
+          console.log(err)
+        })
     }
   }, [allUsers, primaryUser])
 
@@ -51,7 +58,7 @@ export const Explore = () => {
           Recommended Matches
         </h2>
 
-        {!matches && (
+        {isLoading && (
           <Spinner
             aria-label="Extra large center-aligned spinner example"
             size="xl"
@@ -64,6 +71,13 @@ export const Explore = () => {
           matches.map((match) => {
             if (user.uid !== match) return <MatchCard key={match} userId={match} />
           })}
+
+        {isError && (
+          <p className="pt-2 text-[var(--color-text-secondary)]">
+            Oopsie! Our super-smart AI seems to be on a coffee break and couldn't find any
+            skill-tastic matches. Try again later!
+          </p>
+        )}
       </div>
     </>
   )
