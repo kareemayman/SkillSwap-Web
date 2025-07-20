@@ -35,7 +35,7 @@ ${JSON.stringify(candidates)}
 
 **Task**  
 Analyze the PrimaryUser against each candidate. Score them 0–100 based on how well they satisfy the criteria above, then return:
-- An array of candidate uids in order of highest to lowest score.
+- An array of candidate objects in order of highest to lowest score.
 - Only output valid JSON array.
 `
 }
