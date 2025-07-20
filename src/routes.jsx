@@ -6,6 +6,7 @@ import Messages from "./pages/messages/Messages";
 import ProfileReview from "./pages/Profile Review/ProfileReview";
 import RateExperience from "./pages/rating/RateExperience";
 import Register from "./pages/Register/Register";
+import SearchScreen from "./pages/search/SearchScreen";
 
 const routes = [
   { path: "/", element: <LandingPage /> },
@@ -16,7 +17,9 @@ const routes = [
   { path: "profileReview", element: <ProfileReview /> },
   { path: "messages", element: <Messages /> },
   { path: "explore", element: <Explore></Explore> },
-  { path: "rate/:userId", element: <RateExperience /> }
+  { path: "rate/:userId", element: <RateExperience /> },
+  { path: "search", element: <SearchScreen /> },
+
 ];
 
 export default routes;
