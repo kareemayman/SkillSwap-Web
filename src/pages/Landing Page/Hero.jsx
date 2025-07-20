@@ -2,9 +2,11 @@ import React from "react";
 import img from "../../assets/images/hero.png";
 import heroVideo from "../../assets/videos/3249902-uhd_3840_2160_25fps.mp4";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 function HeroSection() {
   const { t } = useTranslation();
+  const navigate = useNavigate()
 
   return (
     <section className="relative w-full h-[550px] overflow-hidden">
@@ -46,6 +48,7 @@ function HeroSection() {
                 color: 'var(--color-text-dark)',
                 backgroundColor: 'var(--color-skill-teach-bg)'
               }}
+              onClick={() => navigate('login')}
             >
               <span className="relative z-10 transition duration-1000 group-hover:text-[var(--color-text-light)]">
                 {t("HeroSection.button")}
