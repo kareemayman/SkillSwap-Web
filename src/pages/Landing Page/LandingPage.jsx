@@ -8,10 +8,12 @@ import { useTranslation } from "react-i18next";
 import { FaArrowRight } from "react-icons/fa";
 import Header from "../../components/Header";
 import { FaGlobe } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 
 export default function LandingPage() {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate()
 
   return (
     <div className="relative">
@@ -56,6 +58,7 @@ export default function LandingPage() {
                   color: "var(--color-text-dark)",
                   backgroundColor: "var(--color-skill-teach-bg)",
                 }}
+                onClick={() => navigate("login")}
               >
                 <span className="relative z-10 transition duration-1000 group-hover:text-[var(--color-text-light)]">
                   {t("HeroSection.button")}
