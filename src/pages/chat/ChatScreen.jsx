@@ -76,6 +76,7 @@ export default function ChatScreen() {
                   key={msg.id}
                   message={msg}
                   isCurrentUser={msg.senderId === currentUser.uid}
+                  otherUserName={otherUser.name}
                 />
               ))}
             </div>
