@@ -1,11 +1,4 @@
-const Button = ({
-  variant = "primary",
-  icon = null,
-  onPress = () => {},
-  disabled = false,
-  value = "Button",
-  customColors = {},
-}) => {
+const Button = ({ onPress = () => {}, disabled = false, value = "Button", customColors = {} }) => {
   const {
     textColor = "var(--color-text-dark)",
     bgColor = "var(--color-skill-teach-bg)",
@@ -25,21 +18,21 @@ const Button = ({
         backgroundColor: bgColor,
       }}
     >
-<span
-  className="relative z-10 transition duration-1000 group-hover:text-inherit"
-  style={{
-    color: textColor,
-    transition: "color 0.3s ease-in-out",
-  }}
-  onMouseEnter={(e) => {
-    e.currentTarget.style.color = hoverTextColor;
-  }}
-  onMouseLeave={(e) => {
-    e.currentTarget.style.color = textColor;
-  }}
->
-  {value}
-</span>
+      <span
+        className="relative z-10 transition duration-1000 group-hover:text-inherit"
+        style={{
+          color: textColor,
+          transition: "color 0.3s ease-in-out",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.color = hoverTextColor;
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.color = textColor;
+        }}
+      >
+        {value}
+      </span>
 
       <span
         className="absolute left-0 top-0 h-full w-0 transition-all duration-[800ms] ease-in-out group-hover:w-full"

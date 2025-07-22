@@ -10,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import { AuthContext } from "./context";
-import { createUserDoc2 } from "../../utils/firestoreUtil";
+import { createUserDoc } from "../../utils/firestoreUtil";
 
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -44,7 +44,7 @@ export default function AuthProvider({ children }) {
       const { user } = userCredentials;
       await setDisplayName(user, name);
 
-      await createUserDoc2(user);
+      await createUserDoc(user);
       // setUser(user);
       // setUser((({ user:user } = userCredentials), user));
     } catch (error) {
@@ -101,7 +101,7 @@ export default function AuthProvider({ children }) {
       const { user } = result;
       // console.log("@signInWithGoogle ---- signin with google success ---- result =", result);
       // console.log("@signInWithGoogle ---- signin with google success ---- user =", user);
-      await createUserDoc2(user);
+      await createUserDoc(user);
       // await setDisplayName(result.user, name);
       // setUser(result.user);
     } catch (error) {
