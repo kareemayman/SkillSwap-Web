@@ -1,3 +1,4 @@
+import ChatScreen from "./pages/chat/ChatScreen";
 import { Explore } from "./pages/Explore/Explore";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import LandingPage from "./pages/Landing Page/LandingPage";
@@ -19,6 +20,7 @@ const routes = [
   { path: "explore", element: <Explore></Explore> },
   { path: "rate/:userId", element: <RateExperience /> },
   { path: "search", element: <SearchScreen /> },
+  { path: "chat/:userId", element: <ChatScreen /> },
 
 ];
 
