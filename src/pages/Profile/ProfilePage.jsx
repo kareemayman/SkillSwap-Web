@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/Auth/context";
 import useFirestoreGet from "../../hooks/useFirestoreGet";
 import CreateProfile from "./CreateProfile/CreateProfile";
 import EditProfile from "./EditProfile/EditProfile";
 import ProfileView from "./ProfileView";
-import Header from "../../components/Header";
 import { Spinner } from "flowbite-react";
 import { hasNullValue } from "../../utils/helpers";
 import img from "../../assets/images/wave3.svg";
@@ -13,7 +12,8 @@ const ProfilePage = () => {
   const { user } = useAuth();
   const { data: userProfile, loading, error, request } = useFirestoreGet();
   // state to control which component should be displayed: view || edit || create
-  const [displayProfileComponent, setDisplayProfileComponent] = useState("view");
+  const [displayProfileComponent, setDisplayProfileComponent] =
+    useState("view");
 
   // Fetch user profile data when component mounts
   useEffect(() => {
@@ -23,7 +23,10 @@ const ProfilePage = () => {
   }, [user?.uid, request]);
 
   useEffect(() => {
-    if (error?.message === "Document not found" || (userProfile && hasNullValue(userProfile))) {
+    if (
+      error?.message === "Document not found" ||
+      (userProfile && hasNullValue(userProfile))
+    ) {
       setDisplayProfileComponent("create");
     }
   }, [error, userProfile]);
@@ -48,7 +51,6 @@ const ProfilePage = () => {
 
   return (
     <>
-      <Header />
       <div className="min-h-screen relative overflow-hidden ">
         <div className="absolute bottom-0 left-0 w-full z-0">
           <img src={img} alt="wave" className="w-full h-auto" />

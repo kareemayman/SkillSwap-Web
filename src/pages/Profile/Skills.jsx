@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react"
-import Header from "../../components/Header"
+import { useEffect, useState } from "react"
 import { Tag } from "../../components/Tag"
 import { fetchSkillsList } from "../../utils/firestoreUtil"
 import { filterSkillPrompt } from "../../utils/geminiPrompts"

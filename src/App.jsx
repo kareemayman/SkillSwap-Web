@@ -1,11 +1,11 @@
 import { useRoutes } from "react-router-dom";
-import routes from "./routes";
+import AppRoutes from "./routes";
 import "./i18n";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 const App = () => {
-  const routing = useRoutes(routes);
+  const routing = useRoutes(AppRoutes());
   const { i18n } = useTranslation();
 
   useEffect(() => {

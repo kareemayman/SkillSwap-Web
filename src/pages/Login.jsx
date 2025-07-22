@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { validateEmail, validatePassword } from "../utils/validation";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, signInWithGoogle } from "../firebase";
 import left from "../assets/images/left.svg";
 import { useTranslation } from "react-i18next";
-import Header from "../components/Header";
 import { createUserDoc } from "../utils/firestoreUtil";
 
-export const Login = () => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailValidError, setEmailValidError] = useState("");
@@ -61,8 +60,6 @@ export const Login = () => {
           alt="right illustration"
           className="absolute bottom-5 right-5 w-40 md:w-60 pointer-events-none animate-rotate-slow"
         />
-
-        <Header></Header>
 
         <main className="flex flex-col justify-center items-center mx-auto pt-16 container">
           <h1 className="font-normal text-3xl text-center">
@@ -131,3 +128,5 @@ export const Login = () => {
     </>
   );
 };
+
+export default Login;

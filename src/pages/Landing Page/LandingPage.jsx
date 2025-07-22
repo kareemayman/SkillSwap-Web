@@ -1,46 +1,18 @@
-import React from "react";
 import HeroSection from "./Hero";
 import HowWorkSection from "./HowWork";
 import SuccessStories from "./SuccessStories";
 import LandingFooter from "./Footer";
-import Button from "../../components/Button";
 import { useTranslation } from "react-i18next";
-import { FaArrowRight } from "react-icons/fa";
-import Header from "../../components/Header";
-import { FaGlobe } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-
 export default function LandingPage() {
-  const { t, i18n } = useTranslation();
-  const navigate = useNavigate()
+  const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <div className="relative">
       <div className="w-full">
         {/* Your buttons and other content */}
-
-        <Header>
-          <Button
-            value={
-              <>
-                <FaGlobe className="inline mr-2" />
-                {i18n.language === "en" ? "English" : "العربية"}
-              </>
-            }
-            onPress={() =>
-              i18n.language === "en"
-                ? i18n.changeLanguage("ar")
-                : i18n.changeLanguage("en")
-            }
-            customColors={{
-              textColor: "var(--color-text-dark)",
-              bgColor: "var(--color-skill-teach-bg)",
-              hoverFillColor: "var(--color-btn-submit-bg)",
-              hoverTextColor: "var(--color-text-light)",
-            }}
-          />
-        </Header>
 
         <HeroSection />
         <div className="container max-w-[1300px] mx-auto">

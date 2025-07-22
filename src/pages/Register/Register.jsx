@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import Header from "../../components/Header";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/Auth/context";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -42,13 +41,13 @@ export default function Register() {
   };
   return (
     <>
-      <Header />
-
       <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <div className="mb-8">
-              <h3 className="text-center text-xl font-semibold text-gray-900">{t("Register.title")}</h3>
+              <h3 className="text-center text-xl font-semibold text-gray-900">
+                {t("Register.title")}
+              </h3>
             </div>
 
             <div className="space-y-6">
@@ -105,7 +104,10 @@ export default function Register() {
               <div className="text-center">
                 <span className="text-gray-600 text-sm">
                   {t("Register.footer")}{" "}
-                  <Link to="/login" className="font-medium text-blue-500 hover:text-blue-700">
+                  <Link
+                    to="/login"
+                    className="font-medium text-blue-500 hover:text-blue-700"
+                  >
                     {t("Register.link")}
                   </Link>
                 </span>
@@ -118,7 +120,9 @@ export default function Register() {
                   <div className="w-full border-t border-gray-300" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">{t("Register.alternative")}</span>
+                  <span className="px-2 bg-white text-gray-500">
+                    {t("Register.alternative")}
+                  </span>
                 </div>
               </div>
 

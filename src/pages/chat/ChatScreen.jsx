@@ -12,7 +12,6 @@ import {
 import UserSidebar from "./components/UserSidebar";
 import ChatInput from "./components/ChatInput";
 import ChatMessage from "./components/ChatMessage";
-import Header from "../../components/Header";
 
 export default function ChatScreen() {
   const { user: currentUser } = useAuth();
@@ -51,11 +50,16 @@ export default function ChatScreen() {
 
   return (
     <>
-      <Header></Header>
       <div className=" container mx-auto py-9 px-4 md:px-16">
         <div className="flex h-screen backdrop-blur-xl border shadow-2xl rounded-[18px] p-2 w-full border-[var(--color-card-border)]">
           <div className="flex-1 flex flex-col p-4 overflow-hidden">
-            <div className="flex items-center justify-between mb-4 " style={{borderBottom: "1px solid var(--color-card-border)",paddingBottom: "15px"}}>
+            <div
+              className="flex items-center justify-between mb-4 "
+              style={{
+                borderBottom: "1px solid var(--color-card-border)",
+                paddingBottom: "15px",
+              }}
+            >
               <h1 className="text-2xl font-bold text-[var(--color-text-primary)]">
                 Chat with {otherUser.name}
               </h1>

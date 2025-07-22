@@ -1,8 +1,10 @@
-// import { useState, useEffect } from "react";
-import { getUserById, submitRating, updateUserRatingStats } from "../../utils/firestoreUtil";
+import {
+  getUserById,
+  submitRating,
+  updateUserRatingStats,
+} from "../../utils/firestoreUtil";
 import { useAuth } from "../../contexts/Auth/context";
 import RatingSection from "./components/RatingSection";
-import Header from "../../components/Header";
 import { useEffect, useState } from "react";
 
 const RatingPage = ({ userId }) => {
@@ -37,9 +39,9 @@ const RatingPage = ({ userId }) => {
   }, [userId]);
 
   const handleStarChange = (category, value) => {
-    setRatings(prev => ({
+    setRatings((prev) => ({
       ...prev,
-      [category]: value
+      [category]: value,
     }));
   };
 
@@ -65,7 +67,7 @@ const RatingPage = ({ userId }) => {
         teachingSkill: ratings.teaching,
         communication: ratings.communication,
         punctuality: ratings.punctuality,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
       };
 
       await submitRating(ratingData);
@@ -79,13 +81,15 @@ const RatingPage = ({ userId }) => {
     }
   };
 
-  if (loading) return <div className="text-center py-8">Loading user data...</div>;
-  if (error) return <div className="text-center py-8 text-red-500">{error}</div>;
+  if (loading)
+    return <div className="text-center py-8">Loading user data...</div>;
+  if (error)
+    return <div className="text-center py-8 text-red-500">{error}</div>;
   if (!user) return <div className="text-center py-8">User not found</div>;
 
   return (
     <>
-      <div >
+      <div>
         <h1 className="text-[var(--color-text-primary)] text-3xl font-bold mb-4">
           Rating
         </h1>
@@ -99,7 +103,7 @@ const RatingPage = ({ userId }) => {
             <RatingSection
               title="Overall Rating"
               rating={ratings.overall}
-              setRating={(val) => handleStarChange('overall', val)}
+              setRating={(val) => handleStarChange("overall", val)}
             />
 
             <h3 className="text-lg font-medium text-gray-800 mb-3">
@@ -109,19 +113,19 @@ const RatingPage = ({ userId }) => {
             <RatingSection
               title="Teaching Skill"
               rating={ratings.teaching}
-              setRating={(val) => handleStarChange('teaching', val)}
+              setRating={(val) => handleStarChange("teaching", val)}
             />
 
             <RatingSection
               title="Communication"
               rating={ratings.communication}
-              setRating={(val) => handleStarChange('communication', val)}
+              setRating={(val) => handleStarChange("communication", val)}
             />
 
             <RatingSection
               title="Punctuality"
               rating={ratings.punctuality}
-              setRating={(val) => handleStarChange('punctuality', val)}
+              setRating={(val) => handleStarChange("punctuality", val)}
             />
 
             <button

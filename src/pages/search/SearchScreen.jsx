@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Pagination } from "flowbite-react";
 import { getAllUsers } from "../../utils/firestoreUtil";
 import SearchBar from "./components/SearchBar";
 import FilterBar from "./components/FilterBar";
 import UserCard from "./components/UserCard";
-import Header from "../../components/Header";
 import Lottie from "lottie-react";
 import noUsersAnim from "../../assets/animations/NoDatafound.json";
 
@@ -68,7 +67,6 @@ export default function SearchScreen() {
 
   return (
     <>
-      <Header />
       <div className="container mx-auto py-6 px-4 md:px-16 ">
         <SearchBar value={searchText} onChange={handleSearchChange} />
         <FilterBar
