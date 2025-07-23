@@ -54,18 +54,18 @@ const Login = () => {
 
   return (
     <>
-      <div className="relative overflow-hidden h-[calc(100dvh-80px)]">
+      <div className="relative h-[calc(100dvh-80px)] overflow-hidden">
         <img
           src={left}
           alt="right illustration"
-          className="absolute bottom-5 right-5 w-40 md:w-60 pointer-events-none animate-rotate-slow hidden sm:block"
+          className="hidden sm:block right-5 bottom-5 absolute w-40 md:w-60 animate-rotate-slow pointer-events-none"
         />
 
         <main className="flex flex-col justify-center items-center mx-auto pt-16 container">
           <h1 className="font-normal text-3xl text-center">{t("Login.title")}</h1>
 
           <form
-            className="flex flex-col mt-8 mb-6 min-w-[80%] sm:min-w-3/4 lg:min-w-[500px] "
+            className="flex flex-col mt-8 mb-6 min-w-[80%] sm:min-w-3/4 lg:min-w-[400px]"
             onSubmit={(e) => handleSubmit(e)}
           >
             <input
@@ -75,10 +75,10 @@ const Login = () => {
               onChange={(e) => {
                 setEmail(e.target.value)
               }}
-              className="mx-3 p-3 border-[var(--color-card-content-border)] border-2 border-solid rounded-md outline-[var(--ripe-olive)] placeholder:text-[var(--clary-sage)] transition-all duration-300"
+              className="mx-3 p-3 border border-gray-300 border-solid rounded-md outline-[var(--ripe-olive)] text-gray-900 transition-all duration-300 placeholder-gray-500"
             />
 
-            <p className="text-red-500 mb-6 mx-3">{emailValidError}</p>
+            <p className="mx-3 mb-6 text-red-500">{emailValidError}</p>
 
             <input
               type="password"
@@ -87,15 +87,15 @@ const Login = () => {
               onChange={(e) => {
                 setPassword(e.target.value)
               }}
-              className="mx-3 p-3 border-[var(--color-card-content-border)] border-2 border-solid rounded-md outline-[var(--ripe-olive)] placeholder:text-[var(--clary-sage)] transition-all duration-300"
+              className="mx-3 p-3 border border-gray-300 border-solid rounded-md outline-[var(--ripe-olive)] text-gray-900 transition-all duration-300 placeholder-gray-500"
             />
 
-            <p className="text-red-500 mb-6 mx-3">{passwordValidError}</p>
+            <p className="mx-3 mb-6 text-red-500">{passwordValidError}</p>
 
             <input
               type="submit"
               value={t("Login.button")}
-              className="bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] hover:shadow-md p-2 rounded-md w-[95%] mx-auto text-[#F7FAFC] transition-all duration-300 cursor-pointer"
+              className="bg-[var(--color-btn-submit-bg)]  hover:bg-black/90 hover:shadow-md mx-auto p-3 rounded-md w-[95%] font-medium text-[#F7FAFC] transition-all duration-300 cursor-pointer"
             />
           </form>
 
@@ -110,9 +110,9 @@ const Login = () => {
 
           <button
             onClick={handleSignInWithGoogle}
-            className="bg-[var(--color-btn-submit-bg)] hover:shadow-md hover:bg-[var(--color-btn-submit-hover)] mb-6 p-2 rounded-md min-w-[80%] sm:min-w-3/4 lg:min-w-[475px] mx-auto text-[#F7FAFC] transition-all duration-300 cursor-pointer flex justify-center items-center"
+            className="flex justify-center items-center bg-white hover:bg-gray-50 hover:shadow-md mx-auto mb-6 p-3 rounded-md min-w-[80%] sm:min-w-3/4 lg:min-w-[385px] font-medium text-gray-500 transition-all duration-300 cursor-pointer"
           >
-            <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
+            <svg className="mr-2 w-5 h-5" viewBox="0 0 24 24">
               <path
                 fill="#4285F4"
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
