@@ -64,7 +64,7 @@
     "copyright": "© {{year}} SkillSwap. All rights reserved."
   },
   "Register": {
-    "title": "Join our community",
+    "title": "Join our community 🤝",
     "button": "Sign Up",
     "footer": "Already have an account?",
     "link": "Sign In",
@@ -72,7 +72,7 @@
     "google": "Continue with Google"
   },
   "Login": {
-    "title": "Welcome to SkillSwap",
+    "title": "Welcome to SkillSwap 👋",
     "button": "Sign In",
     "forget": "Forgot Password?",
     "footer": "Don't have an account?",

@@ -52,7 +52,7 @@ export default function ProfileReview({ updateStep, userId, initialData, onCompl
 
       <div className="mb-6">
         <h3 className="text-xl font-bold mb-2 text-[var(--color-text-primary)]">About me</h3>
-        <div className="leading-relaxed backdrop-blur-sm p-4 rounded-lg border border-[var(--color-card-border)] bg-[var(--color-card-content-bg)] text-[var(--color-text-secondary)]">
+        <div className="leading-relaxed backdrop-blur-sm p-4 rounded-lg border border-[var(--color-card-border)] glass-card text-[var(--color-text-secondary)]">
           {userProfile?.bio}
         </div>
       </div>

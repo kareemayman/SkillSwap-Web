@@ -44,7 +44,7 @@ const Explore = () => {
     <>
       <div className="mx-auto container py-6 px-4 md:px-16">
         <h1 className="font-medium text-4xl my-2 text-[var(--color-text-primary)]">
-          AI-Powered Skill Match Suggestions
+          <span className="text-[var(--main-color)]">AI</span>-Powered Skill Match Suggestions 🤖
         </h1>
 
         <p className="pt-2 text-[var(--color-text-secondary)]">

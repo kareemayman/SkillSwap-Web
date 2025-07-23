@@ -52,12 +52,12 @@ export default function SuccessStories() {
   ];
 
   return (
-    <section className="text-[#141414] flex flex-col gap-10 px-4 py-10">
+    <section className="text-[var(--main-color)] flex flex-col gap-10 px-4 py-10" style={{ paddingTop: "7rem" }}>
       <div className="flex flex-col gap-4">
         <h2 className="text-4xl font-extrabold">
           {t("SuccessStoriesSection.title")}
         </h2>
-        <p className="text-base max-w-[720px]">
+        <p className="text-[var(--color-text-secondary)] max-w-[720px]">
           {t("SuccessStoriesSection.description")}
         </p>
       </div>

@@ -2,7 +2,7 @@ import React from "react";
 
 export default function MsgCart({ data }) {
   return (
-    <div className="flex justify-between bg-[var(--color-card-content-bg)] border-[var(--color-card-border)] p-4 rounded-lg shadow-md gap-8 flex-wrap w-full items-center">
+    <div className="flex justify-between usercard border-[var(--color-card-border)] p-4 rounded-lg shadow-md gap-8 flex-wrap w-full items-center">
       <div className="flex items-center gap-4">
         <div className="w-16 h-16 rounded-full object-cover mb-4 ring-2 ring-[var(--color-card-border)] ">
           <img src={data.pic} />
@@ -12,7 +12,7 @@ export default function MsgCart({ data }) {
           <p className="whitespace-normal text-[var(--color-text-secondary)]">{data.msg}</p>
         </div>
       </div>
-      <span>{data.time}</span>
+      <span className="text-[var(--color-text-secondary)]">{data.time}</span>
     </div>
   );
 }
