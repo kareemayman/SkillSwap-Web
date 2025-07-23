@@ -26,7 +26,7 @@ export const MatchCard = ({ user }) => {
         </div>
       </div>
 
-      <img src={user.profilePicture || Avat} alt="avatar" />
+      <img src={user.profilePicture || Avat} alt="avatar"/>
     </div>
   )
 }

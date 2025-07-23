@@ -54,11 +54,11 @@ const Login = () => {
 
   return (
     <>
-      <div className="relative min-h-screen overflow-hidden">
+      <div className="relative overflow-hidden h-[calc(100dvh-80px)]">
         <img
           src={left}
           alt="right illustration"
-          className="absolute bottom-5 right-5 w-40 md:w-60 pointer-events-none animate-rotate-slow"
+          className="absolute bottom-5 right-5 w-40 md:w-60 pointer-events-none animate-rotate-slow hidden sm:block"
         />
 
         <main className="flex flex-col justify-center items-center mx-auto pt-16 container">
