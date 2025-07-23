@@ -4,7 +4,7 @@ import { AuthContext } from "../../contexts/Auth/context";
 import { getAllUsers, getUserById } from "../../utils/firestoreUtil";
 import { generateFromGemini } from "../../api/gemini";
 import { skillMatch } from "../../utils/geminiPrompts";
-import { Spinner } from "flowbite-react";
+import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
 
 const Explore = () => {
   const { user } = useContext(AuthContext);
@@ -57,12 +57,7 @@ const Explore = () => {
         </h2>
 
         {isLoading && (
-          <Spinner
-            aria-label="Extra large center-aligned spinner example"
-            size="xl"
-            color="success"
-            className="w-full mt-32"
-          ></Spinner>
+          <LoadingAnimation></LoadingAnimation>
         )}
 
         {matches &&
