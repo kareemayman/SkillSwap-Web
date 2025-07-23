@@ -6,7 +6,6 @@ import LandingPage from "./pages/Landing Page/LandingPage";
 import Login from "./pages/Login";
 import Messages from "./pages/messages/Messages";
 import ProfilePage from "./pages/Profile/ProfilePage";
-import ProfileReview from "./pages/Profile/CreateProfile/Profile Review/ProfileReview";
 import RateExperience from "./pages/rating/RateExperience";
 import Register from "./pages/Register/Register";
 import SearchScreen from "./pages/search/SearchScreen";
@@ -23,7 +22,6 @@ const AppRoutes = () => {
           element: <ProtectedRoute />,
           children: [
             { path: "profile", element: <ProfilePage /> },
-            { path: "profileReview", element: <ProfileReview /> },
             { path: "explore", element: <Explore /> },
             { path: "messages", element: <Messages /> },
             { path: "rate/:userId", element: <RateExperience /> },

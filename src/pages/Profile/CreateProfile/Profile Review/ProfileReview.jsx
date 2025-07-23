@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import img from "../../../../assets/images/avat.png";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../firebase";
+import { avatarTheme } from "flowbite-react";
 
 export default function ProfileReview({ updateStep, userId, initialData, onComplete }) {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ export default function ProfileReview({ updateStep, userId, initialData, onCompl
         isAvailableForTrade: true,
         isAvailableForPaid: false,
         reviews: [],
+        availability: true,
       };
 
       // Update the database
@@ -28,7 +30,7 @@ export default function ProfileReview({ updateStep, userId, initialData, onCompl
       onComplete(finalUpdateObj);
 
       // Show success message or handle navigation
-      navigate("/landing");
+      navigate("/");
     } catch (error) {
       console.error("Error finalizing profile:", error);
     }

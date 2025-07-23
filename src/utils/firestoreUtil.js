@@ -51,6 +51,7 @@ export const createUserDoc = async (user) => {
         totalSessions: null, // number
         hasSkills: null, // array of skill objects [{ id: "skillId", name: "skillName", skillLevel: "beginner" }]
         needSkills: null, // array of skill objects [{ id: "skillId", name: "skillName", skillLevel: "beginner" }]
+        reviews: null, // array of review objects [{ id: "reviewId", reviewerId: "userId", reviewText: "Great session!", rating: 5 }]
       });
     }
   } catch (error) {
