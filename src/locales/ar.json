@@ -61,7 +61,7 @@
     "contact": "اتصل بنا",
     "terms": "شروط الخدمة",
     "privacy": "سياسة الخصوصية",
-    "copyright": " SkillSwap 2023. جميع الحقوق محفوظة."
+    "copyright": " SkillSwap {{year}}. جميع الحقوق محفوظة."
   },
   "Register": {
     "title": "انضم إلى مجتمعنا",
