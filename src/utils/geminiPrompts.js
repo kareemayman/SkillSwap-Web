@@ -21,9 +21,8 @@ Given a primary user and a list of candidate users, your job is to return a JSON
 Criteria (in priority order):  
 1. Skill match: candidate.hasSkills must intersect primary.needSkills.  
 2. Reciprocal exchange: candidate.needSkills should intersect primary.hasSkills (bonus points).  
-3. Availability overlap: intersect primary.availability with candidate.availability.  
-4. Location: if the skill makes sense to be taught online in primary.needSkills, ignore location; otherwise prefer same city.  
-5. Rating: use only to break ties if all above are equal.  
+3. Location: if the skill makes sense to be taught online in primary.needSkills, ignore location; otherwise prefer same city.  
+4. Rating: use only to break ties if all above are equal.  
 
 **Input**:
 
