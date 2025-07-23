@@ -67,14 +67,14 @@ export default function SearchScreen() {
 
   return (
     <>
-      <div className="container mx-auto py-6 px-4 md:px-16 ">
+      <div className=" container container-[700px] mx-auto py-9 px-4 md:px-16 ">
         <SearchBar value={searchText} onChange={handleSearchChange} />
         <FilterBar
           selected={selectedFilter}
           onFilterClick={handleFilterClick}
         />
         {loading ? (
-          <div className="text-center mt-10 text-bkack text-lg">
+          <div className="text-center mt-10 text-black text-lg">
             Loading users...
           </div>
         ) : paginatedUsers.length > 0 ? (
@@ -84,17 +84,44 @@ export default function SearchScreen() {
             <div className="w-64 h-64">
               <Lottie animationData={noUsersAnim} loop={true} />
             </div>
-            <p className="text-xl font-semibold mt-4">No users found 😔</p>
+            <p className="text-xl text-[var(--color-text-secondary)] font-semibold mt-4">No users found 😔</p>
           </div>
         )}
         {totalPages > 1 && (
-          <div className="flex justify-center mt-4">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-              showIcons
-            />
+          <div className="flex justify-center mt-4 ">
+
+<Pagination
+  currentPage={currentPage}
+  totalPages={totalPages}
+  onPageChange={setCurrentPage}
+  showIcons
+  theme={{
+    base: "flex items-center -space-x-px h-10 text-sm",
+    layout: {
+      table: {
+        base: "text-gray-500 dark:text-gray-400 bg-black",
+        span: "text-sm font-normal text-gray-500 dark:text-gray-400",
+      },
+    },
+    pages: {
+      base: "flex items-center -space-x-px",
+      showIcon: "inline-flex",
+      previous: {
+        base: "bg-gray-black-800  text-white hover:bg-gray-black-900 border border-gray-600 rounded-l-lg px-3 py-2",
+        icon: "h-5 w-5",
+      },
+      next: {
+        base: "bg-gray-black-800 text-white hover:bg-gray-black-900 border border-gray-600 rounded-r-lg px-3 py-2",
+        icon: "h-5 w-5",
+      },
+      selector: {
+        base: "bg-black border border-gray-600 text-white hover:bg-gray-700 focus:ring-2 focus:ring-orange-500 font-medium px-3 py-2",
+        active:
+          "bg-orange-600 text-white hover:bg-orange-700 border-orange-600 z-10",
+      },
+    },
+  }}
+/>
           </div>
         )}
       </div>

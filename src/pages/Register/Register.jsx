@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useAuth } from "../../contexts/Auth/context"
 import { Link, useNavigate } from "react-router-dom"
 import { useTranslation } from "react-i18next"
+import left from "../../assets/videos/hands .gif"
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -44,10 +45,16 @@ export default function Register() {
       <div
         className="right, flex flex-col bg-[linear-gradient( sm:px-6 lg:px-8 py-12 h-[calc(100dvh-80px)] to #d1c7b8b7, rgba(209, 199, 184, 0.56), rgba(172, 181, 151, 0.7) )]"
       >
+                <img
+                  src={left}
+                  alt="right illustration"
+                  className="hidden sm:block right-5 bottom-5 absolute w-40 md:w-60 animate-rotate-slow pointer-events-none"
+                />
+        
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <div className="px-4 sm:px-10 py-8 sm:rounded-lg">
             <div className="mb-8">
-              <h3 className="font-normal text-3xl text-center">
+              <h3 className="font-normal text-3xl text-center text-[var(--main-color)]">
                 {t("Register.title")}
               </h3>
             </div>
@@ -58,7 +65,7 @@ export default function Register() {
                   id="name"
                   name="name"
                   type="text"
-                  className="block relative px-3 py-3 border border-gray-300 rounded-md w-full text-gray-900 sm:text-sm appearance-none placeholder-gray-500"
+                  className="block relative px-3 py-3 bg-[var(--color-text-primary)] rounded-md w-full text-[var(--color-text-secondary)] sm:text-sm appearance-none placeholder-gray-500"
                   placeholder={t("name")}
                   value={formData.name}
                   onChange={handleInputChange}
@@ -71,7 +78,7 @@ export default function Register() {
                   name="email"
                   type="email"
                   autoComplete="email"
-                  className="block relative px-3 py-3 border border-gray-300 rounded-md w-full text-gray-900 sm:text-sm appearance-none placeholder-gray-500"
+                  className="block relative px-3 py-3 bg-[var(--color-text-primary)] rounded-md w-full text-[var(--color-text-secondary)] sm:text-sm appearance-none placeholder-gray-500"
                   placeholder={t("email")}
                   value={formData.email}
                   onChange={handleInputChange}
@@ -84,7 +91,7 @@ export default function Register() {
                   name="password"
                   type="password"
                   autoComplete="new-password"
-                  className="block relative px-3 py-3 border border-gray-300 rounded-md w-full text-gray-900 sm:text-sm appearance-none placeholder-gray-500"
+                  className="block relative px-3 py-3 bg-[var(--color-text-primary)] rounded-md w-full text-[var(--color-text-secondary)] sm:text-sm appearance-none placeholder-gray-500"
                   placeholder={t("password")}
                   value={formData.password}
                   onChange={handleInputChange}
@@ -95,7 +102,7 @@ export default function Register() {
                 <button
                   type="button"
                   onClick={handleSubmit}
-                  className="group relative flex justify-center bg-black hover:bg-black/90 active:bg-black px-4 py-3 border border-transparent rounded-md w-full font-bold text-white text-sm active:scale-95 hover:cursor-pointer"
+                  className="group relative flex justify-center bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] active:bg-black px-4 py-3 border border-transparent rounded-md w-full font-bold text-white text-sm active:scale-95 hover:cursor-pointer"
                 >
                   {t("Register.button")}
                 </button>
@@ -106,7 +113,7 @@ export default function Register() {
               <div className="text-center">
                 <span className="text-gray-600 text-sm">
                   {t("Register.footer")}{" "}
-                  <Link to="/login" className="font-medium text-blue-500 hover:text-blue-700">
+                  <Link to="/login" className="font-medium text-[var(--color-text-primary)] hover:text-blue-700">
                     {t("Register.link")}
                   </Link>
                 </span>
@@ -116,7 +123,7 @@ export default function Register() {
             <div className="mt-6">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="border-gray-300 border-t w-full" />
+                  <div  />
                 </div>
                 <div className="relative flex justify-center text-sm">
                   <span className="bg-[rgba(172, 181, 151, 0.7)] px-2 text-gray-500">{t("Register.alternative")}</span>
@@ -127,7 +134,7 @@ export default function Register() {
                 <button
                   type="button"
                   onClick={handleGoogleSignUp}
-                  className="inline-flex justify-center bg-white hover:bg-gray-50 shadow-sm px-4 py-3 border border-gray-300 rounded-md w-full font-bold text-gray-500 text-sm hover:cursor-pointer"
+                  className="inline-flex justify-center bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] shadow-sm px-4 py-3   rounded-md w-full font-bold text-[var(--color-text-light)] text-sm hover:cursor-pointer"
                 >
                   <svg className="mr-2 w-5 h-5" viewBox="0 0 24 24">
                     <path

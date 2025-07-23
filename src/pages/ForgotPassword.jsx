@@ -21,10 +21,10 @@ const ForgotPassword = () => {
   return (
     <>
       <div className="flex flex-col justify-center items-center mx-auto px-3 pt-16 container">
-        <h1 className="font-normal text-3xl text-center">
+        <h1 className="font-normal text-3xl text-center text-[var(--main-color)]">
           Forgot your password?
         </h1>
-        <p className="mt-4 text-center">
+        <p className="mt-4 text-center text-[var(--color-text-secondary)]">
           Enter the email address associated with your account and we'll send
           you a link to reset your password
         </p>
@@ -40,7 +40,7 @@ const ForgotPassword = () => {
             onChange={(e) => {
               setEmail(e.target.value);
             }}
-            className="mx-3 p-3 border-[#CFDBE8] border-2 border-solid rounded-md outline-[#6A8FD9] placeholder:text-[#4A739C] transition-all duration-300"
+            className="mx-3 p-3 border-solid rounded-md outline-[#6A8FD9] placeholder:text-[var(--color-text-secondary)] transition-all duration-300  bg-[var(--color-text-primary)]"
           />
 
           <p className="mx-3 mb-6 text-red-500">{emailValidError}</p>

@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../../contexts/Auth/context";
 import { db } from "../../firebase";
-
 import {
   getOrCreateChatRoom,
   sendMessage,
@@ -12,6 +11,7 @@ import {
 import UserSidebar from "./components/UserSidebar";
 import ChatInput from "./components/ChatInput";
 import ChatMessage from "./components/ChatMessage";
+import img from "../../assets/images/bgchat.jpg";
 
 export default function ChatScreen() {
   const { user: currentUser } = useAuth();
@@ -49,46 +49,47 @@ export default function ChatScreen() {
   if (!otherUser) return <div>Loading chat partner...</div>;
 
   return (
-    <>
-      <div className=" container mx-auto py-9 px-4 md:px-16">
-        <div className="flex h-screen backdrop-blur-xl border shadow-2xl rounded-[18px] p-2 w-full border-[var(--color-card-border)]">
-          <div className="flex-1 flex flex-col p-4 overflow-hidden">
-            <div
-              className="flex items-center justify-between mb-4 "
-              style={{
-                borderBottom: "1px solid var(--color-card-border)",
-                paddingBottom: "15px",
-              }}
-            >
-              <h1 className="text-2xl font-bold text-[var(--color-text-primary)]">
-                Chat with {otherUser.name}
-              </h1>
-              <button
-                onClick={() => navigate("/messages")}
-                className="group flex items-center gap-2 px-4 py-2 bg-black font-semibold rounded-lg text-[var(--color-text-light)] hover:scale-105 transition-all"
-              >
-                <span className="transform group-hover:-translate-x-1 transition">
-                  🔙
-                </span>
-                <span>Back</span>
-              </button>
-            </div>
-            {/* <h2 className="text-2xl font-bold mb-4">Chat with {otherUser.name}</h2> */}
-            <div className="flex-1 overflow-y-auto space-y-2 pr-2 pt-2">
-              {messages.map((msg) => (
-                <ChatMessage
-                  key={msg.id}
-                  message={msg}
-                  isCurrentUser={msg.senderId === currentUser.uid}
-                  otherUserName={otherUser.name}
-                />
-              ))}
-            </div>
-            <ChatInput onSend={handleSend} />
-          </div>
-          <UserSidebar user={otherUser} />
+    
+<div className="w-full chat-box overflow-y-scroll  ">
+  <div className="flex h-[100vh] bg-black backdrop-blur-xl  shadow-xl overflow-hidden">
+    <div className="flex-1 flex flex-col px-5 overflow-hidden">
+
+      {/* Header */}
+      <div className="bg-[var(--input-bg)] px-5 -mx-5 py-4 border-b border-gray-900">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-semibold text-gray-300">
+            Chat with {otherUser.name}
+          </h1>
+          <button
+            onClick={() => navigate("/messages")}
+            className="flex items-center gap-2 px-4 py-2 text-[var(--color-text-light)] rounded-md shadow-sm  hover:bg-[var(--color-btn-back-hover)] transition"
+          >
+            <span>🔙</span>
+            <span>Back</span>
+          </button>
         </div>
       </div>
-    </>
+
+      {/* Messages */}
+      <div className="flex-1 overflow-y-auto space-y-3 px-2 custom-scrollbar py-7"
+        style={{ backgroundImage: `url(${img})`, backgroundSize: "cover" }}>
+        {messages.map((msg) => (
+          <ChatMessage
+            key={msg.id}
+            message={msg}
+            isCurrentUser={msg.senderId === currentUser.uid}
+            otherUserName={otherUser.name}
+          />
+        ))}
+      </div>
+
+      {/* Input */}
+      <ChatInput onSend={handleSend} />
+    </div>
+
+    {/* Sidebar */}
+    <UserSidebar user={otherUser} />
+  </div>
+</div>
   );
 }

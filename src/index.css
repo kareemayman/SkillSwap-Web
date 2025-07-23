@@ -7,7 +7,7 @@
 /* swiper-button in landing page */
 .custom-swiper-nav .swiper-button-next,
 .custom-swiper-nav .swiper-button-prev {
-  color: #000;
+  color: #8b6f5a;
   font-size: 16px;
   width: 24px;
   height: 24px;
@@ -17,19 +17,6 @@
 .custom-swiper-nav .swiper-button-next:hover,
 .custom-swiper-nav .swiper-button-prev:hover {
   color: #333;
-}
-/* rotate svg in login */
-@keyframes rotate-slow {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-rotate-slow {
-  animation: rotate-slow 20s linear infinite;
 }
 
 @font-face {
@@ -70,42 +57,77 @@
   --color-btn-submit-hover: #D9C4B1;
 } */
 :root {
-  /*  Palette */
-  --ripe-olive: #6b715c;
-  --clary-sage: #acb597;
-  --alabaster: #edeae0;
-  --accessible-beige: #d1c7b8;
 
   /* text color */
-  --color-text-primary: #111827;
-  --color-text-secondary: #272c33e3;
+  --main-color: #fe7843ca;
+  --color-text-primary: #b4afa8;
+  --color-text-secondary: #7c7c7c;
   --color-text-light: #ffffff;
+  --color-text-dark: #000000cc;
+  --input-bg: rgba(21, 19, 19, 0.968);
 
   /* card style */
-  --color-card-border: var(--accessible-beige);
-  --color-card-content-bg: rgba(237, 234, 224, 0.7);
-  --color-card-content-border: var(--accessible-beige);
-  --color-skill-teach-bg: var(--alabaster);
-  --color-skill-learn-bg: var(--accessible-beige);
-  --color-btn-back-hover: #c0b4a3;
-  --color-btn-submit-bg: #1d1e18;
-  --color-btn-submit-hover: #6b715c;
-  --glass-effect: rgba(255, 255, 255, 0.2);
-  --sidebar-background: linear-gradient(
-  to bottom,
-  rgba(0, 0, 0, 1),        /* solid black */
-  rgba(0, 0, 0, 0.9),       /* back to black */
-  rgba(56, 71, 31, 0.9)  /* dark olive green */
-);
-
+  --color-card-border: #8b6f5a;
+  --color-card-content-border: #755d4c;
+  /* --color-skill-teach-bg: var(--alabaster);
+  --color-skill-learn-bg: var(--accessible-beige); */
+  /* --color-btn-back-hover: #c0b4a3; */
+  --color-btn-submit-bg: #8b6f5a;
+  --color-btn-submit-hover: #635041;
 }
+
+/* card in landing page */
+.glass-card {
+  background: radial-gradient(
+    at top left,
+    #a3875a3e 10%,
+    #0e0e0e 50%,
+    #1a1a1a 100%,
+    #0e0e0e
+  );
+  backdrop-filter: blur(12px);
+  background-color: #2e2e2e;
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #e9f5db;
+}
+/* user card in website */
+ .usercard {
+  background: radial-gradient(
+    at bottom,
+    #0e0e0e 10%,
+    #1a1a1a 40%,
+    #0e0e0e 100%
+  );
+  backdrop-filter: blur(10px);
+}
+
 
 body {
   min-height: 100vh;
-  background: linear-gradient(
-    to right,
-    #d1c7b8b7,
-    rgba(209, 199, 184, 0.56),
-    rgba(172, 181, 151, 0.7)
+  background: radial-gradient(
+    ellipse at bottom,
+    #1a1a17 0%,
+    #20201c 40%,
+    #252521 100%
   );
+}
+
+/* scroll in chat */
+.chat-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-box::-webkit-scrollbar-track {
+  background: #1a1a17; 
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+  background-color: #444; 
+  border-radius: 4px;
+}
+
+.chat-box {
+  scrollbar-width: thin;
+  scrollbar-color: #444 #1a1a17;
 }

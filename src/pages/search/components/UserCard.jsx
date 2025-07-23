@@ -10,7 +10,7 @@ export default function UserCard({ user }) {
       .join(", ") || "—";
 
   return (
-    <div className="flex  justify-between bg-[var(--color-card-content-bg)] border-[var(--color-card-border)]  rounded-lg shadow-lg gap-8 flex-wrap w-full items-center p-4  mb-4">
+    <div className="flex  justify-between usercard border-[var(--color-card-border)]  rounded-lg shadow-lg gap-8 flex-wrap w-full items-center p-4  mb-4">
       <div className="flex items-center gap-4">
         <img
           src={user.profilePicture}
@@ -45,7 +45,7 @@ export default function UserCard({ user }) {
           </p>
         </div>
       </div>
-      <button className="border border-[var(--color-card-content-bg)] text-white bg-[var(--color-btn-submit-bg)] rounded-md shadow-sm hover:bg-[var(--color-btn-submit-hover)] px-4 py-2">
+      <button className=" text-[var(--color-text-light)] bg-[var(--color-btn-submit-bg)] rounded-md shadow-sm hover:bg-[var(--color-btn-submit-hover)] px-4 py-2">
         View Profile
       </button>
     </div>

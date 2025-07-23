@@ -11,7 +11,7 @@ export const MatchCard = ({ user }) => {
   }, [user])
 
   return (
-    user && <div className='p-4 mb-4 border-[--color-card-border] border-2 border-solid rounded-xl w-full bg-[--color-card-content-bg] flex justify-between md:items-start md:flex-row flex-col'>
+    user && <div className='p-4 mb-4   rounded-xl w-full usercard flex justify-between md:items-start md:flex-row flex-col'>
       <div className="info">
         <h3 className='font-medium text-[--color-text-primary] text-lg capitalize'>{user.name}</h3>
         {userSkills && <p className='font-medium text-[--color-text-secondary] capitalize'>

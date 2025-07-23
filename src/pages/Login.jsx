@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { validateEmail, validatePassword } from "../utils/validation"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth, signInWithGoogle } from "../firebase"
-import left from "../assets/images/left.svg"
+import left from "../assets/videos/hands .gif"
 import { useTranslation } from "react-i18next"
 import { createUserDoc } from "../utils/firestoreUtil"
 
@@ -62,7 +62,7 @@ const Login = () => {
         />
 
         <main className="flex flex-col justify-center items-center mx-auto pt-16 container">
-          <h1 className="font-normal text-3xl text-center">{t("Login.title")}</h1>
+          <h1 className="font-normal text-3xl text-center text-[var(--main-color)]">{t("Login.title")}</h1>
 
           <form
             className="flex flex-col mt-8 mb-6 min-w-[80%] sm:min-w-3/4 lg:min-w-[400px]"
@@ -75,7 +75,7 @@ const Login = () => {
               onChange={(e) => {
                 setEmail(e.target.value)
               }}
-              className="mx-3 p-3 border border-gray-300 border-solid rounded-md outline-[var(--ripe-olive)] text-gray-900 transition-all duration-300 placeholder-gray-500"
+              className="mx-3 p-3  rounded-md text-[var(--color-text-secondary)] transition-all duration-300 placeholder-gray-500  bg-[var(--color-text-primary)]"
             />
 
             <p className="mx-3 mb-6 text-red-500">{emailValidError}</p>
@@ -87,7 +87,7 @@ const Login = () => {
               onChange={(e) => {
                 setPassword(e.target.value)
               }}
-              className="mx-3 p-3 border border-gray-300 border-solid rounded-md outline-[var(--ripe-olive)] text-gray-900 transition-all duration-300 placeholder-gray-500"
+              className="mx-3 p-3  rounded-md text-[var(--color-text-secondary)] bg-[var(--color-text-primary)] transition-all duration-300 placeholder-gray-500"
             />
 
             <p className="mx-3 mb-6 text-red-500">{passwordValidError}</p>
@@ -95,22 +95,22 @@ const Login = () => {
             <input
               type="submit"
               value={t("Login.button")}
-              className="bg-[var(--color-btn-submit-bg)]  hover:bg-black/90 hover:shadow-md mx-auto p-3 rounded-md w-[95%] font-medium text-[#F7FAFC] transition-all duration-300 cursor-pointer"
+              className="bg-[var(--color-btn-submit-bg)]  hover:bg-[var(--color-btn-submit-hover)] hover:shadow-md mx-auto p-3 rounded-md w-[95%] font-medium text-[#F7FAFC] transition-all duration-300 cursor-pointer"
             />
           </form>
 
           <Link
             to="/resetPassword"
-            className="mb-3 text-[#4A739C] hover:text-[#0D80F2] underline transition-all duration-300"
+            className="mb-3 text-[var(--color-text-secondary)] hover:text-[#0D80F2] underline transition-all duration-300"
           >
             {t("Login.forget")}
           </Link>
 
-          <p className="mb-6 text-[#4A739C]">{t("Login.alternative")}</p>
+          <p className="mb-6 text-gray-600">{t("Login.alternative")}</p>
 
           <button
             onClick={handleSignInWithGoogle}
-            className="flex justify-center items-center bg-white hover:bg-gray-50 hover:shadow-md mx-auto mb-6 p-3 rounded-md min-w-[80%] sm:min-w-3/4 lg:min-w-[385px] font-medium text-gray-500 transition-all duration-300 cursor-pointer"
+            className="flex justify-center items-center bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] hover:shadow-md mx-auto mb-6 p-3 rounded-md min-w-[80%] sm:min-w-3/4 lg:min-w-[385px] font-medium text-[var(--color-text-light)] transition-all duration-300 cursor-pointer"
           >
             <svg className="mr-2 w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -135,7 +135,7 @@ const Login = () => {
 
           <Link
             to="/register"
-            className="mb-3 text-[#4A739C] hover:text-[#0D80F2] underline transition-all duration-300"
+            className="mb-3 text-[var(--color-text-primary)] hover:text-[#0D80F2] underline transition-all duration-300"
           >
             {t("Login.footer")} {t("Login.link")}
           </Link>

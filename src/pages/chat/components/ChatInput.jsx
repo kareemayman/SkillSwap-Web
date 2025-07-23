@@ -12,18 +12,17 @@ export default function ChatInput({ onSend }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex p-2 gap-2 border-t">
+    <form onSubmit={handleSubmit} className="flex mt-4 gap-3 border-t border-gray-700 pt-4">
       <input
         type="text"
-        className="flex-1 p-2 border-[1px] border-[var(--color-card-content-bg)] bg-[var(--color-card-content-bg)] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-text-primary)]"
-
-        placeholder="Type a message"
+      className='w-full border-neutral-950 focus:border-[var(--color-card-content-border)] bg-[var(--input-bg)] text-[var(--color-text-primary)] rounded-md shadow-sm   '
+        placeholder="Type a message..."
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
       <button
         type="submit"
-              className="px-6 py-3 font-semibold rounded-lg text-[var(--color-text-light)] shadow-lg bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] hover:shadow-2xl hover:backdrop-blur-xl"
+        className="px-6 py-3 bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] text-white font-medium rounded-xl  transition"
       >
         Send
       </button>

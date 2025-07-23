@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import img from "../../assets/images/wave3.svg";
+import img from "../../assets/images/img.svg";
 
 export default function LandingFooter() {
   const { t } = useTranslation();
@@ -10,7 +10,7 @@ export default function LandingFooter() {
   return (
     <div className="relative w-full  mt-20">
       <div className="relative z-10 max-w-[1000px] mx-auto px-5 py-12">
-        <div className="flex flex-wrap justify-center gap-8 mb-6">
+        <div className="flex flex-wrap justify-center gap-8 mb-6 text-[var(--color-text-secondary)]">
           <Link
             to="#"
             className="text-base min-w-[160px] text-center hover:text-[var(--color-text-primary)] transition-colors"
