@@ -72,30 +72,25 @@ export default function CreateProfile({ userData }) {
   }
 
   return (
-    <div className="flex flex-col items-center text-start ">
+    <div className="flex flex-col items-center text-start container max-w-3xl mx-auto">
       <div className="w-full px-4 ">
         <div className="container flex flex-col md:flex-row text-center items-center md:text-start justify-start md:items-baseline w-full gap-2 text-2xl font-semibold">
           <p>Welcome {userData.name}! 👋</p>
           <p className="text-xl font-medium md:ms-4">Please complete your profile</p>
         </div>
 
-        <div className="container">
+        <div className="">
           <ProgressBar activeStep={step} />
         </div>
       </div>
 
-      <div className="container mb-4 relative z-10 flex items-center justify-center ">
+      <div className="w-full mb-4 relative z-10 flex items-center justify-center ">
         <div className="backdrop-blur-xl border shadow-2xl rounded-[18px] p-8 w-full border-[var(--color-card-border)]">{stepComponent}</div>
       </div>
     </div>
   );
 }
 
-// function to check user data and determine which step should the user start with at create profile
-// step 1 - personal info: if bio or photoURL is null then step should be 1
-// step 2 - skills: if hasSkills or needSkills is null then step should be 2
-// step 3 - availability and location: if availability or location is null then step should be 3
-// step 4 - review and submit: if all previous steps are completed then step should be 4 (is available for trade and is available for paid will be set to true at this step)
 function getInitialStep(userData) {
   console.log("@getInitialStep ---- userData =", userData);
   if (!userData.bio || !userData.profilePicture) {

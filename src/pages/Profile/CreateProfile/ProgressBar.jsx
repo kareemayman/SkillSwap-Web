@@ -27,7 +27,7 @@ function renderSteps(activeStep = 1) {
       <>
         <div
           className={`flex justify-center items-center w-8 h-8 rounded-full ${
-            i + 1 <= activeStep ? "bg-green-400 ring-green-200" : "bg-gray-200 ring-gray-100"
+            i + 1 <= activeStep ? "bg-green-400 ring-green-200" : "bg-gray-100 ring-white"
           } rounded-full ring-0 sm:ring-8 shrink-0`}
         >
           {i + 1 < activeStep ? (
