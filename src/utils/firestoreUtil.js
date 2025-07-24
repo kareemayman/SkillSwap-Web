@@ -1,10 +1,10 @@
-import { collection, doc, getDocs, getDoc, serverTimestamp, setDoc, updateDoc, query, where } from "firebase/firestore";
+import { collection, doc, getDocs, getDoc, serverTimestamp, setDoc, updateDoc, query, where, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 export const fetchSkillsList = async () => {
   const qSnap = await getDocs(collection(db, "skills"));
   return qSnap.docs.map((doc) => ({
-    id: doc.id,
+    skillId: doc.id,
     ...doc.data(),
   }));
 };
@@ -96,3 +96,14 @@ export const updateUserRatingStats = async (userId) => {
     totalSessions: totalRatings,
   });
 };
+
+export const createSkillDoc = async (skill) => {
+  try {
+    const skillDocRef = addDoc(collection(db, "skills"), {
+      skillName: skill.skillName,
+      skillLevel: skill.skillLevel,
+    })
+  } catch (error) {
+    console.error("Error creating skill document:", error);
+  }
+}
