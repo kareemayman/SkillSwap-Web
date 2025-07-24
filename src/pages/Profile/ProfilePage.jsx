@@ -6,14 +6,13 @@ import EditProfile from "./EditProfile/EditProfile";
 import ProfileView from "./ProfileView";
 import { Spinner } from "flowbite-react";
 import { hasNullValue } from "../../utils/helpers";
-import img from "../../assets/images/wave3.svg";
+import img from "../../assets/images/img.svg";
 
 const ProfilePage = () => {
   const { user } = useAuth();
   const { data: userProfile, loading, error, request } = useFirestoreGet();
   // state to control which component should be displayed: view || edit || create
-  const [displayProfileComponent, setDisplayProfileComponent] =
-    useState("view");
+  const [displayProfileComponent, setDisplayProfileComponent] = useState("view");
 
   // Fetch user profile data when component mounts
   useEffect(() => {
@@ -23,10 +22,7 @@ const ProfilePage = () => {
   }, [user?.uid, request]);
 
   useEffect(() => {
-    if (
-      error?.message === "Document not found" ||
-      (userProfile && hasNullValue(userProfile))
-    ) {
+    if (error?.message === "Document not found" || (userProfile && hasNullValue(userProfile))) {
       setDisplayProfileComponent("create");
     }
   }, [error, userProfile]);
@@ -53,7 +49,7 @@ const ProfilePage = () => {
     <>
       <div className="min-h-screen relative overflow-hidden ">
         <div className="absolute bottom-0 left-0 w-full z-0">
-          <img src={img} alt="wave" className="w-full h-auto" />
+          <img src={img} alt="decorative wave" className="w-full h-auto object-cover" style={{ minHeight: "80px" }} />
         </div>
 
         <div className=" container max-w-4xl mx-auto px-5 py-6 ">

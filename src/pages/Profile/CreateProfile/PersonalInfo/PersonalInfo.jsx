@@ -44,7 +44,7 @@ export default function PersonalInfo({ updateStep, userId, initialData, onComple
 
       // Wait for 1 seconds to show success message before moving to next step
       setTimeout(() => {
-        updateStep(3);
+        updateStep(2);
       }, 1000);
     } catch (error) {
       setStatus({ loading: false, error: error.message, data: null });

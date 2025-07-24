@@ -10,9 +10,6 @@ import CountryCitySelector from "./CountryCitySelector";
 import PhoneNumberInput from "./PhoneNumberInput";
 import SkillLevelSelector from "./SkillLevelSelector";
 
-function setForm(text) {
-  console.log("setForm called with:", text);
-}
 
 export default function Step3({ updateStep, userId, initialData, onComplete }) {
   const [status, setStatus] = useState({ loading: false, error: null, data: null });

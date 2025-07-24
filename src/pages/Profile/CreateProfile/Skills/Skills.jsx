@@ -33,15 +33,11 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
 
   // For new custom skills, extract ones that aren't in the original lists
   const [newTeachSkills, setNewTeachSkills] = useState(
-    initialData?.hasSkills
-      ?.filter((skill) => !skill.skillId.startsWith("skill_"))
-      ?.map((skill) => skill.skillName) || []
+    initialData?.hasSkills?.filter((skill) => !skill.skillId.startsWith("skill_"))?.map((skill) => skill.skillName) || []
   );
 
   const [newLearnSkills, setNewLearnSkills] = useState(
-    initialData?.needSkills
-      ?.filter((skill) => !skill.skillId.startsWith("skill_"))
-      ?.map((skill) => skill.skillName) || []
+    initialData?.needSkills?.filter((skill) => !skill.skillId.startsWith("skill_"))?.map((skill) => skill.skillName) || []
   );
 
   const [status, setStatus] = useState({
@@ -69,24 +65,14 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
 
   useEffect(() => {
     setFilteredSkills([]);
-    if (
-      skillsToLearnSearchQuery === skillsToLearn &&
-      skillsToLearn.trim() !== ""
-    ) {
-      const prompt = filterSkillPrompt(
-        skillsToLearn.toLowerCase(),
-        JSON.stringify(skillsList)
-      );
+    if (skillsToLearnSearchQuery === skillsToLearn && skillsToLearn.trim() !== "") {
+      const prompt = filterSkillPrompt(skillsToLearn.toLowerCase(), JSON.stringify(skillsList));
       generateFromGemini(prompt).then((res) => {
         console.log(res);
         const parsedRes = JSON.parse(res);
         parsedRes.forEach((id) => {
           const skill = skillsList.find((skill) => skill.id === id);
-          if (
-            skill &&
-            !filteredSkills.includes(skill) &&
-            !selectedSkillToLearn.includes(skill)
-          ) {
+          if (skill && !filteredSkills.includes(skill) && !selectedSkillToLearn.includes(skill)) {
             setFilteredSkills((prev) => [...prev, skill]);
           }
         });
@@ -103,24 +89,14 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
 
   useEffect(() => {
     setFilteredSkills([]);
-    if (
-      skillsToTeachSearchQuery === skillsToTeach &&
-      skillsToTeach.trim() !== ""
-    ) {
-      const prompt = filterSkillPrompt(
-        skillsToTeach.toLowerCase(),
-        JSON.stringify(skillsList)
-      );
+    if (skillsToTeachSearchQuery === skillsToTeach && skillsToTeach.trim() !== "") {
+      const prompt = filterSkillPrompt(skillsToTeach.toLowerCase(), JSON.stringify(skillsList));
       generateFromGemini(prompt).then((res) => {
         console.log(res);
         const parsedRes = JSON.parse(res);
         parsedRes.forEach((id) => {
           const skill = skillsList.find((skill) => skill.id === id);
-          if (
-            skill &&
-            !filteredSkills.includes(skill) &&
-            !selectedSkillToTeach.includes(skill)
-          ) {
+          if (skill && !filteredSkills.includes(skill) && !selectedSkillToTeach.includes(skill)) {
             setFilteredSkills((prev) => [...prev, skill]);
           }
         });
@@ -165,9 +141,7 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
       const updateObj = { hasSkills, needSkills };
 
       const userRef = doc(db, "users", userId);
-      console.log(
-        `@handleSkillsSubmit ---- userId = ${userId} ---- userRef = ${userRef}`
-      );
+      console.log(`@handleSkillsSubmit ---- userId = ${userId} ---- userRef = ${userRef}`);
       await updateDoc(userRef, updateObj);
 
       onComplete(updateObj);
@@ -186,7 +160,7 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
 
       // Wait for 1 seconds to show success message before moving to next step
       setTimeout(() => {
-        updateStep(4);
+        updateStep(3);
       }, 1000);
     } catch (error) {
       console.error("Error updating skills:", error);
@@ -200,8 +174,8 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
       <StatusOverlay status={status} onDismiss={dismissOverlay} />
 
       <div className="self-start w-full">
-        <h1 className="mb-8 font-bold text-3xl">My Skills</h1>
-        <p className="font-bold text-xl">Skills to Learn</p>
+        <h1 className="mb-8 font-bold text-3xl text-[var(--color-text-primary)]">My Skills</h1>
+        <p className="font-bold text-xl text-[var(--color-text-secondary)]">Skills to Learn</p>
 
         <div className="relative">
           <input
@@ -214,12 +188,7 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
             onChange={(e) => setSkillsToLearn(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter" && skillsToLearn.trim() !== "") {
-                if (
-                  !skillsList.find(
-                    (skill) => skill.skillName === skillsToLearn
-                  ) &&
-                  !newLearnSkills.includes(skillsToLearn)
-                ) {
+                if (!skillsList.find((skill) => skill.skillName === skillsToLearn) && !newLearnSkills.includes(skillsToLearn)) {
                   setNewLearnSkills((prev) => [...prev, skillsToLearn]);
                   setSkillsToLearn("");
                 }
@@ -248,30 +217,18 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
 
         <div className="flex flex-wrap gap-3 my-6 max-w-[30%] tags">
           {selectedSkillToLearn.map((skill) => (
-            <Tag
-              key={skill.id}
-              onClick={() =>
-                setSelectedSkillToLearn((prev) =>
-                  prev.filter((s) => s.id !== skill.id)
-                )
-              }
-            >
+            <Tag key={skill.id} onClick={() => setSelectedSkillToLearn((prev) => prev.filter((s) => s.id !== skill.id))}>
               {skill.skillName}
             </Tag>
           ))}
           {newLearnSkills.map((skill) => (
-            <Tag
-              key={skill}
-              onClick={() =>
-                setNewLearnSkills((prev) => prev.filter((s) => s !== skill))
-              }
-            >
+            <Tag key={skill} onClick={() => setNewLearnSkills((prev) => prev.filter((s) => s !== skill))}>
               {skill}
             </Tag>
           ))}
         </div>
 
-        <p className="font-bold text-xl">Skills to Teach</p>
+        <p className="font-bold text-xl text-[var(--color-text-secondary)]">Skills to Teach</p>
 
         <div className="relative">
           <input
@@ -284,12 +241,7 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
             onChange={(e) => setSkillsToTeach(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter" && skillsToTeach.trim() !== "") {
-                if (
-                  !skillsList.find(
-                    (skill) => skill.skillName === skillsToTeach
-                  ) &&
-                  !newTeachSkills.includes(skillsToTeach)
-                ) {
+                if (!skillsList.find((skill) => skill.skillName === skillsToTeach) && !newTeachSkills.includes(skillsToTeach)) {
                   setNewTeachSkills((prev) => [...prev, skillsToTeach]);
                   setSkillsToTeach("");
                 }
@@ -321,21 +273,14 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
             <Tag
               key={skill.id}
               onClick={() => {
-                setSelectedSkillToTeach((prev) =>
-                  prev.filter((s) => s.id !== skill.id)
-                );
+                setSelectedSkillToTeach((prev) => prev.filter((s) => s.id !== skill.id));
               }}
             >
               {skill.skillName}
             </Tag>
           ))}
           {newTeachSkills.map((skill) => (
-            <Tag
-              key={skill}
-              onClick={() =>
-                setNewTeachSkills((prev) => prev.filter((s) => s !== skill))
-              }
-            >
+            <Tag key={skill} onClick={() => setNewTeachSkills((prev) => prev.filter((s) => s !== skill))}>
               {skill}
             </Tag>
           ))}
@@ -351,14 +296,10 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
         >
           Back
         </button>
-        {/* <button className="px-6 py-3 font-semibold rounded-lg text-[var(--color-text-light)] shadow-lg bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] hover:shadow-2xl hover:backdrop-blur-xl">
-                    Submit
-                  </button> */}
+
         <Button
           /**user must choose skills to teach and to learn so that he can submit and Proceed to teh next step */ disabled={
-            (selectedSkillToTeach.length === 0 &&
-              newTeachSkills.length === 0) ||
-            (selectedSkillToLearn.length === 0 && newLearnSkills.length === 0)
+            (selectedSkillToTeach.length === 0 && newTeachSkills.length === 0) || (selectedSkillToLearn.length === 0 && newLearnSkills.length === 0)
           }
           value="Next"
           onPress={handleSkillsSubmit}

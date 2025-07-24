@@ -57,7 +57,7 @@ export default function SkillLevelSelector({ skills = [], onSkillLevelChange }) 
   return (
     <div className="space-y-4 w-full flex flex-col md:flex-row md:justify-between md:items-start md:space-y-0">
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-medium text-[var(--color-text-primary)]">
           <LuBrain className="inline w-4 h-4 mr-1" />
           Select Skill & Proficiency Level
         </label>
@@ -162,7 +162,7 @@ export default function SkillLevelSelector({ skills = [], onSkillLevelChange }) 
       {/* Current Skills Display */}
       {skills.length > 0 && (
         <div className="space-y-2">
-          <h3 className="text-sm font-medium text-gray-700">Current Skills:</h3>
+          <h3 className="text-sm font-medium text-[var(--color-text-primary)]">Current Skills:</h3>
           <div className=" max-h-64 overflow-y-auto">
             <div className="grid gap-2">
               {skills.map((skill) => (
@@ -175,7 +175,8 @@ export default function SkillLevelSelector({ skills = [], onSkillLevelChange }) 
                     {skill.skillLevel ? (
                       <span
                         className={`px-2 py-1 text-xs rounded-full border flex-shrink-0 ${
-                          SKILL_LEVELS.find((level) => level.value === skill.skillLevel)?.color || "bg-gray-50 text-gray-700 border-gray-200"
+                          SKILL_LEVELS.find((level) => level.value === skill.skillLevel)?.color ||
+                          "bg-gray-50 text-[var(--color-text-primary)] border-gray-200"
                         }`}
                       >
                         {skill.skillLevel}

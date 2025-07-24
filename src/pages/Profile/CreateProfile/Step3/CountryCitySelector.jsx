@@ -91,7 +91,7 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
       <div className="flex flex-col space-y-2 md:flex-row md:space-x-4 md:space-y-0">
         {/* Country Selector */}
         <div className="relative">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-[var(--color-text-primary)] mb-2">
             <LuGlobe className="inline w-4 h-4 mr-1" />
             Country
           </label>
@@ -156,7 +156,7 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
         {/* City Selector */}
 
         <div className="relative">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-[var(--color-text-primary)] mb-2">
             <LuMapPin className="inline w-4 h-4 mr-1" />
             City
           </label>

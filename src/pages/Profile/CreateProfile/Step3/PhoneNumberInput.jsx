@@ -17,7 +17,8 @@ export default function PhoneNumberInput({ onPhoneChange, initialCountryCode = "
       setError(null);
 
       try {
-        const response = await fetch("https://restcountries.com/v3.1/all?fields=idd,flags,cca2");
+        // const response = await fetch("https://restcountries.com/v3.1/all?fields=idd,flags,cca2");
+        const response = await fetch("https://restcountries.com/v3.1/all?fields=name,idd,flags,cca2");
         if (!response.ok) throw new Error("Failed to fetch countries");
 
         const result = await response.json();
@@ -30,8 +31,9 @@ export default function PhoneNumberInput({ onPhoneChange, initialCountryCode = "
               return country.idd.suffixes.map((suffix) => ({
                 cca2: country.cca2,
                 flag: country.flags.png,
+                flagAlt: country.flags.alt || country.cca2,
                 code: `${country.idd.root}${suffix}`,
-                searchText: `${country.cca2} ${country.idd.root}${suffix}`,
+                searchText: `${country.name.common} ${country.name.official} ${country.cca2} ${country.idd.root}${suffix}`,
               }));
             } else if (country.idd?.root) {
               // Some countries only have root without suffixes
@@ -110,7 +112,7 @@ export default function PhoneNumberInput({ onPhoneChange, initialCountryCode = "
   return (
     <div className="space-y-4 w-full flex flex-col md:flex-row md:justify-between md:items-end md:space-y-0">
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-medium text-[var(--color-text-primary)]">
           <LuPhone className="inline w-4 h-4 mr-1" />
           Phone Number
         </label>
@@ -128,7 +130,7 @@ export default function PhoneNumberInput({ onPhoneChange, initialCountryCode = "
                 <div className="w-6 h-4 bg-gray-200 animate-pulse rounded"></div>
               ) : selectedCountry ? (
                 <>
-                  <img src={selectedCountry.flag} alt={selectedCountry.cca2} className="w-6 h-4 object-cover rounded-sm" />
+                  <img src={selectedCountry.flag} alt={selectedCountry.flagAlt} className="w-6 h-4 object-cover rounded-sm" />
                   <span className="text-gray-900 text-sm font-medium">{selectedCountry.cca2}</span>
                   <span className="text-gray-600 text-sm">{selectedCountry.code}</span>
                 </>
@@ -165,7 +167,7 @@ export default function PhoneNumberInput({ onPhoneChange, initialCountryCode = "
                         onClick={() => handleCountrySelect(country)}
                         className="w-full px-3 py-2 text-left hover:bg-blue-50 focus:outline-none focus:bg-blue-50 flex items-center space-x-2"
                       >
-                        <img src={country.flag} alt={country.cca2} className="w-5 h-3 object-cover rounded-sm flex-shrink-0" />
+                        <img src={country.flag} alt={country.flagAlt} className="w-5 h-3 object-cover rounded-sm flex-shrink-0" />
                         <span className="text-gray-900 font-medium text-sm min-w-0">{country.cca2}</span>
                         <span className="text-gray-600 text-sm">{country.code}</span>
                       </button>
@@ -194,7 +196,7 @@ export default function PhoneNumberInput({ onPhoneChange, initialCountryCode = "
       {selectedCountry && phoneNumber && (
         <div className="p-3 bg-green-50 rounded-lg border border-green-200">
           <div className="flex items-center space-x-2">
-            <img src={selectedCountry.flag} alt={selectedCountry.cca2} className="w-5 h-3 object-cover rounded-sm" />
+            <img src={selectedCountry.flag} alt={selectedCountry.flagAlt} className="w-5 h-3 object-cover rounded-sm" />
             <span className="text-sm font-medium text-green-900">
               Complete Phone: {selectedCountry.code} {phoneNumber}
             </span>
@@ -204,29 +206,3 @@ export default function PhoneNumberInput({ onPhoneChange, initialCountryCode = "
     </div>
   );
 }
-
-// Example usage component
-const ExampleUsage = () => {
-  const [phoneData, setPhoneData] = useState({ countryCode: "", phoneNumber: "" });
-
-  const handlePhoneChange = (countryCode, phoneNumber) => {
-    setPhoneData({ countryCode, phoneNumber });
-    console.log("Phone changed:", { countryCode, phoneNumber });
-  };
-
-  return (
-    <div className="max-w-md mx-auto p-6 bg-gray-50 min-h-screen">
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">Enter Your Phone Number</h1>
-
-        <LuPhoneNumberInput onPhoneChange={handlePhoneChange} initialCountryCode="" initialPhoneNumber="" />
-
-        {/* Debug info */}
-        <div className="mt-6 p-4 bg-gray-100 rounded-lg">
-          <h3 className="text-sm font-semibold text-gray-700 mb-2">Current Phone Data:</h3>
-          <pre className="text-xs text-gray-600">{JSON.stringify(phoneData, null, 2)}</pre>
-        </div>
-      </div>
-    </div>
-  );
-};
