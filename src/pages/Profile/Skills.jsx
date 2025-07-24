@@ -40,7 +40,7 @@ export const Skills = () => {
         console.log(res)
         const parsedRes = JSON.parse(res)
         parsedRes.forEach((id) => {
-          const skill = skillsList.find((skill) => skill.id === id)
+          const skill = skillsList.find((skill) => skill.skillId === id)
           if (skill && !filteredSkills.includes(skill) && !selectedSkillToLearn.includes(skill)) {
             setFilteredSkills((prev) => [...prev, skill])
           }
@@ -64,7 +64,7 @@ export const Skills = () => {
         console.log(res)
         const parsedRes = JSON.parse(res)
         parsedRes.forEach((id) => {
-          const skill = skillsList.find((skill) => skill.id === id)
+          const skill = skillsList.find((skill) => skill.skillId === id)
           if (skill && !filteredSkills.includes(skill) && !selectedSkillToTeach.includes(skill)) {
             setFilteredSkills((prev) => [...prev, skill])
           }
@@ -110,7 +110,7 @@ export const Skills = () => {
                     setFilteredSkills([])
                     setSkillsToLearn("")
                   }}
-                  key={skill.id}
+                  key={skill.skillId}
                   className="hover:bg-[#6A8FD9] p-3 border-2 border-b-[#CFDBE8] border-solid rounded-md capitalize transition-all duration-300 cursor-pointer"
                 >
                   {skill.skillName}
@@ -123,9 +123,9 @@ export const Skills = () => {
         <div className="flex flex-wrap gap-3 my-6 max-w-[30%] tags">
           {selectedSkillToLearn.map((skill) => (
             <Tag
-              key={skill.id}
+              key={skill.skillId}
               onClick={() =>
-                setSelectedSkillToLearn((prev) => prev.filter((s) => s.id !== skill.id))
+                setSelectedSkillToLearn((prev) => prev.filter((s) => s.skillId !== skill.skillId))
               }
             >
               {skill.skillName}
@@ -174,7 +174,7 @@ export const Skills = () => {
                     setFilteredSkills([])
                     setSkillsToTeach("")
                   }}
-                  key={skill.id}
+                  key={skill.skillId}
                   className="hover:bg-[#6A8FD9] p-3 border-2 border-b-[#CFDBE8] border-solid rounded-md capitalize transition-all duration-300 cursor-pointer"
                 >
                   {skill.skillName}
@@ -187,9 +187,9 @@ export const Skills = () => {
         <div className="flex flex-wrap gap-3 my-6 max-w-[30%] tags">
           {selectedSkillToTeach.map((skill) => (
             <Tag
-              key={skill.id}
+              key={skill.skillId}
               onClick={() => {
-                setSelectedSkillToTeach((prev) => prev.filter((s) => s.id !== skill.id))
+                setSelectedSkillToTeach((prev) => prev.filter((s) => s.skillId !== skill.skillId))
               }}
             >
               {skill.skillName}

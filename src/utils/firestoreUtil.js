@@ -4,7 +4,7 @@ import { db } from "../firebase";
 export const fetchSkillsList = async () => {
   const qSnap = await getDocs(collection(db, "skills"));
   return qSnap.docs.map((doc) => ({
-    skillId: doc.id,
+    id: doc.id,
     ...doc.data(),
   }));
 };
