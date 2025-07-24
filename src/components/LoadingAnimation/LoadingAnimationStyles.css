@@ -229,7 +229,7 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border: 1px solid #351a1a;
+	border: 1px solid #fafbfC;
 	border-radius: 50%;
 } 
 
@@ -257,14 +257,14 @@ body {
   width: 10px;
   height: 10px;
 	border-radius: 50%;
-  background-color: #d87e62;
+  background-color: #3ff9dc;
 }
 
 .sun {
 	width: 35px;
 	height: 35px;
 	border-radius: 50%;
-	background-color: #7e2e2e;
+	background-color: #e09406;
 }
 
 .leo {
