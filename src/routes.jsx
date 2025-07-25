@@ -11,6 +11,7 @@ import Register from "./pages/Register/Register";
 import SearchScreen from "./pages/search/SearchScreen";
 import Layout from "./layouts/Layout";
 import AuthProtection from "./components/AuthProtection";
+import { ScheduleSession } from "./pages/Schedule/ScheduleSession";
 
 const AppRoutes = () => {
   const routes = [
@@ -27,6 +28,7 @@ const AppRoutes = () => {
             { path: "rate/:userId", element: <RateExperience /> },
             { path: "search", element: <SearchScreen /> },
             { path: "chat/:userId", element: <ChatScreen /> },
+            { path: "schedule", element: <ScheduleSession></ScheduleSession>}
           ],
         },
         {

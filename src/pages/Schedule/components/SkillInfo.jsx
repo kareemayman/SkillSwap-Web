@@ -1,0 +1,14 @@
+import React from 'react'
+
+export const SkillInfo = ({ skillName, skillLevel, type}) => {
+  return (
+    <div>
+        <hr className='border border-solid border-[var(--color-btn-submit-hover)]'/>
+
+        <div className="flex items-center my-4">
+          <p className='text-[var(--color-text-secondary)] min-w-48 font-medium'>{skillName} ({skillLevel})</p>
+          <p className='text-[var(--color-text-light)] font-medium'>{type}</p>
+        </div>
+    </div>
+  )
+}
