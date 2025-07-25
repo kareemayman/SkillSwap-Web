@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import Avat from '../../../assets/images/avat.png'
+import { useNavigate } from 'react-router-dom';
 
 export const MatchCard = ({ user }) => {
   const [userSkills, setUserSkills] = useState([]);
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (user) {
@@ -21,8 +23,10 @@ export const MatchCard = ({ user }) => {
             })
           }
         </p>}
-        <div className='flex justify-center items-center bg-[--color-btn-submit-bg] p-2 py-1 my-3 rounded-md w-fit text-[--color-text-light] font-medium transition-all duration-300 cursor-pointer hover:bg-[--color-btn-submit-hover]'>
-          View Profile
+        <div 
+          onClick={() => {navigate(`/schedule/${user.uid}`)}}
+          className='flex justify-center items-center bg-[--color-btn-submit-bg] p-2 py-1 my-3 rounded-md w-fit text-[--color-text-light] font-medium transition-all duration-300 cursor-pointer hover:bg-[--color-btn-submit-hover]'>
+          Schedule Session
         </div>
       </div>
 
