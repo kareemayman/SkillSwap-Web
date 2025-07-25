@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useAuth } from "../../contexts/Auth/context";
 import { db } from "../../firebase";
 import {
@@ -20,6 +20,7 @@ export default function ChatScreen() {
   const [otherUser, setOtherUser] = useState(null);
   const [messages, setMessages] = useState([]);
   const [chatId, setChatId] = useState(null);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,6 +41,31 @@ export default function ChatScreen() {
     };
     init();
   }, [currentUser, otherUser]);
+
+
+useEffect(() => {
+  if (!chatId || !currentUser?.uid) return;
+
+  const markLastMessageAsRead = async () => {
+    const chatRef = doc(db, "chats", chatId);
+    const chatSnap = await getDoc(chatRef);
+    const chatData = chatSnap.data();
+    const lastMsg = chatData?.lastMessage;
+
+    if (lastMsg && !lastMsg.readBy?.includes(currentUser.uid)) {
+      await updateDoc(chatRef, {
+        "lastMessage.readBy": [...(lastMsg.readBy || []), currentUser.uid],
+      });
+    }
+  };
+
+  markLastMessageAsRead();
+}, [chatId, currentUser?.uid]);
+
+
+
+
+
 
   const handleSend = (text) => {
     if (chatId) sendMessage(chatId, currentUser.uid, text);

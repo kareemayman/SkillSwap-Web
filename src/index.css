@@ -109,8 +109,9 @@ body {
     ellipse at bottom,
     #1a1a17 0%,
     #20201c 40%,
-    #252521 100%
+#191a1f 100%
   );
+  font-family: "Manrope", sans-serif;
 }
 
 /* scroll in chat */
