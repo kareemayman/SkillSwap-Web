@@ -12,7 +12,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="shadow-md shadow-[var(--color-card-border)]">
+    <header className="shadow-sm shadow-[var(--color-card-border)]">
       <div className="py-4 mx-auto container px-2 md:px-4 flex items-center relative">
         {/* Logo on the left */}
         <Link to="/">
