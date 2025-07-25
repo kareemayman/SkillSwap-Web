@@ -37,22 +37,21 @@ export const getOrCreateChatRoom = async (user1Id, user2Id) => {
 
 export const sendMessage = async (chatId, senderId, text) => {
   const messageRef = collection(db, "chats", chatId, "messages");
-  const messageData = {
+const messageData = {
+  text,
+  senderId,
+  timestamp: serverTimestamp(),
+  readBy: [senderId], 
+};
+  await addDoc(messageRef, messageData);
+
+  await updateDoc(doc(db, "chats", chatId), {
+lastMessage: {
     text,
     senderId,
     timestamp: serverTimestamp(),
-  };
-
-  await addDoc(messageRef, messageData);
-
-  // Optionally update last message in chat doc
-  await updateDoc(doc(db, "chats", chatId), {
-    lastMessage: {
-      text,
-      senderId,
-      timestamp: serverTimestamp(),
-    },
-  });
+    readBy: [senderId],
+  },  });
 };
 
 
