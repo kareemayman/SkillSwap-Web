@@ -12,13 +12,18 @@ import {
 import { HiUserCircle } from "react-icons/hi2";
 import { useEffect, useState } from "react";
 import { subscribeToUserChats } from "../utils/chatUtil";
+
 export default function Header() {
   const { user, logOut } = useAuth();
   const { i18n } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
 
-  // ✅ Fetch unread count on mount & user change
+  const toggleLanguage = () => {
+    const newLang = i18n.language === "en" ? "ar" : "en";
+    i18n.changeLanguage(newLang);
+  };
+
   useEffect(() => {
     if (!user?.uid) return;
 
@@ -36,10 +41,11 @@ export default function Header() {
 
     return () => unsub();
   }, [user?.uid]);
+
   return (
     <header className="shadow-sm shadow-[var(--color-card-border)]">
-      <div className="py-4 mx-auto container px-2 md:px-4 flex items-center relative">
-        {/* Logo on the left */}
+      <div className="py-4 mx-auto container px-2 md:px-4 flex items-center justify-between relative">
+        {/* Logo Section */}
         <Link to="/">
           <div className="flex items-end gap-1">
             <img src={logo} alt="logo" className="w-8 h-8" />
@@ -47,15 +53,15 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* Right side: Nav + Language */}
-        <div className="ml-auto flex items-center gap-3">
+        {/* Navigation & Actions */}
+        <div className="flex items-center gap-3   pl-4 ml-4">
           {/* Desktop Nav */}
           <div className="hidden sm:flex gap-3 items-center text-[var(--color-text-primary)]">
             {user ? (
               <>
                 <NavLink
                   to="/explore"
-                  className="hover:text[var(--color-btn-submit-hover)] transition-transform duration-200 hover:scale-110 font-medium"
+                  className="hover:text-[var(--color-btn-submit-hover)] transition-transform duration-200 hover:scale-110 font-medium"
                 >
                   Explore
                 </NavLink>
@@ -111,13 +117,9 @@ export default function Header() {
             )}
           </div>
 
-          {/* Language Button - Always Visible */}
+          {/* Language Switch Button */}
           <button
-            onClick={() =>
-              i18n.language === "en"
-                ? i18n.changeLanguage("ar")
-                : i18n.changeLanguage("en")
-            }
+            onClick={toggleLanguage}
             className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--color-btn-submit-bg)] text-[var(--color-text-light)] hover:bg-[var(--color-btn-submit-hover)] transition-transform duration-200 hover:scale-110 font-bold"
             title="Change Language"
             style={{ fontFamily: "'Amiri', serif", fontWeight: "bold" }}
@@ -127,7 +129,7 @@ export default function Header() {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="sm:hidden text-xl z-20"
+            className="sm:hidden text-xl z-20 ml-2 text-[var(--color-text-primary)] hover:text-[var(--color-btn-submit-hover)] transition-transform duration-200"
             onClick={() => setMenuOpen((prev) => !prev)}
             title="Toggle Menu"
           >

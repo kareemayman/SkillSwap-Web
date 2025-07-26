@@ -36,7 +36,7 @@ export default function Cart({
       )}
 
       <h3 className="text-xl font-bold text-[var(--color-text-primary)]">{title}</h3>
-      <p className="text-[var(--color-text-secondary)] leading-relaxed">
+      <p className="text-[var(--color-text-secondary)] leading-relaxed line-clamp-2">
         {desc}
       </p>
 
