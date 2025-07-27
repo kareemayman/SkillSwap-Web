@@ -35,10 +35,10 @@ function renderSteps(activeStep = 1) {
               <path strokeWidth={4} stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="M1 5.917 5.724 10.5 15 1.5" />
             </svg>
           ) : (
-            <p className={`p-2 font-semibold ${i + 1 <= activeStep ? "text-white" : "text-gray-900"}`}>{i + 1}</p>
+            <p className={`p-2 font-semibold ${i + 1 <= activeStep ? "text-white" : "text-[--color-text-primary]"}`}>{i + 1}</p>
           )}
         </div>
-        <h3 className="font-medium text-gray-900 ">
+        <h3 className="font-medium text-[--color-text-primary] ">
           {stepsTitles[i].split(" ").map((t) => (
             <>
               <span>{t}</span>

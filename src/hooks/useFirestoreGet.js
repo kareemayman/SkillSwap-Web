@@ -59,7 +59,8 @@ export default function useFirestoreGet({ initialLoading = false } = {}) {
 
         if (docSnap.exists()) {
           result = { id: docSnap.id, ...docSnap.data() };
-          console.log(`@useFirestoreGet @request ---- docSnap.exists() = ${docSnap.exists()} ---- result = `, result);
+
+          // console.log(`@useFirestoreGet @request ---- docSnap.exists() = ${docSnap.exists()} ---- result = `, JSON.stringify(result));
         } else {
           console.log(`@useFirestoreGet @request ---- will throw new Error("Document not found")`);
           throw new Error("Document not found");

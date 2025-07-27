@@ -10,13 +10,12 @@ import CountryCitySelector from "./CountryCitySelector";
 import PhoneNumberInput from "./PhoneNumberInput";
 import SkillLevelSelector from "./SkillLevelSelector";
 
-
 export default function Step3({ updateStep, userId, initialData, onComplete }) {
   const [status, setStatus] = useState({ loading: false, error: null, data: null });
   const [location, setLocation] = useState(initialData?.location || { country: "", city: "" });
   const [phoneData, setPhoneData] = useState(() => {
     if (initialData?.phone) {
-      // Assuming phone is stored as "+CountryCodePhoneNumber"
+      // Assuming phone is stored as "+CountryCode PhoneNumber"
       const [countryCode, ...rest] = initialData.phone.split(" ");
       return {
         countryCode,

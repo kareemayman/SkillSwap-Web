@@ -3,7 +3,7 @@ import { useAuth } from "../../contexts/Auth/context";
 import useFirestoreGet from "../../hooks/useFirestoreGet";
 import CreateProfile from "./CreateProfile/CreateProfile";
 import EditProfile from "./EditProfile/EditProfile";
-import ProfileView from "./ProfileView";
+import ProfileView from "./ProfileView/ProfileView";
 import { Spinner } from "flowbite-react";
 import { hasNullValue } from "../../utils/helpers";
 import img from "../../assets/images/img.svg";
@@ -30,7 +30,7 @@ const ProfilePage = () => {
   if (loading || (!userProfile && !error)) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <Spinner size="xl" color="info" />
+        <Spinner size="xl" className="fill-[--color-btn-submit-bg]" />
       </div>
     );
   }
