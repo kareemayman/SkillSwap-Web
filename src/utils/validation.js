@@ -28,8 +28,8 @@ export function validatePassword(password) {
     return "Password cannot be empty.";
   }
 
-  if (trimmedPassword.length < 8) {
-    return "Password must be at least 8 characters long.";
+  if (trimmedPassword.length < 6) {
+    return "Password must be at least 6 characters long.";
   }
 
   // You can add more checks here (e.g., uppercase, number, special char) if needed
