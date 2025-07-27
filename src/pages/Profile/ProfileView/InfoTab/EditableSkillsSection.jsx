@@ -93,7 +93,7 @@ export default function EditableSkillsSection({ title, data = [], skillType, upd
 
       {/* Display existing skills as tags */}
       <div className="flex flex-wrap gap-2">
-        {data.length > 0 ? (
+        {data && data.length > 0 ? (
           data.map((skill) => (
             <Tag key={skill.skillId} isDeletable={true} onClick={() => handleRemoveSkill(skill.skillId)}>
               {skill.skillName}
