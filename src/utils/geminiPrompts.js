@@ -38,3 +38,41 @@ Analyze the PrimaryUser against each candidate. Score them 0–100 based on how 
 - Only output valid JSON array.
 `
 }
+
+export const getSkillCategory = (skillName, skillCategories) => {
+  return `
+  You are a smart categorization assistant.
+
+I will give you:
+1. A list of existing skill categories.
+2. A new skill name.
+
+Your task is to:
+- Find the most appropriate category from the list that fits the new skill.
+- If no category fits, create a **new category name** that makes sense.
+- Always return a category (either from the list or a new one).
+- Return only the category name, no explanation.
+
+Here’s the data:
+
+Skill Categories:
+${JSON.stringify(skillCategories)}
+
+New Skill:
+${skillName}
+`
+}
+
+export const translateSkillToArabic = (skillName) => {
+  return `
+  You are a professional translator.
+
+Translate the following skill name from English to Arabic.
+
+Only return the Arabic translation, with no extra explanation or punctuation.
+
+Skill Name: ${skillName}
+
+Your response:
+`
+}
