@@ -100,11 +100,11 @@ export const updateUserRatingStats = async (userId) => {
 };
 
 export const createSkillDoc = async (skill) => {
-  const category = await generateFromGemini(getSkillCategory(skill.skillName, await getSkillCategories()));
-  const skillNameArabic = await generateFromGemini(translateSkillToArabic(skill.skillName));
-
   try {
-    const skillDocRef = addDoc(collection(db, "skills"), {
+    const category = await generateFromGemini(getSkillCategory(skill.skillName, await getSkillCategories()));
+    const skillNameArabic = await generateFromGemini(translateSkillToArabic(skill.skillName));
+
+    const skillDocRef = await addDoc(collection(db, "skills"), {
       skillName: skill.skillName,
       skillNameArabic: skillNameArabic,
       createdAt: new Date(),
