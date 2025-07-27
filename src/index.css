@@ -102,6 +102,27 @@
   backdrop-filter: blur(10px);
 }
 
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #1a1a17; 
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--main-color); 
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #fe7843; 
+}
+
+::selection {
+  background: rgba(255, 120, 67, 0.3);
+  color: var(--color-text-light);
+}
 
 body {
   min-height: 100vh;
