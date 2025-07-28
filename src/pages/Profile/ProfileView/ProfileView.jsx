@@ -10,7 +10,8 @@ import StatusOverlay from "../../../components/StatusOverlay";
 
 const sampleUserProfile = {
   id: "NLMrdVmgTSaSMDOuY0vGXktYgNm1",
-  profilePicture: "https://res.cloudinary.com/dplcc4igl/image/upload/v1753203054/profile_pictures/sfey6tcvoq9trywlpisd.jpg",
+  profilePicture:
+    "https://res.cloudinary.com/dplcc4igl/image/upload/v1753203054/profile_pictures/sfey6tcvoq9trywlpisd.jpg",
   isAvailableForTrade: true,
   bio: "I'm a passionate learner and educator with a background in graphic design and a love for languages. I'm excited to connect with others and share my skills while also expanding my knowledge in new areas.",
   name: "Sophia Bennett",
@@ -22,20 +23,42 @@ const sampleUserProfile = {
   location: { city: "Alexandria", country: "Egypt" },
   totalSessions: 0,
   hasSkills: [
-    { skillId: "L9Brj0D8zYbnPllH3zOp", skillName: "Photography", skillLevel: "Advanced" },
-    { skillName: "Graphic Design", skillId: "skill_2n6bu8962", skillLevel: "Intermediate" },
-    { skillName: "Writing", skillId: "skill_3n7cu9073", skillLevel: "Beginner" },
+    {
+      skillId: "L9Brj0D8zYbnPllH3zOp",
+      skillName: "Photography",
+      skillLevel: "Advanced",
+    },
+    {
+      skillName: "Graphic Design",
+      skillId: "skill_2n6bu8962",
+      skillLevel: "Intermediate",
+    },
+    {
+      skillName: "Writing",
+      skillId: "skill_3n7cu9073",
+      skillLevel: "Beginner",
+    },
   ],
   needSkills: [
-    { skillLevel: "Beginner", skillId: "skill_29snal0g7", skillName: "Spanish" },
-    { skillLevel: "Intermediate", skillId: "skill_30tmal1h8", skillName: "Cooking" },
+    {
+      skillLevel: "Beginner",
+      skillId: "skill_29snal0g7",
+      skillName: "Spanish",
+    },
+    {
+      skillLevel: "Intermediate",
+      skillId: "skill_30tmal1h8",
+      skillName: "Cooking",
+    },
   ],
   phone: "+20 34567890",
   availability: true,
 };
 
-export default function ProfileView({ data }) {
-  const [updatedProfile, setUpdatedProfile] = useState(data || sampleUserProfile);
+export default function ProfileView({ data, isOwnProfile }) {
+  const [updatedProfile, setUpdatedProfile] = useState(
+    data || sampleUserProfile
+  );
   const [activeTab, setActiveTab] = useState("Profile");
   const [status, setStatus] = useState({ loading: false, error: null });
 
@@ -78,16 +101,22 @@ export default function ProfileView({ data }) {
             alt="Profile"
             className="w-32 h-32 rounded-full object-cover border-4 border-[var(--color-text-primary)] shadow-lg"
           />
-          <EditButton
-            title="Edit Profile Picture"
-            classes="absolute -bottom-0.5 -right-0.5"
-            onClickHandler={() => {
-              console.log("edit profile picture button clicked");
-            }}
-          />
+          {isOwnProfile && (
+            <EditButton
+              title="Edit Profile Picture"
+              classes="absolute -bottom-0.5 -right-0.5"
+              onClickHandler={() => {
+                console.log("edit profile picture button clicked");
+              }}
+            />
+          )}
         </div>
 
-        <EditableName data={updatedProfile.name} updateUserData={updateUserData} />
+        <EditableName
+          data={updatedProfile.name}
+          updateUserData={updateUserData}
+          isOwnProfile={isOwnProfile}
+        />
 
         <p className="text-[var(--color-text-secondary)] mb-2">Skill Trader</p>
       </div>
@@ -110,15 +139,28 @@ export default function ProfileView({ data }) {
       </div>
 
       {/* Tab Content */}
-      {activeTab === "Profile" && <InfoTab updatedProfile={updatedProfile} updateUserData={updateUserData} />}
+      {activeTab === "Profile" && (
+        <InfoTab
+          updatedProfile={updatedProfile}
+          updateUserData={updateUserData}
+          isOwnProfile={isOwnProfile}
+        />
+      )}
 
       {activeTab === "Skill Trades" && (
         <div className="text-center py-12">
-          <p className="text-gray-500">Skill Trades content will be implemented here</p>
+          <p className="text-gray-500">
+            Skill Trades content will be implemented here
+          </p>
         </div>
       )}
 
-      {activeTab === "Settings" && <SettingsTab updatedProfile={updatedProfile} updateUserData={updateUserData} />}
+      {activeTab === "Settings" && (
+        <SettingsTab
+          updatedProfile={updatedProfile}
+          updateUserData={updateUserData}
+        />
+      )}
     </div>
   );
 }

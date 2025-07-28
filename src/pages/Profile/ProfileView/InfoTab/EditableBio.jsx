@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { LuCircleX, LuCircleCheck } from "react-icons/lu";
 import EditButton from "../EditButton";
 
-export default function EditableBio({ data, updateUserData }) {
+export default function EditableBio({ data, updateUserData, isOwnProfile }) {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(data || "");
   const [error, setError] = useState("");
@@ -26,7 +26,9 @@ export default function EditableBio({ data, updateUserData }) {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold text-[--color-text-primary]">About me</h2>
+        <h2 className="text-xl font-semibold text-[--color-text-primary]">
+          About me
+        </h2>
 
         <div className="md:w-1/2 flex justify-end">
           {isEditing ? (
@@ -46,7 +48,13 @@ export default function EditableBio({ data, updateUserData }) {
               </button>
             </div>
           ) : (
-            <EditButton title="Edit Bio" classes="" onClickHandler={() => setIsEditing(true)} />
+            isOwnProfile && (
+              <EditButton
+                title="Edit Bio"
+                classes=""
+                onClickHandler={() => setIsEditing(true)}
+              />
+            )
           )}
         </div>
       </div>

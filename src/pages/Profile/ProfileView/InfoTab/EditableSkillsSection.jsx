@@ -44,7 +44,13 @@ import EditButton from "../EditButton"; // This is a generic "Add" button now
 import SkillSelector from "./SkillSelector";
 import { LuCirclePlus } from "react-icons/lu";
 
-export default function EditableSkillsSection({ title, data = [], skillType, updateUserData }) {
+export default function EditableSkillsSection({
+  title,
+  data = [],
+  skillType,
+  updateUserData,
+  isOwnProfile,
+}) {
   const [isAdding, setIsAdding] = useState(false);
 
   // This function receives the new skills from the SkillSelector
@@ -70,17 +76,21 @@ export default function EditableSkillsSection({ title, data = [], skillType, upd
 
   // A function to remove a skill (optional but good for UX)
   const handleRemoveSkill = (skillIdToRemove) => {
-    const updatedSkills = data.filter((skill) => skill.skillId !== skillIdToRemove);
+    const updatedSkills = data.filter(
+      (skill) => skill.skillId !== skillIdToRemove
+    );
     updateUserData(skillType, updatedSkills);
   };
 
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold text-[--color-text-primary]">{title}</h2>
+        <h2 className="text-xl font-semibold text-[--color-text-primary]">
+          {title}
+        </h2>
 
         {/* We don't show the add button while the selector is already open */}
-        {!isAdding && (
+        {!isAdding && isOwnProfile && (
           <EditButton
             title="Add Skills"
             classes="!p-2" // override default padding to be smaller
@@ -95,7 +105,11 @@ export default function EditableSkillsSection({ title, data = [], skillType, upd
       <div className="flex flex-wrap gap-2">
         {data && data.length > 0 ? (
           data.map((skill) => (
-            <Tag key={skill.skillId} isDeletable={true} onClick={() => handleRemoveSkill(skill.skillId)}>
+            <Tag
+              key={skill.skillId}
+              isDeletable={true}
+              onClick={() => handleRemoveSkill(skill.skillId)}
+            >
               {skill.skillName}
             </Tag>
           ))

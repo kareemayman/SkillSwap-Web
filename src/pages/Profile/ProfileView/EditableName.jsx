@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { LuCircleCheck, LuCircleX } from "react-icons/lu";
 import EditButton from "./EditButton";
 
-export default function EditableName({ data, updateUserData }) {
+export default function EditableName({ data, updateUserData, isOwnProfile }) {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(data || "");
   const [error, setError] = useState("");
@@ -62,13 +62,15 @@ export default function EditableName({ data, updateUserData }) {
 
           <h1 className="text-2xl font-bold">{data}</h1>
 
-          <EditButton
-            title="Edit Name"
-            classes=""
-            onClickHandler={() => {
-              setIsEditing(true);
-            }}
-          />
+          {isOwnProfile && (
+            <EditButton
+              title="Edit Name"
+              classes=""
+              onClickHandler={() => {
+                setIsEditing(true);
+              }}
+            />
+          )}
         </div>
       )}
     </div>

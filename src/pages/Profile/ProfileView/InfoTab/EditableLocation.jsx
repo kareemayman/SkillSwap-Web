@@ -3,9 +3,15 @@ import { LuCircleX, LuCircleCheck, LuMapPin } from "react-icons/lu";
 import EditButton from "../EditButton";
 import CountryCitySelector from "../../CreateProfile/Step3/CountryCitySelector";
 
-export default function EditableLocation({ data, updateUserData }) {
+export default function EditableLocation({
+  data,
+  updateUserData,
+  isOwnProfile,
+}) {
   const [isEditing, setIsEditing] = React.useState(false);
-  const [location, setLocation] = React.useState(data || { city: "", country: "" });
+  const [location, setLocation] = React.useState(
+    data || { city: "", country: "" }
+  );
   const [error, setError] = React.useState(null);
 
   const handleSave = () => {
@@ -27,7 +33,9 @@ export default function EditableLocation({ data, updateUserData }) {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold text-[--color-text-primary]">Location</h2>
+        <h2 className="text-xl font-semibold text-[--color-text-primary]">
+          Location
+        </h2>
 
         <div className="md:w-1/2 flex justify-end">
           {isEditing ? (
@@ -49,7 +57,13 @@ export default function EditableLocation({ data, updateUserData }) {
               </button>
             </div>
           ) : (
-            <EditButton title="Edit Location" classes="" onClickHandler={() => setIsEditing(true)} />
+            isOwnProfile && (
+              <EditButton
+                title="Edit Location"
+                classes=""
+                onClickHandler={() => setIsEditing(true)}
+              />
+            )
           )}
         </div>
       </div>
@@ -70,7 +84,11 @@ export default function EditableLocation({ data, updateUserData }) {
       ) : (
         <div className="flex items-center gap-2 text-[--color-text-secondary]">
           <LuMapPin size={16} />
-          <span>{location.city && location.country ? `${location.city}, ${location.country}` : "No location set"}</span>
+          <span>
+            {location.city && location.country
+              ? `${location.city}, ${location.country}`
+              : "No location set"}
+          </span>
         </div>
       )}
     </div>
