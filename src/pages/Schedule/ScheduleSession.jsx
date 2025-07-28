@@ -2,8 +2,9 @@ import { useEffect, useState } from "react"
 import Avat from "../../assets/images/avat.png"
 import { SkillInfo } from "./components/SkillInfo"
 import { useNavigate, useParams } from "react-router-dom"
-import { getUserById } from "../../utils/firestoreUtil"
+import { createFirestoreTrade, getUserById } from "../../utils/firestoreUtil"
 import { useAuth } from "../../contexts/Auth/context"
+import toast from "react-hot-toast"
 
 export const ScheduleSession = () => {
   const [proposeTradeToggle, setProposeTradeToggle] = useState(true)
@@ -41,6 +42,27 @@ export const ScheduleSession = () => {
         })
     }
   }, [currentUserFromAuth])
+
+  function createTrade() {
+    if (paymentToggle === false && (seekingSkill.trim() === "" || offeringSkill.trim() === "")) {
+      toast.error("Please select both seeking and offering skills.")
+    } else if (paymentToggle === true && seekingSkill.trim() === "") {
+      toast.error("Please select a seeking skill.")
+    } else {
+      const tradeData = {
+        userA: currentUser.uid,
+        userB: userId,
+        skillA: paymentToggle ? "PAYMENT" : offeringSkill,
+        skillB: seekingSkill,
+        milestones: [],
+      }
+
+      createFirestoreTrade(tradeData).then(() => {
+        toast.success("Session scheduled successfully!")
+        navigate(`/chat/${userId}`) // Redirect to chat after scheduling
+      })
+    }
+  }
 
   return (
     user &&
@@ -214,7 +236,10 @@ export const ScheduleSession = () => {
                 </button>
               </div>
             </div>
-            <button className="bg-[#e79259] hover:bg-[var(--color-btn-submit-hover)] shadow-sm mt-4 px-5 py-2 border border-[var(--color-btn-submit-hover)] border-solid rounded-full sm:w-[400px] font-medium text-black transition-all duration-300">
+            <button
+              onClick={createTrade}
+              className="bg-[#e79259] hover:bg-[var(--color-btn-submit-hover)] shadow-sm mt-4 px-5 py-2 border border-[var(--color-btn-submit-hover)] border-solid rounded-full sm:w-[400px] font-medium text-black transition-all duration-300"
+            >
               Schedule Session
             </button>
           </div>
