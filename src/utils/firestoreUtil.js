@@ -120,3 +120,16 @@ export const getSkillCategories = async () => {
   const categories = new Set(skills.map(skill => skill.category));
   return Array.from(categories);
 }
+
+export const createFirestoreTrade = async (tradeData) => {
+  try {
+    const tradeDocRef = await addDoc(collection(db, "trades"), {
+      ...tradeData,
+      createdAt: serverTimestamp(),
+    });
+    return tradeDocRef.id;
+  } catch (error) {
+    console.error("Error creating trade document:", error);
+    throw error;
+  }
+}
