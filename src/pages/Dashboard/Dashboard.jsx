@@ -45,7 +45,7 @@ export default function Dashboard() {
         </p>
       </div>
 
-      <div className="w-full min-h-48 rounded-lg border border-solid border-[var(--color-card-border)]">
+      <div className="w-full min-h-20 rounded-lg border border-solid border-[var(--color-card-border)]">
         {selectedTab === "users" && (
           <>
             <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold bg-[#26211c] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
@@ -81,6 +81,40 @@ export default function Dashboard() {
               <p className="flex-1">John Doe</p>
               <p className="flex-1 text-[var(--color-text-primary)]">Photography, writing</p>
               <p className="flex-1 text-[var(--color-text-primary)]">5</p>
+              <div className="flex-1 text-[var(--color-text-primary)]"><span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Edit</span> | <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Delete</span></div>
+            </div>
+          </>
+        )}
+        {selectedTab === 'skills' && (
+          <>
+            <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold bg-[#26211c] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+              <p className="flex-1">Skill Name</p>
+              <p className="flex-1">Category</p>
+              <p className="flex-1">Arabic Skill Name</p>
+              <p className="flex-1">Actions</p>
+            </div>
+            <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+              <p className="flex-1">Guitar</p>
+              <p className="flex-1">Musical Instruments</p>
+              <p className="flex-1">جيتار</p>
+              <div className="flex-1 text-[var(--color-text-primary)]"><span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Edit</span> | <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Delete</span></div>
+            </div>
+            <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+              <p className="flex-1">Guitar</p>
+              <p className="flex-1">Musical Instruments</p>
+              <p className="flex-1">جيتار</p>
+              <div className="flex-1 text-[var(--color-text-primary)]"><span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Edit</span> | <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Delete</span></div>
+            </div>
+            <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+              <p className="flex-1">Guitar</p>
+              <p className="flex-1">Musical Instruments</p>
+              <p className="flex-1">جيتار</p>
+              <div className="flex-1 text-[var(--color-text-primary)]"><span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Edit</span> | <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Delete</span></div>
+            </div>
+            <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+              <p className="flex-1">Guitar</p>
+              <p className="flex-1">Musical Instruments</p>
+              <p className="flex-1">جيتار</p>
               <div className="flex-1 text-[var(--color-text-primary)]"><span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Edit</span> | <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Delete</span></div>
             </div>
           </>
