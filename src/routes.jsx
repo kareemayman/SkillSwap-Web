@@ -12,6 +12,7 @@ import SearchScreen from "./pages/search/SearchScreen"
 import Layout from "./layouts/Layout"
 import AuthProtection from "./components/AuthProtection"
 import { ScheduleSession } from "./pages/Schedule/ScheduleSession"
+import Dashboard from "./pages/Dashboard/Dashboard"
 
 const AppRoutes = () => {
   const routes = [
@@ -29,6 +30,7 @@ const AppRoutes = () => {
             { path: "search", element: <SearchScreen /> },
             { path: "chat/:userId", element: <ChatScreen /> },
             { path: "schedule/:userId", element: <ScheduleSession></ScheduleSession> },
+            { path: "dashboard", element: <Dashboard /> },
           ],
         },
         {
