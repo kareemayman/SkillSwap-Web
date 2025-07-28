@@ -63,7 +63,7 @@ export default function EditableBio({ data, updateUserData }) {
           {error && <p className="text-red-500 text-sm">{error}</p>}
         </div>
       ) : (
-        <div className="min-h-16 leading-relaxed backdrop-blur-sm p-4 rounded-lg border-[var(--color-card-border)] glass-card text-[var(--color-text-secondary)]">
+        <div className="min-h-16 leading-relaxed backdrop-blur-sm p-4 rounded-lg border-[var(--color-card-border)] usercard text-[var(--color-text-secondary)]">
           {data}
         </div>
       )}

@@ -59,7 +59,7 @@
 :root {
 
   /* text color */
-  --main-color: #fe7843ca;
+  --main-color: #fe7843;
   --color-text-primary: #b4afa8;
   --color-text-secondary: #7c7c7c;
   --color-text-light: #ffffff;
@@ -68,9 +68,9 @@
 
   /* card style */
   --color-card-border: #8b6f5a;
-  --color-card-content-border: #755d4c;
-  /* --color-skill-teach-bg: var(--alabaster);
-  --color-skill-learn-bg: var(--accessible-beige); */
+  --color-card-content-border: #5d5149;
+  --color-skill-teach-bg: #ffe5b4;
+  --color-skill-learn-bg: #bc640dd8;
   /* --color-btn-back-hover: #c0b4a3; */
   --color-btn-submit-bg: #8b6f5a;
   --color-btn-submit-hover: #635041;

@@ -101,7 +101,7 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
               type="button"
               onClick={() => setShowCountryDropdown(!showCountryDropdown)}
               disabled={isLoadingCountries}
-              className="w-full px-4 py-3 text-left bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+              className="w-full px-4 py-3 text-left bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-card-border)] focus:border-[var(--color-card-border)] disabled:bg-gray-100 disabled:cursor-not-allowed"
             >
               <div className="flex items-center justify-between">
                 <span className={selectedCountry ? "text-gray-900" : "text-gray-500"}>
@@ -112,7 +112,7 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
             </button>
 
             {showCountryDropdown && !isLoadingCountries && (
-              <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg">
+              <div className="absolute z-10 w-full mt-1 bg-slate-50 border border-gray-300 rounded-lg shadow-lg">
                 {/* Search input */}
                 <div className="p-3 border-b border-gray-200">
                   <div className="relative">
@@ -122,7 +122,7 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
                       placeholder="Search countries..."
                       value={countrySearch}
                       onChange={(e) => setCountrySearch(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 bg-slate-50 focus:ring-[var(--color-card-border)] focus:border-[var(--color-card-border)] text-[var(--color-text-dark)]"
                       autoFocus
                     />
                   </div>
@@ -136,7 +136,7 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
                         key={country.iso2}
                         type="button"
                         onClick={() => handleCountrySelect(country)}
-                        className="w-full px-4 py-3 text-left hover:bg-blue-50 focus:outline-none focus:bg-blue-50"
+                        className="w-full px-4 py-3 text-left hover:bg-blue-50 focus:outline-none focus:ring-[var(--color-card-border)]"
                       >
                         <div className="flex items-center justify-between">
                           <span className="text-gray-900">{country.country}</span>
@@ -166,7 +166,7 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
               type="button"
               onClick={() => selectedCountry && setShowCityDropdown(!showCityDropdown)}
               disabled={!selectedCountry}
-              className="w-full px-4 py-3 text-left bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-3 text-left bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-card-border)] focus:border-[var(--color-card-border)]"
             >
               <div className="flex items-center justify-between">
                 <span className={selectedCity ? "text-gray-900" : "text-gray-500"}>
@@ -187,7 +187,7 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
                       placeholder="Search cities..."
                       value={citySearch}
                       onChange={(e) => setCitySearch(e.target.value)}
-                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-card-border)] focus:border-[var(--color-card-border)] text-[var(--color-text-dark)]"
                       autoFocus
                     />
                   </div>
@@ -201,7 +201,7 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
                         key={index}
                         type="button"
                         onClick={() => handleCitySelect(city)}
-                        className="w-full px-4 py-3 text-left hover:bg-blue-50 focus:outline-none focus:bg-blue-50"
+                        className="w-full px-4 py-3 text-left hover:bg-blue-50 focus:outline-none focus:ring-[var(--color-card-border)]"
                       >
                         <span className="text-gray-900">{city}</span>
                       </button>

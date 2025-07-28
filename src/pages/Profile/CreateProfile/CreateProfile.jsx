@@ -43,9 +43,9 @@ export default function CreateProfile({ userData }) {
   return (
     <div className="flex flex-col items-center text-start container max-w-3xl mx-auto">
       <div className="w-full px-4 ">
-        <div className="container flex flex-col md:flex-row text-center items-center md:text-start justify-start md:items-baseline w-full gap-2 text-2xl font-semibold text-[var(--color-text-primary)]">
-          <p>Welcome {userData.name}! 👋</p>
-          <p className="text-xl font-medium md:ms-4">Please complete your profile</p>
+        <div className=" flex flex-col  text-center items-center md:text-start justify-start md:items-baseline w-full gap-2 text-2xl font-semibold text-[var(--color-text-primary)]">
+          <p>Welcome <span className="text-[var(--main-color)]">{userData.name}</span>! 👋</p>
+          <p className="text-xl font-medium md:ms-4 text-[var(--color-text-secondary)]">Please complete your profile</p>
         </div>
 
         <div className="">
@@ -54,7 +54,7 @@ export default function CreateProfile({ userData }) {
       </div>
 
       <div className="w-full mb-4 relative z-10 flex items-center justify-center ">
-        <div className="backdrop-blur-xl border shadow-2xl rounded-[18px] p-8 w-full border-[var(--color-card-border)]">{stepComponent}</div>
+        <div className="backdrop-blur-xl border shadow-2xl shadow-[rgba(0,0,0,0.1)] rounded-[18px] p-8 w-full  glass-card">{stepComponent}</div>
       </div>
     </div>
   );

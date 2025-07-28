@@ -158,7 +158,7 @@ const PhoneInputComponent = ({ setForm }) => {
         <div className="relative">
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+            className="shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-black bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none  dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
             type="button"
           >
             {selectedCountry.flag}
@@ -169,7 +169,7 @@ const PhoneInputComponent = ({ setForm }) => {
           </button>
 
           {isDropdownOpen && (
-            <div className="absolute top-full left-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-52 dark:bg-gray-700">
+            <div className="absolute top-full left-0 z-10 bg-slate-50 divide-y divide-gray-100 rounded-lg shadow-sm w-52 dark:bg-gray-700">
               <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                 {countries.map((country) => (
                   <li key={country.code}>
@@ -194,7 +194,7 @@ const PhoneInputComponent = ({ setForm }) => {
           <input
             type="text"
             id="phone-input"
-            className="w-full sm:w-full md:w-[50%] lg:w-[67%] rounded-lg border-2 border-[#CEDAE8] h-12  placeholder-[#4A72B5]"
+            className="w-full sm:w-full md:w-[50%] lg:w-[67%] rounded-lg border-2 border-[#CEDAE8] h-12  placeholder-[#4A72B5] "
             pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
             placeholder="123-456-7890"
             onChange={(e) => {

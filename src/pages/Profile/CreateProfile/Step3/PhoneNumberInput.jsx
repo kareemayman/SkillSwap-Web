@@ -124,7 +124,7 @@ export default function PhoneNumberInput({ onPhoneChange, initialCountryCode = "
               type="button"
               onClick={() => setShowCountryDropdown(!showCountryDropdown)}
               disabled={isLoadingCountries}
-              className="h-12 px-3 bg-white border border-gray-300 border-r-0 rounded-l-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed flex items-center space-x-2"
+              className="h-12 px-3 bg-white border border-gray-300 border-r-0 rounded-l-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-card-border)] focus:border-[var(--color-card-border)] disabled:bg-gray-100 disabled:cursor-not-allowed flex items-center space-x-2"
             >
               {isLoadingCountries ? (
                 <div className="w-6 h-4 bg-gray-200 animate-pulse rounded"></div>
@@ -186,7 +186,7 @@ export default function PhoneNumberInput({ onPhoneChange, initialCountryCode = "
             placeholder="Enter phone number"
             value={phoneNumber}
             onChange={handlePhoneNumberChange}
-            className="flex-1 h-12 px-4 bg-white border border-gray-300 rounded-r-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder:text-gray-500"
+            className="flex-1 h-12 px-4 bg-slate-50 border border-gray-300 rounded-r-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-card-border)] focus:border-[var(--color-card-border)] placeholder:text-gray-500 text-black"
             disabled={!selectedCountry}
           />
         </div>
