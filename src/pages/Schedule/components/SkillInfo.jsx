@@ -9,7 +9,7 @@ export const SkillInfo = ({ skillName, skillLevel, type }) => {
         <p className="text-[var(--color-text-secondary)] sm:min-w-56 font-medium capitalize">
           {skillName} ({skillLevel})
         </p>
-        <p className="text-[var(--color-text-light)] font-medium capitalize">{type}</p>
+        <p className="text-[var(--color-text-primary)] font-medium capitalize">{type}</p>
       </div>
     </div>
   )

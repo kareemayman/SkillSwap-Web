@@ -69,8 +69,8 @@ export const ScheduleSession = () => {
     currentUser && (
       <>
         <div className="mx-auto px-16 pt-8 pb-8 container">
-          <h1 className="font-medium text-[var(--color-text-light)] text-4xl sm:text-left text-center">
-            Schedule Session with <span className="capitalize">{user ? user.name : "User"}</span>
+          <h1 className=" font-semibold text-[var(--color-text-primary)] text-3xl sm:text-left text-center">
+            Schedule Session with <span className="capitalize  ">{user ? user.name : "User"}</span>🗓️
           </h1>
           <div className="flex sm:flex-row flex-col items-center gap-3 my-8">
             <img
@@ -79,11 +79,11 @@ export const ScheduleSession = () => {
               className="rounded-full w-32 h-32 object-cover"
             />
             <div className="sm:text-left text-center">
-              <h2 className="font-medium text-[var(--color-text-light)] text-2xl capitalize">
+              <h2 className="font-medium text-[var(--color-text-primary)] text-2xl capitalize">
                 {user.name}
               </h2>
               <p className="font-medium text-[var(--color-text-secondary)]">
-                Offering:{" "}
+                <span className="font-semibold text-[var(--color-text-primary)]">Offering:{" "}</span>
                 {user.hasSkills.map((s, i) => {
                   return (
                     <span className="capitalize" key={s.skillId}>{`${s.skillName} (${
@@ -92,7 +92,7 @@ export const ScheduleSession = () => {
                   )
                 })}
                 <br />
-                Seeking:{" "}
+                <span className="font-semibold text-[var(--color-text-primary)]">Seeking:{" "}</span>
                 {user.needSkills.map((s, i) => {
                   return (
                     <span className="capitalize" key={s.skillId}>{`${s.skillName} (${
@@ -104,7 +104,7 @@ export const ScheduleSession = () => {
             </div>
           </div>
           <div className="mb-8">
-            <h3 className="my-4 font-medium text-[var(--color-text-light)] text-xl">Skills</h3>
+            <h3 className="my-4 font-medium text-[var(--main-color)] text-xl">Skills</h3>
             {user.hasSkills &&
               user.hasSkills.map((skill, index) => (
                 <SkillInfo
@@ -124,9 +124,9 @@ export const ScheduleSession = () => {
                 ></SkillInfo>
               ))}
           </div>
-          <h3 className="mt-10 mb-2 font-medium text-[var(--color-text-light)] text-xl">Bio</h3>
-          <p className="text-[var(--color-text-light)]">{user.bio}</p>
-          <h3 className="mt-10 mb-4 font-medium text-[var(--color-text-light)] text-xl">Actions</h3>
+          <h3 className="mt-10 mb-2 font-medium text-[var(--main-color)] text-xl">Bio</h3>
+          <p className="text-[var(--color-text-secondary)] usercard p-3 rounded-lg">{user.bio}</p>
+          <h3 className="mt-10 mb-4 font-medium text-[var(--main-color)] text-xl">Actions</h3>
           <div className="flex flex-wrap-reverse gap-4">
             <button
               onClick={() => navigate(`/chat/${userId}`)}
@@ -138,7 +138,7 @@ export const ScheduleSession = () => {
               onClick={() => setProposeTradeToggle(!proposeTradeToggle)}
               className={`${
                 !proposeTradeToggle && "opacity-50"
-              } bg-[#e79259]  shadow-sm px-5 py-2 rounded-full font-medium text-black text-sm transition-all duration-300`}
+              } bg-[var(--color-btn-submit-bg)]  shadow-sm px-5 py-2 rounded-full font-medium  text-sm transition-all duration-300 text-[var(--color-text-light)] hover:bg-[var(--color-btn-submit-hover)]`}
             >
               Propose Skill Trade
             </button>
@@ -147,7 +147,7 @@ export const ScheduleSession = () => {
             {!proposeTradeToggle && (
               <div className="absolute inset-0 bg-[var(--color-card-bg)] opacity-50 rounded-lg"></div>
             )}
-            <h3 className="mt-10 mb-4 font-medium text-[var(--color-text-light)] text-xl">
+            <h3 className="mt-10 mb-4 font-medium text-[var(--main-color)] text-xl">
               Choose Your Option
             </h3>
             <div className="flex flex-wrap gap-4 mb-4">
@@ -156,7 +156,7 @@ export const ScheduleSession = () => {
                 className={`${
                   paymentToggle
                     ? "bg-transparent hover:bg-[var(--color-btn-submit-hover)] text-[var(--color-text-light)]"
-                    : "bg-[#e79259] text-black"
+                    : "bg-[var(--color-btn-submit-bg)] text-[var(--color-text-light)] hover:bg-[var(--color-btn-submit-hover)]"
                 } shadow-sm px-5 py-2 border border-[var(--color-btn-submit-hover)] border-solid rounded-lg font-medium text-sm transition-all duration-300`}
               >
                 Trade a Skill
@@ -221,10 +221,10 @@ export const ScheduleSession = () => {
               {!paymentToggle && (
                 <div className="absolute inset-0 bg-[var(--color-card-bg)] opacity-50 rounded-lg"></div>
               )}
-              <h3 className="mt-10 mb-4 font-medium text-[var(--color-text-light)] text-xl">
+              <h3 className="mt-10 mb-4 font-medium text-[var(--main-color)] text-xl">
                 Payment
               </h3>
-              <p className="text-[var(--color-text-light)]">
+              <p className="text-[var(--color-text-primary)]">
                 Olivia charges $30 per session. Select a payment method:
               </p>
               <div className="flex flex-wrap gap-4 my-4">
@@ -238,7 +238,7 @@ export const ScheduleSession = () => {
             </div>
             <button
               onClick={createTrade}
-              className="bg-[#e79259] hover:bg-[var(--color-btn-submit-hover)] shadow-sm mt-4 px-5 py-2 border border-[var(--color-btn-submit-hover)] border-solid rounded-full sm:w-[400px] font-medium text-black transition-all duration-300"
+              className="bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] shadow-sm mt-4 px-5 py-2 border border-[var(--color-btn-submit-hover)] border-solid rounded-full sm:w-[400px] font-medium text-white transition-all duration-300"
             >
               Schedule Session
             </button>
