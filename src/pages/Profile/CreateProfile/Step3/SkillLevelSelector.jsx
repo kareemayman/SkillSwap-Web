@@ -68,7 +68,7 @@ export default function SkillLevelSelector({ skills = [], onSkillLevelChange }) 
             <button
               type="button"
               onClick={() => setShowSkillDropdown(!showSkillDropdown)}
-              className="w-full h-12 px-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 flex items-center justify-between"
+              className="w-full h-12 px-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-card-border)] focus:border-[var(--color-card-border)] flex items-center justify-between"
             >
               <div className="flex items-center space-x-2">
                 <LuTarget className="w-4 h-4 text-gray-400" />
@@ -92,7 +92,7 @@ export default function SkillLevelSelector({ skills = [], onSkillLevelChange }) 
                       placeholder="Search skills..."
                       value={skillSearch}
                       onChange={(e) => setSkillSearch(e.target.value)}
-                      className="w-full pl-8 pr-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder:text-gray-500"
+                      className="w-full pl-8 pr-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-card-border)] focus:border-[var(--color-card-border)] placeholder:text-gray-500"
                       autoFocus
                     />
                   </div>
@@ -125,7 +125,7 @@ export default function SkillLevelSelector({ skills = [], onSkillLevelChange }) 
               type="button"
               onClick={() => setShowLevelDropdown(!showLevelDropdown)}
               disabled={!selectedSkill}
-              className="w-full h-12 px-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed flex items-center justify-between"
+              className="w-full h-12 px-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-card-border)] focus:border-[var(--color-card-border)] disabled:bg-gray-100 disabled:cursor-not-allowed flex items-center justify-between"
             >
               <div className="flex items-center space-x-2">
                 {selectedLevel || currentLevelInfo ? (

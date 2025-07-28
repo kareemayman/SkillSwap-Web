@@ -1,8 +1,8 @@
 const Button = ({ onPress = () => {}, disabled = false, value = "Button", customColors = {} }) => {
   const {
-    textColor = "var(--color-text-dark)",
-    bgColor = "var(--color-skill-teach-bg)",
-    hoverFillColor = "var(--color-btn-submit-bg)",
+    textColor = "var(--color-text-light)",
+    bgColor = "var(--color-btn-submit-bg)",
+    hoverFillColor = "var(--color-btn-submit-hover)",
     hoverTextColor = "var(--color-text-light)",
   } = customColors;
 

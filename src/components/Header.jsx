@@ -10,14 +10,16 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { HiUserCircle } from "react-icons/hi2";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { subscribeToUserChats } from "../utils/chatUtil";
+import useFirestoreGet from "../hooks/useFirestoreGet";
 
 export default function Header() {
   const { user, logOut } = useAuth();
   const { i18n } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const { data: userProfile, loading, error, request } = useFirestoreGet();
 
   const toggleLanguage = () => {
     const newLang = i18n.language === "en" ? "ar" : "en";
@@ -42,8 +44,14 @@ export default function Header() {
     return () => unsub();
   }, [user?.uid]);
 
+  useEffect(() => {
+    if (user?.uid) {
+      request("users", user.uid); // Assumes user data is stored in a "users" collection
+    }
+  }, [user?.uid]);
+
   return (
-    <header className="shadow-sm shadow-[var(--color-card-border)]">
+    <header className="shadow-lg shadow-[var(--color-card-border)]">
       <div className="py-4 mx-auto container px-2 md:px-4 flex items-center justify-between relative">
         {/* Logo Section */}
         <Link to="/">
@@ -84,13 +92,23 @@ export default function Header() {
                 >
                   <FaSearch />
                 </NavLink>
+
                 <NavLink
                   to="/profile"
                   title="Profile"
                   className="transition-transform duration-200 hover:scale-110"
                 >
-                  <HiUserCircle className="text-2xl" />
+                  {userProfile?.profilePicture ? (
+                    <img
+                      src={userProfile.profilePicture}
+                      alt="Profile"
+                      className="w-8 h-8 rounded-full object-cover border border-gray-300"
+                    />
+                  ) : (
+                    <HiUserCircle className="text-2xl" />
+                  )}
                 </NavLink>
+
                 <button
                   onClick={logOut}
                   title="Logout"

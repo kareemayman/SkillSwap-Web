@@ -38,7 +38,7 @@ export default function ProfileReview({ updateStep, userId, initialData, onCompl
 
   return (
     <>
-      <h1 className="text-3xl font-bold mb-8 text-center text-[var(--color-text-primary)]">Review your profile</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center text-[var(--main-color)] italic">Review your profile</h1>
 
       <div className="flex flex-col items-center mb-8">
         <img
@@ -46,13 +46,13 @@ export default function ProfileReview({ updateStep, userId, initialData, onCompl
           alt="profile"
           className="w-24 h-24 rounded-full object-cover mb-4 ring-4 ring-[var(--color-card-border)]"
         />
-        <h2 className="text-2xl font-semibold text-[var(--color-text-secondary)]">{userProfile?.name}</h2>
+        <h2 className="text-2xl font-semibold text-[var(--color-text-primary)]">{userProfile?.name}</h2>
         <p className="text-lg text-[var(--color-text-secondary)]">{`${userProfile?.location?.city}, ${userProfile?.location?.country}`}</p>
       </div>
 
       <div className="mb-6">
         <h3 className="text-xl font-bold mb-2 text-[var(--color-text-primary)]">About me</h3>
-        <div className="leading-relaxed backdrop-blur-sm p-4 rounded-lg border border-[var(--color-card-border)] glass-card text-[var(--color-text-secondary)]">
+        <div className="leading-relaxed backdrop-blur-sm p-4 rounded-lg border border-black shadow-sm usercard text-[var(--color-text-secondary)]">
           {userProfile?.bio}
         </div>
       </div>
@@ -63,7 +63,7 @@ export default function ProfileReview({ updateStep, userId, initialData, onCompl
           {userProfile?.needSkills?.map((skill, index) => (
             <span
               key={index}
-              className="px-4 py-2 rounded-full text-sm font-medium shadow-sm bg-[var(--color-skill-learn-bg)] text-[var(--color-text-secondary)]"
+              className="px-4 py-2 rounded-full text-sm font-medium shadow-sm bg-[var(--color-skill-learn-bg)] text-white/800"
             >
               {skill?.skillName}
             </span>
@@ -77,7 +77,7 @@ export default function ProfileReview({ updateStep, userId, initialData, onCompl
           {userProfile?.hasSkills?.map((skill, index) => (
             <span
               key={index}
-              className="px-4 py-2 rounded-full text-sm font-medium shadow-sm bg-[var(--color-skill-teach-bg)] text-[var(--color-text-secondary)]"
+              className="px-4 py-2 rounded-full text-sm font-medium shadow-sm bg-[var(--color-skill-teach-bg)] text-black"
             >
               {skill?.skillName}
             </span>

@@ -24,7 +24,7 @@ export default function EditableName({ data, updateUserData }) {
   };
 
   return (
-    <div className="flex flex-col items-center gap-2 text-[var(--color-text-primary)]">
+    <div className="flex flex-col items-center gap-2 text-[var(--main-color)]">
       {isEditing ? (
         <div className="flex flex-col items-center gap-2 ">
           <div className="flex justify-center items-center gap-2">

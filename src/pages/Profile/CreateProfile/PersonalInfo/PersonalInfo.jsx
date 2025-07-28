@@ -63,7 +63,7 @@ export default function PersonalInfo({ updateStep, userId, initialData, onComple
 
       <div className="flex flex-col gap-8">
         <div>
-          <label htmlFor="bio" className="block mb-2 text-base font-medium text-gray-900 dark:text-white">
+          <label htmlFor="bio" className="block mb-2 text-base font-bold text-[var(--color-text-primary)] dark:text-white">
             Bio
           </label>
           <textarea
@@ -82,11 +82,12 @@ export default function PersonalInfo({ updateStep, userId, initialData, onComple
           />
         </div>
 
-        <div className="flex flex-col gap-4 lg:p-4 justify-center md:min-w-70 lg:min-w-80 ">
+        <div className="flex flex-col gap-4 lg:p-4 justify-center md:min-w-70 lg:min-w-80  bg-slate-50">
           <ImageUpload isDropzone selectedImage={image} setSelectedImage={setImage} maxSize={5 * 1024 * 1024} />
 
           <div className="flex justify-end gap-4">
-            <Button disabled={!image || !bio} value="Next" onPress={saveChangesHandler} />
+            <Button  disabled={!image || !bio} value="Next" onPress={saveChangesHandler}
+             />
           </div>
         </div>
       </div>

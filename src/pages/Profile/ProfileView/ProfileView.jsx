@@ -89,8 +89,7 @@ export default function ProfileView({ data }) {
 
         <EditableName data={updatedProfile.name} updateUserData={updateUserData} />
 
-        <p className="text-gray-600 mb-2">Skill Trader</p>
-        <p className="text-gray-500 text-sm">Joined 2021</p>
+        <p className="text-[var(--color-text-secondary)] mb-2">Skill Trader</p>
       </div>
 
       {/* Navigation Tabs */}

@@ -174,12 +174,12 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
       <StatusOverlay status={status} onDismiss={dismissOverlay} />
 
       <div className="self-start w-full">
-        <h1 className="mb-8 font-bold text-3xl text-[var(--color-text-primary)]">My Skills</h1>
+        <h1 className="mb-8 font-bold text-3xl text-[var(--main-color)] italic text-center">My Skills 💡</h1>
         <p className="font-bold text-xl text-[var(--color-text-secondary)]">Skills to Learn</p>
 
         <div className="relative">
           <input
-            className="backdrop-blur-sm p-4 rounded-lg border border-[var(--color-card-border)] bg-slate-50 text-[var(--color-text-secondary)] placeholder:text-[#4A739C] transition-all duration-300"
+            className="backdrop-blur-sm p-3 mt-1 rounded-lg border border-[var(--color-card-border)] bg-slate-50 text-[var(--color-text-secondary)] placeholder:text-[#4A739C] transition-all duration-300 text-sm"
             type="text"
             name="skillsToLearn"
             id="skillsToLearn"
@@ -197,7 +197,7 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
           />
 
           {skillsToLearn.trim() !== "" && (
-            <div className="top-full left-0 z-50 absolute bg-[#E8EDF5] rounded-md min-w-[30%]">
+            <div className="top-full left-0 z-50 absolute bg-black rounded-md min-w-[30%]">
               {filteredSkills.map((skill) => (
                 <div
                   onClick={() => {
@@ -217,12 +217,12 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
 
         <div className="flex flex-wrap gap-3 my-6 max-w-[30%] tags">
           {selectedSkillToLearn.map((skill) => (
-            <Tag key={skill.id} onClick={() => setSelectedSkillToLearn((prev) => prev.filter((s) => s.id !== skill.id))}>
+            <Tag key={skill.id} onClick={() => setSelectedSkillToLearn((prev) => prev.filter((s) => s.id !== skill.id))}  type="learn">
               {skill.skillName}
             </Tag>
           ))}
           {newLearnSkills.map((skill) => (
-            <Tag key={skill} onClick={() => setNewLearnSkills((prev) => prev.filter((s) => s !== skill))}>
+            <Tag key={skill} onClick={() => setNewLearnSkills((prev) => prev.filter((s) => s !== skill))} type="learn">
               {skill}
             </Tag>
           ))}
@@ -232,7 +232,7 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
 
         <div className="relative">
           <input
-            className="backdrop-blur-sm p-4 rounded-lg  border border-[var(--color-card-border)] bg-slate-50 text-[var(--color-text-secondary)] placeholder:text-[#4A739C] transition-all duration-300"
+            className="backdrop-blur-sm p-3 mt-1 rounded-lg  border border-[var(--color-card-border)] bg-slate-50 text-[var(--color-text-secondary)] placeholder:text-[#4A739C] transition-all duration-300 text-sm" 
             type="text"
             name="skillsToTeach"
             id="skillsToTeach"
@@ -275,12 +275,13 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
               onClick={() => {
                 setSelectedSkillToTeach((prev) => prev.filter((s) => s.id !== skill.id));
               }}
+              type="teach"
             >
               {skill.skillName}
             </Tag>
           ))}
           {newTeachSkills.map((skill) => (
-            <Tag key={skill} onClick={() => setNewTeachSkills((prev) => prev.filter((s) => s !== skill))}>
+            <Tag key={skill} onClick={() => setNewTeachSkills((prev) => prev.filter((s) => s !== skill))}  type="teach">
               {skill}
             </Tag>
           ))}
