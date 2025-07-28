@@ -56,36 +56,76 @@ export default function Dashboard() {
               <p className="flex-1">Actions</p>
             </div>
             <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
-              <div className="flex-1"><img src={Avat} alt="image" className="block rounded-full w-12 h-12 object-cover" /></div>
+              <div className="flex-1">
+                <img src={Avat} alt="image" className="block rounded-full w-12 h-12 object-cover" />
+              </div>
               <p className="flex-1">John Doe</p>
               <p className="flex-1 text-[var(--color-text-primary)]">Photography, writing</p>
               <p className="flex-1 text-[var(--color-text-primary)]">5</p>
-              <div className="flex-1 text-[var(--color-text-primary)]"><span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Edit</span> | <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Delete</span></div>
+              <div className="flex-1 text-[var(--color-text-primary)]">
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Edit
+                </span>{" "}
+                |{" "}
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Delete
+                </span>
+              </div>
             </div>
             <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
-              <div className="flex-1"><img src={Avat} alt="image" className="block rounded-full w-12 h-12 object-cover" /></div>
+              <div className="flex-1">
+                <img src={Avat} alt="image" className="block rounded-full w-12 h-12 object-cover" />
+              </div>
               <p className="flex-1">John Doe</p>
               <p className="flex-1 text-[var(--color-text-primary)]">Photography, writing</p>
               <p className="flex-1 text-[var(--color-text-primary)]">5</p>
-              <div className="flex-1 text-[var(--color-text-primary)]"><span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Edit</span> | <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Delete</span></div>
+              <div className="flex-1 text-[var(--color-text-primary)]">
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Edit
+                </span>{" "}
+                |{" "}
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Delete
+                </span>
+              </div>
             </div>
             <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
-              <div className="flex-1"><img src={Avat} alt="image" className="block rounded-full w-12 h-12 object-cover" /></div>
+              <div className="flex-1">
+                <img src={Avat} alt="image" className="block rounded-full w-12 h-12 object-cover" />
+              </div>
               <p className="flex-1">John Doe</p>
               <p className="flex-1 text-[var(--color-text-primary)]">Photography, writing</p>
               <p className="flex-1 text-[var(--color-text-primary)]">5</p>
-              <div className="flex-1 text-[var(--color-text-primary)]"><span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Edit</span> | <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Delete</span></div>
+              <div className="flex-1 text-[var(--color-text-primary)]">
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Edit
+                </span>{" "}
+                |{" "}
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Delete
+                </span>
+              </div>
             </div>
             <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
-              <div className="flex-1"><img src={Avat} alt="image" className="block rounded-full w-12 h-12 object-cover" /></div>
+              <div className="flex-1">
+                <img src={Avat} alt="image" className="block rounded-full w-12 h-12 object-cover" />
+              </div>
               <p className="flex-1">John Doe</p>
               <p className="flex-1 text-[var(--color-text-primary)]">Photography, writing</p>
               <p className="flex-1 text-[var(--color-text-primary)]">5</p>
-              <div className="flex-1 text-[var(--color-text-primary)]"><span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Edit</span> | <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Delete</span></div>
+              <div className="flex-1 text-[var(--color-text-primary)]">
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Edit
+                </span>{" "}
+                |{" "}
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Delete
+                </span>
+              </div>
             </div>
           </>
         )}
-        {selectedTab === 'skills' && (
+        {selectedTab === "skills" && (
           <>
             <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold bg-[#26211c] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
               <p className="flex-1">Skill Name</p>
@@ -97,25 +137,140 @@ export default function Dashboard() {
               <p className="flex-1">Guitar</p>
               <p className="flex-1">Musical Instruments</p>
               <p className="flex-1">جيتار</p>
-              <div className="flex-1 text-[var(--color-text-primary)]"><span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Edit</span> | <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Delete</span></div>
+              <div className="flex-1 text-[var(--color-text-primary)]">
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Edit
+                </span>{" "}
+                |{" "}
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Delete
+                </span>
+              </div>
             </div>
             <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
               <p className="flex-1">Guitar</p>
               <p className="flex-1">Musical Instruments</p>
               <p className="flex-1">جيتار</p>
-              <div className="flex-1 text-[var(--color-text-primary)]"><span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Edit</span> | <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Delete</span></div>
+              <div className="flex-1 text-[var(--color-text-primary)]">
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Edit
+                </span>{" "}
+                |{" "}
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Delete
+                </span>
+              </div>
             </div>
             <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
               <p className="flex-1">Guitar</p>
               <p className="flex-1">Musical Instruments</p>
               <p className="flex-1">جيتار</p>
-              <div className="flex-1 text-[var(--color-text-primary)]"><span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Edit</span> | <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Delete</span></div>
+              <div className="flex-1 text-[var(--color-text-primary)]">
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Edit
+                </span>{" "}
+                |{" "}
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Delete
+                </span>
+              </div>
             </div>
             <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
               <p className="flex-1">Guitar</p>
               <p className="flex-1">Musical Instruments</p>
               <p className="flex-1">جيتار</p>
-              <div className="flex-1 text-[var(--color-text-primary)]"><span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Edit</span> | <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">Delete</span></div>
+              <div className="flex-1 text-[var(--color-text-primary)]">
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Edit
+                </span>{" "}
+                |{" "}
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Delete
+                </span>
+              </div>
+            </div>
+          </>
+        )}
+        {selectedTab === "reviews" && (
+          <>
+            <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold bg-[#26211c] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+              <p className="flex-1">Reviewer</p>
+              <p className="flex-1">Reviewd User</p>
+              <p className="flex-1 pr-6">Review Text</p>
+              <p className="flex-1">Rating</p>
+              <p className="flex-1">Actions</p>
+            </div>
+            <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+              <p className="flex-1">Kareem Ayman</p>
+              <p className="flex-1">Abdelrahman</p>
+              <p className="flex-1 text-[var(--color-text-primary)] pr-6">
+                Abdlerahman was a very good tutor, very patient and explained everything in great
+                detail.
+              </p>
+              <p className="flex-1 text-[var(--color-text-primary)]">5</p>
+              <div className="flex-1 text-[var(--color-text-primary)]">
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Edit
+                </span>{" "}
+                |{" "}
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Delete
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+              <p className="flex-1">Kareem Ayman</p>
+              <p className="flex-1">Abdelrahman</p>
+              <p className="flex-1 text-[var(--color-text-primary)] pr-6">
+                Abdlerahman was a very good tutor, very patient and explained everything in great
+                detail.
+              </p>
+              <p className="flex-1 text-[var(--color-text-primary)]">5</p>
+              <div className="flex-1 text-[var(--color-text-primary)]">
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Edit
+                </span>{" "}
+                |{" "}
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Delete
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+              <p className="flex-1">Kareem Ayman</p>
+              <p className="flex-1">Abdelrahman</p>
+              <p className="flex-1 text-[var(--color-text-primary)] pr-6">
+                Abdlerahman was a very good tutor, very patient and explained everything in great
+                detail.
+              </p>
+              <p className="flex-1 text-[var(--color-text-primary)]">5</p>
+              <div className="flex-1 text-[var(--color-text-primary)]">
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Edit
+                </span>{" "}
+                |{" "}
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Delete
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+              <p className="flex-1">Kareem Ayman</p>
+              <p className="flex-1">Abdelrahman</p>
+              <p className="flex-1 text-[var(--color-text-primary)] pr-6">
+                Abdlerahman was a very good tutor, very patient and explained everything in great
+                detail.
+              </p>
+              <p className="flex-1 text-[var(--color-text-primary)]">5</p>
+              <div className="flex-1 text-[var(--color-text-primary)]">
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Edit
+                </span>{" "}
+                |{" "}
+                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                  Delete
+                </span>
+              </div>
             </div>
           </>
         )}
