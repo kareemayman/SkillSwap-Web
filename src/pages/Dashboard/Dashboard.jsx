@@ -1,8 +1,21 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Avat from "../../assets/images/avat.png"
+import { getAllUsers } from "../../utils/firestoreUtil"
 
 export default function Dashboard() {
   const [selectedTab, setSelectedTab] = useState("users")
+  const [allUsers, setAllUsers] = useState([])
+  const [allSkills, setAllSkills] = useState([])
+
+  useEffect(() => {
+    getAllUsers().then((users) => {
+      setAllUsers(users)
+    })
+
+    fetchSkillsList().then((skills) => {
+      setAllSkills(skills)
+    })
+  }, [])
 
   return (
     <div className="container mx-auto px-16 pt-8 pb-8">
@@ -55,13 +68,16 @@ export default function Dashboard() {
               <p className="flex-1">Reviews</p>
               <p className="flex-1">Actions</p>
             </div>
-            <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+            {allUsers && allUsers.map((user) => (
+              <div key={user.uid} className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
               <div className="flex-1">
-                <img src={Avat} alt="image" className="block rounded-full w-12 h-12 object-cover" />
+                <img src={user.profilePicture ? user.profilePicture : Avat} alt="image" className="block rounded-full w-12 h-12 object-cover" />
               </div>
-              <p className="flex-1">John Doe</p>
-              <p className="flex-1 text-[var(--color-text-primary)]">Photography, writing</p>
-              <p className="flex-1 text-[var(--color-text-primary)]">5</p>
+              <p className="flex-1 capitalize">{user.name}</p>
+              <p className="flex-1 text-[var(--color-text-primary)] capitalize">{user.hasSkills && user.hasSkills.map((s, i) => {
+                return `${s.skillName}${i < user.hasSkills.length - 1 ? ", " : ""}`
+              })}</p>
+              <p className="flex-1 text-[var(--color-text-primary)]">{user.rating || 0}</p>
               <div className="flex-1 text-[var(--color-text-primary)]">
                 <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
                   Edit
@@ -72,57 +88,7 @@ export default function Dashboard() {
                 </span>
               </div>
             </div>
-            <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
-              <div className="flex-1">
-                <img src={Avat} alt="image" className="block rounded-full w-12 h-12 object-cover" />
-              </div>
-              <p className="flex-1">John Doe</p>
-              <p className="flex-1 text-[var(--color-text-primary)]">Photography, writing</p>
-              <p className="flex-1 text-[var(--color-text-primary)]">5</p>
-              <div className="flex-1 text-[var(--color-text-primary)]">
-                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                  Edit
-                </span>{" "}
-                |{" "}
-                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                  Delete
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
-              <div className="flex-1">
-                <img src={Avat} alt="image" className="block rounded-full w-12 h-12 object-cover" />
-              </div>
-              <p className="flex-1">John Doe</p>
-              <p className="flex-1 text-[var(--color-text-primary)]">Photography, writing</p>
-              <p className="flex-1 text-[var(--color-text-primary)]">5</p>
-              <div className="flex-1 text-[var(--color-text-primary)]">
-                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                  Edit
-                </span>{" "}
-                |{" "}
-                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                  Delete
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
-              <div className="flex-1">
-                <img src={Avat} alt="image" className="block rounded-full w-12 h-12 object-cover" />
-              </div>
-              <p className="flex-1">John Doe</p>
-              <p className="flex-1 text-[var(--color-text-primary)]">Photography, writing</p>
-              <p className="flex-1 text-[var(--color-text-primary)]">5</p>
-              <div className="flex-1 text-[var(--color-text-primary)]">
-                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                  Edit
-                </span>{" "}
-                |{" "}
-                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                  Delete
-                </span>
-              </div>
-            </div>
+            ))}
           </>
         )}
         {selectedTab === "skills" && (
