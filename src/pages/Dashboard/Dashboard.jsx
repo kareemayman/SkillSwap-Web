@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Avat from "../../assets/images/avat.png"
-import { getAllUsers } from "../../utils/firestoreUtil"
+import { fetchSkillsList, getAllUsers } from "../../utils/firestoreUtil"
 
 export default function Dashboard() {
   const [selectedTab, setSelectedTab] = useState("users")
@@ -68,27 +68,38 @@ export default function Dashboard() {
               <p className="flex-1">Reviews</p>
               <p className="flex-1">Actions</p>
             </div>
-            {allUsers && allUsers.map((user) => (
-              <div key={user.uid} className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
-              <div className="flex-1">
-                <img src={user.profilePicture ? user.profilePicture : Avat} alt="image" className="block rounded-full w-12 h-12 object-cover" />
-              </div>
-              <p className="flex-1 capitalize">{user.name}</p>
-              <p className="flex-1 text-[var(--color-text-primary)] capitalize">{user.hasSkills && user.hasSkills.map((s, i) => {
-                return `${s.skillName}${i < user.hasSkills.length - 1 ? ", " : ""}`
-              })}</p>
-              <p className="flex-1 text-[var(--color-text-primary)]">{user.rating || 0}</p>
-              <div className="flex-1 text-[var(--color-text-primary)]">
-                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                  Edit
-                </span>{" "}
-                |{" "}
-                <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                  Delete
-                </span>
-              </div>
-            </div>
-            ))}
+            {allUsers &&
+              allUsers.map((user) => (
+                <div
+                  key={user.uid}
+                  className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
+                >
+                  <div className="flex-1">
+                    <img
+                      src={user.profilePicture ? user.profilePicture : Avat}
+                      alt="image"
+                      className="block rounded-full w-12 h-12 object-cover"
+                    />
+                  </div>
+                  <p className="flex-1 capitalize">{user.name}</p>
+                  <p className="flex-1 text-[var(--color-text-primary)] capitalize">
+                    {user.hasSkills &&
+                      user.hasSkills.map((s, i) => {
+                        return `${s.skillName}${i < user.hasSkills.length - 1 ? ", " : ""}`
+                      })}
+                  </p>
+                  <p className="flex-1 text-[var(--color-text-primary)]">{user.rating || 0}</p>
+                  <div className="flex-1 text-[var(--color-text-primary)]">
+                    <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                      Edit
+                    </span>{" "}
+                    |{" "}
+                    <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                      Delete
+                    </span>
+                  </div>
+                </div>
+              ))}
           </>
         )}
         {selectedTab === "skills" && (
@@ -99,7 +110,27 @@ export default function Dashboard() {
               <p className="flex-1">Arabic Skill Name</p>
               <p className="flex-1">Actions</p>
             </div>
-            <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+            {allSkills &&
+              allSkills.map((skill) => (
+                <div
+                  key={skill.id}
+                  className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
+                >
+                  <p className="flex-1">{skill.skillName}</p>
+                  <p className="flex-1">{skill.category}</p>
+                  <p className="flex-1">{skill.skillNameArabic}</p>
+                  <div className="flex-1 text-[var(--color-text-primary)]">
+                    <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                      Edit
+                    </span>{" "}
+                    |{" "}
+                    <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                      Delete
+                    </span>
+                  </div>
+                </div>
+              ))}
+            {/* <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
               <p className="flex-1">Guitar</p>
               <p className="flex-1">Musical Instruments</p>
               <p className="flex-1">جيتار</p>
@@ -154,7 +185,7 @@ export default function Dashboard() {
                   Delete
                 </span>
               </div>
-            </div>
+            </div> */}
           </>
         )}
         {selectedTab === "reviews" && (
