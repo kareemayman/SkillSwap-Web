@@ -7,25 +7,38 @@ import ProfileView from "./ProfileView/ProfileView";
 import { Spinner } from "flowbite-react";
 import { hasNullValue } from "../../utils/helpers";
 import img from "../../assets/images/img.svg";
+import { useParams } from "react-router-dom";
 
 const ProfilePage = () => {
   const { user } = useAuth();
-  const { data: userProfile, loading, error, request } = useFirestoreGet();
-  // state to control which component should be displayed: view || edit || create
-  const [displayProfileComponent, setDisplayProfileComponent] = useState("view");
+  const { id } = useParams();
+  const isOwnProfile = !id || id === user?.uid;
 
-  // Fetch user profile data when component mounts
+  const {
+    data: userProfile,
+    loading,
+    error,
+    request,
+  } = useFirestoreGet();
+
+  const [displayProfileComponent, setDisplayProfileComponent] =
+    useState("view");
+
   useEffect(() => {
     if (user?.uid) {
-      request("users", user.uid);
+      request("users", id || user.uid);
     }
-  }, [user?.uid, request]);
+  }, [user?.uid, request, id]);
 
   useEffect(() => {
-    if (error?.message === "Document not found" || (userProfile && hasNullValue(userProfile))) {
+    if (
+      isOwnProfile &&
+      (error?.message === "Document not found" ||
+        (userProfile && hasNullValue(userProfile)))
+    ) {
       setDisplayProfileComponent("create");
     }
-  }, [error, userProfile]);
+  }, [error, userProfile, isOwnProfile]);
 
   if (loading || (!userProfile && !error)) {
     return (
@@ -34,9 +47,9 @@ const ProfilePage = () => {
       </div>
     );
   }
+ 
+    console.log("@ProfilePage ---- error =", error);
 
-  console.log("@ProfilePage ---- error =", error);
-  // if there is unexpected error other than profile wasn't found
   if (error && error?.message !== "Document not found") {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
@@ -46,23 +59,26 @@ const ProfilePage = () => {
   }
 
   return (
-    <>
-      <div className="min-h-screen relative overflow-hidden ">
-        <div className="absolute bottom-0 left-0 w-full z-0">
-          <img src={img} alt="decorative wave" className="w-full h-auto object-cover" style={{ minHeight: "80px" }} />
-        </div>
-
-        <div className=" container max-w-4xl mx-auto px-5 py-6 ">
-          {displayProfileComponent === "create" ? (
-            <CreateProfile userData={userProfile} />
-          ) : displayProfileComponent === "edit" ? (
-            <EditProfile />
-          ) : (
-            <ProfileView data={userProfile} />
-          )}
-        </div>
+    <div className="min-h-screen relative overflow-hidden ">
+      <div className="absolute bottom-0 left-0 w-full z-0">
+        <img
+          src={img}
+          alt="decorative wave"
+          className="w-full h-auto object-cover"
+          style={{ minHeight: "80px" }}
+        />
       </div>
-    </>
+
+      <div className=" container max-w-4xl mx-auto px-5 py-6 ">
+        {displayProfileComponent === "create" && isOwnProfile ? (
+          <CreateProfile userData={userProfile} />
+        ) : displayProfileComponent === "edit" && isOwnProfile ? (
+          <EditProfile />
+        ) : (
+          <ProfileView data={userProfile} isOwnProfile={isOwnProfile} />
+        )}
+      </div>
+    </div>
   );
 };
 
