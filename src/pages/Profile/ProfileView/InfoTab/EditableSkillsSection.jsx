@@ -109,6 +109,7 @@ export default function EditableSkillsSection({
               key={skill.skillId}
               isDeletable={true}
               onClick={() => handleRemoveSkill(skill.skillId)}
+              teaching={title.includes("teach")}
             >
               {skill.skillName}
             </Tag>

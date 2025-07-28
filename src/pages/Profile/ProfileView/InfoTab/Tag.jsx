@@ -18,7 +18,13 @@ const LEVEL_STYLES = {
  * @param {boolean} [props.isEditing=false] - If true, the tag is in edit mode and shows the delete icon.
  * @param {function} [props.onDelete] - Callback to run when the delete icon is clicked.
  */
-export const Tag = ({ children, skillLevel, isEditing = false, onDelete }) => {
+export const Tag = ({
+  children,
+  skillLevel,
+  isEditing = false,
+  onDelete,
+  teaching,
+}) => {
   const handleDelete = (e) => {
     e.stopPropagation(); // Prevent any parent onClick events
     onDelete?.();
@@ -29,9 +35,19 @@ export const Tag = ({ children, skillLevel, isEditing = false, onDelete }) => {
   const levelText = skillLevel || "N/A";
 
   return (
-    <div className="flex items-center gap-2 w-fit bg-gray-50 border border-gray-200 text-sm font-medium text-[var(--color-text-secondary)] pl-1 pr-2 py-1 rounded-full transition-all duration-300">
+    <div
+      className={`flex items-center gap-2 w-fit ${
+        teaching
+          ? "bg-[var(--color-skill-teach-bg)] text-black"
+          : "bg-[var(--color-skill-learn-bg)] text-white"
+      } text-sm font-medium text-[var(--color-text-secondary)] pl-1 pr-2 py-1 rounded-full transition-all duration-300`}
+    >
       {/* Skill Level Indicator */}
-      <span className={`px-2 py-0.5 text-xs font-semibold rounded-full capitalize ${levelStyle}`}>{levelText}</span>
+      <span
+        className={`px-2 py-0.5 text-xs font-semibold rounded-full capitalize ${levelStyle}`}
+      >
+        {levelText}
+      </span>
 
       {/* Skill Name */}
       <span className="capitalize">{children}</span>
