@@ -69,6 +69,7 @@ export const ScheduleSession = () => {
   return (
     user &&
     currentUser && (
+
       <div className="mx-auto px-16 pt-8 pb-8 container">
         <h1 className="font-semibold text-[var(--color-text-primary)] text-3xl sm:text-left text-center">
           {t("Schedule Session with")} <span className="capitalize">{user?.name || "User"}</span>🗓️
@@ -90,6 +91,7 @@ export const ScheduleSession = () => {
                 <span key={s.skillId} className="capitalize">
                   {`${s.skillName} (${s.skillLevel})${i === user.hasSkills.length - 1 ? "" : ", "}`}
                 </span>
+
               ))}
               <br />
               <span className="font-semibold text-[var(--color-text-primary)]">{t("Seeking")}: </span>
