@@ -9,6 +9,7 @@ import { db } from "../../../../firebase";
 import CountryCitySelector from "./CountryCitySelector";
 import PhoneNumberInput from "./PhoneNumberInput";
 import SkillLevelSelector from "./SkillLevelSelector";
+import { useTranslation } from "react-i18next";
 
 export default function Step3({ updateStep, userId, initialData, onComplete }) {
   const [status, setStatus] = useState({ loading: false, error: null, data: null });
@@ -24,6 +25,8 @@ export default function Step3({ updateStep, userId, initialData, onComplete }) {
     }
     return { countryCode: "", phoneNumber: "" };
   });
+  const { t } = useTranslation();
+
   const [skillsData, setSkillsData] = useState(() => {
     const hasSkills = initialData?.hasSkills || [];
     return hasSkills.map((skill) => ({
@@ -153,7 +156,7 @@ export default function Step3({ updateStep, userId, initialData, onComplete }) {
           }}
           className="px-6 py-3 font-semibold rounded-lg shadow-lg text-[var(--color-text-secondary)] hover:bg-[var(--color-btn-back-hover)] hover:shadow-2xl"
         >
-          Back
+          {t("Common.Back")}
         </button>
 
         <CustomButton

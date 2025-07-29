@@ -5,11 +5,12 @@ import img from "../../../../assets/images/avat.png";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../firebase";
 import { avatarTheme } from "flowbite-react";
+import { useTranslation } from "react-i18next";
 
 export default function ProfileReview({ updateStep, userId, initialData, onComplete }) {
   const navigate = useNavigate();
   const [userProfile, setUserProfile] = useState(initialData); // For testing purposes, using static data
-
+const {t}=useTranslation();
   async function handleSubmit() {
     try {
       // Final update object
@@ -51,14 +52,14 @@ export default function ProfileReview({ updateStep, userId, initialData, onCompl
       </div>
 
       <div className="mb-6">
-        <h3 className="text-xl font-bold mb-2 text-[var(--color-text-primary)]">About me</h3>
+        <h3 className="text-xl font-bold mb-2 text-[var(--color-text-primary)]">{t("About me")}</h3>
         <div className="leading-relaxed backdrop-blur-sm p-4 rounded-lg border border-black shadow-sm usercard text-[var(--color-text-secondary)]">
           {userProfile?.bio}
         </div>
       </div>
 
       <div className="mb-6">
-        <h3 className="text-xl font-bold mb-2 text-[var(--color-text-primary)]">Skills I want to learn</h3>
+        <h3 className="text-xl font-bold mb-2 text-[var(--color-text-primary)]">{t("Skills I want to learn")}</h3>
         <div className="flex flex-wrap gap-2">
           {userProfile?.needSkills?.map((skill, index) => (
             <span
@@ -72,7 +73,7 @@ export default function ProfileReview({ updateStep, userId, initialData, onCompl
       </div>
 
       <div className="mb-8">
-        <h3 className="text-xl font-bold mb-2 text-[var(--color-text-primary)]">Skills I can teach</h3>
+        <h3 className="text-xl font-bold mb-2 text-[var(--color-text-primary)]">{t("Skills I can teach")}</h3>
         <div className="flex flex-wrap gap-2">
           {userProfile?.hasSkills?.map((skill, index) => (
             <span
@@ -92,7 +93,7 @@ export default function ProfileReview({ updateStep, userId, initialData, onCompl
           }}
           className="px-6 py-3 font-semibold rounded-lg shadow-lg text-[var(--color-text-secondary)] hover:bg-[var(--color-btn-back-hover)] hover:shadow-2xl"
         >
-          Back
+          {t("Back")}
         </button>
         {/* <button className="px-6 py-3 font-semibold rounded-lg text-[var(--color-text-light)] shadow-lg bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] hover:shadow-2xl hover:backdrop-blur-xl">
               Submit

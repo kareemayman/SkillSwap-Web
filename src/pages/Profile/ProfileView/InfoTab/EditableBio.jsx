@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { LuCircleX, LuCircleCheck } from "react-icons/lu";
 import EditButton from "../EditButton";
+import { useTranslation } from "react-i18next";
 
 export default function EditableBio({ data, updateUserData, isOwnProfile }) {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(data || "");
   const [error, setError] = useState("");
+  const { t } = useTranslation();
+
 
   const handleSave = () => {
     if (value.trim() === "") {
@@ -27,7 +30,7 @@ export default function EditableBio({ data, updateUserData, isOwnProfile }) {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold text-[--color-text-primary]">
-          About me
+      {t("About me")}
         </h2>
 
         <div className="md:w-1/2 flex justify-end">
@@ -66,7 +69,7 @@ export default function EditableBio({ data, updateUserData, isOwnProfile }) {
             onChange={(e) => setValue(e.target.value)}
             className="w-full min-h-16 px-4 py-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             rows={2}
-            placeholder="Tell others about yourself..."
+            placeholder={t("Tell others about yourself...")}
           />
           {error && <p className="text-red-500 text-sm">{error}</p>}
         </div>

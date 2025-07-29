@@ -7,6 +7,7 @@ import EditButton from "./EditButton";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import StatusOverlay from "../../../components/StatusOverlay";
+import { useTranslation } from "react-i18next";
 
 const sampleUserProfile = {
   id: "NLMrdVmgTSaSMDOuY0vGXktYgNm1",
@@ -56,6 +57,8 @@ const sampleUserProfile = {
 };
 
 export default function ProfileView({ data, isOwnProfile }) {
+  const { t } = useTranslation();
+
   const [updatedProfile, setUpdatedProfile] = useState(
     data || sampleUserProfile
   );
@@ -92,18 +95,17 @@ export default function ProfileView({ data, isOwnProfile }) {
   return (
     <div className="max-w-4xl mx-auto p-6 text-[var(--color-text-primary)] z-20 backdrop-blur-lg relative">
       <StatusOverlay status={status} onDismiss={dismissError} />
-
       {/* Profile Header */}
       <div className="text-center mb-8">
         <div className="relative inline-block mb-4">
           <img
             src={updatedProfile.profilePicture}
-            alt="Profile"
+            alt={t("ProfileView.ProfilePictureAlt")}
             className="w-32 h-32 rounded-full object-cover border-4 border-[var(--color-text-primary)] shadow-lg"
           />
           {isOwnProfile && (
             <EditButton
-              title="Edit Profile Picture"
+              title={t("ProfileView.EditProfilePicture")}
               classes="absolute -bottom-0.5 -right-0.5"
               onClickHandler={() => {
                 console.log("edit profile picture button clicked");
@@ -118,9 +120,10 @@ export default function ProfileView({ data, isOwnProfile }) {
           isOwnProfile={isOwnProfile}
         />
 
-        <p className="text-[var(--color-text-secondary)] mb-2">Skill Trader</p>
+        <p className="text-[var(--color-text-secondary)] mb-2">
+          {t("SkillTrader")}
+        </p>
       </div>
-
       {/* Navigation Tabs */}
       <div className="flex justify-center border-b border-[--color-card-border] mb-8">
         {tabs.map((tab) => (
@@ -133,11 +136,10 @@ export default function ProfileView({ data, isOwnProfile }) {
                 : "border-transparent text-[--color-text-primary] hover:text-[--color-btn-submit-bg]"
             }`}
           >
-            {tab}
+            {t(`ProfileView.Tabs.${tab}`)}
           </button>
         ))}
       </div>
-
       {/* Tab Content */}
       {activeTab === "Profile" && (
         <InfoTab
@@ -146,21 +148,19 @@ export default function ProfileView({ data, isOwnProfile }) {
           isOwnProfile={isOwnProfile}
         />
       )}
-
       {activeTab === "Skill Trades" && (
         <div className="text-center py-12">
           <p className="text-gray-500">
-            Skill Trades content will be implemented here
+            {t("ProfileView.SkillTradesComingSoon")}
           </p>
         </div>
       )}
-
       {activeTab === "Settings" && (
         <SettingsTab
           updatedProfile={updatedProfile}
           updateUserData={updateUserData}
         />
-      )}
+      )}{" "}
     </div>
   );
 }

@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const PhoneInputComponent = ({ setForm }) => {
+  const { t } = useTranslation();
+
   const countries = [
     {
       code: "+1",
@@ -152,7 +155,8 @@ const PhoneInputComponent = ({ setForm }) => {
   return (
     <div className=" w-[80%]">
       <label htmlFor="phone-input" className="font-bold text-[var(--color-text-primary)]">
-        Phone number:
+                    {t("Phone number")}
+
       </label>
       <div className="flex items-center ">
         <div className="relative">

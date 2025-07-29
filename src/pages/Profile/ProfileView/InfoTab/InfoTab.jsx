@@ -2,12 +2,16 @@ import React from "react";
 import EditableBio from "./EditableBio";
 import EditableSkillsSection from "./EditableSkillsSection";
 import EditableLocation from "./EditableLocation";
+import { useTranslation } from "react-i18next";
+
 
 export default function InfoTab({
   updatedProfile,
   updateUserData,
   isOwnProfile,
 }) {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-8">
       {/* About Me Section */}
@@ -26,7 +30,7 @@ export default function InfoTab({
 
       {/* Skills I can teach */}
       <EditableSkillsSection
-        title="Skills I can teach"
+        title={t("Skills I can teach")}
         data={updatedProfile.hasSkills}
         skillType="hasSkills" // Prop to identify which field to update
         updateUserData={updateUserData}
@@ -35,7 +39,7 @@ export default function InfoTab({
 
       {/* Skills I want to learn */}
       <EditableSkillsSection
-        title="Skills I want to learn"
+        title={t("Skills I want to learn")}
         data={updatedProfile.needSkills}
         skillType="needSkills" // Prop to identify which field to update
         updateUserData={updateUserData}
