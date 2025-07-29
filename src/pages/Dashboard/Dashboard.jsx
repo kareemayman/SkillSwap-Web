@@ -4,7 +4,7 @@ import { deleteDocById, fetchSkillsList, getAllUsers } from "../../utils/firesto
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
 import { generateFromGemini } from "../../api/gemini"
-import { filterUsersPrompt } from "../../utils/geminiPrompts"
+import { filterSkillObjectsPrompt, filterUsersPrompt } from "../../utils/geminiPrompts"
 
 export default function Dashboard() {
   const [selectedTab, setSelectedTab] = useState("users")
@@ -46,9 +46,15 @@ export default function Dashboard() {
         }
         filterUsers()
       } else if (selectedTab === "skills") {
-        results = allSkills.filter((skill) =>
-          skill.skillName.toLowerCase().includes(searchInputTimeout.toLowerCase())
-        )
+        async function filterSkills() {
+          let filteredSkills = await generateFromGemini(
+            filterSkillObjectsPrompt(searchInputTimeout, allSkills)
+          )
+          filteredSkills = filteredSkills.replace("```json", "").replace("```", "")
+          results = JSON.parse(filteredSkills)
+          setSearchResults(results)
+        }
+        filterSkills()
       } else if (selectedTab === "reviews") {
         results = allUsers.flatMap((user) =>
           user.reviews
@@ -62,8 +68,10 @@ export default function Dashboard() {
   }, [searchInputTimeout])
 
   useEffect(() => {
-    console.log("Search Results:", searchResults)
-  }, [searchResults])
+    setSearchInput("")
+    setSearchResults([])
+    setSearchInputTimeout("")
+  }, [selectedTab])
 
   return (
     <div className="container mx-auto px-16 pt-8 pb-8">
@@ -209,7 +217,27 @@ export default function Dashboard() {
               <p className="flex-1">Arabic Skill Name</p>
               <p className="flex-1">Actions</p>
             </div>
-            {allSkills &&
+            {searchResults &&
+              searchResults.map((skill) => (
+                <div
+                  key={skill.id}
+                  className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
+                >
+                  <p className="flex-1">{skill.skillName}</p>
+                  <p className="flex-1">{skill.category}</p>
+                  <p className="flex-1">{skill.skillNameArabic}</p>
+                  <div className="flex-1 text-[var(--color-text-primary)]">
+                    <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                      Edit
+                    </span>{" "}
+                    |{" "}
+                    <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                      Delete
+                    </span>
+                  </div>
+                </div>
+              ))}
+            {searchResults.length == 0 && allSkills &&
               allSkills.map((skill) => (
                 <div
                   key={skill.id}

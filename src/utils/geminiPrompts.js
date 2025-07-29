@@ -102,3 +102,34 @@ ${JSON.stringify(userList)}
 Your response:
   `
 }
+
+export const filterSkillObjectsPrompt = (searchQuery, skillList) => {
+  return `
+  I have a list of skill objects, and I want to implement a smart search filter.
+Each skill object includes the following fields:
+
+skillName (in English)
+
+skillNameArabic (Arabic translation)
+
+category (e.g., Design, Music, Coding)
+
+Given a search query string, return a filtered list of skills where any of these fields contain the query as a substring (case-insensitive and typo-tolerant).
+Prioritize results in this order:
+
+Exact or close matches in skillName
+
+Then in skillNameArabic
+
+Then in category
+
+Return only the filtered and ranked list of skill objects from most to least relevant match in JSON format without explaining anything.
+
+Search Query: ${searchQuery}
+
+Skill List:
+${JSON.stringify(skillList)}
+
+Your response:
+  `
+}
