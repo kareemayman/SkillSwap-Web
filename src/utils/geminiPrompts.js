@@ -76,3 +76,95 @@ Skill Name: ${skillName}
 Your response:
 `
 }
+
+export const filterUsersPrompt = (searchQuery, userList) => {
+  return `
+  I have a list of user profiles, and I want to implement a search functionality.
+Each user object includes the following fields: name, email, bio, and phone.
+Given a search query string, return a filtered list of users where any of these fields contain the query as a substring (case-insensitive).
+The match should be flexible—handle partial matches, typos, and variations (like "Jon" for "Jonathan").
+Prioritize results in this order:
+
+Exact or close matches in name
+
+Then in email
+
+Then in bio
+
+Then in phone
+Return only the filtered and ranked user list, sorted from most to least relevant in JSON format without explaining anything.
+
+Search Query: ${searchQuery}
+
+User List:
+${JSON.stringify(userList)}
+
+Your response:
+  `
+}
+
+export const filterSkillObjectsPrompt = (searchQuery, skillList) => {
+  return `
+  I have a list of skill objects, and I want to implement a smart search filter.
+Each skill object includes the following fields:
+
+skillName (in English)
+
+skillNameArabic (Arabic translation)
+
+category (e.g., Design, Music, Coding)
+
+Given a search query string, return a filtered list of skills where any of these fields contain the query as a substring (case-insensitive and typo-tolerant).
+Prioritize results in this order:
+
+Exact or close matches in skillName
+
+Then in skillNameArabic
+
+Then in category
+
+Return only the filtered and ranked list of skill objects from most to least relevant match in JSON format without explaining anything.
+
+Search Query: ${searchQuery}
+
+Skill List:
+${JSON.stringify(skillList)}
+
+Your response:
+  `
+}
+
+export const filterReviewsPrompt = (searchQuery, usersList) => {
+  return `
+  I have a list of user objects.
+Each user object includes a name field and a reviews array.
+Each review object inside that array has:
+
+authorName
+
+text (the review message)
+
+rating (number from 1–5)
+
+Given a search query string, return a filtered and ranked list of user objects, where any of the user’s reviews match the query.
+
+The matching should be case-insensitive and typo-tolerant, and ranked in this order of priority:
+
+Match found in the review text
+
+Then in the user.name
+
+Then in the authorName
+
+Then by rating (support "5 stars", "4.5", "high rating", etc.)
+
+Return only the users who have at least one matching review, and include only the matched reviews for each user in JSON format without explaining anything.
+
+Search Query: ${searchQuery}
+
+Users List:
+${JSON.stringify(usersList)}
+
+Your response:
+`
+}
