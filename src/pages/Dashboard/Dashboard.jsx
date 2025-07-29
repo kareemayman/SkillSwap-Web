@@ -4,7 +4,11 @@ import { deleteDocById, fetchSkillsList, getAllUsers } from "../../utils/firesto
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
 import { generateFromGemini } from "../../api/gemini"
-import { filterSkillObjectsPrompt, filterUsersPrompt } from "../../utils/geminiPrompts"
+import {
+  filterReviewsPrompt,
+  filterSkillObjectsPrompt,
+  filterUsersPrompt,
+} from "../../utils/geminiPrompts"
 
 export default function Dashboard() {
   const [selectedTab, setSelectedTab] = useState("users")
@@ -56,13 +60,15 @@ export default function Dashboard() {
         }
         filterSkills()
       } else if (selectedTab === "reviews") {
-        results = allUsers.flatMap((user) =>
-          user.reviews
-            ? user.reviews.filter((review) =>
-                review.text.toLowerCase().includes(searchInputTimeout.toLowerCase())
-              )
-            : []
-        )
+        async function filterReviews() {
+          let filteredReviews = await generateFromGemini(
+            filterReviewsPrompt(searchInputTimeout, allUsers)
+          )
+          filteredReviews = filteredReviews.replace("```json", "").replace("```", "")
+          results = JSON.parse(filteredReviews)
+          setSearchResults(results)
+        }
+        filterReviews()
       }
     }
   }, [searchInputTimeout])
@@ -237,7 +243,8 @@ export default function Dashboard() {
                   </div>
                 </div>
               ))}
-            {searchResults.length == 0 && allSkills &&
+            {searchResults.length == 0 &&
+              allSkills &&
               allSkills.map((skill) => (
                 <div
                   key={skill.id}
@@ -268,8 +275,8 @@ export default function Dashboard() {
               <p className="flex-1">Rating</p>
               <p className="flex-1">Actions</p>
             </div>
-            {allUsers &&
-              allUsers.map(
+            {searchResults &&
+              searchResults.map(
                 (user) =>
                   user.reviews &&
                   user.reviews.map((review, index) => (
@@ -279,6 +286,32 @@ export default function Dashboard() {
                     >
                       <p className="flex-1">{review.authorName}</p>
                       <p className="flex-1">{user.name}</p>
+                      <p className="flex-1 text-[var(--color-text-primary)] pr-6">{review.text}</p>
+                      <p className="flex-1 text-[var(--color-text-primary)]">{review.rating}</p>
+                      <div className="flex-1 text-[var(--color-text-primary)]">
+                        <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                          Edit
+                        </span>{" "}
+                        |{" "}
+                        <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
+                          Delete
+                        </span>
+                      </div>
+                    </div>
+                  ))
+              )}
+            {searchResults.length == 0 &&
+              allUsers &&
+              allUsers.map(
+                (user) =>
+                  user.reviews &&
+                  user.reviews.map((review, index) => (
+                    <div
+                      key={review.reviewId}
+                      className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
+                    >
+                      <p className="flex-1 capitalize">{review.authorName}</p>
+                      <p className="flex-1 capitalize">{user.name}</p>
                       <p className="flex-1 text-[var(--color-text-primary)] pr-6">{review.text}</p>
                       <p className="flex-1 text-[var(--color-text-primary)]">{review.rating}</p>
                       <div className="flex-1 text-[var(--color-text-primary)]">

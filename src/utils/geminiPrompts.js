@@ -133,3 +133,38 @@ ${JSON.stringify(skillList)}
 Your response:
   `
 }
+
+export const filterReviewsPrompt = (searchQuery, usersList) => {
+  return `
+  I have a list of user objects.
+Each user object includes a name field and a reviews array.
+Each review object inside that array has:
+
+authorName
+
+text (the review message)
+
+rating (number from 1–5)
+
+Given a search query string, return a filtered and ranked list of user objects, where any of the user’s reviews match the query.
+
+The matching should be case-insensitive and typo-tolerant, and ranked in this order of priority:
+
+Match found in the review text
+
+Then in the user.name
+
+Then in the authorName
+
+Then by rating (support "5 stars", "4.5", "high rating", etc.)
+
+Return only the users who have at least one matching review, and include only the matched reviews for each user in JSON format without explaining anything.
+
+Search Query: ${searchQuery}
+
+Users List:
+${JSON.stringify(usersList)}
+
+Your response:
+`
+}
