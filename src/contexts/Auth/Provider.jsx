@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import { AuthContext } from "./context";
 import { createUserDoc } from "../../utils/firestoreUtil";
+import toast from "react-hot-toast";
 
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -81,10 +82,12 @@ export default function AuthProvider({ children }) {
       await signOut(auth);
       // console.log("@logOut() @AuthProvider ---- log out success");
       // setUser(null);
+      toast.success("Logged out successfully");
     } catch (error) {
       // console.log("@logOut() @AuthProvider ---- log out failure ---- error.code =", error.code, "---- error.message =", error.message);
       // console.log("@logOut() @AuthProvider ---- log out failure ---- error =", error);
       setError(getErrorMessage(error.code));
+      toast.error("Failed to log out: " + getErrorMessage(error.code));
     } finally {
       setLoading(false);
     }

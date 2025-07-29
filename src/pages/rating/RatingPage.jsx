@@ -6,6 +6,7 @@ import {
 import { useAuth } from "../../contexts/Auth/context";
 import RatingSection from "./components/RatingSection";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const RatingPage = ({ userId }) => {
   const [user, setUser] = useState(null);
@@ -49,12 +50,12 @@ const RatingPage = ({ userId }) => {
     e.preventDefault();
 
     if (!ratings.overall) {
-      alert("Please provide at least an overall rating");
+      toast.error("Please provide at least an overall rating");
       return;
     }
 
     if (!currentUser) {
-      alert("You need to be logged in to submit a rating");
+      toast.error("You need to be logged in to submit a rating");
       return;
     }
 
@@ -72,10 +73,10 @@ const RatingPage = ({ userId }) => {
 
       await submitRating(ratingData);
       await updateUserRatingStats(userId);
-      alert("Rating submitted successfully!");
+      toast.success("Rating submitted successfully!");
     } catch (error) {
       console.error("Error submitting rating:", error);
-      alert("Failed to submit rating. Please try again.");
+      toast.error("Failed to submit rating. Please try again.");
     } finally {
       setIsSubmitting(false);
     }

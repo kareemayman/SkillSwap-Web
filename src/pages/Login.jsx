@@ -6,6 +6,7 @@ import { auth, signInWithGoogle } from "../firebase"
 import left from "../assets/videos/hands .gif"
 import { useTranslation } from "react-i18next"
 import { createUserDoc } from "../utils/firestoreUtil"
+import toast from "react-hot-toast"
 
 const Login = () => {
   const [email, setEmail] = useState("")
@@ -31,12 +32,12 @@ const Login = () => {
         // Signed in
         const user = userCredential.user
         // ...
-        alert("Login successful")
+        toast.success(t("Login.success", { name: user.displayName || user.email }))
       })
       .catch((error) => {
         const errorCode = error.code
         const errorMessage = error.message
-        alert("Login failed, " + errorMessage)
+        toast.error(t("Login.error", { error: errorMessage }))
       })
   }
 
@@ -45,10 +46,12 @@ const Login = () => {
       .then((res) => {
         const user = res.user
         console.log("Signed In as " + user.displayName)
+        toast.success(t("Login.success", { name: user.displayName || user.email }))
         createUserDoc(user)
       })
       .catch((error) => {
         console.log(error)
+        toast.error(t("Login.error", { error: error.message }))
       })
   }
 
