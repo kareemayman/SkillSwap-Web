@@ -2,6 +2,7 @@ import React from "react";
 import { LuCircleX, LuCircleCheck, LuMapPin } from "react-icons/lu";
 import EditButton from "../EditButton";
 import CountryCitySelector from "../../CreateProfile/Step3/CountryCitySelector";
+import { useTranslation } from "react-i18next";
 
 export default function EditableLocation({
   data,
@@ -13,6 +14,8 @@ export default function EditableLocation({
     data || { city: "", country: "" }
   );
   const [error, setError] = React.useState(null);
+  const { t } = useTranslation();
+
 
   const handleSave = () => {
     if (!location.country || !location.city) {
@@ -34,7 +37,7 @@ export default function EditableLocation({
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold text-[--color-text-primary]">
-          Location
+          {t("Location")}
         </h2>
 
         <div className="md:w-1/2 flex justify-end">

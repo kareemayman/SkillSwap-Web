@@ -5,6 +5,7 @@ import { getAllUsers, getUserById } from "../../utils/firestoreUtil";
 import { generateFromGemini } from "../../api/gemini";
 import { skillMatch } from "../../utils/geminiPrompts";
 import LoadingAnimation from "../../components/LoadingAnimation/LoadingAnimation";
+import { useTranslation } from "react-i18next";
 
 const Explore = () => {
   const { user } = useContext(AuthContext);
@@ -13,6 +14,8 @@ const Explore = () => {
   const [matches, setMatches] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const { t } = useTranslation();
+
 
   useEffect(() => {
     if (user) {
@@ -44,16 +47,15 @@ const Explore = () => {
     <>
       <div className="mx-auto container py-6 px-4 md:px-16">
         <h1 className="font-medium text-4xl my-2 text-[var(--color-text-primary)]">
-          <span className="text-[var(--main-color)]">AI</span>-Powered Skill Match Suggestions 🤖
+          <span className="text-[var(--main-color)]">{t("explore.AI")}</span>{t("explore.SkillMatchSuggestions")} 🤖
         </h1>
 
         <p className="pt-2 text-[var(--color-text-secondary)]">
-          Based on your profile and preferences, we've identified potential
-          skill trade matches that align with your interests and learning goals.
+          {t("explore.title")}
         </p>
 
         <h2 className="font-medium text-2xl my-5 text-[var(--color-text-primary)]">
-          Recommended Matches
+          {t("explore.RecommendedMatches")}
         </h2>
 
         {isLoading && (

@@ -2,11 +2,13 @@ import React, { useState, useCallback } from "react";
 import { LuCircleX, LuCircleCheck, LuPhone } from "react-icons/lu";
 import EditButton from "../EditButton";
 import PhoneNumberInput from "../../CreateProfile/Step3/PhoneNumberInput";
+import { useTranslation } from "react-i18next";
 
 export default function EditablePhone({ data, updateUserData }) {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(() => parsePhoneNumber(data));
   const [error, setError] = useState("");
+const { t } = useTranslation();
 
   const handleSave = () => {
     if (!value.phoneNumber || value.phoneNumber.trim() === "") {
@@ -39,7 +41,7 @@ export default function EditablePhone({ data, updateUserData }) {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold text-[--color-text-primary]">Phone</h2>
+        <h2 className="text-xl font-semibold text-[--color-text-primary]">{t("Phone")}</h2>
 
         <div className="md:w-1/2 flex justify-end">
           {isEditing ? (

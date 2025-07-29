@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { LuChevronDown, LuSearch, LuPhone } from "react-icons/lu";
+import { useTranslation } from "react-i18next";
 
 export default function PhoneNumberInput({ onPhoneChange, initialCountryCode = "", initialPhoneNumber = "" }) {
   const [countries, setCountries] = useState([]);
@@ -9,6 +10,7 @@ export default function PhoneNumberInput({ onPhoneChange, initialCountryCode = "
   const [isLoadingCountries, setIsLoadingCountries] = useState(false);
   const [error, setError] = useState(null);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+const { t } = useTranslation();
 
   // Fetch countries data when component mounts
   useEffect(() => {
@@ -114,7 +116,7 @@ export default function PhoneNumberInput({ onPhoneChange, initialCountryCode = "
       <div className="space-y-2">
         <label className="block text-sm font-medium text-[var(--color-text-primary)]">
           <LuPhone className="inline w-4 h-4 mr-1" />
-          Phone Number
+          {t("Phone number")}
         </label>
 
         <div className="flex">
@@ -135,7 +137,7 @@ export default function PhoneNumberInput({ onPhoneChange, initialCountryCode = "
                   <span className="text-gray-600 text-sm">{selectedCountry.code}</span>
                 </>
               ) : (
-                <span className="text-gray-500 text-sm">Select</span>
+                <span className="text-gray-500 text-sm"> {t("Select")}</span>
               )}
               <LuChevronDown className="w-4 h-4 text-gray-400 ml-1" />
             </button>
@@ -173,7 +175,7 @@ export default function PhoneNumberInput({ onPhoneChange, initialCountryCode = "
                       </button>
                     ))
                   ) : (
-                    <div className="px-3 py-2 text-gray-500 text-center text-sm">No countries found</div>
+                    <div className="px-3 py-2 text-gray-500 text-center text-sm"> {t("nocountry")}</div>
                   )}
                 </div>
               </div>

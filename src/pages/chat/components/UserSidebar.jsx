@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
 import img from "../../../assets/images/profile.png";
 import { Link } from "react-router-dom"; 
 
-
 export default function UserSidebar({ user }) {
+    const { t }= useTranslation();
+
   return (
     <div className="w-80 p-6 usercard hidden md:block border-l  border-gray-700 ">
       <div className="text-center">
@@ -18,7 +20,7 @@ export default function UserSidebar({ user }) {
       </div>
 
       <div className="mt-6">
-        <h4 className="font-semibold text-[var(--color-text-primary)] mb-2">Offering:</h4>
+        <h4 className="font-semibold text-[var(--color-text-primary)] mb-2">{t("chat.offer")} :</h4>
         <div className="flex flex-wrap gap-2">
           {user?.hasSkills?.map((skill, i) => (
             <span
@@ -32,7 +34,7 @@ export default function UserSidebar({ user }) {
       </div>
 
       <div className="mt-6">
-        <h4 className="font-semibold text-[var(--color-text-primary)]">Desiring:</h4>
+        <h4 className="font-semibold text-[var(--color-text-primary)]">{t("chat.desire")}:</h4>
         <div className="flex flex-wrap gap-2">
           {user?.needSkills?.map((skill, i) => (
             <span
@@ -46,7 +48,7 @@ export default function UserSidebar({ user }) {
       </div>
 
       <div className="mt-6">
-        <h4 className="font-semibold text-[var(--color-text-primary)]">About:</h4>
+        <h4 className="font-semibold text-[var(--color-text-primary)]">{t("chat.about")}:</h4>
         <p className="text-sm text-[var(--color-text-secondary)]">{user?.bio}</p>
       </div>
     </div>

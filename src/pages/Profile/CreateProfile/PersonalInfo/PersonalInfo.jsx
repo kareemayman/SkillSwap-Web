@@ -5,11 +5,13 @@ import StatusOverlay from "../../../../components/StatusOverlay";
 import ImageUpload from "./ImageUpload";
 import Button from "../../../../components/Button";
 import { LuArrowUpRight } from "react-icons/lu";
+import { useTranslation } from "react-i18next";
 
 export default function PersonalInfo({ updateStep, userId, initialData, onComplete }) {
   const [image, setImage] = useState(null);
   const [status, setStatus] = useState({ loading: false, error: null, data: null });
   const [bio, setBio] = useState(initialData?.bio || "");
+  const {t}= useTranslation();
 
   let imageUrl = initialData?.profilePicture || null;
 
@@ -64,13 +66,13 @@ export default function PersonalInfo({ updateStep, userId, initialData, onComple
       <div className="flex flex-col gap-8">
         <div>
           <label htmlFor="bio" className="block mb-2 text-base font-bold text-[var(--color-text-primary)] dark:text-white">
-            Bio
+            {t("Bio")}
           </label>
           <textarea
             id="bio"
             rows="4"
             className="block p-4 w-full text-sm text-gray-900 bg-slate-50 rounded-lg border border-gray-300 placeholder-gray-500 resize-none"
-            placeholder="What's your story? Share your skills, hobbies, or what you'd love to learn."
+            placeholder={t("info")}
             value={bio}
             onChange={(e) => {
               if (e.target.value.trim().length > 0) {

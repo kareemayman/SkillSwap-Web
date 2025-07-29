@@ -11,7 +11,8 @@ import {
 import UserSidebar from "./components/UserSidebar";
 import ChatInput from "./components/ChatInput";
 import ChatMessage from "./components/ChatMessage";
-import img from "../../assets/images/bgchat.jpg";
+import img from "../../assets/images/chat.jpg";
+import { useTranslation } from "react-i18next";
 
 export default function ChatScreen() {
   const { user: currentUser } = useAuth();
@@ -20,6 +21,7 @@ export default function ChatScreen() {
   const [otherUser, setOtherUser] = useState(null);
   const [messages, setMessages] = useState([]);
   const [chatId, setChatId] = useState(null);
+  const { t }= useTranslation();
 
   const navigate = useNavigate();
 
@@ -78,27 +80,28 @@ useEffect(() => {
     
 <div className="w-full chat-box overflow-y-scroll  ">
   <div className="flex h-[100vh] bg-black backdrop-blur-xl  shadow-xl overflow-hidden">
-    <div className="flex-1 flex flex-col px-5 overflow-hidden">
+    <div className="flex-1 flex flex-col px-5 overflow-hidden"
+            style={{ backgroundImage: `url(${img})`, backgroundSize: "cover" }}>
 
       {/* Header */}
       <div className="bg-[var(--input-bg)] px-5 -mx-5 py-4 border-b border-gray-900">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold text-gray-300">
-            Chat with {otherUser.name}
+            {t("chat.chat")} {otherUser.name}
           </h1>
           <button
             onClick={() => navigate("/messages")}
             className="flex items-center gap-2 px-4 py-2 text-[var(--color-text-light)] rounded-md shadow-sm  hover:bg-[var(--color-btn-back-hover)] transition"
           >
             <span>🔙</span>
-            <span>Back</span>
+            <span> {t("chat.Back")}</span>
           </button>
         </div>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto space-y-3 px-2 custom-scrollbar py-7"
-        style={{ backgroundImage: `url(${img})`, backgroundSize: "cover" }}>
+      
+      <div className="flex-1 overflow-y-auto space-y-3 px-2 custom-scrollbar py-7">
         {messages.map((msg) => (
           <ChatMessage
             key={msg.id}

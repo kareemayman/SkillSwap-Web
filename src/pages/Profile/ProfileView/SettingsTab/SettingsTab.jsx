@@ -1,13 +1,16 @@
 import React from "react";
 import EditablePhone from "./EditablePhone";
+import { useTranslation } from "react-i18next";
 
 export default function SettingsTab({ updatedProfile, updateUserData }) {
+  const { t } = useTranslation();
+ 
   return (
     <div className="space-y-8">
       <EditablePhone data={updatedProfile.phone} updateUserData={updateUserData} />
 
       <div className="space-y-4">
-        <h3 className="text-lg font-medium ">Availability</h3>
+        <h3 className="text-lg font-medium ">{t("availability")}</h3>
         <div className="flex items-center gap-3">
           <input
             type="checkbox"
@@ -17,13 +20,13 @@ export default function SettingsTab({ updatedProfile, updateUserData }) {
             className="w-4 h-4 text-[--color-btn-submit-bg] rounded hover:cursor-pointer"
           />
           <label htmlFor="availability" className="text-[--color-text-secondary] hover:cursor-pointer">
-            Available for skill trading
+            {t("Available for skill trading")}
           </label>
         </div>
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-lg font-medium ">Trading Preferences</h3>
+        <h3 className="text-lg font-medium ">{t("Trading Preferences")}</h3>
         <div className="space-y-3">
           <div className="flex items-center gap-3">
             <input
@@ -34,7 +37,7 @@ export default function SettingsTab({ updatedProfile, updateUserData }) {
               className="w-4 h-4 text-[--color-btn-submit-bg] rounded hover:cursor-pointer"
             />
             <label htmlFor="availableForTrade" className="text-[--color-text-secondary] hover:cursor-pointer">
-              Available for skill exchange
+            {t("Available for skill exchange")}
             </label>
           </div>
           <div className="flex items-center gap-3">
@@ -46,7 +49,7 @@ export default function SettingsTab({ updatedProfile, updateUserData }) {
               className="w-4 h-4 text-[--color-btn-submit-bg] rounded hover:cursor-pointer"
             />
             <label htmlFor="availableForPaid" className="text-[--color-text-secondary] hover:cursor-pointer">
-              Available for paid sessions
+            {t("Available for paid sessions")}
             </label>
           </div>
         </div>

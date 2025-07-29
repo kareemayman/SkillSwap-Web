@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { LuChevronDown, LuSearch, LuMapPin, LuGlobe } from "react-icons/lu";
+import { useTranslation } from "react-i18next";
 
-export default function CountryCitySelector({ onSelectionChange, initialCountry = "", initialCity = "" }) {
+export default function CountryCitySelector({
+  onSelectionChange,
+  initialCountry = "",
+  initialCity = "",
+}) {
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(initialCountry);
   const [selectedCity, setSelectedCity] = useState(initialCity);
@@ -11,6 +16,7 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
   const [error, setError] = useState(null);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [showCityDropdown, setShowCityDropdown] = useState(false);
+  const { t } = useTranslation();
 
   // Fetch countries data when component mounts
   useEffect(() => {
@@ -19,11 +25,14 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
       setError(null);
 
       try {
-        const response = await fetch("https://countriesnow.space/api/v0.1/countries");
+        const response = await fetch(
+          "https://countriesnow.space/api/v0.1/countries"
+        );
         if (!response.ok) throw new Error("Failed to fetch countries");
 
         const result = await response.json();
-        if (result.error) throw new Error(result.msg || "API returned an error");
+        if (result.error)
+          throw new Error(result.msg || "API returned an error");
 
         setCountries(result.data);
       } catch (err) {
@@ -40,7 +49,9 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
   // Filter countries based on search
   const filteredCountries = useMemo(() => {
     if (!countrySearch) return countries;
-    return countries.filter((country) => country.country.toLowerCase().includes(countrySearch.toLowerCase()));
+    return countries.filter((country) =>
+      country.country.toLowerCase().includes(countrySearch.toLowerCase())
+    );
   }, [countries, countrySearch]);
 
   // Get cities for selected country
@@ -52,7 +63,9 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
   // Filter cities based on search
   const filteredCities = useMemo(() => {
     if (!citySearch) return availableCities;
-    return availableCities.filter((city) => city.toLowerCase().includes(citySearch.toLowerCase()));
+    return availableCities.filter((city) =>
+      city.toLowerCase().includes(citySearch.toLowerCase())
+    );
   }, [availableCities, citySearch]);
 
   // Handle country selection
@@ -93,7 +106,7 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
         <div className="relative">
           <label className="block text-sm font-medium text-[var(--color-text-primary)] mb-2">
             <LuGlobe className="inline w-4 h-4 mr-1" />
-            Country
+            {t("Country")}
           </label>
 
           <div className="relative">
@@ -104,8 +117,14 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
               className="w-full px-4 py-3 text-left bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-card-border)] focus:border-[var(--color-card-border)] disabled:bg-gray-100 disabled:cursor-not-allowed"
             >
               <div className="flex items-center justify-between">
-                <span className={selectedCountry ? "text-gray-900" : "text-gray-500"}>
-                  {isLoadingCountries ? "Loading countries..." : selectedCountry || "Select a country"}
+                <span
+                  className={
+                    selectedCountry ? "text-gray-900" : "text-gray-500"
+                  }
+                >
+                  {isLoadingCountries
+                    ? "Loading countries..."
+                    : selectedCountry || "Select a country"}
                 </span>
                 <LuChevronDown className="w-5 h-5 text-gray-400" />
               </div>
@@ -139,13 +158,20 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
                         className="w-full px-4 py-3 text-left hover:bg-blue-50 focus:outline-none focus:ring-[var(--color-card-border)]"
                       >
                         <div className="flex items-center justify-between">
-                          <span className="text-gray-900">{country.country}</span>
-                          <span className="text-xs text-gray-500">{country.iso2}</span>
+                          <span className="text-gray-900">
+                            {country.country}
+                          </span>
+                          <span className="text-xs text-gray-500">
+                            {country.iso2}
+                          </span>
                         </div>
                       </button>
                     ))
                   ) : (
-                    <div className="px-4 py-3 text-gray-500 text-center">No countries found</div>
+                    <div className="px-4 py-3 text-gray-500 text-center">
+                      {" "}
+                      {t("nocountry")}
+                    </div>
                   )}
                 </div>
               </div>
@@ -158,21 +184,31 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
         <div className="relative">
           <label className="block text-sm font-medium text-[var(--color-text-primary)] mb-2">
             <LuMapPin className="inline w-4 h-4 mr-1" />
-            City
+            {t("city")}
           </label>
 
           <div className="relative">
             <button
               type="button"
-              onClick={() => selectedCountry && setShowCityDropdown(!showCityDropdown)}
+              onClick={() =>
+                selectedCountry && setShowCityDropdown(!showCityDropdown)
+              }
               disabled={!selectedCountry}
               className="w-full px-4 py-3 text-left bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-card-border)] focus:border-[var(--color-card-border)]"
             >
               <div className="flex items-center justify-between">
-                <span className={selectedCity ? "text-gray-900" : "text-gray-500"}>
-                  {!selectedCountry ? "Select a country first" : selectedCity || "Select a city"}
+                <span
+                  className={selectedCity ? "text-gray-900" : "text-gray-500"}
+                >
+                  {!selectedCountry
+                    ? "Select a country first"
+                    : selectedCity || "Select a city"}
                 </span>
-                <LuChevronDown className={`w-5 h-5 ${!selectedCountry ? "text-gray-300" : "text-gray-400"}`} />
+                <LuChevronDown
+                  className={`w-5 h-5 ${
+                    !selectedCountry ? "text-gray-300" : "text-gray-400"
+                  }`}
+                />
               </div>
             </button>
 
@@ -184,7 +220,7 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
                     <LuSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                     <input
                       type="text"
-                      placeholder="Search cities..."
+                      placeholder={t("cityplaceholder")}
                       value={citySearch}
                       onChange={(e) => setCitySearch(e.target.value)}
                       className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-card-border)] focus:border-[var(--color-card-border)] text-[var(--color-text-dark)]"
@@ -207,7 +243,9 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
                       </button>
                     ))
                   ) : (
-                    <div className="px-4 py-3 text-gray-500 text-center">No cities found</div>
+                    <div className="px-4 py-3 text-gray-500 text-center">
+                      {t("nocity")}
+                    </div>
                   )}
                 </div>
               </div>
@@ -219,8 +257,14 @@ export default function CountryCitySelector({ onSelectionChange, initialCountry 
       {/* Selected values display */}
       {(selectedCountry || selectedCity) && (
         <div className="p-3 bg-green-50 rounded-lg border border-green-200 flex gap-2">
-          <p className="text-sm font-medium text-green-900 mb-1">Selected Location:</p>
-          <p className="text-sm text-green-700">{selectedCity && selectedCountry ? `${selectedCity}, ${selectedCountry}` : selectedCountry}</p>
+          <p className="text-sm font-medium text-green-900 mb-1">
+            Selected Location:
+          </p>
+          <p className="text-sm text-green-700">
+            {selectedCity && selectedCountry
+              ? `${selectedCity}, ${selectedCountry}`
+              : selectedCountry}
+          </p>
         </div>
       )}
     </div>

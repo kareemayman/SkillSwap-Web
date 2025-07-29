@@ -7,6 +7,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 import img from "../../assets/images/profile.png";
+import { useTranslation } from "react-i18next";
 
 export default function Messages() {
   const { user: currentUser } = useAuth();
@@ -14,6 +15,7 @@ export default function Messages() {
   const [userCache, setUserCache] = useState({});
   const [activeTab, setActiveTab] = useState("all");
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!currentUser?.uid) return;
@@ -48,11 +50,10 @@ export default function Messages() {
   return (
     <div className="container mx-auto py-6 px-4 md:px-16">
       <h1 className="text-[var(--color-text-primary)] text-3xl font-bold mb-4">
-        Messages 📩
+       {t("messages.Messages")} 📩
       </h1>
       <p className="text-[var(--color-text-secondary)] leading-5 mb-4">
-        Communicate with potential matches, discuss skill exchange, schedule
-        sessions.
+        {t("messages.title")}
       </p>
 
 <div className="flex border-b mb-4">
@@ -64,7 +65,7 @@ export default function Messages() {
         : "border-transparent text-gray-500"
     }`}
   >
-    All
+        {t("messages.all")}
   </button>
   <button
     onClick={() => setActiveTab("unread")}
@@ -74,7 +75,7 @@ export default function Messages() {
         : "border-transparent text-gray-500"
     }`}
   >
-    Unread
+        {t("messages.unread")}
   </button>
 </div>
 

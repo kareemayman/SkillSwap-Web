@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function ChatInput({ onSend }) {
   const [text, setText] = useState("");
+    const { t }= useTranslation();
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,7 +19,7 @@ export default function ChatInput({ onSend }) {
       <input
         type="text"
       className='w-full border-neutral-950 focus:border-[var(--color-card-content-border)] bg-[var(--input-bg)] text-[var(--color-text-primary)] rounded-md shadow-sm   '
-        placeholder="Type a message..."
+        placeholder={t("chat.placeholder")}
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
@@ -24,7 +27,7 @@ export default function ChatInput({ onSend }) {
         type="submit"
         className="px-6 py-3 bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] text-white font-medium rounded-xl  transition"
       >
-        Send
+        {t("chat.send")}
       </button>
     </form>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { LuChevronDown, LuSearch, LuBrain, LuTarget } from "react-icons/lu";
+import { useTranslation } from "react-i18next";
 
 const SKILL_LEVELS = [
   { value: "beginner", label: "beginner", color: "bg-blue-50 text-blue-700 border-blue-200" },
@@ -13,6 +14,7 @@ export default function SkillLevelSelector({ skills = [], onSkillLevelChange }) 
   const [skillSearch, setSkillSearch] = useState("");
   const [showSkillDropdown, setShowSkillDropdown] = useState(false);
   const [showLevelDropdown, setShowLevelDropdown] = useState(false);
+const { t } = useTranslation();
 
   // Filter skills based on search
   const filteredSkills = useMemo(() => {
@@ -59,7 +61,7 @@ export default function SkillLevelSelector({ skills = [], onSkillLevelChange }) 
       <div className="space-y-2">
         <label className="block text-sm font-medium text-[var(--color-text-primary)]">
           <LuBrain className="inline w-4 h-4 mr-1" />
-          Select Skill & Proficiency Level
+            {t("selectskill")}
         </label>
 
         <div className="flex flex-col sm:flex-row gap-2">
@@ -75,7 +77,7 @@ export default function SkillLevelSelector({ skills = [], onSkillLevelChange }) 
                 {selectedSkill ? (
                   <span className="text-gray-900 text-sm font-medium truncate">{selectedSkill.skillName}</span>
                 ) : (
-                  <span className="text-gray-500 text-sm">Select a skill</span>
+                  <span className="text-gray-500 text-sm"> {t("Select a skill")}</span>
                 )}
               </div>
               <LuChevronDown className="w-4 h-4 text-gray-400 ml-2 flex-shrink-0" />
@@ -162,7 +164,7 @@ export default function SkillLevelSelector({ skills = [], onSkillLevelChange }) 
       {/* Current Skills Display */}
       {skills.length > 0 && (
         <div className="space-y-2">
-          <h3 className="text-sm font-medium text-[var(--color-text-primary)]">Current Skills:</h3>
+          <h3 className="text-sm font-medium text-[var(--color-text-primary)]">{t("Current Skills")}</h3>
           <div className=" max-h-64 overflow-y-auto">
             <div className="grid gap-2">
               {skills.map((skill) => (
@@ -182,7 +184,7 @@ export default function SkillLevelSelector({ skills = [], onSkillLevelChange }) 
                         {skill.skillLevel}
                       </span>
                     ) : (
-                      <span className="px-2 py-1 text-xs rounded-full border bg-gray-50 text-gray-500 border-gray-200 flex-shrink-0">Not set</span>
+                      <span className="px-2 py-1 text-xs rounded-full border bg-gray-50 text-gray-500 border-gray-200 flex-shrink-0">{t("Not set")}</span>
                     )}
                   </div>
                 </div>

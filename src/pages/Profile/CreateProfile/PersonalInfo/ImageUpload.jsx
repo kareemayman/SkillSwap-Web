@@ -2,11 +2,13 @@ import { useEffect, useRef, useState } from "react";
 // import { Image, Trash2 } from "lucide-react";
 import { LuImage, LuTrash2 } from "react-icons/lu";
 import CustomDropzone from "./CustomDropzone";
+import { useTranslation } from "react-i18next";
 
 export default function ImageUpload({ selectedImage, setSelectedImage, maxSize = 1 * 1024 * 1024, isDropzone = false }) {
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
+  const { t}= useTranslation();
 
   useEffect(() => {
     // Reset preview and error when selectedImage changes
@@ -78,7 +80,7 @@ export default function ImageUpload({ selectedImage, setSelectedImage, maxSize =
             className="flex items-center gap-2 p-2 rounded-full hover:bg-gray-100 hover:cursor-pointer active:bg-gray-200 transition-all duration-200"
           >
             <LuImage size={20} color="#27364B" />
-            <span className="text-[#27364B] font-medium text-sm">Add Media</span>
+            <span className="text-[#27364B] font-medium text-sm">{t("Add Media")}</span>
           </button>
         )
       ) : (
