@@ -70,7 +70,7 @@ export const ScheduleSession = () => {
       <>
         <div className="mx-auto px-16 pt-8 pb-8 container">
           <h1 className=" font-semibold text-[var(--color-text-primary)] text-3xl sm:text-left text-center">
-            Schedule Session with <span className="capitalize  ">{user ? user.name : "User"}</span>🗓️
+            Schedule Session with <span className="capitalize  ">{user ? user.name : "User"} 🗓️</span>
           </h1>
           <div className="flex sm:flex-row flex-col items-center gap-3 my-8">
             <img

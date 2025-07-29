@@ -78,7 +78,9 @@
     "footer": "Don't have an account?",
     "link": "Sign Up",
     "alternative": "or continue with",
-    "google": "Continue with Google"
+    "google": "Continue with Google",
+    "success": "Signed in as {{name}}",
+    "error": "Login failed: {{error}}"
   },
   "name": "Name",
   "email": "Email",
