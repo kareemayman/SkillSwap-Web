@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, getDoc, serverTimestamp, setDoc, updateDoc, query, where, addDoc } from "firebase/firestore";
+import { collection, doc, getDocs, getDoc, serverTimestamp, setDoc, updateDoc, query, where, addDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { getSkillCategory, translateSkillToArabic } from "./geminiPrompts";
 import { generateFromGemini } from "../api/gemini";
@@ -131,5 +131,14 @@ export const createFirestoreTrade = async (tradeData) => {
   } catch (error) {
     console.error("Error creating trade document:", error);
     throw error;
+  }
+}
+
+export const deleteDocById = async (collectionName, docId) => {
+  try {
+    const docRef = doc(db, collectionName, docId);
+    await deleteDoc(docRef);
+  } catch (error) {
+    console.error(`Error deleting document from ${collectionName} with ID ${docId}:`, error);
   }
 }

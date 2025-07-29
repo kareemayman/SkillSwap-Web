@@ -76,3 +76,29 @@ Skill Name: ${skillName}
 Your response:
 `
 }
+
+export const filterUsersPrompt = (searchQuery, userList) => {
+  return `
+  I have a list of user profiles, and I want to implement a search functionality.
+Each user object includes the following fields: name, email, bio, and phone.
+Given a search query string, return a filtered list of users where any of these fields contain the query as a substring (case-insensitive).
+The match should be flexible—handle partial matches, typos, and variations (like "Jon" for "Jonathan").
+Prioritize results in this order:
+
+Exact or close matches in name
+
+Then in email
+
+Then in bio
+
+Then in phone
+Return only the filtered and ranked user list, sorted from most to least relevant in JSON format without explaining anything.
+
+Search Query: ${searchQuery}
+
+User List:
+${JSON.stringify(userList)}
+
+Your response:
+  `
+}
