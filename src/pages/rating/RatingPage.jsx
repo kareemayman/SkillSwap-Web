@@ -7,6 +7,7 @@ import { useAuth } from "../../contexts/Auth/context";
 import RatingSection from "./components/RatingSection";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import useFirestoreGet from "../../hooks/useFirestoreGet";
 
 const RatingPage = ({ userId }) => {
   const [user, setUser] = useState(null);
@@ -14,13 +15,24 @@ const RatingPage = ({ userId }) => {
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { user: currentUser } = useAuth();
+  const { data: userProfile, request } = useFirestoreGet();
 
   const [ratings, setRatings] = useState({
     overall: 0,
     teaching: 0,
     communication: 0,
     punctuality: 0,
+    reviewText: "",
   });
+  useEffect(() => {
+    if (currentUser?.uid) {
+      request("users", currentUser.uid); // Assumes user data is stored in a "users" collection
+    }
+  }, [currentUser?.uid]);
+
+  useEffect(() => {
+    console.log("🔥 userProfile loaded:", userProfile);
+  }, [userProfile]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -59,21 +71,39 @@ const RatingPage = ({ userId }) => {
       return;
     }
 
+    if (!userProfile || !userProfile.profilePicture) {
+      toast.error("Please wait, loading your profile data...");
+      return;
+    }
+
     setIsSubmitting(true);
+
     try {
       const ratingData = {
         revieweeId: userId,
         reviewerId: currentUser.uid,
+        authorName: currentUser.displayName || currentUser.name || "Anonymous",
+        authorPhoto: userProfile.profilePicture || "",
         overallRating: ratings.overall,
         teachingSkill: ratings.teaching,
         communication: ratings.communication,
         punctuality: ratings.punctuality,
+        text: ratings.reviewText,
         createdAt: new Date().toISOString(),
       };
+
+      console.log(" Submitting ratingData:", ratingData);
 
       await submitRating(ratingData);
       await updateUserRatingStats(userId);
       toast.success("Rating submitted successfully!");
+      setRatings({
+        overall: 0,
+        teaching: 0,
+        communication: 0,
+        punctuality: 0,
+        reviewText: "",
+      });
     } catch (error) {
       console.error("Error submitting rating:", error);
       toast.error("Failed to submit rating. Please try again.");
@@ -91,13 +121,16 @@ const RatingPage = ({ userId }) => {
   return (
     <>
       <div>
-        <h1 className="text-[var(--color-text-primary)] text-3xl font-bold mb-4">
+        <h1 className="text-[var(--main-color)] text-3xl font-bold mb-4">
           Rating
         </h1>
 
         <div className="mb-6">
-          <h2 className="text-3 text-[var(--color-text-secondary)] leading-5 mb-4">
-            Rate your experience with {user.name}
+          <h2 className="text-lg text-[var(--color-text-secondary)] leading-5 mb-4">
+            Rate your experience with{" "}
+            <span className="text-[var(--color-text-primary)] font-bold">
+              {user.name}
+            </span>
           </h2>
 
           <form onSubmit={handleSubmit}>
@@ -107,7 +140,7 @@ const RatingPage = ({ userId }) => {
               setRating={(val) => handleStarChange("overall", val)}
             />
 
-            <h3 className="text-lg font-medium text-gray-800 mb-3">
+            <h3 className="text-lg font-medium  mb-3 text-[var(--color-text-primary)] ">
               Rate specific aspects
             </h3>
 
@@ -127,6 +160,17 @@ const RatingPage = ({ userId }) => {
               title="Punctuality"
               rating={ratings.punctuality}
               setRating={(val) => handleStarChange("punctuality", val)}
+            />
+            <textarea
+              className="usercard mb-6 border-black blur:border-none hover:border-[var(--color-card-border)] pl-4 py-1 rounded-lg shadow-md  w-full text-[var(--color-text-light)]"
+              placeholder="Write your review..."
+              value={ratings.reviewText}
+              onChange={(e) =>
+                setRatings((prev) => ({
+                  ...prev,
+                  reviewText: e.target.value,
+                }))
+              }
             />
 
             <button

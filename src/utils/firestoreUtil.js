@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, getDoc, serverTimestamp, setDoc, updateDoc, query, where, addDoc, deleteDoc } from "firebase/firestore";
+import { collection, doc, getDocs, getDoc, serverTimestamp, setDoc, updateDoc, query, where, addDoc, deleteDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../firebase";
 import { getSkillCategory, translateSkillToArabic } from "./geminiPrompts";
 import { generateFromGemini } from "../api/gemini";
@@ -63,13 +63,26 @@ export const createUserDoc = async (user) => {
 
 export const submitRating = async (ratingData) => {
   try {
-    // Only create one document when submitting
-    const ratingRef = doc(collection(db, "ratings"));
-    await setDoc(ratingRef, {
-      ...ratingData,
-      createdAt: serverTimestamp(), // Use server timestamp
+    const userRef = doc(db, "users", ratingData.revieweeId);
+    
+    const reviewId = crypto.randomUUID(); // Or any unique ID logic
+    const review = {
+      reviewId,
+      reviewerId: ratingData.reviewerId,
+      authorName: ratingData.authorName, // make sure you pass it
+      text: ratingData.text || "",        // optional comment
+      rating: ratingData.overallRating,
+      teachingSkill: ratingData.teachingSkill,
+      communication: ratingData.communication,
+      punctuality: ratingData.punctuality,
+      createdAt: new Date().toISOString(),
+    };
+
+    await updateDoc(userRef, {
+      reviews: arrayUnion(review)
     });
-    return ratingRef.id;
+
+    return reviewId;
   } catch (error) {
     console.error("Error submitting rating:", error);
     throw error;
@@ -85,14 +98,17 @@ export const getUserRatings = async (userId) => {
 };
 
 export const updateUserRatingStats = async (userId) => {
-  const ratings = await getUserRatings(userId);
-  const totalRatings = ratings.length;
+  const userRef = doc(db, "users", userId);
+  const userSnap = await getDoc(userRef);
+  const userData = userSnap.data();
+
+  const reviews = userData.reviews || [];
+  const totalRatings = reviews.length;
 
   if (totalRatings === 0) return;
 
-  const averageRating = ratings.reduce((sum, rating) => sum + rating.overallRating, 0) / totalRatings;
+  const averageRating = reviews.reduce((sum, review) => sum + review.rating, 0) / totalRatings;
 
-  const userRef = doc(db, "users", userId);
   await updateDoc(userRef, {
     rating: averageRating,
     totalSessions: totalRatings,
