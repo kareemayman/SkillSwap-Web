@@ -69,7 +69,8 @@ export const submitRating = async (ratingData) => {
     const review = {
       reviewId,
       reviewerId: ratingData.reviewerId,
-      authorName: ratingData.authorName, // make sure you pass it
+      authorName: ratingData.authorName,
+      authorPhoto: ratingData.authorPhoto || "", // make sure you pass it
       text: ratingData.text || "",        // optional comment
       rating: ratingData.overallRating,
       teachingSkill: ratingData.teachingSkill,
