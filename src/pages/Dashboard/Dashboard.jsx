@@ -9,8 +9,10 @@ import {
   filterSkillObjectsPrompt,
   filterUsersPrompt,
 } from "../../utils/geminiPrompts"
+import { useTranslation } from "react-i18next"
 
 export default function Dashboard() {
+  const { t } = useTranslation()
   const [selectedTab, setSelectedTab] = useState("users")
   const [allUsers, setAllUsers] = useState([])
   const [allSkills, setAllSkills] = useState([])
@@ -19,13 +21,8 @@ export default function Dashboard() {
   const [searchResults, setSearchResults] = useState([])
 
   useEffect(() => {
-    getAllUsers().then((users) => {
-      setAllUsers(users)
-    })
-
-    fetchSkillsList().then((skills) => {
-      setAllSkills(skills)
-    })
+    getAllUsers().then((users) => setAllUsers(users))
+    fetchSkillsList().then((skills) => setAllSkills(skills))
   }, [])
 
   useEffect(() => {
@@ -35,15 +32,13 @@ export default function Dashboard() {
   }, [searchInput])
 
   useEffect(() => {
-    if (searchInputTimeout.trim() === "" && searchInputTimeout.trim() == searchInput.trim()) {
+    if (searchInputTimeout.trim() === "" && searchInputTimeout.trim() === searchInput.trim()) {
       setSearchResults([])
-    } else if (searchInputTimeout.trim() != "" && searchInputTimeout.trim() == searchInput.trim()) {
+    } else if (searchInputTimeout.trim() !== "" && searchInputTimeout.trim() === searchInput.trim()) {
       let results = []
       if (selectedTab === "users") {
         async function filterUsers() {
-          let filteredUsers = await generateFromGemini(
-            filterUsersPrompt(searchInputTimeout, allUsers)
-          )
+          let filteredUsers = await generateFromGemini(filterUsersPrompt(searchInputTimeout, allUsers))
           filteredUsers = filteredUsers.replace("```json", "").replace("```", "")
           results = JSON.parse(filteredUsers)
           setSearchResults(results)
@@ -51,9 +46,7 @@ export default function Dashboard() {
         filterUsers()
       } else if (selectedTab === "skills") {
         async function filterSkills() {
-          let filteredSkills = await generateFromGemini(
-            filterSkillObjectsPrompt(searchInputTimeout, allSkills)
-          )
+          let filteredSkills = await generateFromGemini(filterSkillObjectsPrompt(searchInputTimeout, allSkills))
           filteredSkills = filteredSkills.replace("```json", "").replace("```", "")
           results = JSON.parse(filteredSkills)
           setSearchResults(results)
@@ -61,9 +54,7 @@ export default function Dashboard() {
         filterSkills()
       } else if (selectedTab === "reviews") {
         async function filterReviews() {
-          let filteredReviews = await generateFromGemini(
-            filterReviewsPrompt(searchInputTimeout, allUsers)
-          )
+          let filteredReviews = await generateFromGemini(filterReviewsPrompt(searchInputTimeout, allUsers))
           filteredReviews = filteredReviews.replace("```json", "").replace("```", "")
           results = JSON.parse(filteredReviews)
           setSearchResults(results)
@@ -82,42 +73,19 @@ export default function Dashboard() {
   return (
     <div className="container mx-auto px-16 pt-8 pb-8">
       <div className="flex gap-12 items-center border-b-2 border-[var(--color-card-border)] mb-8">
-        <p
-          className={`pb-4 relative ${
-            selectedTab == "users"
-              ? "text-[var(--main-color)]"
-              : "text-[var(--color-text-primary)]"
-          } cursor-pointer font-bold hover:text-[var(--color-text-light)] transition-all duration-300 text-lg before:absolute before:content-[""] ${
-            selectedTab == "users" && "before:w-full"
-          } before:h-[3px] before:rounded-xl before:bg-[var(--main-color)] before:top-[calc(100%-2px)] before:left-0 before:transition-all before:duration-300`}
-          onClick={() => setSelectedTab("users")}
-        >
-          Users
-        </p>
-        <p
-          className={`pb-4 relative ${
-            selectedTab == "skills"
-              ? "text-[var(--main-color)]"
-              : "text-[var(--color-text-primary)]"
-          } cursor-pointer font-bold hover:text-[var(--color-text-light)] text-lg before:absolute before:content-[""] ${
-            selectedTab == "skills" && "before:w-full"
-          } before:h-[3px] before:rounded-xl before:bg-[var(--main-color)] before:top-[calc(100%-2px)] before:left-0 before:transition-all before:duration-300`}
-          onClick={() => setSelectedTab("skills")}
-        >
-          Skills
-        </p>
-        <p
-          className={`pb-4 relative ${
-            selectedTab == "reviews"
-              ? "text-[var(--main-color)]"
-              : "text-[var(--color-text-primary)]"
-          } cursor-pointer font-bold hover:text-[var(--color-text-light)] text-lg before:absolute before:content-[""] ${
-            selectedTab == "reviews" && "before:w-full"
-          } before:h-[3px] before:rounded-xl before:bg-[var(--main-color)] before:top-[calc(100%-2px)] before:left-0 before:transition-all before:duration-300`}
-          onClick={() => setSelectedTab("reviews")}
-        >
-          Reviews
-        </p>
+        {["users", "skills", "reviews"].map((tab) => (
+          <p
+            key={tab}
+            className={`pb-4 relative ${
+              selectedTab === tab ? "text-[var(--main-color)]" : "text-[var(--color-text-primary)]"
+            } cursor-pointer font-bold hover:text-[var(--color-text-light)] transition-all duration-300 text-lg before:absolute before:content-[''] ${
+              selectedTab === tab && "before:w-full"
+            } before:h-[3px] before:rounded-xl before:bg-[var(--main-color)] before:top-[calc(100%-2px)] before:left-0 before:transition-all before:duration-300`}
+            onClick={() => setSelectedTab(tab)}
+          >
+            {t(`Dashboard.${tab.charAt(0).toUpperCase() + tab.slice(1)}`)}
+          </p>
+        ))}
       </div>
 
       <div className="w-full rounded-3xl bg-[#382E29] p-3 px-4 flex items-center gap-2 mb-8">
@@ -132,200 +100,106 @@ export default function Dashboard() {
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           className="flex-1 bg-transparent text-[var(--color-text-primary)] placeholder:text-[var(--color-text-primary)] focus:outline-none border-none"
-          placeholder={`Search ${
-            selectedTab === "users" ? "users" : selectedTab === "skills" ? "skills" : "reviews"
-          }`}
+          placeholder={
+            selectedTab === "users"
+              ? t("Dashboard.SearchUsers")
+              : selectedTab === "skills"
+              ? t("Dashboard.SearchSkills")
+              : t("Dashboard.SearchReviews")
+          }
         />
       </div>
 
-      <div className="w-full min-h-20 rounded-lg  shadow-[#382E29] shadow-md">
+      <div className="w-full min-h-20 rounded-lg shadow-[#382E29] shadow-md">
         {selectedTab === "users" && (
           <>
             <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold bg-[#26211c] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
-              <p className="flex-1">User</p>
-              <p className="flex-1">Name</p>
-              <p className="flex-1">Skills</p>
-              <p className="flex-1">Reviews</p>
-              <p className="flex-1">Actions</p>
+              <p className="flex-1">{t("Dashboard.User")}</p>
+              <p className="flex-1">{t("Dashboard.Name")}</p>
+              <p className="flex-1">{t("Dashboard.Skills")}</p>
+              <p className="flex-1">{t("Dashboard.Reviews")}</p>
+              <p className="flex-1">{t("Dashboard.Actions")}</p>
             </div>
-            {searchResults &&
-              searchResults.map((user) => (
-                <div
-                  key={user.uid}
-                  className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
-                >
-                  <div className="flex-1">
-                    <img
-                      src={user.profilePicture ? user.profilePicture : Avat}
-                      alt="image"
-                      className="block rounded-full w-12 h-12 object-cover"
-                    />
-                  </div>
-                  <p className="flex-1 capitalize ">{user.name}</p>
-                  <p className="flex-1 text-[var(--color-text-primary)] capitalize">
-                    {user.hasSkills &&
-                      user.hasSkills.map((s, i) => {
-                        return `${s.skillName}${i < user.hasSkills.length - 1 ? ", " : ""}`
-                      })}
-                  </p>
-                  <p className="flex-1 text-[var(--color-text-primary)]">{user.rating || 0}</p>
-                  <div className="flex-1 text-[var(--color-text-primary)]">
-                    <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                      Edit
-                    </span>{" "}
-                    |{" "}
-                    <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                      Delete
-                    </span>
-                  </div>
+            {(searchResults.length > 0 ? searchResults : allUsers).map((user) => (
+              <div
+                key={user.uid}
+                className="flex items-center p-4 text-[var(--color-text-primary)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
+              >
+                <div className="flex-1">
+                  <img
+                    src={user.profilePicture || Avat}
+                    alt="avatar"
+                    className="block rounded-full w-12 h-12 object-cover"
+                  />
                 </div>
-              ))}
-            {searchResults.length == 0 &&
-              allUsers &&
-              allUsers.map((user) => (
-                <div
-                  key={user.uid}
-                  className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
-                >
-                  <div className="flex-1">
-                    <img
-                      src={user.profilePicture ? user.profilePicture : Avat}
-                      alt="image"
-                      className="block rounded-full w-12 h-12 object-cover"
-                    />
-                  </div>
-                  <p className="flex-1 capitalize text-[var(--color-text-primary)]">{user.name}</p>
-                  <p className="flex-1 text-[var(--color-text-primary)] capitalize">
-                    {user.hasSkills &&
-                      user.hasSkills.map((s, i) => {
-                        return `${s.skillName}${i < user.hasSkills.length - 1 ? ", " : ""}`
-                      })}
-                  </p>
-                  <p className="flex-1 text-[var(--color-text-primary)]">{user.rating || 0}</p>
-                  <div className="flex-1 text-[var(--color-text-primary)]">
-                    <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                      Edit
-                    </span>{" "}
-                    |{" "}
-                    <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                      Delete
-                    </span>
-                  </div>
+                <p className="flex-1 capitalize">{user.name}</p>
+                <p className="flex-1 text-[var(--color-text-primary)] capitalize">
+                  {user.hasSkills?.map((s, i) => `${s.skillName}${i < user.hasSkills.length - 1 ? ", " : ""}`)}
+                </p>
+                <p className="flex-1 text-[var(--color-text-primary)]">{user.rating || 0}</p>
+                <div className="flex-1 text-[var(--color-text-primary)]">
+                  <span className="cursor-pointer hover:text-[var(--color-text-light)]">{t("Dashboard.Edit")}</span>{" "}
+                  |{" "}
+                  <span className="cursor-pointer hover:text-[var(--color-text-light)]">{t("Dashboard.Delete")}</span>
                 </div>
-              ))}
+              </div>
+            ))}
           </>
         )}
+
         {selectedTab === "skills" && (
           <>
             <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold bg-[#26211c] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
-              <p className="flex-1">Skill Name</p>
-              <p className="flex-1">Category</p>
-              <p className="flex-1">Arabic Skill Name</p>
-              <p className="flex-1">Actions</p>
+              <p className="flex-1">{t("Dashboard.SkillName")}</p>
+              <p className="flex-1">{t("Dashboard.Category")}</p>
+              <p className="flex-1">{t("Dashboard.ArabicSkillName")}</p>
+              <p className="flex-1">{t("Dashboard.Actions")}</p>
             </div>
-            {searchResults &&
-              searchResults.map((skill) => (
-                <div
-                  key={skill.id}
-                  className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
-                >
-                  <p className="flex-1 ">{skill.skillName}</p>
-                  <p className="flex-1">{skill.category}</p>
-                  <p className="flex-1">{skill.skillNameArabic}</p>
-                  <div className="flex-1 text-[var(--color-text-primary)]">
-                    <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                      Edit
-                    </span>{" "}
-                    |{" "}
-                    <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                      Delete
-                    </span>
-                  </div>
+            {(searchResults.length > 0 ? searchResults : allSkills).map((skill) => (
+              <div
+                key={skill.id}
+                className="flex items-center p-4 text-[var(--color-text-primary)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
+              >
+                <p className="flex-1">{skill.skillName}</p>
+                <p className="flex-1">{skill.category}</p>
+                <p className="flex-1">{skill.skillNameArabic}</p>
+                <div className="flex-1 text-[var(--color-text-primary)]">
+                  <span className="cursor-pointer hover:text-[var(--color-text-light)]">{t("Dashboard.Edit")}</span>{" "}
+                  |{" "}
+                  <span className="cursor-pointer hover:text-[var(--color-text-light)]">{t("Dashboard.Delete")}</span>
                 </div>
-              ))}
-            {searchResults.length == 0 &&
-              allSkills &&
-              allSkills.map((skill) => (
-                <div
-                  key={skill.id}
-                  className="flex items-center p-4 text-[var(--color-text-primary)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
-                >
-                  <p className="flex-1">{skill.skillName}</p>
-                  <p className="flex-1">{skill.category}</p>
-                  <p className="flex-1">{skill.skillNameArabic}</p>
-                  <div className="flex-1 text-[var(--color-text-primary)]">
-                    <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                      Edit
-                    </span>{" "}
-                    |{" "}
-                    <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                      Delete
-                    </span>
-                  </div>
-                </div>
-              ))}
+              </div>
+            ))}
           </>
         )}
+
         {selectedTab === "reviews" && (
           <>
             <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold bg-[#26211c] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
-              <p className="flex-1">Reviewer</p>
-              <p className="flex-1">Reviewd User</p>
-              <p className="flex-1 pr-6">Review Text</p>
-              <p className="flex-1">Rating</p>
-              <p className="flex-1">Actions</p>
+              <p className="flex-1">{t("Dashboard.Reviewer")}</p>
+              <p className="flex-1">{t("Dashboard.ReviewedUser")}</p>
+              <p className="flex-1 pr-6">{t("Dashboard.ReviewText")}</p>
+              <p className="flex-1">{t("Dashboard.Rating")}</p>
+              <p className="flex-1">{t("Dashboard.Actions")}</p>
             </div>
-            {searchResults &&
-              searchResults.map(
-                (user) =>
-                  user.reviews &&
-                  user.reviews.map((review, index) => (
-                    <div
-                      key={review.reviewId}
-                      className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
-                    >
-                      <p className="flex-1">{review.authorName}</p>
-                      <p className="flex-1">{user.name}</p>
-                      <p className="flex-1 text-[var(--color-text-primary)] pr-6">{review.text}</p>
-                      <p className="flex-1 text-[var(--color-text-primary)]">{review.rating}</p>
-                      <div className="flex-1 text-[var(--color-text-primary)]">
-                        <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                          Edit
-                        </span>{" "}
-                        |{" "}
-                        <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                          Delete
-                        </span>
-                      </div>
-                    </div>
-                  ))
-              )}
-            {searchResults.length == 0 &&
-              allUsers &&
-              allUsers.map(
-                (user) =>
-                  user.reviews &&
-                  user.reviews.map((review, index) => (
-                    <div
-                      key={review.reviewId}
-                      className="flex items-center p-4 text-[var(--color-text-primary)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
-                    >
-                      <p className="flex-1 capitalize ">{review.authorName}</p>
-                      <p className="flex-1 capitalize ">{user.name}</p>
-                      <p className="flex-1 text-[var(--color-text-primary)] pr-6">{review.text}</p>
-                      <p className="flex-1 text-[var(--color-text-primary)]">{review.rating}</p>
-                      <div className="flex-1 text-[var(--color-text-primary)]">
-                        <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                          Edit
-                        </span>{" "}
-                        |{" "}
-                        <span className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]">
-                          Delete
-                        </span>
-                      </div>
-                    </div>
-                  ))
-              )}
+            {(searchResults.length > 0 ? searchResults : allUsers).flatMap((user) =>
+              user.reviews?.map((review) => (
+                <div
+                  key={review.reviewId}
+                  className="flex items-center p-4 text-[var(--color-text-primary)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
+                >
+                  <p className="flex-1">{review.authorName}</p>
+                  <p className="flex-1">{user.name}</p>
+                  <p className="flex-1 pr-6">{review.text}</p>
+                  <p className="flex-1">{review.rating}</p>
+                  <div className="flex-1">
+                    <span className="cursor-pointer hover:text-[var(--color-text-light)]">{t("Dashboard.Edit")}</span>{" "}
+                    |{" "}
+                    <span className="cursor-pointer hover:text-[var(--color-text-light)]">{t("Dashboard.Delete")}</span>
+                  </div>
+                </div>
+              ))
+            )}
           </>
         )}
       </div>

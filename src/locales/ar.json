@@ -186,5 +186,25 @@
   "PayPal": "باي بال",
   "Please select both seeking and offering skills.": "يرجى اختيار كل من المهارة التي تبحث عنها والتي تقدمها.",
   "Please select a seeking skill.": "يرجى اختيار المهارة التي تبحث عنها.",
-  "Session scheduled successfully!": "تم جدولة الجلسة بنجاح!"
+  "Session scheduled successfully!": "تم جدولة الجلسة بنجاح!",
+  "Dashboard": {
+    "Users": "المستخدمين",
+    "Skills": "المهارات",
+    "Reviews": "المراجعات",
+    "SearchUsers": "ابحث عن مستخدمين",
+    "SearchSkills": "ابحث عن مهارات",
+    "SearchReviews": "ابحث عن مراجعات",
+    "User": "المستخدم",
+    "Name": "الاسم",
+    "SkillName": "اسم المهارة",
+    "ArabicSkillName": "الاسم بالعربية",
+    "Category": "الفئة",
+    "Reviewer": "المُقيِّم",
+    "ReviewedUser": "المُقيَّم",
+    "ReviewText": "نص المراجعة",
+    "Rating": "التقييم",
+    "Actions": "الإجراءات",
+    "Edit": "تعديل",
+    "Delete": "حذف"
+  }
 }
