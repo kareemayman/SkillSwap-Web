@@ -159,6 +159,7 @@ export default function ProfileView({ data, isOwnProfile }) {
         <SettingsTab
           updatedProfile={updatedProfile}
           updateUserData={updateUserData}
+          isOwnProfile={isOwnProfile}
         />
       )}{" "}
     </div>
