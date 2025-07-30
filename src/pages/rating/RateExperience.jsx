@@ -6,7 +6,7 @@ const RateExperience = () => {
 
   return (
     <>
-      <div className="container mx-auto py-6 px-4 md:px-16">
+      <div className="container container-[800px] mx-auto py-6 px-4 md:px-16">
         <RatingPage userId={userId} />
       </div>
     </>

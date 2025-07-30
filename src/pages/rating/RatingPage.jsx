@@ -91,13 +91,13 @@ const RatingPage = ({ userId }) => {
   return (
     <>
       <div>
-        <h1 className="text-[var(--color-text-primary)] text-3xl font-bold mb-4">
+        <h1 className="text-[var(--main-color)] text-3xl font-bold mb-4">
           Rating
         </h1>
 
         <div className="mb-6">
-          <h2 className="text-3 text-[var(--color-text-secondary)] leading-5 mb-4">
-            Rate your experience with {user.name}
+          <h2 className="text-lg text-[var(--color-text-secondary)] leading-5 mb-4">
+            Rate your experience with <span className="text-[var(--color-text-primary)] font-bold">{user.name}</span>
           </h2>
 
           <form onSubmit={handleSubmit}>
@@ -107,7 +107,7 @@ const RatingPage = ({ userId }) => {
               setRating={(val) => handleStarChange("overall", val)}
             />
 
-            <h3 className="text-lg font-medium text-gray-800 mb-3">
+            <h3 className="text-lg font-medium  mb-3 text-[var(--color-text-primary)] ">
               Rate specific aspects
             </h3>
 
