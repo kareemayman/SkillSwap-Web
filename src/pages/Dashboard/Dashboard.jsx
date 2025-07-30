@@ -85,11 +85,11 @@ export default function Dashboard() {
         <p
           className={`pb-4 relative ${
             selectedTab == "users"
-              ? "text-[var(--color-text-light)]"
+              ? "text-[var(--main-color)]"
               : "text-[var(--color-text-primary)]"
           } cursor-pointer font-bold hover:text-[var(--color-text-light)] transition-all duration-300 text-lg before:absolute before:content-[""] ${
             selectedTab == "users" && "before:w-full"
-          } before:h-[3px] before:rounded-xl before:bg-[var(--color-text-light)] before:top-[calc(100%-2px)] before:left-0 before:transition-all before:duration-300`}
+          } before:h-[3px] before:rounded-xl before:bg-[var(--main-color)] before:top-[calc(100%-2px)] before:left-0 before:transition-all before:duration-300`}
           onClick={() => setSelectedTab("users")}
         >
           Users
@@ -97,11 +97,11 @@ export default function Dashboard() {
         <p
           className={`pb-4 relative ${
             selectedTab == "skills"
-              ? "text-[var(--color-text-light)]"
+              ? "text-[var(--main-color)]"
               : "text-[var(--color-text-primary)]"
           } cursor-pointer font-bold hover:text-[var(--color-text-light)] text-lg before:absolute before:content-[""] ${
             selectedTab == "skills" && "before:w-full"
-          } before:h-[3px] before:rounded-xl before:bg-[var(--color-text-light)] before:top-[calc(100%-2px)] before:left-0 before:transition-all before:duration-300`}
+          } before:h-[3px] before:rounded-xl before:bg-[var(--main-color)] before:top-[calc(100%-2px)] before:left-0 before:transition-all before:duration-300`}
           onClick={() => setSelectedTab("skills")}
         >
           Skills
@@ -109,11 +109,11 @@ export default function Dashboard() {
         <p
           className={`pb-4 relative ${
             selectedTab == "reviews"
-              ? "text-[var(--color-text-light)]"
+              ? "text-[var(--main-color)]"
               : "text-[var(--color-text-primary)]"
           } cursor-pointer font-bold hover:text-[var(--color-text-light)] text-lg before:absolute before:content-[""] ${
             selectedTab == "reviews" && "before:w-full"
-          } before:h-[3px] before:rounded-xl before:bg-[var(--color-text-light)] before:top-[calc(100%-2px)] before:left-0 before:transition-all before:duration-300`}
+          } before:h-[3px] before:rounded-xl before:bg-[var(--main-color)] before:top-[calc(100%-2px)] before:left-0 before:transition-all before:duration-300`}
           onClick={() => setSelectedTab("reviews")}
         >
           Reviews
@@ -138,7 +138,7 @@ export default function Dashboard() {
         />
       </div>
 
-      <div className="w-full min-h-20 rounded-lg border border-solid border-[var(--color-card-border)]">
+      <div className="w-full min-h-20 rounded-lg  shadow-[#382E29] shadow-md">
         {selectedTab === "users" && (
           <>
             <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold bg-[#26211c] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
@@ -161,7 +161,7 @@ export default function Dashboard() {
                       className="block rounded-full w-12 h-12 object-cover"
                     />
                   </div>
-                  <p className="flex-1 capitalize">{user.name}</p>
+                  <p className="flex-1 capitalize ">{user.name}</p>
                   <p className="flex-1 text-[var(--color-text-primary)] capitalize">
                     {user.hasSkills &&
                       user.hasSkills.map((s, i) => {
@@ -194,7 +194,7 @@ export default function Dashboard() {
                       className="block rounded-full w-12 h-12 object-cover"
                     />
                   </div>
-                  <p className="flex-1 capitalize">{user.name}</p>
+                  <p className="flex-1 capitalize text-[var(--color-text-primary)]">{user.name}</p>
                   <p className="flex-1 text-[var(--color-text-primary)] capitalize">
                     {user.hasSkills &&
                       user.hasSkills.map((s, i) => {
@@ -229,7 +229,7 @@ export default function Dashboard() {
                   key={skill.id}
                   className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
                 >
-                  <p className="flex-1">{skill.skillName}</p>
+                  <p className="flex-1 ">{skill.skillName}</p>
                   <p className="flex-1">{skill.category}</p>
                   <p className="flex-1">{skill.skillNameArabic}</p>
                   <div className="flex-1 text-[var(--color-text-primary)]">
@@ -248,7 +248,7 @@ export default function Dashboard() {
               allSkills.map((skill) => (
                 <div
                   key={skill.id}
-                  className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
+                  className="flex items-center p-4 text-[var(--color-text-primary)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
                 >
                   <p className="flex-1">{skill.skillName}</p>
                   <p className="flex-1">{skill.category}</p>
@@ -308,10 +308,10 @@ export default function Dashboard() {
                   user.reviews.map((review, index) => (
                     <div
                       key={review.reviewId}
-                      className="flex items-center p-4 text-[var(--color-text-light)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
+                      className="flex items-center p-4 text-[var(--color-text-primary)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
                     >
-                      <p className="flex-1 capitalize">{review.authorName}</p>
-                      <p className="flex-1 capitalize">{user.name}</p>
+                      <p className="flex-1 capitalize ">{review.authorName}</p>
+                      <p className="flex-1 capitalize ">{user.name}</p>
                       <p className="flex-1 text-[var(--color-text-primary)] pr-6">{review.text}</p>
                       <p className="flex-1 text-[var(--color-text-primary)]">{review.rating}</p>
                       <div className="flex-1 text-[var(--color-text-primary)]">
