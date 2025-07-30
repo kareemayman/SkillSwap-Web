@@ -4,11 +4,11 @@ import EditButton from "../EditButton";
 import PhoneNumberInput from "../../CreateProfile/Step3/PhoneNumberInput";
 import { useTranslation } from "react-i18next";
 
-export default function EditablePhone({ data, updateUserData }) {
+export default function EditablePhone({ data, updateUserData, isOwnProfile }) {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(() => parsePhoneNumber(data));
   const [error, setError] = useState("");
-const { t } = useTranslation();
+  const { t } = useTranslation();
 
   const handleSave = () => {
     if (!value.phoneNumber || value.phoneNumber.trim() === "") {
@@ -41,7 +41,9 @@ const { t } = useTranslation();
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold text-[--color-text-primary]">{t("Phone")}</h2>
+        <h2 className="text-xl font-semibold text-[--color-text-primary]">
+          {t("Phone")}
+        </h2>
 
         <div className="md:w-1/2 flex justify-end">
           {isEditing ? (
@@ -63,14 +65,24 @@ const { t } = useTranslation();
               </button>
             </div>
           ) : (
-            <EditButton title="Edit Phone Number" classes="" onClickHandler={() => setIsEditing(true)} />
+            isOwnProfile && (
+              <EditButton
+                title="Edit Phone Number"
+                classes=""
+                onClickHandler={() => setIsEditing(true)}
+              />
+            )
           )}
         </div>
       </div>
 
       {isEditing ? (
         <div>
-          <PhoneNumberInput initialCountryCode={value.countryCode} initialPhoneNumber={value.phoneNumber} onPhoneChange={handlePhoneInputChange} />
+          <PhoneNumberInput
+            initialCountryCode={value.countryCode}
+            initialPhoneNumber={value.phoneNumber}
+            onPhoneChange={handlePhoneInputChange}
+          />
           {/* Error Message Display */}
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </div>
