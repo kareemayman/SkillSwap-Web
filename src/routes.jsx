@@ -35,6 +35,7 @@ const AppRoutes = () => {
               element: <ScheduleSession></ScheduleSession>,
             },
             { path: "dashboard", element: <Dashboard /> },
+            { path: "rate/:id", element: <RateExperience /> },
           ],
         },
         {
