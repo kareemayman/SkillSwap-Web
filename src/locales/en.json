@@ -187,5 +187,25 @@
   "PayPal": "PayPal",
   "Please select both seeking and offering skills.": "Please select both seeking and offering skills.",
   "Please select a seeking skill.": "Please select a seeking skill.",
-  "Session scheduled successfully!": "Session scheduled successfully!"
+  "Session scheduled successfully!": "Session scheduled successfully!",
+   "Dashboard": {
+    "Users": "Users",
+    "Skills": "Skills",
+    "Reviews": "Reviews",
+    "SearchUsers": "Search users",
+    "SearchSkills": "Search skills",
+    "SearchReviews": "Search reviews",
+    "User": "User",
+    "Name": "Name",
+    "SkillName": "Skill Name",
+    "ArabicSkillName": "Arabic Skill Name",
+    "Category": "Category",
+    "Reviewer": "Reviewer",
+    "ReviewedUser": "Reviewed User",
+    "ReviewText": "Review Text",
+    "Rating": "Rating",
+    "Actions": "Actions",
+    "Edit": "Edit",
+    "Delete": "Delete"
+  }
 }
