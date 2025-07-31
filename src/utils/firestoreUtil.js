@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, getDoc, serverTimestamp, setDoc, updateDoc, query, where, addDoc, deleteDoc, arrayUnion } from "firebase/firestore";
+import { collection, doc, getDocs, getDoc, serverTimestamp, setDoc, updateDoc, query, where, addDoc, deleteDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from "../firebase";
 import { getSkillCategory, translateSkillToArabic } from "./geminiPrompts";
 import { generateFromGemini } from "../api/gemini";
@@ -23,9 +23,11 @@ export const getUserById = async (id) => {
 
 export const getAllUsers = async () => {
   const qSnap = await getDocs(collection(db, "users"));
-  return qSnap.docs.map((doc) => ({
-    ...doc.data(),
-  }));
+  return qSnap.docs
+    .map((doc) => ({
+      ...doc.data(),
+    }))
+    .filter((user) => user.email !== "skills.swap.app@gmail.com");
 };
 
 export const createUserDoc = async (user) => {
@@ -156,5 +158,55 @@ export const deleteDocById = async (collectionName, docId) => {
     await deleteDoc(docRef);
   } catch (error) {
     console.error(`Error deleting document from ${collectionName} with ID ${docId}:`, error);
+  }
+}
+
+export const deleteSkillFromUsers = async (skillId) => {
+  try {
+    const usersSnap = await getDocs(collection(db, "users"));
+    const batchPromises = [];
+
+    usersSnap.forEach((docSnap) => {
+      const userRef = docSnap.ref;
+      const userData = docSnap.data();
+
+      const newHasSkills = (userData.hasSkills || []).filter(skill => skill.skillId !== skillId);
+      const newNeedSkills = (userData.needSkills || []).filter(skill => skill.skillId !== skillId);
+
+      // Only update if something changed
+      if (
+        newHasSkills.length !== (userData.hasSkills || []).length ||
+        newNeedSkills.length !== (userData.needSkills || []).length
+      ) {
+        batchPromises.push(
+          updateDoc(userRef, {
+            hasSkills: newHasSkills,
+            needSkills: newNeedSkills,
+          })
+        );
+      }
+    });
+
+    await Promise.all(batchPromises);
+  } catch (error) {
+    console.error("Error deleting skill from users:", error);
+  }
+}
+
+export const deleteReview = async (userId, reviewId) => {
+  try {
+    const userRef = doc(db, "users", userId);
+    const userSnap = await getDoc(userRef);
+    const userData = userSnap.data();
+
+    const newReviews = (userData.reviews || []).filter(
+      review => review.reviewId !== reviewId
+    );
+
+    await updateDoc(userRef, {
+      reviews: newReviews,
+    });
+  } catch (error) {
+    console.error("Error deleting review:", error);
   }
 }

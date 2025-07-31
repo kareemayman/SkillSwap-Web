@@ -80,6 +80,7 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
         JSON.stringify(skillsList)
       );
       generateFromGemini(prompt).then((res) => {
+          res = res.replace("```json", "").replace("```", "");
         console.log(res);
         const parsedRes = JSON.parse(res);
         parsedRes.forEach((id) => {
@@ -114,6 +115,8 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
         JSON.stringify(skillsList)
       );
       generateFromGemini(prompt).then((res) => {
+          res = res.replace("```json", "").replace("```", "");
+
         console.log(res);
         const parsedRes = JSON.parse(res);
         parsedRes.forEach((id) => {
