@@ -12,25 +12,25 @@ export default function LandingFooter() {
       <div className="relative z-10 max-w-[1000px] mx-auto px-5 py-12">
         <div className="flex flex-wrap justify-center gap-8 mb-6 text-[var(--color-text-secondary)]">
           <Link
-            to="#"
+            to="/about"
             className="text-base min-w-[160px] text-center hover:text-[var(--color-text-primary)] transition-colors"
           >
             {t("Footer.about")}
           </Link>
-          <Link
+          {/* <Link
             to="#"
             className="text-base min-w-[160px] text-center hover:text-[var(--color-text-primary)] transition-colors"
           >
             {t("Footer.contact")}
-          </Link>
+          </Link> */}
           <Link
-            to="#"
+            to="/terms"
             className="text-base min-w-[160px] text-center hover:text-[var(--color-text-primary)] transition-colors"
           >
             {t("Footer.terms")}
           </Link>
           <Link
-            to="#"
+            to="/privacy"
             className="text-base min-w-[160px] text-center hover:text-[var(--color-text-primary)] transition-colors"
           >
             {t("Footer.privacy")}
