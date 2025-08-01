@@ -67,11 +67,12 @@ export const submitRating = async (ratingData) => {
   try {
     const userRef = doc(db, "users", ratingData.revieweeId);
     
-    const reviewId = crypto.randomUUID(); // Or any unique ID logic
+    const reviewId = crypto.randomUUID(); 
     const review = {
       reviewId,
       reviewerId: ratingData.reviewerId,
-      authorName: ratingData.authorName, // make sure you pass it
+      authorName: ratingData.authorName,
+      authorPhoto: ratingData.authorPhoto || "", // make sure you pass it
       text: ratingData.text || "",        // optional comment
       rating: ratingData.overallRating,
       teachingSkill: ratingData.teachingSkill,
