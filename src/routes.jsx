@@ -13,6 +13,7 @@ import Layout from "./layouts/Layout";
 import AuthProtection from "./components/AuthProtection";
 import { ScheduleSession } from "./pages/Schedule/ScheduleSession";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import Trade from "./pages/Trade/Trade";
 
 const AppRoutes = () => {
   const routes = [
@@ -36,6 +37,7 @@ const AppRoutes = () => {
             },
             { path: "dashboard", element: <Dashboard /> },
             { path: "rate/:id", element: <RateExperience /> },
+            { path: "trade", element: <Trade /> },
           ],
         },
         {

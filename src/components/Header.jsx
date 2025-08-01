@@ -51,13 +51,13 @@ export default function Header() {
   }, [user?.uid]);
 
   return (
-    <header className="shadow-lg shadow-[var(--color-card-border)]">
+    <header className="shadow-sm shadow-[var(--color-card-border)]">
       <div className="py-4 mx-auto container px-2 md:px-4 flex items-center justify-between relative">
         {/* Logo Section */}
         <Link to="/">
           <div className="flex items-end gap-1">
             <img src={logo} alt="logo" className="w-8 h-8" />
-            <h1 className="font-bold text-2xl text-[#FE7743] ">Swapoo</h1>
+            <h1 className="font-bold text-2xl text-[#FE7743] ">Skill<span className="text-white">Bridge</span></h1>
           </div>
         </Link>
 
