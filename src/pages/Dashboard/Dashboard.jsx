@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react"
 import Avat from "../../assets/images/avat.png"
-import { deleteDocById, fetchSkillsList, getAllUsers } from "../../utils/firestoreUtil"
+import {
+  deleteDocById,
+  deleteReview,
+  deleteSkillFromUsers,
+  fetchSkillsList,
+  getAllUsers,
+} from "../../utils/firestoreUtil"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons"
 import { generateFromGemini } from "../../api/gemini"
@@ -11,6 +17,7 @@ import {
 } from "../../utils/geminiPrompts"
 import { useTranslation } from "react-i18next"
 import { useAuth } from "../../contexts/Auth/context"
+import toast from "react-hot-toast"
 
 export default function Dashboard() {
   const { t } = useTranslation()
@@ -24,7 +31,6 @@ export default function Dashboard() {
 
   useEffect(() => {
     getAllUsers().then((users) => {
-      users = users.filter(u => u.email != 'skills.swap.app@gmail.com')
       setAllUsers(users)
     })
     fetchSkillsList().then((skills) => setAllSkills(skills))
@@ -83,6 +89,53 @@ export default function Dashboard() {
     setSearchResults([])
     setSearchInputTimeout("")
   }, [selectedTab])
+
+  function handleDeleteUser(uid) {
+    deleteDocById("users", uid)
+      .then(() => {
+        getAllUsers().then((users) => {
+          setAllUsers(users)
+        })
+      })
+      .then(() => {
+        toast.success("User deleted successfully!")
+      })
+      .catch(() => {
+        toast.error("Error deleting user")
+      })
+  }
+
+  function handleDeleteSkill(skillId) {
+    deleteDocById("skills", skillId)
+      .then(() => {
+        deleteSkillFromUsers(skillId)
+        setAllSkills((prevSkills) => prevSkills.filter((skill) => skill.id !== skillId))
+        getAllUsers().then((users) => {
+          setAllUsers(users)
+        })
+      })
+      .then(() => {
+        toast.success("skill deleted successfully!")
+      })
+      .catch(() => {
+        toast.error("Error deleting skill")
+      })
+  }
+
+  function handleDeleteReview(userId, reviewId) {
+    deleteReview(userId, reviewId)
+      .then(() => {
+        getAllUsers().then((users) => {
+          setAllUsers(users)
+        })
+      })
+      .then(() => {
+        toast.success("Review deleted successfully!")
+      })
+      .catch(() => {
+        toast.error("Error deleting review")
+      })
+  }
 
   return (
     <div className="container mx-auto px-16 pt-8 pb-8">
@@ -162,7 +215,10 @@ export default function Dashboard() {
                         {t("Dashboard.Edit")}
                       </span>{" "}
                       |{" "}
-                      <span className="cursor-pointer hover:text-[var(--color-text-light)]">
+                      <span
+                        onClick={() => handleDeleteUser(user.uid)}
+                        className="cursor-pointer hover:text-[var(--color-text-light)]"
+                      >
                         {t("Dashboard.Delete")}
                       </span>
                     </div>
@@ -192,7 +248,10 @@ export default function Dashboard() {
                         {t("Dashboard.Edit")}
                       </span>{" "}
                       |{" "}
-                      <span className="cursor-pointer hover:text-[var(--color-text-light)]">
+                      <span
+                        onClick={() => handleDeleteSkill(skill.id)}
+                        className="cursor-pointer hover:text-[var(--color-text-light)]"
+                      >
                         {t("Dashboard.Delete")}
                       </span>
                     </div>
@@ -225,7 +284,10 @@ export default function Dashboard() {
                           {t("Dashboard.Edit")}
                         </span>{" "}
                         |{" "}
-                        <span className="cursor-pointer hover:text-[var(--color-text-light)]">
+                        <span
+                          onClick={() => handleDeleteReview(user.uid, review.reviewId)}
+                          className="cursor-pointer hover:text-[var(--color-text-light)]"
+                        >
                           {t("Dashboard.Delete")}
                         </span>
                       </div>
