@@ -2,10 +2,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Avat from "../../assets/images/avat.png"
 import ExpTag from "./Components/ExpTag"
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons"
+import Milestone from "./Components/Milestone"
 
 export default function Trade() {
   return (
-    <div className="mx-auto px-4 md:px-16 py-6 container">
+    <div className="mx-auto px-4 md:px-24 py-6 container">
       <div className="mb-8 p-6 border-[var(--color-card-border)] border-2 rounded-lg">
         <div className="flex lg:flex-row flex-col lg:justify-between items-start lg:items-center gap-6 lg:gap-0 pb-6 border-[var(--color-card-border)] border-b">
           <div className="flex md:flex-row flex-col flex-1 justify-center md:justify-start items-start md:gap-3">
@@ -16,11 +17,12 @@ export default function Trade() {
               </h1>
               <h2 className="relative my-2 w-fit font-bold text-[var(--color-text-light)] text-base">
                 <span className="text-[var(--color-text-primary)]">Teaching: </span> UX Design
-                <ExpTag expLevel={'Advanced'}></ExpTag>
+                <ExpTag expLevel={"Advanced"}></ExpTag>
               </h2>
               <h2 className="relative my-2 w-fit font-bold text-[var(--color-text-light)] text-base">
-                <span className="text-[var(--color-text-primary)]">Learning: </span> Python Programming
-                <ExpTag expLevel={'Beginner'}></ExpTag>
+                <span className="text-[var(--color-text-primary)]">Learning: </span> Python
+                Programming
+                <ExpTag expLevel={"Beginner"}></ExpTag>
               </h2>
             </div>
           </div>
@@ -31,34 +33,137 @@ export default function Trade() {
                 James Wilson
               </h1>
               <h2 className="relative my-2 w-fit font-bold text-[var(--color-text-light)] text-base">
-                <span className="text-[var(--color-text-primary)]">Teaching: </span> Python Programming
-                <ExpTag expLevel={'Advanced'}></ExpTag>
+                <span className="text-[var(--color-text-primary)]">Teaching: </span> Python
+                Programming
+                <ExpTag expLevel={"Advanced"}></ExpTag>
               </h2>
               <h2 className="relative my-2 w-fit font-bold text-[var(--color-text-light)] text-base">
                 <span className="text-[var(--color-text-primary)]">Learning: </span> UX Design
-                <ExpTag expLevel={'Beginner'}></ExpTag>
+                <ExpTag expLevel={"Beginner"}></ExpTag>
               </h2>
             </div>
           </div>
         </div>
 
         <button className="bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] mt-6 px-6 py-3 rounded-lg text-[var(--color-text-light)] transition-all duration-300">
-          <FontAwesomeIcon icon={faCommentDots} ></FontAwesomeIcon>
+          <FontAwesomeIcon icon={faCommentDots}></FontAwesomeIcon>
           <p className="inline ml-2 font-semibold">Message James</p>
         </button>
       </div>
 
-      <div className="flex gap-6">
+      <div className="flex gap-6 flex-col lg:flex-row">
         <div className="flex-1 py-6 border-[var(--color-card-border)] border-2 rounded-lg">
           <div className="px-6 pb-6 border-[var(--color-card-border)] border-b">
-            <h1 className="font-bold text-[var(--color-text-light)] text-xl capitalize">Skill I'm Learning: Python Programming</h1>
-            <h2 className="mt-1 font-bold text-[var(--color-text-secondary)] text-base">Milestones created by James Wilson</h2>
+            <h1 className="font-bold text-[var(--color-text-light)] text-xl capitalize">
+              Skill I'm Learning: Python Programming
+            </h1>
+            <h2 className="mt-1 font-bold text-[var(--color-text-secondary)] text-base">
+              Milestones created by James Wilson
+            </h2>
           </div>
 
-          <div className="p-6"></div>
+          <div className="p-6 pb-0">
+            <Milestone
+              milestone={{
+                id: crypto.randomUUID(),
+                title: "Python Basics and Syntax",
+                isCompleted: true,
+                description:
+                  "Learn the fundamentals of Python including variables, data types, and basic operations. Complete 3 simple exercises.",
+              }}
+            ></Milestone>
+            <Milestone
+              milestone={{
+                id: crypto.randomUUID(),
+                title: "Control Flow and Loops",
+                isCompleted: false,
+                description:
+                  "Master if/else statements, for and while loops. Build a simple number guessing game application.",
+              }}
+            ></Milestone>
+            <Milestone
+              milestone={{
+                id: crypto.randomUUID(),
+                title: "Functions and Modules",
+                isCompleted: false,
+                description:
+                  "Learn to create reusable code with functions, understand parameters, return values, and importing modules.",
+              }}
+            ></Milestone>
+            <Milestone
+              milestone={{
+                id: crypto.randomUUID(),
+                title: "Data Structures",
+                isCompleted: false,
+                description:
+                  "Work with lists, dictionaries, sets, and tuples. Create a simple contact management system.",
+              }}
+            ></Milestone>
+            <Milestone
+              milestone={{
+                id: crypto.randomUUID(),
+                title: "Final Project",
+                isCompleted: false,
+                description:
+                  "Build a command-line tool that demonstrates all concepts learned throughout the sessions.",
+              }}
+            ></Milestone>
+          </div>
         </div>
 
-        <div className="flex-1 p-6 border-[var(--color-card-border)] border-2 rounded-lg"></div>
+        <div className="flex-1 py-6 border-[var(--color-card-border)] border-2 rounded-lg">
+          <div className="px-6 pb-6 border-[var(--color-card-border)] border-b">
+            <h1 className="font-bold text-[var(--color-text-light)] text-xl capitalize">
+              Skill I'm Teaching: UX Design
+            </h1>
+            <h2 className="mt-1 font-bold text-[var(--color-text-secondary)] text-base">
+              Create and manage milestones for James Wilson
+            </h2>
+          </div>
+
+          <div className="p-6 pb-0">
+            <Milestone
+              milestone={{
+                id: crypto.randomUUID(),
+                title: "UX Fundamentals and User Research",
+                isCompleted: true,
+                description:
+                  "Introduction to UX principles, understanding user needs, and basic research methods.",
+              }}
+              controls={true}
+            ></Milestone>
+            <Milestone
+              milestone={{
+                id: crypto.randomUUID(),
+                title: "Wireframing and Prototyping",
+                isCompleted: false,
+                description:
+                  "Create low-fidelity wireframes and interactive prototypes using Figma.",
+              }}
+              controls={true}
+            ></Milestone>
+            <Milestone
+              milestone={{
+                id: crypto.randomUUID(),
+                title: "User Interface Design Principles",
+                isCompleted: false,
+                description:
+                  "Learn color theory, typography, visual hierarchy, and accessibility considerations.",
+              }}
+              controls={true}
+            ></Milestone>
+            <Milestone
+              milestone={{
+                id: crypto.randomUUID(),
+                title: "Usability Testing",
+                isCompleted: false,
+                description:
+                  "Conduct usability tests, analyze results, and implement design improvements based on feedback.",
+              }}
+              controls={true}
+            ></Milestone>
+          </div>
+        </div>
       </div>
     </div>
   )

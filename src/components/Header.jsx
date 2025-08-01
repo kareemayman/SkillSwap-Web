@@ -57,7 +57,7 @@ export default function Header() {
         <Link to="/">
           <div className="flex items-end gap-1">
             <img src={logo} alt="logo" className="w-8 h-8" />
-            <h1 className="font-bold text-2xl text-[#FE7743] ">Skill<span className="text-white">Bridge</span></h1>
+            <h1 className="font-bold text-2xl text-[#FE7743] ">Swapoo</h1>
           </div>
         </Link>
 
