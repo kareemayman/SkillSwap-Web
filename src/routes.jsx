@@ -14,6 +14,9 @@ import AuthProtection from "./components/AuthProtection";
 import { ScheduleSession } from "./pages/Schedule/ScheduleSession";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Trade from "./pages/Trade/Trade";
+import About from "./pages/About";
+import Terms from "./pages/Terms";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const AppRoutes = () => {
   const routes = [
@@ -38,6 +41,10 @@ const AppRoutes = () => {
             { path: "dashboard", element: <Dashboard /> },
             { path: "rate/:id", element: <RateExperience /> },
             { path: "trade/:id", element: <Trade /> },
+            { path: "about", element: <About /> },
+            { path: "terms", element: <Terms /> },
+            { path: "privacy", element: <PrivacyPolicy /> },
+
           ],
         },
         {

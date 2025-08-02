@@ -6,7 +6,7 @@
   },
   "SuccessStoriesSection": {
     "title": "Success Stories",
-    "description": "See how SkillSwap has transformed lives by enabling skill sharing and personal growth."
+    "description": "See how Swapoo has transformed lives by enabling skill sharing and personal growth."
   },
   "SuccessStoriesCards": {
     "card1": {
@@ -35,7 +35,7 @@
     }
   },
   "HowWorkSection": {
-    "title": "How SkillSwap Works",
+    "title": "How Swapoo Works",
     "description": "Our platform connects individuals eager to share their expertise with those seeking to learn. It's a community-driven exchange where skills are valued and shared freely."
   },
   "HowWorksCards": {
@@ -61,7 +61,7 @@
     "contact": "Contact",
     "terms": "Terms of Service",
     "privacy": "Privacy Policy",
-    "copyright": "© {{year}} SkillSwap. All rights reserved."
+    "copyright": "© {{year}} Swapoo. All rights reserved."
   },
   "Register": {
     "title": "Join our community 🤝",
@@ -72,7 +72,7 @@
     "google": "Continue with Google"
   },
   "Login": {
-    "title": "Welcome to SkillSwap 👋",
+    "title": "Welcome to Swapoo 👋",
     "button": "Sign In",
     "forget": "Forgot Password?",
     "footer": "Don't have an account?",
@@ -136,7 +136,7 @@
   "Back": "Back",
 
   "Skills": {
-     "Skills": "Skills",
+    "Skills": "Skills",
     "MySkillsTitle": "My Skills 💡",
     "LearnTitle": "Skills to Learn",
     "TeachTitle": "Skills to Teach",
@@ -148,7 +148,7 @@
     "Back": "Back",
     "Next": "Next"
   },
-  "availability":"Availability",
+  "availability": "Availability",
   "Country": "Country",
   "nocountry": "No countries found",
   "nocity": "No cities found",
@@ -157,7 +157,7 @@
   "addedtoast": "Added to your available teaching items",
   "choose": "Choose your available sessions",
   "Phone number": "Phone number",
-  "phone":"phone",
+  "phone": "phone",
   "Select": "Select",
   "selectskill": "Select Skill & Proficiency Level",
   "Select a skill": "Select a skill",
@@ -188,7 +188,7 @@
   "Please select both seeking and offering skills.": "Please select both seeking and offering skills.",
   "Please select a seeking skill.": "Please select a seeking skill.",
   "Session scheduled successfully!": "Session scheduled successfully!",
-   "Dashboard": {
+  "Dashboard": {
     "Users": "Users",
     "Skills": "Skills",
     "Reviews": "Reviews",
@@ -207,5 +207,100 @@
     "Actions": "Actions",
     "Edit": "Edit",
     "Delete": "Delete"
+  },
+  "about": {
+    "title": "About Swapoo",
+    "description": "We are a group of passionate, freshly graduated youth who built Swapoo to support young people in gaining valuable knowledge and skills—without the high cost of traditional courses. In light of current economic challenges and the rising prices of learning resources, our platform was created to make learning more accessible through skill exchange. We believe everyone has something to teach and something to learn, and by connecting with each other, we can grow together—without financial barriers.",
+    "card1": {
+      "title": "Kareem Ayman"
+    },
+    "card2": {
+      "title": "Doaa Mohamed"
+    },
+    "card3": {
+      "title": "Abdelrahman Ali"
+    },
+    "card4": {
+      "title": "Seif Amr"
+    },
+    "card5": {
+      "title": "Heba"
+    },
+    "card6": {
+      "title": "Mohammed Abdelfatah"
+    },
+   "Our team":"Our team"
+  },
+
+  "terms": {
+    "title": "Terms of Service",
+    "section1": {
+      "title": "1. Introduction",
+      "text": "Welcome to Swapoo! By accessing or using our platform, you agree to be bound by these Terms of Service. Please read them carefully."
+    },
+    "section2": {
+      "title": "2. Who Can Use Swapoo",
+      "text": "You must be at least 16 years old to use Swapoo. By using the platform, you confirm that the information you provide is accurate and that you are responsible for any activity under your account."
+    },
+    "section3": {
+      "title": "3. Purpose of the Platform",
+      "text": "Swapoo is designed to help users connect and exchange skills in a fair, respectful, and non-commercial way. We do not sell courses or take responsibility for the content of individual exchanges between users."
+    },
+    "section4": {
+      "title": "4. What’s Not Allowed",
+      "list": [
+        "Use the platform for illegal or harmful purposes.",
+        "Harass, spam, or mislead other users.",
+        "Share content that is offensive, discriminatory, or false.",
+        "Impersonate others or misrepresent your skills."
+      ]
+    },
+    "section5": {
+      "title": "5. Privacy and Data",
+      "text": "We respect your privacy. Your personal information is stored securely and is never shared with third parties without your consent. See our Privacy Policy for more details."
+    },
+    "section6": {
+      "title": "6. Changes to the Platform",
+      "text": "We may update or change parts of the platform at any time to improve your experience. We may also update these terms, and we’ll notify you if the changes are significant."
+    },
+    "section7": {
+      "title": "7. Limitation of Liability",
+      "text": "Swapoo is not responsible for any harm, loss, or disputes that may occur between users. You use the platform at your own risk."
+    },
+    "section8": {
+      "title": "8. Contact Us",
+      "text": "If you have questions about these terms, feel free to contact us:",
+      "email": "skills.swap.app@gmail.com"
+    }
+  },
+  
+  "privacy": {
+    "title": "Privacy Policy",
+    "section1": {
+      "title": "1. Introduction",
+      "text": "At Swapoo, we take your privacy seriously. This Privacy Policy outlines how we collect, use, and protect your personal information."
+    },
+    "section2": {
+      "title": "2. What Information We Collect",
+      "text": "We may collect your name, email, profile details, and usage behavior to improve your experience on the platform."
+    },
+    "section3": {
+      "title": "3. How We Use Your Data",
+      "text": "Your data is used to personalize your experience, improve our services, and communicate with you. We do not sell or share your personal data without your consent."
+    },
+    "section4": {
+      "title": "4. Data Security",
+      "text": "We implement industry-standard security practices to keep your data safe. However, no method of transmission over the internet is 100% secure."
+    },
+    "section5": {
+      "title": "5. Your Rights",
+      "text": "You have the right to access, update, or delete your personal information at any time. Contact us if you’d like to manage your data."
+    },
+    "section6": {
+      "title": "6. Contact Us",
+      "text": "If you have any questions about this policy, please contact us at skills.swap.app@gmail.com."
+    }
   }
+
+
 }

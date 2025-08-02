@@ -1,5 +1,4 @@
 import React from "react";
-import img from "../../assets/images/hero.png";
 import heroVideo from "../../assets/videos/3249902-uhd_3840_2160_25fps.mp4";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -21,10 +20,6 @@ function HeroSection() {
       />
 
       {/* Overlay */}
-      <div
-        className="w-full h-full bg-cover bg-center"
-        style={{ backgroundImage: `url(${img})` }}
-      >
         <div 
           className="relative z-10 w-full h-full flex items-center justify-center text-center px-4"
           style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
@@ -60,7 +55,6 @@ function HeroSection() {
             </button>
           </div>
         </div>
-      </div>
     </section>
   );
 }
