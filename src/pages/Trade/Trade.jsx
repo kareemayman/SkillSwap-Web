@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Avat from "../../assets/images/avat.png"
 import ExpTag from "./Components/ExpTag"
-import { faCommentDots } from "@fortawesome/free-solid-svg-icons"
+import { faCommentDots, faPlus, faRobot } from "@fortawesome/free-solid-svg-icons"
 import Milestone from "./Components/Milestone"
 import Progress from "./Components/Progress"
 
@@ -52,7 +52,7 @@ export default function Trade() {
         </button>
       </div>
 
-      <div className="flex gap-6 flex-col lg:flex-row">
+      <div className="flex lg:flex-row flex-col gap-6">
         <div className="flex-1 py-6 border-[var(--color-card-border)] border-2 rounded-lg">
           <div className="px-6 pb-6 border-[var(--color-card-border)] border-b">
             <h1 className="font-bold text-[var(--color-text-light)] text-xl capitalize">
@@ -167,6 +167,18 @@ export default function Trade() {
               }}
               controls={true}
             ></Milestone>
+
+            <Progress completed={1} outOf={4}></Progress>
+
+            <div className="flex justify-center items-center mb-6 py-3 border border-[var(--color-card-border)] hover:border-[var(--main-color)] border-dashed rounded-lg w-full font-bold text-[var(--color-text-primary)] hover:text-[var(--color-text-light)] transition-all duration-300 cursor-pointer">
+              <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
+              <p className="ml-2">Add New Milestone</p>
+            </div>
+
+            <div className="bg-[#31292a] flex justify-center items-center mb-6 py-3 border border-transparent hover:border-[var(--main-color)] rounded-lg w-full font-bold text-[var(--main-color)] transition-all duration-300 cursor-pointer">
+              <FontAwesomeIcon icon={faRobot}></FontAwesomeIcon>
+              <p className="ml-2">Generate With AI</p>
+            </div>
           </div>
         </div>
       </div>

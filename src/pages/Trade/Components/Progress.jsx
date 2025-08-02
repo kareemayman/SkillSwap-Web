@@ -1,6 +1,6 @@
 export default function Progress({ completed, outOf }) {
   return (
-    <div>
+    <div className="mb-6">
       <div className="flex justify-between items-center text-[var(--color-text-primary)] text-sm font-semibold">
         <p>
           Progress: {completed} of {outOf} completed
