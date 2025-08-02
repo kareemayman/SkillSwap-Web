@@ -3,6 +3,7 @@ import Avat from "../../assets/images/avat.png"
 import ExpTag from "./Components/ExpTag"
 import { faCommentDots } from "@fortawesome/free-solid-svg-icons"
 import Milestone from "./Components/Milestone"
+import Progress from "./Components/Progress"
 
 export default function Trade() {
   return (
@@ -108,6 +109,8 @@ export default function Trade() {
                   "Build a command-line tool that demonstrates all concepts learned throughout the sessions.",
               }}
             ></Milestone>
+
+            <Progress completed={1} outOf={5}></Progress>
           </div>
         </div>
 
@@ -141,6 +144,7 @@ export default function Trade() {
                   "Create low-fidelity wireframes and interactive prototypes using Figma.",
               }}
               controls={true}
+              ai={true}
             ></Milestone>
             <Milestone
               milestone={{
@@ -151,6 +155,7 @@ export default function Trade() {
                   "Learn color theory, typography, visual hierarchy, and accessibility considerations.",
               }}
               controls={true}
+              ai={true}
             ></Milestone>
             <Milestone
               milestone={{

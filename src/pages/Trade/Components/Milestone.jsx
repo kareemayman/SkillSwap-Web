@@ -1,12 +1,12 @@
-import { faCheck, faFlagCheckered, faPencil, faTrash } from "@fortawesome/free-solid-svg-icons"
+import { faCheck, faFlagCheckered, faPencil, faRobot, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
 
-export default function Milestone({ milestone, controls }) {
+export default function Milestone({ milestone, controls, ai }) {
   const [isCompleted, setIsCompleted] = useState(milestone.isCompleted)
 
   return (
-    <div className="mb-6 p-4 pr-6 rounded-lg border border-[var(--color-card-border)] bg-[#252321] flex items-start gap-3 relative">
+    <div className={`mb-6 p-4 pr-6 rounded-lg border border-[var(--color-card-border)] bg-[#252321] flex items-start gap-3 relative`}>
       {controls ? (
         <div 
           onClick={() => setIsCompleted(!isCompleted)}
@@ -29,10 +29,16 @@ export default function Milestone({ milestone, controls }) {
         </div>
       )}
       <div className="flex-1">
-        <h2 className="text-[var(--color-text-light)] font-bold">{milestone.title}</h2>
+        <h2 className={`text-[var(--color-text-light)] font-bold ${controls && 'pr-11'}`}>{milestone.title}</h2>
         <p className="text-[var(--color-text-primary)] font-semibold mt-1">
           {milestone.description}
         </p>
+        {ai && (
+          <div className="bg-[#31292a] px-1 py-[2px] flex gap-1 items-center text-[var(--main-color)] w-fit text-xs rounded-sm mt-2">
+            <FontAwesomeIcon icon={faRobot}></FontAwesomeIcon>
+            <p>AI Generated</p>
+          </div>
+        )}
       </div>
       {controls && (
         <div className="flex absolute top-4 right-4 items-center gap-2 text-[var(--color-text-primary)]">
