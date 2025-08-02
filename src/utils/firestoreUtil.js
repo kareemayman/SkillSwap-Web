@@ -1,15 +1,29 @@
-import { collection, doc, getDocs, getDoc, serverTimestamp, setDoc, updateDoc, query, where, addDoc, deleteDoc, arrayUnion, arrayRemove } from "firebase/firestore";
-import { db } from "../firebase";
-import { getSkillCategory, translateSkillToArabic } from "./geminiPrompts";
-import { generateFromGemini } from "../api/gemini";
+import {
+  collection,
+  doc,
+  getDocs,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+  query,
+  where,
+  addDoc,
+  deleteDoc,
+  arrayUnion,
+  arrayRemove,
+} from "firebase/firestore"
+import { db } from "../firebase"
+import { getSkillCategory, translateSkillToArabic } from "./geminiPrompts"
+import { generateFromGemini } from "../api/gemini"
 
 export const fetchSkillsList = async () => {
-  const qSnap = await getDocs(collection(db, "skills"));
+  const qSnap = await getDocs(collection(db, "skills"))
   return qSnap.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
-  }));
-};
+  }))
+}
 
 // export const getSkillById = async (id) => {
 //   const qSnap = await getDocs(collection(db, "skills"));
@@ -17,23 +31,23 @@ export const fetchSkillsList = async () => {
 // };
 
 export const getUserById = async (id) => {
-  const qSnap = await getDocs(collection(db, "users"));
-  return qSnap.docs.find((doc) => doc.id === id);
-};
+  const qSnap = await getDocs(collection(db, "users"))
+  return qSnap.docs.find((doc) => doc.id === id)
+}
 
 export const getAllUsers = async () => {
-  const qSnap = await getDocs(collection(db, "users"));
+  const qSnap = await getDocs(collection(db, "users"))
   return qSnap.docs
     .map((doc) => ({
       ...doc.data(),
     }))
-    .filter((user) => user.email !== "skills.swap.app@gmail.com");
-};
+    .filter((user) => user.email !== "skills.swap.app@gmail.com")
+}
 
 export const createUserDoc = async (user) => {
   try {
-    const userDocRef = doc(db, "users", user.uid);
-    const userSnap = await getDoc(userDocRef);
+    const userDocRef = doc(db, "users", user.uid)
+    const userSnap = await getDoc(userDocRef)
 
     if (!userSnap.exists()) {
       await setDoc(userDocRef, {
@@ -56,12 +70,12 @@ export const createUserDoc = async (user) => {
         hasSkills: null, // array of skill objects [{ id: "skillId", name: "skillName", skillLevel: "beginner" }]
         needSkills: null, // array of skill objects [{ id: "skillId", name: "skillName", skillLevel: "beginner" }]
         reviews: null, // array of review objects [{ id: "reviewId", reviewerId: "userId", reviewText: "Great session!", rating: 5 }]
-      });
+      })
     }
   } catch (error) {
-    console.error("Error creating user document:", error);
+    console.error("Error creating user document:", error)
   }
-};
+}
 
 export const submitRating = async (ratingData) => {
   try {
@@ -79,49 +93,51 @@ export const submitRating = async (ratingData) => {
       communication: ratingData.communication,
       punctuality: ratingData.punctuality,
       createdAt: new Date().toISOString(),
-    };
+    }
 
     await updateDoc(userRef, {
-      reviews: arrayUnion(review)
-    });
+      reviews: arrayUnion(review),
+    })
 
-    return reviewId;
+    return reviewId
   } catch (error) {
-    console.error("Error submitting rating:", error);
-    throw error;
+    console.error("Error submitting rating:", error)
+    throw error
   }
-};
+}
 export const getUserRatings = async (userId) => {
-  const q = query(collection(db, "ratings"), where("revieweeId", "==", userId));
-  const qSnap = await getDocs(q);
+  const q = query(collection(db, "ratings"), where("revieweeId", "==", userId))
+  const qSnap = await getDocs(q)
   return qSnap.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
-  }));
-};
+  }))
+}
 
 export const updateUserRatingStats = async (userId) => {
-  const userRef = doc(db, "users", userId);
-  const userSnap = await getDoc(userRef);
-  const userData = userSnap.data();
+  const userRef = doc(db, "users", userId)
+  const userSnap = await getDoc(userRef)
+  const userData = userSnap.data()
 
-  const reviews = userData.reviews || [];
-  const totalRatings = reviews.length;
+  const reviews = userData.reviews || []
+  const totalRatings = reviews.length
 
-  if (totalRatings === 0) return;
+  if (totalRatings === 0) return
 
-  const averageRating = reviews.reduce((sum, review) => sum + review.rating, 0) / totalRatings;
+  const averageRating = reviews.reduce((sum, review) => sum + review.rating, 0) / totalRatings
 
   await updateDoc(userRef, {
     rating: averageRating,
     totalSessions: totalRatings,
-  });
-};
+  })
+}
 
 export const createSkillDoc = async (skill) => {
   try {
-    const category = await generateFromGemini(getSkillCategory(skill.skillName, await getSkillCategories()));
-    const skillNameArabic = await generateFromGemini(translateSkillToArabic(skill.skillName));
+    const category = await generateFromGemini(
+      getSkillCategory(skill.skillName, await getSkillCategories())
+    )
+    const skillNameArabic = await generateFromGemini(translateSkillToArabic(skill.skillName))
 
     const skillDocRef = await addDoc(collection(db, "skills"), {
       skillName: skill.skillName,
@@ -130,14 +146,14 @@ export const createSkillDoc = async (skill) => {
       category: category,
     })
   } catch (error) {
-    console.error("Error creating skill document:", error);
+    console.error("Error creating skill document:", error)
   }
 }
 
 export const getSkillCategories = async () => {
-  const skills = await fetchSkillsList();
-  const categories = new Set(skills.map(skill => skill.category));
-  return Array.from(categories);
+  const skills = await fetchSkillsList()
+  const categories = new Set(skills.map((skill) => skill.category))
+  return Array.from(categories)
 }
 
 export const createFirestoreTrade = async (tradeData) => {
@@ -145,34 +161,34 @@ export const createFirestoreTrade = async (tradeData) => {
     const tradeDocRef = await addDoc(collection(db, "trades"), {
       ...tradeData,
       createdAt: serverTimestamp(),
-    });
-    return tradeDocRef.id;
+    })
+    return tradeDocRef.id
   } catch (error) {
-    console.error("Error creating trade document:", error);
-    throw error;
+    console.error("Error creating trade document:", error)
+    throw error
   }
 }
 
 export const deleteDocById = async (collectionName, docId) => {
   try {
-    const docRef = doc(db, collectionName, docId);
-    await deleteDoc(docRef);
+    const docRef = doc(db, collectionName, docId)
+    await deleteDoc(docRef)
   } catch (error) {
-    console.error(`Error deleting document from ${collectionName} with ID ${docId}:`, error);
+    console.error(`Error deleting document from ${collectionName} with ID ${docId}:`, error)
   }
 }
 
 export const deleteSkillFromUsers = async (skillId) => {
   try {
-    const usersSnap = await getDocs(collection(db, "users"));
-    const batchPromises = [];
+    const usersSnap = await getDocs(collection(db, "users"))
+    const batchPromises = []
 
     usersSnap.forEach((docSnap) => {
-      const userRef = docSnap.ref;
-      const userData = docSnap.data();
+      const userRef = docSnap.ref
+      const userData = docSnap.data()
 
-      const newHasSkills = (userData.hasSkills || []).filter(skill => skill.skillId !== skillId);
-      const newNeedSkills = (userData.needSkills || []).filter(skill => skill.skillId !== skillId);
+      const newHasSkills = (userData.hasSkills || []).filter((skill) => skill.skillId !== skillId)
+      const newNeedSkills = (userData.needSkills || []).filter((skill) => skill.skillId !== skillId)
 
       // Only update if something changed
       if (
@@ -184,30 +200,38 @@ export const deleteSkillFromUsers = async (skillId) => {
             hasSkills: newHasSkills,
             needSkills: newNeedSkills,
           })
-        );
+        )
       }
-    });
+    })
 
-    await Promise.all(batchPromises);
+    await Promise.all(batchPromises)
   } catch (error) {
-    console.error("Error deleting skill from users:", error);
+    console.error("Error deleting skill from users:", error)
   }
 }
 
 export const deleteReview = async (userId, reviewId) => {
   try {
-    const userRef = doc(db, "users", userId);
-    const userSnap = await getDoc(userRef);
-    const userData = userSnap.data();
+    const userRef = doc(db, "users", userId)
+    const userSnap = await getDoc(userRef)
+    const userData = userSnap.data()
 
-    const newReviews = (userData.reviews || []).filter(
-      review => review.reviewId !== reviewId
-    );
+    const newReviews = (userData.reviews || []).filter((review) => review.reviewId !== reviewId)
 
     await updateDoc(userRef, {
       reviews: newReviews,
-    });
+    })
   } catch (error) {
-    console.error("Error deleting review:", error);
+    console.error("Error deleting review:", error)
+  }
+}
+
+export const getTradeById = async (tradeId) => {
+  try {
+    const tradeDocRef = doc(db, "trades", tradeId)
+    const tradeSnap = await getDoc(tradeDocRef)
+    return tradeSnap.data()
+  } catch (error) {
+    console.error("Error getting trade by ID:", error)
   }
 }
