@@ -1,75 +1,88 @@
-import { useEffect, useState } from "react";
-import Avat from "../../assets/images/avat.png";
-import { SkillInfo } from "./components/SkillInfo";
-import { useNavigate, useParams } from "react-router-dom";
-import { createFirestoreTrade, getUserById } from "../../utils/firestoreUtil";
-import { useAuth } from "../../contexts/Auth/context";
-import toast from "react-hot-toast";
-import { useTranslation } from "react-i18next";
+import { useEffect, useState } from "react"
+import Avat from "../../assets/images/avat.png"
+import { SkillInfo } from "./components/SkillInfo"
+import { useNavigate, useParams } from "react-router-dom"
+import { createFirestoreTrade, getUserById } from "../../utils/firestoreUtil"
+import { useAuth } from "../../contexts/Auth/context"
+import toast from "react-hot-toast"
+import { useTranslation } from "react-i18next"
+import { generateFromGemini } from "../../api/gemini"
+import { generateMilestonesPrompt } from "../../utils/geminiPrompts"
 
 export const ScheduleSession = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
-  const [proposeTradeToggle, setProposeTradeToggle] = useState(true);
-  const [paymentToggle, setPaymentToggle] = useState(false);
-  const [seekingSkill, setSeekingSkill] = useState("");
-  const [offeringSkill, setOfferingSkill] = useState("");
-  const [user, setUser] = useState(null);
-  const { user: currentUserFromAuth } = useAuth();
-  const [currentUser, setCurrentUser] = useState();
+  const [proposeTradeToggle, setProposeTradeToggle] = useState(true)
+  const [paymentToggle, setPaymentToggle] = useState(false)
+  const [seekingSkill, setSeekingSkill] = useState("")
+  const [offeringSkill, setOfferingSkill] = useState("")
+  const [seekingSkillLevel, setSeekingSkillLevel] = useState("")
+  const [offeringSkillLevel, setOfferingSkillLevel] = useState("")
+  const [user, setUser] = useState(null)
+  const { user: currentUserFromAuth } = useAuth()
+  const [currentUser, setCurrentUser] = useState()
 
-  const { userId } = useParams();
-  const navigate = useNavigate();
+  const { userId } = useParams()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (userId) {
       getUserById(userId)
         .then((res) => {
-          setUser(res.data());
+          setUser(res.data())
         })
         .catch((err) => {
-          console.error("Error fetching user data:", err);
-        });
+          console.error("Error fetching user data:", err)
+        })
     }
-  }, [userId]);
+  }, [userId])
 
   useEffect(() => {
     if (currentUserFromAuth) {
       getUserById(currentUserFromAuth.uid)
         .then((res) => {
-          setCurrentUser(res.data());
+          setCurrentUser(res.data())
         })
         .catch((err) => {
-          console.error("Error fetching current user data:", err);
-        });
+          console.error("Error fetching current user data:", err)
+        })
     }
-  }, [currentUserFromAuth]);
+  }, [currentUserFromAuth])
 
-  function createTrade() {
+  async function createTrade() {
     if (paymentToggle === false && (seekingSkill.trim() === "" || offeringSkill.trim() === "")) {
-      toast.error(t("Please select both seeking and offering skills."));
+      toast.error(t("Please select both seeking and offering skills."))
     } else if (paymentToggle === true && seekingSkill.trim() === "") {
-      toast.error(t("Please select a seeking skill."));
+      toast.error(t("Please select a seeking skill."))
     } else {
+      let milestonesA = await generateFromGemini(generateMilestonesPrompt(offeringSkill, offeringSkillLevel))
+      milestonesA = milestonesA.replace("```json", "").replace("```", "")
+      milestonesA = JSON.parse(milestonesA)
+      let milestonesB = await generateFromGemini(generateMilestonesPrompt(seekingSkill, seekingSkillLevel))
+      milestonesB = milestonesB.replace("```json", "").replace("```", "")
+      milestonesB = JSON.parse(milestonesB)
+
       const tradeData = {
         userA: currentUser.uid,
         userB: userId,
         skillA: paymentToggle ? "PAYMENT" : offeringSkill,
         skillB: seekingSkill,
-        milestones: [],
-      };
+        skillALevel: paymentToggle ? "PAYMENT" : offeringSkillLevel,
+        skillBLevel: seekingSkillLevel,
+        milestonesA: milestonesA,
+        milestonesB: milestonesB,
+      }
 
-      createFirestoreTrade(tradeData).then(() => {
-        toast.success(t("Session scheduled successfully!"));
-        navigate(`/chat/${userId}`);
-      });
+      createFirestoreTrade(tradeData).then((tradeId) => {
+        toast.success(t("Session scheduled successfully!"))
+        navigate(`/trade/${tradeId}`)
+      })
     }
   }
 
   return (
     user &&
     currentUser && (
-
       <div className="mx-auto px-16 pt-8 pb-8 container">
         <h1 className="font-semibold text-[var(--color-text-primary)] text-3xl sm:text-left text-center">
           {t("Schedule Session with")} <span className="capitalize">{user?.name || "User"}</span>🗓️
@@ -86,18 +99,23 @@ export const ScheduleSession = () => {
               {user.name}
             </h2>
             <p className="font-medium text-[var(--color-text-secondary)]">
-              <span className="font-semibold text-[var(--color-text-primary)]">{t("Offering")}: </span>
+              <span className="font-semibold text-[var(--color-text-primary)]">
+                {t("Offering")}:{" "}
+              </span>
               {user.hasSkills.map((s, i) => (
                 <span key={s.skillId} className="capitalize">
                   {`${s.skillName} (${s.skillLevel})${i === user.hasSkills.length - 1 ? "" : ", "}`}
                 </span>
-
               ))}
               <br />
-              <span className="font-semibold text-[var(--color-text-primary)]">{t("Seeking")}: </span>
+              <span className="font-semibold text-[var(--color-text-primary)]">
+                {t("Seeking")}:{" "}
+              </span>
               {user.needSkills.map((s, i) => (
                 <span key={s.skillId} className="capitalize">
-                  {`${s.skillName} (${s.skillLevel})${i === user.needSkills.length - 1 ? "" : ", "}`}
+                  {`${s.skillName} (${s.skillLevel})${
+                    i === user.needSkills.length - 1 ? "" : ", "
+                  }`}
                 </span>
               ))}
             </p>
@@ -105,12 +123,24 @@ export const ScheduleSession = () => {
         </div>
 
         <div className="mb-8">
-          <h3 className="my-4 font-medium text-[var(--main-color)] text-xl">{t("Skills.Skills")}</h3>
+          <h3 className="my-4 font-medium text-[var(--main-color)] text-xl">
+            {t("Skills.Skills")}
+          </h3>
           {user.hasSkills.map((skill) => (
-            <SkillInfo key={skill.skillId} skillName={skill.skillName} skillLevel={skill.skillLevel} type={t("Offering")} />
+            <SkillInfo
+              key={skill.skillId}
+              skillName={skill.skillName}
+              skillLevel={skill.skillLevel}
+              type={t("Offering")}
+            />
           ))}
           {user.needSkills.map((skill) => (
-            <SkillInfo key={skill.skillId} skillName={skill.skillName} skillLevel={skill.skillLevel} type={t("Seeking")} />
+            <SkillInfo
+              key={skill.skillId}
+              skillName={skill.skillName}
+              skillLevel={skill.skillLevel}
+              type={t("Seeking")}
+            />
           ))}
         </div>
 
@@ -119,49 +149,116 @@ export const ScheduleSession = () => {
 
         <h3 className="mt-10 mb-4 font-medium text-[var(--main-color)] text-xl">{t("Actions")}</h3>
         <div className="flex flex-wrap-reverse gap-4">
-          <button onClick={() => navigate(`/chat/${userId}`)} className="bg-[#382f29] hover:bg-[var(--color-btn-submit-hover)] shadow-sm px-5 py-2 rounded-full font-medium text-[var(--color-text-light)] text-sm transition-all duration-300">
+          <button
+            onClick={() => navigate(`/chat/${userId}`)}
+            className="bg-[#382f29] hover:bg-[var(--color-btn-submit-hover)] shadow-sm px-5 py-2 rounded-full font-medium text-[var(--color-text-light)] text-sm transition-all duration-300"
+          >
             {t("Message")}
           </button>
-          <button onClick={() => setProposeTradeToggle(!proposeTradeToggle)} className={`bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] shadow-sm px-5 py-2 rounded-full font-medium text-sm text-[var(--color-text-light)] transition-all duration-300 ${!proposeTradeToggle && "opacity-50"}`}>
+          <button
+            onClick={() => setProposeTradeToggle(!proposeTradeToggle)}
+            className={`bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] shadow-sm px-5 py-2 rounded-full font-medium text-sm text-[var(--color-text-light)] transition-all duration-300 ${
+              !proposeTradeToggle && "opacity-50"
+            }`}
+          >
             {t("Propose Skill Trade")}
           </button>
         </div>
 
         <div className={`${!proposeTradeToggle && "opacity-50"} relative`}>
-          {!proposeTradeToggle && <div className="absolute inset-0 bg-[var(--color-card-bg)] opacity-50 rounded-lg"></div>}
+          {!proposeTradeToggle && (
+            <div className="absolute inset-0 bg-[var(--color-card-bg)] opacity-50 rounded-lg"></div>
+          )}
 
-          <h3 className="mt-10 mb-4 font-medium text-[var(--main-color)] text-xl">{t("Choose Your Option")}</h3>
+          <h3 className="mt-10 mb-4 font-medium text-[var(--main-color)] text-xl">
+            {t("Choose Your Option")}
+          </h3>
 
           <div className="flex flex-wrap gap-4 mb-4">
-            <button onClick={() => setPaymentToggle(false)} className={`shadow-sm px-5 py-2 border border-[var(--color-btn-submit-hover)] rounded-lg font-medium text-sm transition-all duration-300 ${paymentToggle ? "bg-transparent hover:bg-[var(--color-btn-submit-hover)] text-[var(--color-text-light)]" : "bg-[var(--color-btn-submit-bg)] text-[var(--color-text-light)] hover:bg-[var(--color-btn-submit-hover)]"}`}>
+            <button
+              onClick={() => setPaymentToggle(false)}
+              className={`shadow-sm px-5 py-2 border border-[var(--color-btn-submit-hover)] rounded-lg font-medium text-sm transition-all duration-300 ${
+                paymentToggle
+                  ? "bg-transparent hover:bg-[var(--color-btn-submit-hover)] text-[var(--color-text-light)]"
+                  : "bg-[var(--color-btn-submit-bg)] text-[var(--color-text-light)] hover:bg-[var(--color-btn-submit-hover)]"
+              }`}
+            >
               {t("Trade a Skill")}
             </button>
-            <button onClick={() => setPaymentToggle(true)} className={`shadow-sm px-5 py-2 border border-[var(--color-btn-submit-hover)] rounded-lg font-medium text-sm transition-all duration-300 ${paymentToggle ? "bg-[#e79259] text-black" : "bg-transparent hover:bg-[var(--color-btn-submit-hover)] text-[var(--color-text-light)]"}`}>
+            <button
+              onClick={() => setPaymentToggle(true)}
+              className={`shadow-sm px-5 py-2 border border-[var(--color-btn-submit-hover)] rounded-lg font-medium text-sm transition-all duration-300 ${
+                paymentToggle
+                  ? "bg-[#e79259] text-black"
+                  : "bg-transparent hover:bg-[var(--color-btn-submit-hover)] text-[var(--color-text-light)]"
+              }`}
+            >
               {t("Pay for a Session")}
             </button>
           </div>
 
-          <select name="seekingSkill" id="seekingSkill" className="inline-block bg-[#382f29] shadow-sm mb-2 sm:mb-0 px-4 py-2 border border-[var(--color-btn-submit-hover)] rounded-lg outline-none sm:w-[300px] font-medium text-[var(--color-text-light)] transition-all duration-300 cursor-pointer" value={seekingSkill} onChange={(e) => setSeekingSkill(e.target.value)}>
-            <option value="" disabled selected>{t("Select Seeking Skill")}</option>
+          <select
+            name="seekingSkill"
+            id="seekingSkill"
+            className="inline-block bg-[#382f29] shadow-sm mb-2 sm:mb-0 px-4 py-2 border border-[var(--color-btn-submit-hover)] rounded-lg outline-none sm:w-[300px] font-medium text-[var(--color-text-light)] transition-all duration-300 cursor-pointer"
+            value={seekingSkill}
+            onChange={(e) => {
+              setSeekingSkill(e.target.value)
+              const selectedOption = e.target.options[e.target.selectedIndex]
+              setSeekingSkillLevel(selectedOption.dataset.level)
+            }}
+          >
+            <option value="" disabled selected>
+              {t("Select Seeking Skill")}
+            </option>
             {user.hasSkills.map((skill) => (
-              <option key={skill.skillId} value={skill.skillName} className="capitalize font-medium">
+              <option
+                key={skill.skillId}
+                value={skill.skillName}
+                data-level={skill.skillLevel}
+                className="capitalize font-medium"
+              >
                 {`${skill.skillName} (${skill.skillLevel})`}
               </option>
             ))}
           </select>
 
-          <select name="offeringSkill" id="offeringSkill" className={`bg-[#382f29] shadow-sm sm:ml-4 px-4 py-2 border border-[var(--color-btn-submit-hover)] rounded-lg outline-none sm:w-[300px] font-medium text-[var(--color-text-light)] transition-all duration-300 ${paymentToggle ? "opacity-20 cursor-not-allowed" : "cursor-pointer"}`} disabled={paymentToggle} value={offeringSkill} onChange={(e) => setOfferingSkill(e.target.value)}>
-            <option value="" disabled selected>{t("Select Offering Skill")}</option>
+          <select
+            name="offeringSkill"
+            id="offeringSkill"
+            className={`bg-[#382f29] shadow-sm sm:ml-4 px-4 py-2 border border-[var(--color-btn-submit-hover)] rounded-lg outline-none sm:w-[300px] font-medium text-[var(--color-text-light)] transition-all duration-300 ${
+              paymentToggle ? "opacity-20 cursor-not-allowed" : "cursor-pointer"
+            }`}
+            disabled={paymentToggle}
+            value={offeringSkill}
+            onChange={(e) => {
+              setOfferingSkill(e.target.value)
+              const selectedOption = e.target.options[e.target.selectedIndex]
+              setOfferingSkillLevel(selectedOption.dataset.level)
+            }}
+          >
+            <option value="" disabled selected>
+              {t("Select Offering Skill")}
+            </option>
             {currentUser.hasSkills.map((skill) => (
-              <option key={skill.skillId} value={skill.skillName} className="capitalize font-medium">
+              <option
+                key={skill.skillId}
+                value={skill.skillName}
+                data-level={skill.skillLevel}
+                className="capitalize font-medium"
+              >
                 {`${skill.skillName} (${skill.skillLevel})`}
               </option>
             ))}
           </select>
 
           <div className={`${!paymentToggle && "opacity-50"} relative`}>
-            {!paymentToggle && <div className="absolute inset-0 bg-[var(--color-card-bg)] opacity-50 rounded-lg"></div>}
-            <h3 className="mt-10 mb-4 font-medium text-[var(--main-color)] text-xl">{t("Payment")}</h3>
+            {!paymentToggle && (
+              <div className="absolute inset-0 bg-[var(--color-card-bg)] opacity-50 rounded-lg"></div>
+            )}
+            <h3 className="mt-10 mb-4 font-medium text-[var(--main-color)] text-xl">
+              {t("Payment")}
+            </h3>
             <p className="text-[var(--color-text-primary)]">
               {t("Olivia charges $30 per session. Select a payment method:")}
             </p>
@@ -175,11 +272,14 @@ export const ScheduleSession = () => {
             </div>
           </div>
 
-          <button onClick={createTrade} className="bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] shadow-sm mt-4 px-5 py-2 border border-[var(--color-btn-submit-hover)] rounded-full sm:w-[400px] font-medium text-white transition-all duration-300">
+          <button
+            onClick={createTrade}
+            className="bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] shadow-sm mt-4 px-5 py-2 border border-[var(--color-btn-submit-hover)] rounded-full sm:w-[400px] font-medium text-white transition-all duration-300"
+          >
             {t("Schedule Session")}
           </button>
         </div>
       </div>
     )
-  );
-};
+  )
+}

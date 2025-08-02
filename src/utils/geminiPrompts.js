@@ -168,3 +168,53 @@ ${JSON.stringify(usersList)}
 Your response:
 `
 }
+
+export const generateMilestonesPrompt = (skillName, skillLevel) => {
+  return `
+  You are an expert mentor helping learners progress step-by-step in their skill learning journey.
+Given a skill name and the teacher's experience level, generate a list of milestones that break the skill into logical, progressive steps.
+
+Each milestone should be practical, clear, and focused on real progress.
+Return the result as an array of objects, where each object contains:
+
+id: a unique identifier for the milestone
+
+title: a short, descriptive milestone title
+
+description: a detailed explanation of what this milestone covers
+
+isCompleted: a boolean always set to false
+
+price: a number representing the cost of the milestone, default to 0
+
+✅ Use between 3 to 7 milestones.
+✅ Make sure the progression makes sense for someone starting from scratch.
+✅ Adjust the complexity based on the teacher's level:
+
+Beginner: focus on fundamentals
+
+Intermediate: build on basics with real-world application
+
+Advanced: cover advanced concepts, optimization, and mastery
+
+Example Input
+Skill: “Digital Marketing”
+Teacher Experience Level: “Intermediate”
+Expected Output Format (as JSON) without farther explanation:
+[
+  {
+    "id": K6CBXu0ECzcT7d5cIyEE,
+    "title": "Understanding the Basics of Digital Marketing",
+    "description": "Learn the foundational concepts such as SEO, SEM, content marketing, email campaigns, and analytics.",
+    "isCompleted": false,
+    "price": 0
+  },
+  ...
+]
+
+Skill: ${skillName}
+Teacher Experience Level: ${skillLevel}
+
+Your response:
+`
+}

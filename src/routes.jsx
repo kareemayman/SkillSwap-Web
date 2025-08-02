@@ -37,7 +37,7 @@ const AppRoutes = () => {
             },
             { path: "dashboard", element: <Dashboard /> },
             { path: "rate/:id", element: <RateExperience /> },
-            { path: "trade", element: <Trade /> },
+            { path: "trade/:id", element: <Trade /> },
           ],
         },
         {
