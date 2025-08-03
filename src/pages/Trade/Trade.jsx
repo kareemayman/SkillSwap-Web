@@ -19,10 +19,11 @@ export default function Trade() {
   const [totalMilestonesA, setTotalMilestonesA] = useState(0)
   const [totalMilestonesB, setTotalMilestonesB] = useState(0)
   const { user } = useAuth()
-
+  const [isUserA, setIsUserA] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
+    if (id === user.uid) setIsUserA(true)
     async function fetchAllData() {
       if (!id) return
       const tradeData = await getTradeById(id)
@@ -66,7 +67,7 @@ export default function Trade() {
 
   return (
     <div className="mx-auto px-4 md:px-24 py-6 container">
-      {trade && userA && userB && (
+      {trade && userA && userB && (user.uid == trade.userA || user.uid == trade.userB) ? (
         <>
           <div className="mb-8 p-6 border-[var(--color-card-border)] border-2 rounded-lg">
             <div className="flex lg:flex-row flex-col lg:justify-between items-start lg:items-center gap-6 lg:gap-0 pb-6 border-[var(--color-card-border)] border-b">
@@ -175,7 +176,7 @@ export default function Trade() {
             </div>
           </div>
         </>
-      )}
+      ) : <h1 className="text-2xl font-bold text-[var(--color-text-primary)]">You're not part of this trade</h1>}
     </div>
   )
 }
