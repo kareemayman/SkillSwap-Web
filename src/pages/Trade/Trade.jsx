@@ -7,6 +7,7 @@ import Progress from "./Components/Progress"
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { getTradeById, getUserById } from "../../utils/firestoreUtil"
+import { useAuth } from "../../contexts/Auth/context"
 
 export default function Trade() {
   const { id } = useParams()
@@ -17,6 +18,7 @@ export default function Trade() {
   const [milestonesBCompleted, setMilestonesBCompleted] = useState(0)
   const [totalMilestonesA, setTotalMilestonesA] = useState(0)
   const [totalMilestonesB, setTotalMilestonesB] = useState(0)
+  const { user } = useAuth()
 
   const navigate = useNavigate()
 
@@ -155,7 +157,7 @@ export default function Trade() {
 
               <div className="p-6 pb-0">
                 {trade.milestonesA?.map((m) => {
-                  return <Milestone key={m.id} milestone={m} controls={true} tradeId={id} setTrade={setTrade}></Milestone>
+                  return <Milestone key={m.id} milestone={m} controls={true} tradeId={id} setTrade={setTrade} trade={trade}></Milestone>
                 })}
 
                 <Progress completed={milestonesACompleted} outOf={totalMilestonesA}></Progress>

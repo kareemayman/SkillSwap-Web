@@ -258,3 +258,12 @@ export const updateMilestone = async (tradeId, myMilestone) => {
     console.error("Error updating milestone:", error);
   }
 };
+
+export const updateTrade = async (tradeId, tradeData) => {
+  try {
+    const tradeDocRef = doc(db, "trades", tradeId);
+    await updateDoc(tradeDocRef, tradeData);
+  } catch (error) {
+    console.error("Error updating trade:", error);
+  }
+};
