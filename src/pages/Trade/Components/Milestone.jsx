@@ -7,9 +7,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState } from "react"
-import { updateMilestone } from "../../../utils/firestoreUtil"
+import { updateMilestone, updateTrade } from "../../../utils/firestoreUtil"
 
-export default function Milestone({ tradeId, milestone, controls, setTrade }) {
+export default function Milestone({ tradeId, milestone, controls, setTrade, trade }) {
   const [myMilestone, setMyMilestone] = useState(milestone)
 
   useEffect(() => {
@@ -23,6 +23,17 @@ export default function Milestone({ tradeId, milestone, controls, setTrade }) {
       }))
     } 
   }, [myMilestone])
+
+  function deleteMilestone() {
+    if (window.confirm("Are you sure you want to delete this milestone?")) {
+      if(setTrade) {
+        const prevTrade = trade
+        const newTrade = { ...prevTrade, milestonesA: prevTrade.milestonesA.filter((m) => m.id !== myMilestone.id) }
+        setTrade(newTrade)
+        updateTrade(tradeId, newTrade)
+      }
+    }
+  }
 
   return (
     <div
@@ -75,6 +86,7 @@ export default function Milestone({ tradeId, milestone, controls, setTrade }) {
             className="cursor-pointer transition-all duration-300 hover:text-[var(--color-text-light)]"
           ></FontAwesomeIcon>
           <FontAwesomeIcon
+            onClick={deleteMilestone}
             icon={faTrash}
             className="cursor-pointer transition-all duration-300 hover:text-[var(--main-color)]"
           ></FontAwesomeIcon>
