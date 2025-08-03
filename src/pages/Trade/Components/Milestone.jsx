@@ -1,27 +1,53 @@
-import { faCheck, faFlagCheckered, faPencil, faRobot, faTrash } from "@fortawesome/free-solid-svg-icons"
+import {
+  faCheck,
+  faFlagCheckered,
+  faPencil,
+  faRobot,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { updateMilestone } from "../../../utils/firestoreUtil"
 
-export default function Milestone({ milestone, controls }) {
-  const [isCompleted, setIsCompleted] = useState(milestone.isCompleted)
+export default function Milestone({ tradeId, milestone, controls, setTrade }) {
+  const [myMilestone, setMyMilestone] = useState(milestone)
+
+  useEffect(() => {
+    updateMilestone(tradeId, myMilestone)
+    if(setTrade) {
+      setTrade((prevTrade) => ({
+        ...prevTrade,
+        milestonesA: prevTrade.milestonesA.map((m) =>
+          m.id === myMilestone.id ? myMilestone : m
+        ),
+      }))
+    } 
+  }, [myMilestone])
 
   return (
-    <div className={`mb-6 p-4 pr-6 rounded-lg border border-[var(--color-card-border)] bg-[#252321] flex items-start gap-3 relative`}>
+    <div
+      className={`mb-6 p-4 pr-6 rounded-lg border border-[var(--color-card-border)] bg-[#252321] flex items-start gap-3 relative`}
+    >
       {controls ? (
-        <div 
-          onClick={() => setIsCompleted(!isCompleted)}
-          className={`rounded-md w-7 h-7 ${isCompleted ? "bg-[var(--main-color)]" : "bg-white"} cursor-pointer transition-all duration-300 flex items-center justify-center`}>
-            <FontAwesomeIcon icon={faCheck} className="text-white"></FontAwesomeIcon>
+        <div
+          onClick={() => {
+            setMyMilestone({ ...myMilestone, isCompleted: !myMilestone.isCompleted })
+          }}
+          className={`rounded-md w-7 h-7 ${
+            myMilestone.isCompleted ? "bg-[var(--main-color)]" : "bg-white"
+          } cursor-pointer transition-all duration-300 flex items-center justify-center`}
+        >
+          <FontAwesomeIcon icon={faCheck} className="text-white"></FontAwesomeIcon>
         </div>
       ) : (
         <div
           className={`rounded-full ${
-            milestone.isCompleted
+            myMilestone.isCompleted
               ? "bg-[var(--main-color)] text-white"
               : "bg-[#36322f] text-[var(--color-text-primary)]"
           } w-7 h-7 flex items-center justify-center`}
         >
-          {milestone.isCompleted ? (
+          {myMilestone.isCompleted ? (
             <FontAwesomeIcon icon={faCheck}></FontAwesomeIcon>
           ) : (
             <FontAwesomeIcon icon={faFlagCheckered}></FontAwesomeIcon>
@@ -29,11 +55,13 @@ export default function Milestone({ milestone, controls }) {
         </div>
       )}
       <div className="flex-1">
-        <h2 className={`text-[var(--color-text-light)] font-bold ${controls && 'pr-11'}`}>{milestone.title}</h2>
+        <h2 className={`text-[var(--color-text-light)] font-bold ${controls && "pr-11"}`}>
+          {myMilestone.title}
+        </h2>
         <p className="text-[var(--color-text-primary)] font-semibold mt-1">
-          {milestone.description}
+          {myMilestone.description}
         </p>
-        {milestone.AI && (
+        {myMilestone.AI && (
           <div className="bg-[#31292a] px-1 py-[2px] flex gap-1 items-center text-[var(--main-color)] w-fit text-xs rounded-sm mt-2">
             <FontAwesomeIcon icon={faRobot}></FontAwesomeIcon>
             <p>AI Generated</p>

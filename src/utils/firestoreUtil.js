@@ -235,3 +235,26 @@ export const getTradeById = async (tradeId) => {
     console.error("Error getting trade by ID:", error)
   }
 }
+
+export const updateMilestone = async (tradeId, myMilestone) => {
+  try {
+    const tradeDocRef = doc(db, "trades", tradeId);
+    const tradeSnap = await getDoc(tradeDocRef);
+    const tradeData = tradeSnap.data();
+
+    // Get current milestonesA array
+    const milestonesA = tradeData.milestonesA || [];
+
+    // Update the milestone with matching id
+    const updatedMilestonesA = milestonesA.map(m =>
+      m.id === myMilestone.id ? myMilestone : m
+    );
+
+    // Update milestonesA in Firestore
+    await updateDoc(tradeDocRef, {
+      milestonesA: updatedMilestonesA,
+    });
+  } catch (error) {
+    console.error("Error updating milestone:", error);
+  }
+};

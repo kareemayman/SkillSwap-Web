@@ -45,19 +45,21 @@ export default function Trade() {
   }, [trade])
 
   function calculateMilestoneProgress() {
-    setTotalMilestonesA(trade.milestonesA?.length)
-    setTotalMilestonesB(trade.milestonesB?.length)
+    if (trade.milestonesA && trade.milestonesB) {
+      setTotalMilestonesA(trade.milestonesA.length)
+      setTotalMilestonesB(trade.milestonesB.length)
 
-    let milestonesACompleted = 0
-    let milestonesBCompleted = 0
-    trade.milestonesA?.forEach((milestone) => {
-      if (milestone.isCompleted) milestonesACompleted++
-    })
-    trade.milestonesB?.forEach((milestone) => {
-      if (milestone.isCompleted) milestonesBCompleted++
-    })
-    setMilestonesACompleted(milestonesACompleted)
-    setMilestonesBCompleted(milestonesBCompleted)
+      let milestonesACompleted = 0
+      let milestonesBCompleted = 0
+      trade.milestonesA.forEach((milestone) => {
+        if (milestone.isCompleted) milestonesACompleted++
+      })
+      trade.milestonesB.forEach((milestone) => {
+        if (milestone.isCompleted) milestonesBCompleted++
+      })
+      setMilestonesACompleted(milestonesACompleted)
+      setMilestonesBCompleted(milestonesBCompleted)
+    }
   }
 
   return (
@@ -133,13 +135,8 @@ export default function Trade() {
               </div>
 
               <div className="p-6 pb-0">
-                {trade.milestonesB?.map(m => {
-                  return (
-                    <Milestone
-                      key={m.id}
-                      milestone={m}
-                    ></Milestone>
-                  )
+                {trade.milestonesB?.map((m) => {
+                  return <Milestone key={m.id} milestone={m} tradeId={id}></Milestone>
                 })}
 
                 <Progress completed={milestonesBCompleted} outOf={totalMilestonesB}></Progress>
@@ -157,14 +154,8 @@ export default function Trade() {
               </div>
 
               <div className="p-6 pb-0">
-                {trade.milestonesA?.map(m => {
-                  return (
-                    <Milestone
-                      key={m.id}
-                      milestone={m}
-                      controls={true}
-                    ></Milestone>
-                  )
+                {trade.milestonesA?.map((m) => {
+                  return <Milestone key={m.id} milestone={m} controls={true} tradeId={id} setTrade={setTrade}></Milestone>
                 })}
 
                 <Progress completed={milestonesACompleted} outOf={totalMilestonesA}></Progress>
