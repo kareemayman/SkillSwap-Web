@@ -2,7 +2,7 @@ import { faCheck, faFlagCheckered, faPencil, faRobot, faTrash } from "@fortaweso
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
 
-export default function Milestone({ milestone, controls, ai }) {
+export default function Milestone({ milestone, controls }) {
   const [isCompleted, setIsCompleted] = useState(milestone.isCompleted)
 
   return (
@@ -33,7 +33,7 @@ export default function Milestone({ milestone, controls, ai }) {
         <p className="text-[var(--color-text-primary)] font-semibold mt-1">
           {milestone.description}
         </p>
-        {ai && (
+        {milestone.AI && (
           <div className="bg-[#31292a] px-1 py-[2px] flex gap-1 items-center text-[var(--main-color)] w-fit text-xs rounded-sm mt-2">
             <FontAwesomeIcon icon={faRobot}></FontAwesomeIcon>
             <p>AI Generated</p>

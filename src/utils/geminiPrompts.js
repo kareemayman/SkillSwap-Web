@@ -187,6 +187,8 @@ isCompleted: a boolean always set to false
 
 price: a number representing the cost of the milestone, default to 0
 
+AI: a boolean always set to true
+
 ✅ Use between 3 to 7 milestones.
 ✅ Make sure the progression makes sense for someone starting from scratch.
 ✅ Adjust the complexity based on the teacher's level:
@@ -207,7 +209,8 @@ Expected Output Format (as JSON) without farther explanation:
     "title": "Understanding the Basics of Digital Marketing",
     "description": "Learn the foundational concepts such as SEO, SEM, content marketing, email campaigns, and analytics.",
     "isCompleted": false,
-    "price": 0
+    "price": 0,
+    "AI": true
   },
   ...
 ]

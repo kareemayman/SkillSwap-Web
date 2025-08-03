@@ -138,7 +138,6 @@ export default function Trade() {
                     <Milestone
                       key={m.id}
                       milestone={m}
-                      ai={true}
                     ></Milestone>
                   )
                 })}
@@ -163,7 +162,6 @@ export default function Trade() {
                     <Milestone
                       key={m.id}
                       milestone={m}
-                      ai={true}
                       controls={true}
                     ></Milestone>
                   )
