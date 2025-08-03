@@ -221,3 +221,65 @@ Teacher Experience Level: ${skillLevel}
 Your response:
 `
 }
+
+export const generateNewMilestonePrompt = (skillName, skillLevel, milestones) => {
+  return `
+  You are an expert mentor guiding learners through structured skill development.
+
+You will receive:
+- A skill name
+- The teacher's experience level
+- A list of previously generated milestones (each with id, title, description, isCompleted, price, AI)
+
+Your task is to generate **ONE new milestone** that logically comes **after** the given milestones.
+
+🔹 The new milestone must:
+- Have a 'title' and 'description' that clearly build on the earlier ones
+- Include a unique 'id' (use a random alphanumeric string)
+- Set 'isCompleted' to false
+- Set 'price' to 0
+- Set 'AI' to true
+
+⚠️ Do NOT repeat or modify existing milestones.
+⚠️ Keep the tone and style consistent with the previous ones.
+✅ Ensure progression makes sense based on the teacher’s level:
+- Beginner → basic building blocks
+- Intermediate → real-world application & practice
+- Advanced → optimization, creativity, and mastery
+
+⛔️ Return ONLY the new milestone in a valid JSON object, not an array.
+
+---
+**Example Input**
+Skill: “UX Design”  
+Teacher Experience Level: “Intermediate”  
+Previous Milestones:
+[
+  {
+    "id": "abc123",
+    "title": "Introduction to UX Principles",
+    "description": "Understand core UX concepts like usability, accessibility, and user-centered design.",
+    "isCompleted": false,
+    "price": 0,
+    "AI": true
+  },
+  {
+    "id": "def456",
+    "title": "Conducting Effective User Research",
+    "description": "Learn how to gather insights through interviews, surveys, and observation.",
+    "isCompleted": false,
+    "price": 0,
+    "AI": true
+  }
+]
+
+---
+
+Skill: ${skillName}
+Teacher Experience Level: ${skillLevel}
+Previous Milestones:
+${JSON.stringify(milestones)}
+
+Your response:
+  `
+}

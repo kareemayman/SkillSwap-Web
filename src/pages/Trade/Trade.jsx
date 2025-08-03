@@ -6,8 +6,10 @@ import Milestone from "./Components/Milestone"
 import Progress from "./Components/Progress"
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { getTradeById, getUserById } from "../../utils/firestoreUtil"
+import { getTradeById, getUserById, updateTrade } from "../../utils/firestoreUtil"
 import { useAuth } from "../../contexts/Auth/context"
+import { generateFromGemini } from "../../api/gemini"
+import { generateNewMilestonePrompt } from "../../utils/geminiPrompts"
 
 export default function Trade() {
   const { id } = useParams()
@@ -62,6 +64,28 @@ export default function Trade() {
       })
       setMilestonesACompleted(milestonesACompleted)
       setMilestonesBCompleted(milestonesBCompleted)
+    }
+  }
+
+  async function generateMilestone() {
+    if(isUserA) {
+      let milestone = await generateFromGemini(generateNewMilestonePrompt(trade.skillA, trade.skillALevel, trade.milestonesA))
+      milestone = milestone.replace("```json", "").replace("```", "")
+      milestone = JSON.parse(milestone)
+
+      const newMilestonesA = [...trade.milestonesA, milestone]
+      const newTrade = {...trade, milestonesA: newMilestonesA}
+      setTrade(newTrade)
+      updateTrade(id, newTrade)
+    } else {
+      let milestone = await generateFromGemini(generateNewMilestonePrompt(trade.skillB, trade.skillBLevel, trade.milestonesB))
+      milestone = milestone.replace("```json", "").replace("```", "")
+      milestone = JSON.parse(milestone)
+
+      const newMilestonesB = [...trade.milestonesB, milestone]
+      const newTrade = {...trade, milestonesB: newMilestonesB}
+      setTrade(newTrade)
+      updateTrade(id, newTrade)
     }
   }
 
@@ -172,7 +196,9 @@ export default function Trade() {
                   <p className="ml-2">Add New Milestone</p>
                 </div>
 
-                <div className="bg-[#31292a] flex justify-center items-center mb-6 py-3 border border-transparent hover:border-[var(--main-color)] rounded-lg w-full font-bold text-[var(--main-color)] transition-all duration-300 cursor-pointer">
+                <div 
+                  onClick={generateMilestone}
+                  className="bg-[#31292a] flex justify-center items-center mb-6 py-3 border border-transparent hover:border-[var(--main-color)] rounded-lg w-full font-bold text-[var(--main-color)] transition-all duration-300 cursor-pointer">
                   <FontAwesomeIcon icon={faRobot}></FontAwesomeIcon>
                   <p className="ml-2">Generate With AI</p>
                 </div>
