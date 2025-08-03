@@ -13,6 +13,10 @@ export default function Trade() {
   const [trade, setTrade] = useState([])
   const [userA, setUserA] = useState([])
   const [userB, setUserB] = useState([])
+  const [milestonesACompleted, setMilestonesACompleted] = useState(0)
+  const [milestonesBCompleted, setMilestonesBCompleted] = useState(0)
+  const [totalMilestonesA, setTotalMilestonesA] = useState(0)
+  const [totalMilestonesB, setTotalMilestonesB] = useState(0)
 
   const navigate = useNavigate()
 
@@ -34,6 +38,29 @@ export default function Trade() {
     }
     fetchAllData()
   }, [id])
+
+  useEffect(() => {
+    if (!trade) return
+    calculateMilestoneProgress()
+  }, [trade])
+
+  function calculateMilestoneProgress() {
+    if (trade.milestonesA && trade.milestonesB) {
+      setTotalMilestonesA(trade.milestonesA.length)
+      setTotalMilestonesB(trade.milestonesB.length)
+
+      let milestonesACompleted = 0
+      let milestonesBCompleted = 0
+      trade.milestonesA.forEach((milestone) => {
+        if (milestone.isCompleted) milestonesACompleted++
+      })
+      trade.milestonesB.forEach((milestone) => {
+        if (milestone.isCompleted) milestonesBCompleted++
+      })
+      setMilestonesACompleted(milestonesACompleted)
+      setMilestonesBCompleted(milestonesBCompleted)
+    }
+  }
 
   return (
     <div className="mx-auto px-4 md:px-24 py-6 container">
@@ -108,17 +135,11 @@ export default function Trade() {
               </div>
 
               <div className="p-6 pb-0">
-                {trade.milestonesB?.map(m => {
-                  return (
-                    <Milestone
-                      key={m.id}
-                      milestone={m}
-                      ai={true}
-                    ></Milestone>
-                  )
+                {trade.milestonesB?.map((m) => {
+                  return <Milestone key={m.id} milestone={m} tradeId={id}></Milestone>
                 })}
 
-                <Progress completed={1} outOf={5}></Progress>
+                <Progress completed={milestonesBCompleted} outOf={totalMilestonesB}></Progress>
               </div>
             </div>
 
@@ -133,18 +154,11 @@ export default function Trade() {
               </div>
 
               <div className="p-6 pb-0">
-                {trade.milestonesA?.map(m => {
-                  return (
-                    <Milestone
-                      key={m.id}
-                      milestone={m}
-                      ai={true}
-                      controls={true}
-                    ></Milestone>
-                  )
+                {trade.milestonesA?.map((m) => {
+                  return <Milestone key={m.id} milestone={m} controls={true} tradeId={id} setTrade={setTrade}></Milestone>
                 })}
 
-                <Progress completed={1} outOf={4}></Progress>
+                <Progress completed={milestonesACompleted} outOf={totalMilestonesA}></Progress>
 
                 <div className="flex justify-center items-center mb-6 py-3 border border-[var(--color-card-border)] hover:border-[var(--main-color)] border-dashed rounded-lg w-full font-bold text-[var(--color-text-primary)] hover:text-[var(--color-text-light)] transition-all duration-300 cursor-pointer">
                   <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
