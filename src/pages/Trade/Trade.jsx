@@ -23,11 +23,11 @@ export default function Trade() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (id === user.uid) setIsUserA(true)
     async function fetchAllData() {
       if (!id) return
       const tradeData = await getTradeById(id)
       setTrade(tradeData)
+      if(user.uid == tradeData.userA) setIsUserA(true)
 
       if (tradeData) {
         const userADataSnap = await getUserById(tradeData.userA)
@@ -73,56 +73,56 @@ export default function Trade() {
             <div className="flex lg:flex-row flex-col lg:justify-between items-start lg:items-center gap-6 lg:gap-0 pb-6 border-[var(--color-card-border)] border-b">
               <div className="flex md:flex-row flex-col flex-1 justify-center md:justify-start items-start md:gap-3">
                 <img
-                  src={userA.profilePicture ? userA.profilePicture : Avat}
+                  src={isUserA ? (userA.profilePicture ? userA.profilePicture : Avat) : (userB.profilePicture ? userB.profilePicture : Avat)}
                   alt="userAvatar"
                   className="rounded-full w-16 h-16 object-cover"
                 />
                 <div>
                   <h1 className="capitalize before:top-[50%] before:left-[calc(100%+10px)] before:absolute relative before:flex before:justify-center before:items-center before:bg-[var(--main-color)] before:px-2 before:rounded-xl w-fit before:h-5 font-bold text-[var(--color-text-light)] before:text-[10px] text-xl before:text-center before:content-['You'] before:-translate-y-1/2">
-                    {userA.name}
+                    {isUserA ? userA.name : userB.name}
                   </h1>
                   <h2 className="capitalize relative my-2 w-fit font-bold text-[var(--color-text-light)] text-base">
                     <span className="capitalize text-[var(--color-text-primary)]">Teaching: </span>{" "}
-                    {trade.skillA}
-                    <ExpTag expLevel={trade.skillALevel}></ExpTag>
+                    {isUserA ? trade.skillA : trade.skillB}
+                    <ExpTag expLevel={isUserA ? trade.skillALevel : trade.skillBLevel}></ExpTag>
                   </h2>
                   <h2 className="capitalize relative my-2 w-fit font-bold text-[var(--color-text-light)] text-base">
                     <span className="capitalize text-[var(--color-text-primary)]">Learning: </span>{" "}
-                    {trade.skillB}
-                    <ExpTag expLevel={trade.skillBLevel}></ExpTag>
+                    {isUserA ? trade.skillB : trade.skillA}
+                    <ExpTag expLevel={isUserA ? trade.skillBLevel : trade.skillALevel}></ExpTag>
                   </h2>
                 </div>
               </div>
               <div className="flex md:flex-row flex-col flex-1 justify-center md:justify-start items-start md:gap-3">
                 <img
-                  src={userB.profilePicture ? userB.profilePicture : Avat}
+                  src={isUserA ? (userB.profilePicture ? userB.profilePicture : Avat) : (userA.profilePicture ? userA.profilePicture : Avat)}
                   alt="userAvatar"
                   className="rounded-full w-16 h-16 object-cover"
                 />
                 <div>
                   <h1 className="capitalize w-fit font-bold text-[var(--color-text-light)] text-xl">
-                    {userB.name}
+                    {isUserA ? userB.name : userA.name}
                   </h1>
                   <h2 className="capitalize relative my-2 w-fit font-bold text-[var(--color-text-light)] text-base">
                     <span className="capitalize text-[var(--color-text-primary)]">Teaching: </span>{" "}
-                    {trade.skillB}
-                    <ExpTag expLevel={trade.skillBLevel}></ExpTag>
+                    {isUserA ? trade.skillB : trade.skillA}
+                    <ExpTag expLevel={isUserA ? trade.skillBLevel : trade.skillALevel}></ExpTag>
                   </h2>
                   <h2 className="capitalize relative my-2 w-fit font-bold text-[var(--color-text-light)] text-base">
                     <span className="capitalize text-[var(--color-text-primary)]">Learning: </span>{" "}
-                    {trade.skillA}
-                    <ExpTag expLevel={trade.skillALevel}></ExpTag>
+                    {isUserA ? trade.skillA : trade.skillB}
+                    <ExpTag expLevel={isUserA ? trade.skillALevel : trade.skillBLevel}></ExpTag>
                   </h2>
                 </div>
               </div>
             </div>
 
             <button
-              onClick={() => navigate(`/chat/${userB.uid}`)}
+              onClick={() => {isUserA ? navigate(`/chat/${userB.uid}`) : navigate(`/chat/${userA.uid}`)}}
               className="bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] mt-6 px-6 py-3 rounded-lg text-[var(--color-text-light)] transition-all duration-300"
             >
               <FontAwesomeIcon icon={faCommentDots}></FontAwesomeIcon>
-              <p className="capitalize inline ml-2 font-semibold">Message {userB.name}</p>
+              <p className="capitalize inline ml-2 font-semibold">Message {isUserA ? userB.name : userA.name}</p>
             </button>
           </div>
 
@@ -130,38 +130,42 @@ export default function Trade() {
             <div className="flex-1 py-6 border-[var(--color-card-border)] border-2 rounded-lg">
               <div className="px-6 pb-6 border-[var(--color-card-border)] border-b">
                 <h1 className="font-bold text-[var(--color-text-light)] text-xl capitalize">
-                  Skill I'm Learning: {trade.skillB}
+                  Skill I'm Learning: {isUserA ? trade.skillB : trade.skillA}
                 </h1>
                 <h2 className="capitalize mt-1 font-bold text-[var(--color-text-secondary)] text-base">
-                  Milestones created by {userB.name}
+                  Milestones created by {isUserA ? userB.name : userA.name}
                 </h2>
               </div>
 
               <div className="p-6 pb-0">
-                {trade.milestonesB?.map((m) => {
-                  return <Milestone key={m.id} milestone={m} tradeId={id}></Milestone>
-                })}
+                {isUserA ? (trade.milestonesB?.map((m) => {
+                  return <Milestone key={m.id} milestone={m} tradeId={id} isUserA={isUserA}></Milestone>
+                })) : (trade.milestonesA?.map((m) => {
+                  return <Milestone key={m.id} milestone={m} tradeId={id} isUserA={isUserA}></Milestone>
+                }))}
 
-                <Progress completed={milestonesBCompleted} outOf={totalMilestonesB}></Progress>
+                <Progress completed={isUserA ? milestonesBCompleted : milestonesACompleted} outOf={isUserA ? totalMilestonesB : totalMilestonesA}></Progress>
               </div>
             </div>
 
             <div className="flex-1 py-6 border-[var(--color-card-border)] border-2 rounded-lg">
               <div className="px-6 pb-6 border-[var(--color-card-border)] border-b">
                 <h1 className="font-bold text-[var(--color-text-light)] text-xl capitalize">
-                  Skill I'm Teaching: {trade.skillA}
+                  Skill I'm Teaching: {isUserA ? trade.skillA : trade.skillB}
                 </h1>
                 <h2 className="capitalize mt-1 font-bold text-[var(--color-text-secondary)] text-base">
-                  Create and manage milestones for {userB.name}
+                  Create and manage milestones for {isUserA ? userB.name : userA.name}
                 </h2>
               </div>
 
               <div className="p-6 pb-0">
-                {trade.milestonesA?.map((m) => {
-                  return <Milestone key={m.id} milestone={m} controls={true} tradeId={id} setTrade={setTrade} trade={trade}></Milestone>
-                })}
+                {isUserA ?(trade.milestonesA?.map((m) => {
+                  return <Milestone key={m.id} milestone={m} controls={true} tradeId={id} setTrade={setTrade} trade={trade} isUserA={isUserA}></Milestone>
+                })) : (trade.milestonesB?.map((m) => {
+                  return <Milestone key={m.id} milestone={m} controls={true} tradeId={id} setTrade={setTrade} trade={trade} isUserA={isUserA}></Milestone>
+                }))}
 
-                <Progress completed={milestonesACompleted} outOf={totalMilestonesA}></Progress>
+                <Progress completed={isUserA ? milestonesACompleted : milestonesBCompleted} outOf={isUserA ? totalMilestonesA : totalMilestonesB}></Progress>
 
                 <div className="flex justify-center items-center mb-6 py-3 border border-[var(--color-card-border)] hover:border-[var(--main-color)] border-dashed rounded-lg w-full font-bold text-[var(--color-text-primary)] hover:text-[var(--color-text-light)] transition-all duration-300 cursor-pointer">
                   <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
