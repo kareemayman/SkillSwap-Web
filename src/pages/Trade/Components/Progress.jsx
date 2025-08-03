@@ -9,7 +9,7 @@ export default function Progress({ completed, outOf }) {
       </div>
       <div className="rounded-full bg-[#2a2724] h-2 mt-2 w-full">
         <div
-          className="h-2 rounded-full bg-[var(--main-color)]"
+          className="h-2 rounded-full bg-[var(--main-color)] transition-all duration-700"
           style={{ width: `${Math.floor((completed / outOf) * 100)}%` }}
         ></div>
       </div>
