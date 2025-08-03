@@ -78,7 +78,7 @@ const Login = () => {
               onChange={(e) => {
                 setEmail(e.target.value)
               }}
-              className="mx-3 p-3  rounded-md text-[var(--color-text-secondary)] transition-all duration-300 placeholder-gray-500  bg-[var(--color-text-primary)]"
+              className="mx-3 p-3  rounded-md text-black transition-all duration-300 placeholder-gray-500  bg-[var(--color-text-primary)]"
             />
 
             <p className="mx-3 mb-6 text-red-500">{emailValidError}</p>
@@ -90,7 +90,7 @@ const Login = () => {
               onChange={(e) => {
                 setPassword(e.target.value)
               }}
-              className="mx-3 p-3  rounded-md text-[var(--color-text-secondary)] bg-[var(--color-text-primary)] transition-all duration-300 placeholder-gray-500"
+              className="mx-3 p-3  rounded-md text-black bg-[var(--color-text-primary)] transition-all duration-300 placeholder-gray-500"
             />
 
             <p className="mx-3 mb-6 text-red-500">{passwordValidError}</p>

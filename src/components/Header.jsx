@@ -51,7 +51,7 @@ export default function Header() {
   }, [user?.uid]);
 
   return (
-    <header className="shadow-sm shadow-[var(--color-card-border)]">
+    <header className="shadow-md shadow-[var(--color-card-border)]">
       <div className="py-4 mx-auto container px-2 md:px-4 flex items-center justify-between relative">
         {/* Logo Section */}
         <Link to="/">
