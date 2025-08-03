@@ -1,21 +1,57 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "../firebase";
+import toast from "react-hot-toast";
+import { validateEmail } from "../utils/validation";
+import { useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [emailValidError, setEmailValidError] = useState("");
   const [triedSubmit, setTriedSubmit] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (triedSubmit) {
       setEmailValidError(validateEmail(email));
-      setPasswordValidError(validatePassword(password));
     }
   }, [email, triedSubmit]);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     setTriedSubmit(true);
+
+    const emailError = validateEmail(email);
+    setEmailValidError(emailError);
+    if (emailError) return;
+
+    try {
+      setLoading(true);
+      await sendPasswordResetEmail(auth, email);
+      toast.success("Password reset email sent!");
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+    } catch (error) {
+      console.error("Error sending reset email:", error);
+      toast.error(getResetErrorMessage(error.code));
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function getResetErrorMessage(code) {
+    switch (code) {
+      case "auth/user-not-found":
+        return "No user found with this email.";
+      case "auth/invalid-email":
+        return "Invalid email address.";
+      default:
+        return "Something went wrong. Please try again.";
+    }
   }
 
   return (
@@ -40,16 +76,27 @@ const ForgotPassword = () => {
             onChange={(e) => {
               setEmail(e.target.value);
             }}
-            className="mx-3 p-3 border-solid rounded-md outline-[#6A8FD9] placeholder:text-[var(--color-text-secondary)] transition-all duration-300  bg-[var(--color-text-primary)]"
+            className="mx-3 p-3 border-solid rounded-md outline-[#6A8FD9] placeholder:text-[var(--color-text-secondary)] transition-all duration-300  bg-[var(--color-text-primary)] focus:bg-slate-50"
           />
 
           <p className="mx-3 mb-6 text-red-500">{emailValidError}</p>
 
-          <input
+          <button
             type="submit"
-            value="Submit"
-            className="bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] hover:shadow-md p-2 rounded-md w-full text-[#F7FAFC] transition-all duration-300 cursor-pointer"
-          />
+            disabled={loading}
+            className={`flex items-center justify-center gap-2 bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] hover:shadow-md p-2 rounded-md w-full text-[#F7FAFC] transition-all duration-300 ${
+              loading ? "opacity-60 cursor-not-allowed" : ""
+            }`}
+          >
+            {loading ? (
+              <>
+                <span className="button-spinner"></span>
+                Sending...
+              </>
+            ) : (
+              "Submit"
+            )}
+          </button>
 
           <Link
             to={"/login"}
