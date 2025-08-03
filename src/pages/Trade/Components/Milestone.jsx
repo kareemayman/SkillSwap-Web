@@ -9,28 +9,49 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState } from "react"
 import { updateMilestone, updateTrade } from "../../../utils/firestoreUtil"
 
-export default function Milestone({ tradeId, milestone, controls, setTrade, trade }) {
+export default function Milestone({ tradeId, milestone, controls, setTrade, trade, isUserA }) {
   const [myMilestone, setMyMilestone] = useState(milestone)
 
   useEffect(() => {
-    updateMilestone(tradeId, myMilestone)
-    if(setTrade) {
-      setTrade((prevTrade) => ({
-        ...prevTrade,
-        milestonesA: prevTrade.milestonesA.map((m) =>
-          m.id === myMilestone.id ? myMilestone : m
-        ),
-      }))
-    } 
+    updateMilestone(tradeId, myMilestone, isUserA)
+    if (setTrade) {
+      if (isUserA) {
+        setTrade((prevTrade) => ({
+          ...prevTrade,
+          milestonesA: prevTrade.milestonesA.map((m) =>
+            m.id === myMilestone.id ? myMilestone : m
+          ),
+        }))
+      } else {
+        setTrade((prevTrade) => ({
+          ...prevTrade,
+          milestonesB: prevTrade.milestonesB.map((m) =>
+            m.id === myMilestone.id ? myMilestone : m
+          ),
+        }))
+      }
+    }
   }, [myMilestone])
 
   function deleteMilestone() {
     if (window.confirm("Are you sure you want to delete this milestone?")) {
-      if(setTrade) {
+      if (setTrade) {
         const prevTrade = trade
-        const newTrade = { ...prevTrade, milestonesA: prevTrade.milestonesA.filter((m) => m.id !== myMilestone.id) }
-        setTrade(newTrade)
-        updateTrade(tradeId, newTrade)
+        if (isUserA) {
+          const newTrade = {
+            ...prevTrade,
+            milestonesA: prevTrade.milestonesA.filter((m) => m.id !== myMilestone.id),
+          }
+          setTrade(newTrade)
+          updateTrade(tradeId, newTrade)
+        } else {
+          const newTrade = {
+            ...prevTrade,
+            milestonesB: prevTrade.milestonesB.filter((m) => m.id !== myMilestone.id),
+          }
+          setTrade(newTrade)
+          updateTrade(tradeId, newTrade)
+        }
       }
     }
   }
