@@ -9,7 +9,7 @@ export default function MilestoneModal({ data, setShowModal, deleteMilestone, se
 
   return (
     <div className="top-0 left-0 z-50 fixed bg-[rgba(0,0,0,0.5)] w-full h-full">
-      <div className="top-1/2 left-1/2 fixed bg-[#1e1c1b] p-5 border border-[var(--color-card-border)] rounded-lg lg:min-w-[500px] text-[var(--color-text-primary)] -translate-x-1/2 -translate-y-1/2">
+      <div className="top-1/2 left-1/2 fixed bg-[#1e1c1b] p-5 border border-[var(--color-card-border)] rounded-lg min-w-[80%] sm:min-w-[500px] text-[var(--color-text-primary)] -translate-x-1/2 -translate-y-1/2">
         <div className="flex justify-between items-center mb-6">
           <h1 className="font-bold text-[var(--color-text-light)] text-xl">Edit Milestone</h1>
           <FontAwesomeIcon
@@ -49,7 +49,7 @@ export default function MilestoneModal({ data, setShowModal, deleteMilestone, se
           </p>
         </div>
 
-        <div className="flex justify-between items-center pt-6">
+        <div className="flex flex-col sm:flex-row justify-between gap-4 sm:gap-0 sm:items-center pt-6">
           <div 
             onClick={deleteMilestone}
             className="flex justify-center items-center gap-1 border border-[#542b2b] bg-[#2e1c1c] hover:bg-[#3a2424] px-4 py-3 rounded-md font-bold text-[#ff6b6b] text-base transition-all duration-300 cursor-pointer">
@@ -60,7 +60,7 @@ export default function MilestoneModal({ data, setShowModal, deleteMilestone, se
           <div className="flex gap-4">
             <div 
               onClick={() => {setShowModal(false)}}
-              className="flex justify-center items-center gap-1 border border-[var(--color-card-border)] bg-transparent hover:bg-[#252321] px-4 py-3 rounded-md font-bold text-[var(--color-text-primary)] text-base transition-all duration-300 cursor-pointer">
+              className="flex flex-1 sm:flex-initial justify-center items-center gap-1 border border-[var(--color-card-border)] bg-transparent hover:bg-[#252321] px-4 py-3 rounded-md font-bold text-[var(--color-text-primary)] text-base transition-all duration-300 cursor-pointer">
               <p>Cancel</p>
             </div>
             <div 
@@ -68,9 +68,9 @@ export default function MilestoneModal({ data, setShowModal, deleteMilestone, se
                 setMyMilestone({...data, title: milestoneTitle, description: milestoneDesc, isCompleted: milestoneCompleted})
                 setShowModal(false)
               }}
-              className="flex justify-center items-center gap-1 border border-[var(--color-card-border)] bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] px-4 py-3 rounded-md font-bold text-[var(--color-text-light)] text-base transition-all duration-300 cursor-pointer">
-              <FontAwesomeIcon className="text-lg" icon={faCheck}></FontAwesomeIcon>
-              <p>Save Milestone</p>
+              className="flex flex-1 sm:flex-initial justify-center items-center gap-1 border border-[var(--color-card-border)] bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] px-4 py-3 rounded-md font-bold text-[var(--color-text-light)] text-base transition-all duration-300 cursor-pointer">
+              <FontAwesomeIcon className="hidden sm:inline-block text-lg" icon={faCheck}></FontAwesomeIcon>
+              <p className="text-center">Save Milestone</p>
             </div>
           </div>
         </div>
