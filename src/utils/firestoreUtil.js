@@ -11,24 +11,7 @@ import {
   addDoc,
   deleteDoc,
   arrayUnion,
-} from "firebase/firestore";
-import { db } from "../firebase";
-import { getSkillCategory, translateSkillToArabic } from "./geminiPrompts";
-import { generateFromGemini } from "../api/gemini";
-import {
-  collection,
-  doc,
-  getDocs,
-  getDoc,
-  serverTimestamp,
-  setDoc,
-  updateDoc,
-  query,
-  where,
-  addDoc,
-  deleteDoc,
-  arrayUnion,
-  arrayRemove,
+   arrayRemove,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { getSkillCategory, translateSkillToArabic } from "./geminiPrompts";
