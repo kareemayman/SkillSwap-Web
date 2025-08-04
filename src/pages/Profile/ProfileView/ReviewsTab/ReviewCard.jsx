@@ -5,7 +5,7 @@ export default function ReviewCard({ data }) {
   const { t } = useTranslation();
 
   return (
-    <div className="usercard border-[--color-card-border] border p-2 my-2 rounded-xl overflow-hidden transition-all duration-300">
+    <div className="usercard  p-2 my-2 rounded-xl overflow-hidden transition-all duration-300">
       <div className="flex justify-between">
         {/* Avatar */}
         {data?.authorPhoto ? (
