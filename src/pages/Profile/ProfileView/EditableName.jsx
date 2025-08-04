@@ -58,7 +58,7 @@ export default function EditableName({ data, updateUserData, isOwnProfile }) {
         </div>
       ) : (
         <div className="w-full flex justify-center items-center gap-3 mb-0.5">
-          <div className="w-7"></div>
+          {isOwnProfile && <div className="w-7"></div>}
 
           <h1 className="text-2xl font-bold">{data}</h1>
 

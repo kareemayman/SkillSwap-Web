@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 // import { Loader2, CheckCircle, TriangleAlert } from "lucide-react";
-import { LuLoaderCircle , LuCircleCheckBig, LuTriangleAlert } from "react-icons/lu";
+import { LuLoaderCircle, LuCircleCheckBig, LuTriangleAlert } from "react-icons/lu";
 
 export default function StatusOverlay({ status, onDismiss, autoDismissDelay = 1 }) {
   // auto dismiss after 1 second if successful
@@ -27,7 +27,7 @@ export default function StatusOverlay({ status, onDismiss, autoDismissDelay = 1 
   // Determine background color based on status
   let overlayPrimaryColor = "bg-white";
   if (status.loading) {
-    overlayPrimaryColor = "bg-blue-500/70";
+    overlayPrimaryColor = "bg-white/70";
   } else if (status.error) {
     overlayPrimaryColor = "bg-red-500/70";
   } else if (status.data) {
@@ -39,14 +39,14 @@ export default function StatusOverlay({ status, onDismiss, autoDismissDelay = 1 
       <div className="text-center p-6">
         {status.loading && (
           <div className="flex flex-col items-center gap-3">
-            <LuLoaderCircle  className="h-8 w-8 animate-spin text-white" />
-            <p className="text-white text-sm font-medium">Please wait...</p>
+            <LuLoaderCircle className="h-8 w-8 animate-spin text-[--color-btn-submit-bg]" />
+            <p className="text-[--color-btn-submit-bg] text-sm font-medium">Please wait...</p>
           </div>
         )}
 
         {status.data && (
           <div className="flex flex-col items-center gap-3">
-            <LuCircleCheckBig  className="h-8 w-8 text-white" />
+            <LuCircleCheckBig className="h-8 w-8 text-white" />
             <p className="text-white text-sm font-medium">{status.data}</p>
             <button
               onClick={onDismiss}
@@ -59,7 +59,7 @@ export default function StatusOverlay({ status, onDismiss, autoDismissDelay = 1 
 
         {status.error && (
           <div className="flex flex-col items-center gap-3">
-            <LuTriangleAlert  className="h-8 w-8 text-white" />
+            <LuTriangleAlert className="h-8 w-8 text-white" />
             <p className="text-white text-sm font-medium text-center max-w-xs">{status.error}</p>
             <button
               onClick={onDismiss}

@@ -10,8 +10,8 @@ ${skillList}
 
 Respond with only an array of matching skill IDs in JSON format without any extra explaination, like:
 ["id corrosponding to guitar", "id corrosponding to piano"]
-`
-}
+`;
+};
 
 export const skillMatch = (primaryUser, candidates) => {
   return `
@@ -36,8 +36,8 @@ ${JSON.stringify(candidates)}
 Analyze the PrimaryUser against each candidate. Score them 0–100 based on how well they satisfy the criteria above, then return:
 - An array of candidate objects in order of highest to lowest score.
 - Only output valid JSON array.
-`
-}
+`;
+};
 
 export const getSkillCategory = (skillName, skillCategories) => {
   return `
@@ -60,22 +60,36 @@ ${JSON.stringify(skillCategories)}
 
 New Skill:
 ${skillName}
-`
-}
+`;
+};
 
-export const translateSkillToArabic = (skillName) => {
+// export const translateSkillToArabic = (skillName) => {
+//   return `
+//   You are a professional translator.
+
+// Translate the following skill name from English to Arabic.
+
+// Only return the Arabic translation, with no extra explanation or punctuation.
+
+// Skill Name: ${skillName}
+
+// Your response:
+// `
+// }
+
+export const translateSkillToArabic = (skillName, category) => {
   return `
-  You are a professional translator.
+You are a professional Arabic translator.
 
-Translate the following skill name from English to Arabic.
+Translate the following skill name from English to Arabic, considering that it belongs to the category: "${category}".
 
-Only return the Arabic translation, with no extra explanation or punctuation.
+Only return the Arabic translation — no explanation, no transliteration, and no punctuation.
 
 Skill Name: ${skillName}
 
 Your response:
-`
-}
+`;
+};
 
 export const filterUsersPrompt = (searchQuery, userList) => {
   return `
@@ -100,8 +114,8 @@ User List:
 ${JSON.stringify(userList)}
 
 Your response:
-  `
-}
+  `;
+};
 
 export const filterSkillObjectsPrompt = (searchQuery, skillList) => {
   return `
@@ -131,8 +145,8 @@ Skill List:
 ${JSON.stringify(skillList)}
 
 Your response:
-  `
-}
+  `;
+};
 
 export const filterReviewsPrompt = (searchQuery, usersList) => {
   return `
@@ -166,8 +180,8 @@ Users List:
 ${JSON.stringify(usersList)}
 
 Your response:
-`
-}
+`;
+};
 
 export const generateMilestonesPrompt = (skillName, skillLevel) => {
   return `
@@ -219,8 +233,8 @@ Skill: ${skillName}
 Teacher Experience Level: ${skillLevel}
 
 Your response:
-`
-}
+`;
+};
 
 export const generateNewMilestonePrompt = (skillName, skillLevel, milestones) => {
   return `
@@ -281,5 +295,5 @@ Previous Milestones:
 ${JSON.stringify(milestones)}
 
 Your response:
-  `
-}
+`;
+};

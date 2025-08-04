@@ -133,8 +133,8 @@
   "About me": "About me",
   "Skills I want to learn": "Skills I want to learn",
   "Skills I can teach": "Skills I can teach",
+  "Add skills for": "Add skills for",
   "Back": "Back",
-
   "Skills": {
     "Skills": "Skills",
     "MySkillsTitle": "My Skills 💡",
@@ -229,7 +229,7 @@
     "card6": {
       "title": "Mohammed Abdelfatah"
     },
-   "Our team":"Our team"
+    "Our team": "Our team"
   },
 
   "terms": {
@@ -273,7 +273,7 @@
       "email": "skills.swap.app@gmail.com"
     }
   },
-  
+
   "privacy": {
     "title": "Privacy Policy",
     "section1": {
@@ -300,7 +300,11 @@
       "title": "6. Contact Us",
       "text": "If you have any questions about this policy, please contact us at skills.swap.app@gmail.com."
     }
-  }
-
-
+  },
+  "Overall Rating": "Overall Rating",
+  "Overall": "Overall",
+  "Teaching Skill": "Teaching Skill",
+  "Communication": "Communication",
+  "Punctuality": "Punctuality",
+  "Start Trading": "Start Trading"
 }

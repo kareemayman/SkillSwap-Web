@@ -27,8 +27,7 @@ const AppRoutes = () => {
         {
           element: <ProtectedRoute />,
           children: [
-            { path: "profile", element: <ProfilePage /> }, // your own profile
-            { path: "profile/:id", element: <ProfilePage /> }, // other user's profile
+            { path: "profile/:id", element: <ProfilePage /> },
             { path: "explore", element: <Explore /> },
             { path: "messages", element: <Messages /> },
             { path: "rate/:userId", element: <RateExperience /> },

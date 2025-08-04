@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 const SKILL_LEVELS = [
   { value: "beginner", label: "beginner", color: "bg-blue-50 text-blue-700 border-blue-200" },
-  { value: "intermediate", label: "intermediate", color: "bg-yellow-50 text-yellow-700 border-yellow-200" },
+  { value: "intermediate", label: "intermediate", color: "bg-green-50 text-green-700 border-green-200" },
   { value: "advanced", label: "advanced", color: "bg-purple-50 text-purple-700 border-purple-200" },
 ];
 

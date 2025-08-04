@@ -51,6 +51,7 @@ export default function EditablePhone({ data, updateUserData, isOwnProfile }) {
               <button
                 aria-label="Save phone number"
                 className="p-1 rounded-full bg-green-100 text-green-700 transition-colors hover:bg-green-700 hover:text-green-100"
+                title="Save Changes"
                 onClick={handleSave}
               >
                 <LuCircleCheck size={20} />
@@ -59,6 +60,7 @@ export default function EditablePhone({ data, updateUserData, isOwnProfile }) {
               <button
                 aria-label="Cancel editing phone number"
                 className="p-1 rounded-full bg-red-100 text-red-700 transition-colors hover:bg-red-700 hover:text-red-100"
+                title="Cancel"
                 onClick={handleCancel}
               >
                 <LuCircleX size={20} />

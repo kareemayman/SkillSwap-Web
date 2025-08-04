@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/Auth/context";
 import useFirestoreGet from "../../hooks/useFirestoreGet";
 import CreateProfile from "./CreateProfile/CreateProfile";
-import EditProfile from "./EditProfile/EditProfile";
 import ProfileView from "./ProfileView/ProfileView";
 import { Spinner } from "flowbite-react";
 import { hasNullValue } from "../../utils/helpers";
@@ -12,30 +11,23 @@ import { useParams } from "react-router-dom";
 const ProfilePage = () => {
   const { user } = useAuth();
   const { id } = useParams();
-  const isOwnProfile = !id || id === user?.uid;
+  const isOwnProfile = id === user?.uid;
 
-  const {
-    data: userProfile,
-    loading,
-    error,
-    request,
-  } = useFirestoreGet();
+  const { data: userProfile, loading, error, request } = useFirestoreGet();
 
-  const [displayProfileComponent, setDisplayProfileComponent] =
-    useState("view");
+  const [displayProfileComponent, setDisplayProfileComponent] = useState("view");
 
   useEffect(() => {
-    if (user?.uid) {
-      request("users", id || user.uid);
-    }
-  }, [user?.uid, request, id]);
+    request("users", id);
+  }, [request, id]);
 
   useEffect(() => {
-    if (
-      isOwnProfile &&
-      (error?.message === "Document not found" ||
-        (userProfile && hasNullValue(userProfile)))
-    ) {
+    if (isOwnProfile && (error?.message === "Document not found" || (userProfile && hasNullValue(userProfile)))) {
+      console.log(
+        `@ProfilePage ---- will render crate profile isOwnProfile = ${isOwnProfile} ---- error?.message = ${
+          error?.message
+        } ---- !!userProfile = ${!!userProfile} ---- hasNullValue(userProfile) = ${hasNullValue(userProfile)}`
+      );
       setDisplayProfileComponent("create");
     }
   }, [error, userProfile, isOwnProfile]);
@@ -47,8 +39,8 @@ const ProfilePage = () => {
       </div>
     );
   }
- 
-    console.log("@ProfilePage ---- error =", error);
+
+  console.log("@ProfilePage ---- error =", error);
 
   if (error && error?.message !== "Document not found") {
     return (
@@ -61,19 +53,12 @@ const ProfilePage = () => {
   return (
     <div className="min-h-screen relative overflow-hidden ">
       <div className="absolute bottom-0 left-0 w-full z-0">
-        <img
-          src={img}
-          alt="decorative wave"
-          className="w-full h-auto object-cover"
-          style={{ minHeight: "80px" }}
-        />
+        <img src={img} alt="decorative wave" className="w-full h-auto object-cover" style={{ minHeight: "80px" }} />
       </div>
 
       <div className=" container max-w-4xl mx-auto px-5 py-6 ">
         {displayProfileComponent === "create" && isOwnProfile ? (
           <CreateProfile userData={userProfile} />
-        ) : displayProfileComponent === "edit" && isOwnProfile ? (
-          <EditProfile />
         ) : (
           <ProfileView data={userProfile} isOwnProfile={isOwnProfile} />
         )}

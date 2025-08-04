@@ -1,32 +1,32 @@
 import { useEffect, useState } from "react";
-import { fetchSkillsList } from "../../../../utils/firestoreUtil";
+import { createSkillDoc, fetchSkillsList } from "../../../../utils/firestoreUtil";
 import { filterSkillPrompt } from "../../../../utils/geminiPrompts";
 import { generateFromGemini } from "../../../../api/gemini";
 import { Tag } from "./Tag";
 import { LuCircleX, LuCircleCheck, LuSearch } from "react-icons/lu";
+import { useTranslation } from "react-i18next";
 
-function generateSkillId() {
-  return `skill_${Math.random().toString(36).substring(2, 11)}`;
-}
-
-export default function SkillSelector({ onSave, onCancel, existingSkills = [], placeholder = "Search for skills" }) {
+export default function SkillSelector({ onSave, onCancel, existingSkills = [], placeholder = "Search for skills", skillType = "hasSkills" }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
-  const [masterSkillsList, setMasterSkillsList] = useState([]);
+  const [allSkillsList, setAllSkillsList] = useState([]);
   const [filteredResults, setFilteredResults] = useState([]);
 
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [newCustomSkills, setNewCustomSkills] = useState([]);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState(null);
   const [error, setError] = useState(null);
+
+  const { i18n } = useTranslation();
 
   // Fetch the master list of skills once on mount
   useEffect(() => {
     const getSkills = async () => {
       try {
         const skillsArray = await fetchSkillsList();
-        setMasterSkillsList(skillsArray);
+        setAllSkillsList(skillsArray);
+        console.log("@ProfilePage ---- @SkillSelector ---- Master skills list:", skillsArray);
       } catch (err) {
         console.error("Failed to fetch skills list:", err);
         setError("Could not load the skills list. Please try again.");
@@ -51,51 +51,72 @@ export default function SkillSelector({ onSave, onCancel, existingSkills = [], p
     }
 
     const performSearch = async () => {
-      setIsLoading(true);
+      setLoadingMessage("Searching ...");
       const allCurrentSkillNames = [
         ...existingSkills.map((s) => s.skillName.toLowerCase()),
         ...selectedSkills.map((s) => s.skillName.toLowerCase()),
-        ...newCustomSkills.map((s) => s.toLowerCase()),
+        ...newCustomSkills.map((s) => s.skillName.toLowerCase()),
       ];
 
       try {
-        const prompt = filterSkillPrompt(debouncedQuery.toLowerCase(), JSON.stringify(masterSkillsList));
+        const prompt = filterSkillPrompt(debouncedQuery.toLowerCase(), JSON.stringify(allSkillsList));
         const res = await generateFromGemini(prompt);
         const parsedRes = JSON.parse(res);
 
+        console.log("@ProfilePage ---- @SkillSelector ---- Gemini response:", parsedRes);
+
         const results = parsedRes
-          .map((id) => masterSkillsList.find((skill) => skill.id === id))
+          .map((id) => allSkillsList.find((skill) => skill.id === id))
           .filter((skill) => skill && !allCurrentSkillNames.includes(skill.skillName.toLowerCase()));
 
         setFilteredResults(results);
+        setError(null);
       } catch (err) {
         console.error("Error filtering skills with Gemini:", err);
         setError("Search failed. Please check your connection.");
       } finally {
-        setIsLoading(false);
+        setLoadingMessage(null);
       }
     };
 
     performSearch();
-  }, [debouncedQuery, masterSkillsList, existingSkills, selectedSkills, newCustomSkills]);
+  }, [debouncedQuery, allSkillsList, existingSkills, selectedSkills, newCustomSkills]);
 
   const handleSelectSkill = (skill) => {
-    setSelectedSkills((prev) => [...prev, skill]);
+    setSelectedSkills((prev) => [...prev, { ...skill, skillLevel: "beginner" }]);
     setSearchQuery("");
     setFilteredResults([]);
   };
 
-  const handleAddCustomSkill = (skillName) => {
-    if (skillName.trim() !== "" && !newCustomSkills.includes(skillName)) {
-      setNewCustomSkills((prev) => [...prev, skillName]);
-      setSearchQuery("");
+  const handleAddCustomSkill = async (skillName) => {
+    if (skillName.trim() !== "" && !newCustomSkills.some((s) => s.skillName.toLowerCase() === skillName.toLowerCase())) {
+      setLoadingMessage("Adding new skill...");
+      try {
+        const newSkill = await createSkillDoc({ skillName });
+        newSkill.skillId = newSkill.id;
+        delete newSkill.id;
+
+        setNewCustomSkills((prev) => [...prev, { ...newSkill, skillLevel: skillType === "hasSkills" ? "intermediate" : "beginner" }]);
+        setSearchQuery("");
+      } catch (error) {
+        console.error("Error creating new skill with Gemini:\n", error);
+        setError("Adding new skill failed. Please try again.");
+      } finally {
+        setLoadingMessage(null);
+      }
     }
   };
 
   const handleSave = () => {
     const newSkillsToAdd = [
-      ...selectedSkills.map((skill) => ({ skillId: skill.id, skillName: skill.skillName })),
-      ...newCustomSkills.map((skillName) => ({ skillId: generateSkillId(), skillName })),
+      ...selectedSkills.map((skill) => {
+        const newSkill = { ...skill, skillId: newSkill.id, skillLevel: skillType === "hasSkills" ? "intermediate" : "beginner" };
+        delete newSkill.id;
+
+        return newSkill;
+      }),
+      // ...newCustomSkills.map((skillName) => ({ skillId: generateSkillId(), skillName })),
+      ...newCustomSkills,
     ];
     onSave(newSkillsToAdd);
   };
@@ -119,8 +140,8 @@ export default function SkillSelector({ onSave, onCancel, existingSkills = [], p
         />
         {searchQuery.trim() !== "" && (
           <div className="top-full left-0 mt-1 z-50 absolute bg-[#E8EDF5] rounded-md w-full shadow-lg">
-            {isLoading && <div className="p-3 text-center text-gray-500">Searching...</div>}
-            {!isLoading &&
+            {loadingMessage && <div className="p-3 text-center text-gray-500">{loadingMessage}</div>}
+            {!loadingMessage &&
               filteredResults.map((skill) => (
                 <div
                   onClick={() => handleSelectSkill(skill)}
@@ -130,7 +151,7 @@ export default function SkillSelector({ onSave, onCancel, existingSkills = [], p
                   {skill.skillName}
                 </div>
               ))}
-            {!isLoading && filteredResults.length === 0 && debouncedQuery && (
+            {!loadingMessage && filteredResults.length === 0 && debouncedQuery && (
               <div className="p-3 text-center text-gray-500">No matches found. Press Enter to add as a new skill.</div>
             )}
           </div>
@@ -139,13 +160,25 @@ export default function SkillSelector({ onSave, onCancel, existingSkills = [], p
 
       <div className="flex flex-wrap gap-2 my-4 tags min-h-[40px]">
         {selectedSkills.map((skill) => (
-          <Tag key={skill.id} onClick={() => setSelectedSkills((prev) => prev.filter((s) => s.id !== skill.id))}>
-            {skill.skillName}
+          <Tag
+            key={skill.id}
+            skillLevel={skill.skillLevel}
+            isEditing
+            onDelete={() => setSelectedSkills((prev) => prev.filter((s) => s.id !== skill.id))}
+            teaching={skillType === "hasSkills"}
+          >
+            {i18n.language === "ar" ? (skill?.skillNameArabic ? skill?.skillNameArabic : skill?.skillName) : skill?.skillName}
           </Tag>
         ))}
         {newCustomSkills.map((skill) => (
-          <Tag key={skill} onClick={() => setNewCustomSkills((prev) => prev.filter((s) => s !== skill))}>
-            {skill}
+          <Tag
+            key={skill.id}
+            skillLevel={skill.skillLevel}
+            isEditing
+            onDelete={() => setNewCustomSkills((prev) => prev.filter((s) => s !== skill))}
+            teaching={skillType === "hasSkills"}
+          >
+            {i18n.language === "ar" ? (skill?.skillNameArabic ? skill?.skillNameArabic : skill?.skillName) : skill?.skillName}
           </Tag>
         ))}
       </div>

@@ -9,7 +9,6 @@ export default function EditableBio({ data, updateUserData, isOwnProfile }) {
   const [error, setError] = useState("");
   const { t } = useTranslation();
 
-
   const handleSave = () => {
     if (value.trim() === "") {
       setError("Bio cannot be empty");
@@ -29,15 +28,14 @@ export default function EditableBio({ data, updateUserData, isOwnProfile }) {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold text-[--color-text-primary]">
-      {t("About me")}
-        </h2>
+        <h2 className="text-xl font-semibold text-[--color-text-primary]">{t("About me")}</h2>
 
         <div className="md:w-1/2 flex justify-end">
           {isEditing ? (
             <div className="flex items-center gap-2">
               <button
                 className="p-1 rounded-full bg-green-100 text-green-700 transition-colors hover:bg-green-700 hover:text-green-100"
+                title="Save Changes"
                 onClick={handleSave}
               >
                 <LuCircleCheck size={20} />
@@ -45,19 +43,14 @@ export default function EditableBio({ data, updateUserData, isOwnProfile }) {
 
               <button
                 className="p-1 rounded-full bg-red-100 text-red-700 transition-colors hover:bg-red-700 hover:text-red-100"
+                title="Cancel"
                 onClick={handleCancel}
               >
                 <LuCircleX size={20} />
               </button>
             </div>
           ) : (
-            isOwnProfile && (
-              <EditButton
-                title="Edit Bio"
-                classes=""
-                onClickHandler={() => setIsEditing(true)}
-              />
-            )
+            isOwnProfile && <EditButton title="Edit Bio" classes="" onClickHandler={() => setIsEditing(true)} />
           )}
         </div>
       </div>
