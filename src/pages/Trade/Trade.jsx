@@ -11,6 +11,7 @@ import { useAuth } from "../../contexts/Auth/context"
 import { generateFromGemini } from "../../api/gemini"
 import { generateNewMilestonePrompt } from "../../utils/geminiPrompts"
 import MilestoneModal from "./Components/MilestoneModal"
+import { useTranslation } from "react-i18next";
 
 export default function Trade() {
   const { id } = useParams()
@@ -26,7 +27,8 @@ export default function Trade() {
   const navigate = useNavigate()
   const [showMilestoneModal, setShowMilestoneModal] = useState(false)
   const [myMilestone, setMyMilestone] = useState(null) // for generating new milestones
-
+   const {t}= useTranslation();
+ 
   useEffect(() => {
     if (myMilestone) {
       generateMilestoneFromScratch()
@@ -120,6 +122,7 @@ export default function Trade() {
     setMyMilestone(null)
   }
 
+
   return (
     <>
       {showMilestoneModal && (
@@ -138,12 +141,8 @@ export default function Trade() {
                   <img
                     src={
                       isUserA
-                        ? userA.profilePicture
-                          ? userA.profilePicture
-                          : Avat
-                        : userB.profilePicture
-                        ? userB.profilePicture
-                        : Avat
+                        ? userA.profilePicture || Avat
+                        : userB.profilePicture || Avat
                     }
                     alt="userAvatar"
                     className="rounded-full w-16 h-16 object-cover"
@@ -154,14 +153,14 @@ export default function Trade() {
                     </h1>
                     <h2 className="capitalize relative my-2 w-fit font-bold text-[var(--color-text-light)] text-base">
                       <span className="capitalize text-[var(--color-text-primary)]">
-                        Teaching:{" "}
+                        {t("teaching")}:
                       </span>{" "}
                       {isUserA ? trade.skillA : trade.skillB}
                       <ExpTag expLevel={isUserA ? trade.skillALevel : trade.skillBLevel}></ExpTag>
                     </h2>
                     <h2 className="capitalize relative my-2 w-fit font-bold text-[var(--color-text-light)] text-base">
                       <span className="capitalize text-[var(--color-text-primary)]">
-                        Learning:{" "}
+                        {t("learning")}:{" "}
                       </span>{" "}
                       {isUserA ? trade.skillB : trade.skillA}
                       <ExpTag expLevel={isUserA ? trade.skillBLevel : trade.skillALevel}></ExpTag>
@@ -172,12 +171,8 @@ export default function Trade() {
                   <img
                     src={
                       isUserA
-                        ? userB.profilePicture
-                          ? userB.profilePicture
-                          : Avat
-                        : userA.profilePicture
-                        ? userA.profilePicture
-                        : Avat
+                        ? userB.profilePicture || Avat
+                        : userA.profilePicture || Avat
                     }
                     alt="userAvatar"
                     className="rounded-full w-16 h-16 object-cover"
@@ -188,14 +183,14 @@ export default function Trade() {
                     </h1>
                     <h2 className="capitalize relative my-2 w-fit font-bold text-[var(--color-text-light)] text-base">
                       <span className="capitalize text-[var(--color-text-primary)]">
-                        Teaching:{" "}
+                        {t("teaching")}:
                       </span>{" "}
                       {isUserA ? trade.skillB : trade.skillA}
                       <ExpTag expLevel={isUserA ? trade.skillBLevel : trade.skillALevel}></ExpTag>
                     </h2>
                     <h2 className="capitalize relative my-2 w-fit font-bold text-[var(--color-text-light)] text-base">
                       <span className="capitalize text-[var(--color-text-primary)]">
-                        Learning:{" "}
+                        {t("learning")}:
                       </span>{" "}
                       {isUserA ? trade.skillA : trade.skillB}
                       <ExpTag expLevel={isUserA ? trade.skillALevel : trade.skillBLevel}></ExpTag>
@@ -212,7 +207,7 @@ export default function Trade() {
               >
                 <FontAwesomeIcon icon={faCommentDots}></FontAwesomeIcon>
                 <p className="capitalize inline ml-2 font-semibold">
-                  Message {isUserA ? userB.name : userA.name}
+                  {t("message_user", { name: isUserA ? userB.name : userA.name })}
                 </p>
               </button>
             </div>
@@ -221,103 +216,72 @@ export default function Trade() {
               <div className="flex-1 py-6 border-[var(--color-card-border)] border-2 rounded-lg">
                 <div className="px-6 pb-6 border-[var(--color-card-border)] border-b">
                   <h1 className="font-bold text-[var(--color-text-light)] text-xl capitalize">
-                    Skill I'm Learning: {isUserA ? trade.skillB : trade.skillA}
+                    {t("skill_im_learning")}: {isUserA ? trade.skillB : trade.skillA}
                   </h1>
                   <h2 className="capitalize mt-1 font-bold text-[var(--color-text-secondary)] text-base">
-                    Milestones created by {isUserA ? userB.name : userA.name}
+                    {t("milestones_created_by", { name: isUserA ? userB.name : userA.name })}
                   </h2>
                 </div>
 
                 <div className="p-6 pb-0">
-                  {isUserA
-                    ? trade.milestonesB?.map((m) => {
-                        return (
-                          <Milestone
-                            key={m.id}
-                            milestone={m}
-                            tradeId={id}
-                            isUserA={isUserA}
-                          ></Milestone>
-                        )
-                      })
-                    : trade.milestonesA?.map((m) => {
-                        return (
-                          <Milestone
-                            key={m.id}
-                            milestone={m}
-                            tradeId={id}
-                            isUserA={isUserA}
-                          ></Milestone>
-                        )
-                      })}
+                  {(isUserA ? trade.milestonesB : trade.milestonesA)?.map((m) => (
+                    <Milestone
+                      key={m.id}
+                      milestone={m}
+                      tradeId={id}
+                      isUserA={isUserA}
+                    />
+                  ))}
 
                   <Progress
                     completed={isUserA ? milestonesBCompleted : milestonesACompleted}
                     outOf={isUserA ? totalMilestonesB : totalMilestonesA}
-                  ></Progress>
+                  />
                 </div>
               </div>
 
               <div className="flex-1 py-6 border-[var(--color-card-border)] border-2 rounded-lg">
                 <div className="px-6 pb-6 border-[var(--color-card-border)] border-b">
                   <h1 className="font-bold text-[var(--color-text-light)] text-xl capitalize">
-                    Skill I'm Teaching: {isUserA ? trade.skillA : trade.skillB}
+                    {t("skill_im_teaching")}: {isUserA ? trade.skillA : trade.skillB}
                   </h1>
                   <h2 className="capitalize mt-1 font-bold text-[var(--color-text-secondary)] text-base">
-                    Create and manage milestones for {isUserA ? userB.name : userA.name}
+                    {t("create_and_manage_milestones", { name: isUserA ? userB.name : userA.name })}
                   </h2>
                 </div>
 
                 <div className="p-6 pb-0">
-                  {isUserA
-                    ? trade.milestonesA?.map((m) => {
-                        return (
-                          <Milestone
-                            key={m.id}
-                            milestone={m}
-                            controls={true}
-                            tradeId={id}
-                            setTrade={setTrade}
-                            trade={trade}
-                            isUserA={isUserA}
-                          ></Milestone>
-                        )
-                      })
-                    : trade.milestonesB?.map((m) => {
-                        return (
-                          <Milestone
-                            key={m.id}
-                            milestone={m}
-                            controls={true}
-                            tradeId={id}
-                            setTrade={setTrade}
-                            trade={trade}
-                            isUserA={isUserA}
-                          ></Milestone>
-                        )
-                      })}
+                  {(isUserA ? trade.milestonesA : trade.milestonesB)?.map((m) => (
+                    <Milestone
+                      key={m.id}
+                      milestone={m}
+                      controls={true}
+                      tradeId={id}
+                      setTrade={setTrade}
+                      trade={trade}
+                      isUserA={isUserA}
+                    />
+                  ))}
 
                   <Progress
                     completed={isUserA ? milestonesACompleted : milestonesBCompleted}
                     outOf={isUserA ? totalMilestonesA : totalMilestonesB}
-                  ></Progress>
+                  />
 
                   <div
-                    onClick={() => {
-                      setShowMilestoneModal(true)
-                    }}
+                    onClick={() => setShowMilestoneModal(true)}
                     className="flex justify-center items-center mb-6 py-3 border border-[var(--color-card-border)] hover:border-[var(--main-color)] border-dashed rounded-lg w-full font-bold text-[var(--color-text-primary)] hover:text-[var(--color-text-light)] transition-all duration-300 cursor-pointer"
                   >
-                    <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
-                    <p className="ml-2">Add New Milestone</p>
+                    <FontAwesomeIcon icon={faPlus} />
+                    <p className="ml-2">{t("add_new_milestone")}</p>
                   </div>
 
                   <div
                     onClick={generateMilestone}
                     className="bg-[#31292a] flex justify-center items-center mb-6 py-3 border border-transparent hover:border-[var(--main-color)] rounded-lg w-full font-bold text-[var(--main-color)] transition-all duration-300 cursor-pointer"
                   >
-                    <FontAwesomeIcon icon={faRobot}></FontAwesomeIcon>
-                    <p className="ml-2">Generate With AI</p>
+                    <FontAwesomeIcon icon={faRobot} />
+                    <p className="ml-2">{t("generate_with_ai")}</p>
                   </div>
                 </div>
               </div>
@@ -325,10 +289,10 @@ export default function Trade() {
           </>
         ) : (
           <h1 className="text-2xl font-bold text-[var(--color-text-primary)]">
-            You're not part of this trade
+            {t("not_part_of_trade")}
           </h1>
         )}
       </div>
     </>
-  )
-}
+  );
+};

@@ -305,5 +305,15 @@
   "Teaching Skill": "مهارة التدريس",
   "Communication": "التواصل",
   "Punctuality": "انضباط المواعيد",
-  "Start Trading": "ابدأ المبادلة"
+  "Start Trading": "ابدأ المبادلة",
+   "not_part_of_trade": "أنت لست جزءًا من هذا التبادل",
+  "teaching": "يقوم بالتدريس",
+  "learning": "يتعلم",
+  "skill_im_teaching": "المهارة التي أُدرّسها",
+  "skill_im_learning": "المهارة التي أتعلمها",
+  "milestones_created_by": "المهام التي أنشأها {{name}}",
+  "create_and_manage_milestones": "أنشئ وأدر المهام لـ {{name}}",
+  "message_user": "أرسل رسالة إلى {{name}}",
+  "add_new_milestone": "أضف مهمة جديدة",
+  "generate_with_ai": "توليد مهمة باستخدام الذكاء الاصطناعي"
 }
