@@ -306,5 +306,18 @@
   "Teaching Skill": "Teaching Skill",
   "Communication": "Communication",
   "Punctuality": "Punctuality",
-  "Start Trading": "Start Trading"
+  "Start Trading": "Start Trading",
+  
+  "not_part_of_trade": "You're not part of this trade",
+  "teaching": "Teaching",
+  "learning": "Learning",
+  "skill_im_learning": "Skill I'm Learning",
+  "skill_im_teaching": "Skill I'm Teaching",
+  "milestones_created_by": "Milestones created by {{name}}",
+  "create_and_manage_milestones": "Create and manage milestones for {{name}}",
+  "message_user": "Message {{name}}",
+  "add_new_milestone": "Add New Milestone",
+  "generate_with_ai": "Generate With AI"
+
+
 }
