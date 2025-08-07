@@ -274,3 +274,12 @@ export const updateTrade = async (tradeId, tradeData) => {
     console.error("Error updating trade:", error);
   }
 };
+
+export const updateSkillById = async (skillId, skillData) => {
+  try {
+    const skillDocRef = doc(db, "skills", skillId);
+    await updateDoc(skillDocRef, skillData);
+  } catch (error) {
+    console.error("Error updating skill:", error);
+  }
+}
