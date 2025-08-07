@@ -211,10 +211,6 @@ export default function Dashboard() {
                     </p>
                     <p className="flex-1 text-[var(--color-text-primary)]">{user.rating || 0}</p>
                     <div className="flex-1 text-[var(--color-text-primary)]">
-                      <span className="cursor-pointer hover:text-[var(--color-text-light)]">
-                        {t("Dashboard.Edit")}
-                      </span>{" "}
-                      |{" "}
                       <span
                         onClick={() => handleDeleteUser(user.uid)}
                         className="cursor-pointer hover:text-[var(--color-text-light)]"
@@ -280,10 +276,6 @@ export default function Dashboard() {
                       <p className="flex-1 pr-6">{review.text}</p>
                       <p className="flex-1">{review.rating}</p>
                       <div className="flex-1">
-                        <span className="cursor-pointer hover:text-[var(--color-text-light)]">
-                          {t("Dashboard.Edit")}
-                        </span>{" "}
-                        |{" "}
                         <span
                           onClick={() => handleDeleteReview(user.uid, review.reviewId)}
                           className="cursor-pointer hover:text-[var(--color-text-light)]"
