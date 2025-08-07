@@ -21,6 +21,7 @@ export const ScheduleSession = () => {
   const [user, setUser] = useState(null)
   const { user: currentUserFromAuth } = useAuth()
   const [currentUser, setCurrentUser] = useState()
+  const [disabledButton, setDisabledButton] = useState(false)
 
   const { userId } = useParams()
   const navigate = useNavigate()
@@ -55,6 +56,7 @@ export const ScheduleSession = () => {
     } else if (paymentToggle === true && seekingSkill.trim() === "") {
       toast.error(t("Please select a seeking skill."))
     } else {
+      setDisabledButton(true)
       let milestonesA = await generateFromGemini(generateMilestonesPrompt(offeringSkill, offeringSkillLevel))
       milestonesA = milestonesA.replace("```json", "").replace("```", "")
       milestonesA = JSON.parse(milestonesA)
@@ -76,6 +78,7 @@ export const ScheduleSession = () => {
       createFirestoreTrade(tradeData).then((tradeId) => {
         toast.success(t("Session scheduled successfully!"))
         navigate(`/trade/${tradeId}`)
+        setDisabledButton(false)
       })
     }
   }
@@ -273,6 +276,7 @@ export const ScheduleSession = () => {
           </div>
 
           <button
+            disabled={disabledButton}
             onClick={createTrade}
             className="bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] shadow-sm mt-4 px-5 py-2 border border-[var(--color-btn-submit-hover)] rounded-full sm:w-[400px] font-medium text-white transition-all duration-300"
           >

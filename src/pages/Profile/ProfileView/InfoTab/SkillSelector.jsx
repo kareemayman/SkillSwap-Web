@@ -60,7 +60,8 @@ export default function SkillSelector({ onSave, onCancel, existingSkills = [], p
 
       try {
         const prompt = filterSkillPrompt(debouncedQuery.toLowerCase(), JSON.stringify(allSkillsList));
-        const res = await generateFromGemini(prompt);
+        let res = await generateFromGemini(prompt);
+        res = res.replace("```json", "").replace("```", "");
         const parsedRes = JSON.parse(res);
 
         console.log("@ProfilePage ---- @SkillSelector ---- Gemini response:", parsedRes);
