@@ -18,6 +18,7 @@ import {
 import { useTranslation } from "react-i18next"
 import { useAuth } from "../../contexts/Auth/context"
 import toast from "react-hot-toast"
+import EditSkillForm from "./components/EditSkillForm"
 
 export default function Dashboard() {
   const { t } = useTranslation()
@@ -28,6 +29,8 @@ export default function Dashboard() {
   const [searchInputTimeout, setSearchInputTimeout] = useState("")
   const [searchResults, setSearchResults] = useState([])
   const { user } = useAuth()
+  const [showEditSkillForm, setShowEditSkillForm] = useState(false)
+  const [editedSkill, setEditedSkill] = useState({})
 
   useEffect(() => {
     getAllUsers().then((users) => {
@@ -211,10 +214,6 @@ export default function Dashboard() {
                     </p>
                     <p className="flex-1 text-[var(--color-text-primary)]">{user.rating || 0}</p>
                     <div className="flex-1 text-[var(--color-text-primary)]">
-                      <span className="cursor-pointer hover:text-[var(--color-text-light)]">
-                        {t("Dashboard.Edit")}
-                      </span>{" "}
-                      |{" "}
                       <span
                         onClick={() => handleDeleteUser(user.uid)}
                         className="cursor-pointer hover:text-[var(--color-text-light)]"
@@ -235,6 +234,15 @@ export default function Dashboard() {
                   <p className="flex-1">{t("Dashboard.ArabicSkillName")}</p>
                   <p className="flex-1">{t("Dashboard.Actions")}</p>
                 </div>
+                {showEditSkillForm && (
+                  <EditSkillForm
+                    skill={editedSkill}
+                    setShowModal={setShowEditSkillForm}
+                    deleteSkill={handleDeleteSkill}
+                    setAllSkills={setAllSkills}
+                    onClose={() => setShowEditSkillForm(false)}
+                  />
+                )}
                 {(searchResults.length > 0 ? searchResults : allSkills).map((skill) => (
                   <div
                     key={skill.id}
@@ -244,7 +252,13 @@ export default function Dashboard() {
                     <p className="flex-1">{skill.category}</p>
                     <p className="flex-1">{skill.skillNameArabic}</p>
                     <div className="flex-1 text-[var(--color-text-primary)]">
-                      <span className="cursor-pointer hover:text-[var(--color-text-light)]">
+                      <span
+                        onClick={() => {
+                          setEditedSkill(skill)
+                          setShowEditSkillForm(true)
+                        }}
+                        className="cursor-pointer hover:text-[var(--color-text-light)]"
+                      >
                         {t("Dashboard.Edit")}
                       </span>{" "}
                       |{" "}
@@ -280,10 +294,6 @@ export default function Dashboard() {
                       <p className="flex-1 pr-6">{review.text}</p>
                       <p className="flex-1">{review.rating}</p>
                       <div className="flex-1">
-                        <span className="cursor-pointer hover:text-[var(--color-text-light)]">
-                          {t("Dashboard.Edit")}
-                        </span>{" "}
-                        |{" "}
                         <span
                           onClick={() => handleDeleteReview(user.uid, review.reviewId)}
                           className="cursor-pointer hover:text-[var(--color-text-light)]"
