@@ -17,6 +17,7 @@ import Trade from "./pages/Trade/Trade";
 import About from "./pages/About";
 import Terms from "./pages/Terms";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import NotFound from "./pages/NotFound";
 
 const AppRoutes = () => {
   const routes = [
@@ -54,6 +55,7 @@ const AppRoutes = () => {
             { path: "resetPassword", element: <ForgotPassword /> },
           ],
         },
+        { path: "*", element: <NotFound /> },
       ],
     },
   ];
