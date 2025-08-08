@@ -11,7 +11,7 @@ export default function PersonalInfo({ updateStep, userId, initialData, onComple
   const [image, setImage] = useState(null);
   const [status, setStatus] = useState({ loading: false, error: null, data: null });
   const [bio, setBio] = useState(initialData?.bio || "");
-  const {t}= useTranslation();
+  const { t } = useTranslation();
 
   let imageUrl = initialData?.profilePicture || null;
 
@@ -84,41 +84,15 @@ export default function PersonalInfo({ updateStep, userId, initialData, onComple
           />
         </div>
 
-        <div className="flex flex-col gap-4 lg:p-4 justify-center md:min-w-70 lg:min-w-80  bg-slate-50">
+        <div className="">
           <ImageUpload isDropzone selectedImage={image} setSelectedImage={setImage} maxSize={5 * 1024 * 1024} />
+        </div>
 
-          <div className="flex justify-end gap-4">
-            <Button  disabled={!image || !bio} value="Next" onPress={saveChangesHandler}
-             />
-          </div>
+        <div className="flex justify-end gap-4">
+          <Button disabled={!image || !bio} value="Next" onPress={saveChangesHandler} />
         </div>
       </div>
     </>
     // </div>
   );
 }
-
-// cloudinary response sample
-// {
-//     "asset_id": "f2f7c8b2cc749cb19e132ffab99c3361",
-//     "public_id": "profile_pictures/user_123",
-//     "version": 1753158955,
-//     "version_id": "d00769168b40717c62d0704546c893a2",
-//     "signature": "b8cb5ce9a33da671a31fbfe1be39868967782c89",
-//     "width": 1920,
-//     "height": 1080,
-//     "format": "jpg",
-//     "resource_type": "image",
-//     "created_at": "2025-07-22T04:35:55Z",
-//     "tags": [],
-//     "bytes": 476046,
-//     "type": "upload",
-//     "etag": "fd1ae8741410218865b874c86b794170",
-//     "placeholder": false,
-//     "url": "http://res.cloudinary.com/dplcc4igl/image/upload/v1753158955/profile_pictures/user_123.jpg",
-//     "secure_url": "https://res.cloudinary.com/dplcc4igl/image/upload/v1753158955/profile_pictures/user_123.jpg",
-//     "asset_folder": "profile_pictures",
-//     "display_name": "20250103",
-//     "existing": false,
-//     "original_filename": "20250103"
-// }

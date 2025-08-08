@@ -28,7 +28,7 @@ export default function ProfileView({ data, isOwnProfile }) {
     punctuality: 0,
   };
 
-  const count = data?.reviews.length;
+  const count = data?.reviews?.length;
 
   data?.reviews.forEach((review) => {
     total.rating += review.rating ?? 0;
