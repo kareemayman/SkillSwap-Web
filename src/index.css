@@ -71,7 +71,6 @@
   --color-skill-learn-bg: #bc640dd8;
 
   --color-btn-submit-bg: #68482f;
-  /* --color-btn-submit-hover: #68482f; */
   --color-btn-submit-hover: #a27655;
 }
 
@@ -108,6 +107,7 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
   color: #e9f5db;
 }
+
 .glass-card {
   background: radial-gradient(
     at top left,
@@ -133,17 +133,18 @@
   );
   backdrop-filter: blur(10px);
 }
+
 .usercard {
   background: radial-gradient(
     at bottom,
-    #f9e7d7 0%,     /* بيج وردي فاتح */
-    #c9ae93 40%,    /* بني فاتح */
-    #b49c88 100%    /* بني أغمق شوية */
+    #f9e7d7 0%,     
+    #c9ae93 40%,    
+    #b49c88 100%    
   );
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(120, 72, 28, 0.15); /* حدود بني داكن شفاف */
-  box-shadow: 0 4px 20px rgba(120, 72, 28, 0.1); /* ظل بني ناعم */
+  border: 1px solid rgba(120, 72, 28, 0.15); 
+  box-shadow: 0 4px 20px rgba(120, 72, 28, 0.1); 
 }
 
 body::-webkit-scrollbar {
@@ -185,16 +186,12 @@ body {
   min-height: 100vh;
   background: radial-gradient(
     ellipse at bottom,
-    #f8f3ef 10%,   /* بيج مائل للبرتقالي - خفيف جدًا */
-    #f3eae5 40%,   /* لون بيج دافئ */
+    #f8f3ef 10%,   
+    #f3eae5 40%,   
     #d0b49f 100%
   );
   font-family: "Manrope", sans-serif;
 }
-/* body {
-  min-height: 100vh;
-  background: #d0b49f; 
-} */
 
 /* scroll in chat */
 .chat-box::-webkit-scrollbar {

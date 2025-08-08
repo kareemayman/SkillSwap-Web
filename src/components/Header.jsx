@@ -28,16 +28,6 @@ export default function Header() {
     i18n.changeLanguage(newLang);
   };
 
-  // useEffect(() => {
-  //   const html = document.documentElement;
-  //   if (darkMode) {
-  //     html.classList.add("dark");
-  //     localStorage.setItem("theme", "dark");
-  //   } else {
-  //     html.classList.remove("dark");
-  //     localStorage.setItem("theme", "light");
-  //   }
-  // }, [darkMode]);
 
   useEffect(() => {
     if (!user?.uid) return;
@@ -59,7 +49,7 @@ export default function Header() {
 
   useEffect(() => {
     if (user?.uid) {
-      request("users", user.uid); // Assumes user data is stored in a "users" collection
+      request("users", user.uid); 
     }
   }, [user?.uid]);
 
