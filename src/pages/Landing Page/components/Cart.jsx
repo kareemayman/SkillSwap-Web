@@ -20,7 +20,7 @@ export default function Cart({
       style={{ backgroundColor: 'var(--color-card-content-bg)' }}
     >
       {isIcon ? (
-        <div className="p-3  rounded-full w-12 h-12 flex items-center justify-center bg-[var(--color-btn-submit-bg)]">
+        <div className="p-3  rounded-full w-12 h-12 flex items-center justify-center dark:bg-[var(--color-btn-submit-bg)] bg-transparent">
           <img
             src={imgSrc}
             alt={imgAlt}

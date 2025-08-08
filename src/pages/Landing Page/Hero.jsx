@@ -26,12 +26,12 @@ function HeroSection() {
         >
           <div className="max-w-4xl mx-auto">
             <h1 
-              className="text-[36px] md:text-[48px] leading-[60px] tracking-[-2px] mb-4 dark:text-[var(--color-text-primary)] text-white/40"
+              className="text-[36px] md:text-[48px] leading-[60px] tracking-[-2px] mb-4 dark:text-[var(--color-text-primary)] text-white/50"
             >
               {t("HeroSection.title")}
             </h1>
             <p 
-              className="text-[16px] leading-[24px] mb-6 mx-auto dark:text-[var(--color-text-secondary)] text-white/30"
+              className="text-[16px] leading-[24px] mb-6 mx-auto dark:text-[var(--color-text-secondary)] text-white/50"
             >
               {t("HeroSection.description")}
             </p>
