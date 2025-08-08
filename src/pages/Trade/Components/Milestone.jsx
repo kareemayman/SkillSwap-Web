@@ -69,7 +69,7 @@ export default function Milestone({ tradeId, milestone, controls, setTrade, trad
         ></MilestoneModal>
       )}
       <div
-        className={`mb-6 p-4 pr-6 rounded-lg border border-[var(--color-card-border)] bg-[#252321] flex items-start gap-3 relative`}
+        className={`mb-6 p-4 pr-6 rounded-lg border border-[var(--color-card-border)] dark:bg-[#252321] bg-[#cabdb1] flex items-start gap-3 relative`}
       >
         {controls ? (
           <div
@@ -87,7 +87,7 @@ export default function Milestone({ tradeId, milestone, controls, setTrade, trad
             className={`rounded-full ${
               myMilestone.isCompleted
                 ? "bg-[var(--main-color)] text-white"
-                : "bg-[#36322f] text-[var(--color-text-primary)]"
+                : "dark:bg-[#36322f] bg-[#cabdb1] text-[var(--color-text-primary)]"
             } w-7 h-7 flex items-center justify-center`}
           >
             {myMilestone.isCompleted ? (

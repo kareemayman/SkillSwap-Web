@@ -14,8 +14,8 @@ export default function MilestoneModal({
   const [milestoneCompleted, setMilestoneCompleted] = useState(data?.isCompleted || false)
 
   return (
-    <div className="top-0 left-0 z-50 fixed bg-[rgba(0,0,0,0.5)] w-full h-full">
-      <div className="top-1/2 left-1/2 fixed bg-[#1e1c1b] p-5 border border-[var(--color-card-border)] rounded-lg min-w-[80%] sm:min-w-[500px] text-[var(--color-text-primary)] -translate-x-1/2 -translate-y-1/2">
+    <div className="top-0 left-0 z-50 fixed bg-[rgba(0,0,0,0.5)]  w-full h-full">
+      <div className="top-1/2 left-1/2 fixed dark:bg-[#1e1c1b] usercard p-5 border border-[var(--color-card-border)] rounded-lg min-w-[80%] sm:min-w-[500px] text-[var(--color-text-primary)] -translate-x-1/2 -translate-y-1/2">
         <div className="flex justify-between items-center mb-6">
           <h1 className="font-bold text-[var(--color-text-light)] text-xl">
             {newMilestone ? "Create New" : "Edit"} Milestone
@@ -38,7 +38,7 @@ export default function MilestoneModal({
           onChange={(e) => {
             setMilestoneTitle(e.target.value)
           }}
-          className="bg-[#151313f7] mb-6 p-4 py-3 border border-[var(--color-card-border)] focus:border-[var(--main-color)] rounded-md outline-none w-full placeholder-[var(--color-text-placeholder)] text-[var(--color-text-light)] transition-all duration-300"
+          className="dark:bg-[#151313f7] bg-[var(--input-bg)] mb-6 p-4 py-3 border border-[var(--color-card-border)] focus:border-[var(--main-color)] rounded-md outline-none w-full placeholder-[var(--color-text-placeholder)] text-[var(--color-text-light)] transition-all duration-300"
         />
 
         <h2 className="mb-2 font-semibold text-base">Description *</h2>
@@ -49,7 +49,7 @@ export default function MilestoneModal({
           onChange={(e) => {
             setMilestoneDesc(e.target.value)
           }}
-          className="bg-[#151313f7] mb-6 p-4 py-3 border border-[var(--color-card-border)] focus:border-[var(--main-color)] rounded-md outline-none w-full min-h-40 placeholder-[var(--color-text-placeholder)] text-[var(--color-text-light)] transition-all duration-300 resize-none"
+          className="dark:bg-[#151313f7] bg-[var(--input-bg)] mb-6 p-4 py-3 border border-[var(--color-card-border)] focus:border-[var(--main-color)] rounded-md outline-none w-full min-h-40 placeholder-[var(--color-text-placeholder)] text-[var(--color-text-light)] transition-all duration-300 resize-none"
         />
 
         <div
@@ -100,7 +100,7 @@ export default function MilestoneModal({
                 })
                 setShowModal(false)
               }}
-              className="flex flex-1 sm:flex-initial justify-center items-center gap-1 border border-[var(--color-card-border)] bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] px-4 py-3 rounded-md font-bold text-[var(--color-text-light)] text-base transition-all duration-300 cursor-pointer"
+              className="flex flex-1 sm:flex-initial justify-center items-center gap-1 border border-[var(--color-card-border)] bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] px-4 py-3 rounded-md font-bold dark:text-[var(--color-text-light)] text-white/80 text-base transition-all duration-300 cursor-pointer"
             >
               <FontAwesomeIcon
                 className="hidden sm:inline-block text-lg"

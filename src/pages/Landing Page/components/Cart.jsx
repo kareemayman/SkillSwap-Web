@@ -41,7 +41,7 @@ export default function Cart({
       </p>
 
       <div className="mt-auto pt-4">
-        <button className="px-4 py-2 bg-[var(--color-btn-submit-bg)] text-[var(--color-text-light)] font-medium rounded-lg hover:shadow hover:bg-[var(--color-btn-submit-hover)] transition duration-200 text-sm p-2">
+        <button className="px-4 py-2 bg-[var(--color-btn-submit-bg)] dark:text-[var(--color-text-light)] text-white/100 font-medium rounded-lg hover:shadow hover:bg-[var(--color-btn-submit-hover)] transition duration-200 text-sm p-2">
           Learn More
         </button>
       </div>

@@ -2,23 +2,42 @@ import logo from "../assets/images/logo.png";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/Auth/context";
 import { useTranslation } from "react-i18next";
-import { FaBars, FaTimes, FaComments, FaSearch, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaBars,
+  FaTimes,
+  FaComments,
+  FaSearch,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import { HiUserCircle } from "react-icons/hi2";
 import { use, useEffect, useState } from "react";
 import { subscribeToUserChats } from "../utils/chatUtil";
 import useFirestoreGet from "../hooks/useFirestoreGet";
-
+import { useContext } from "react";
+import { ThemeContext } from "../contexts/ThemeContext.jsx";
 export default function Header() {
   const { user, logOut } = useAuth();
   const { i18n } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const { data: userProfile, loading, error, request } = useFirestoreGet();
+  const { darkMode, setDarkMode } = useContext(ThemeContext);
 
   const toggleLanguage = () => {
     const newLang = i18n.language === "en" ? "ar" : "en";
     i18n.changeLanguage(newLang);
   };
+
+  // useEffect(() => {
+  //   const html = document.documentElement;
+  //   if (darkMode) {
+  //     html.classList.add("dark");
+  //     localStorage.setItem("theme", "dark");
+  //   } else {
+  //     html.classList.remove("dark");
+  //     localStorage.setItem("theme", "light");
+  //   }
+  // }, [darkMode]);
 
   useEffect(() => {
     if (!user?.uid) return;
@@ -26,7 +45,11 @@ export default function Header() {
     const unsub = subscribeToUserChats(user.uid, (chats) => {
       const count = chats.filter((chat) => {
         const msg = chat.lastMessage;
-        return msg && msg.senderId !== user.uid && (!msg.readBy || !msg.readBy.includes(user.uid));
+        return (
+          msg &&
+          msg.senderId !== user.uid &&
+          (!msg.readBy || !msg.readBy.includes(user.uid))
+        );
       }).length;
       setUnreadCount(count);
     });
@@ -47,7 +70,9 @@ export default function Header() {
         <Link to="/">
           <div className="flex items-end gap-1">
             <img src={logo} alt="logo" className="w-8 h-8" />
-            <h1 className="font-bold text-2xl text-[#FE7743] ">Swapoo</h1>
+            <h1 className="font-bold text-2xl text-[var(--main-color)] ">
+              Swapoo
+            </h1>
           </div>
         </Link>
 
@@ -63,7 +88,21 @@ export default function Header() {
                 >
                   Explore
                 </NavLink>
-                <NavLink to="/messages" className="relative text-xl transition-transform duration-200 hover:scale-110" title="Messages">
+
+                {user?.email === "skills.swap.app@gmail.com" && (
+                <NavLink
+                  to="/dashboard"
+                  className="hover:text-[var(--color-btn-submit-hover)] transition-transform duration-200 hover:scale-110 font-medium"
+                >
+                  Dashboard
+                </NavLink>
+                )}
+
+                <NavLink
+                  to="/messages"
+                  className="relative text-xl transition-transform duration-200 hover:scale-110"
+                  title="Messages"
+                >
                   <FaComments />
                   {unreadCount > 0 && (
                     <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
@@ -71,28 +110,50 @@ export default function Header() {
                     </span>
                   )}
                 </NavLink>
-                <NavLink to="/search" className="text-xl transition-transform duration-200 hover:scale-110" title="Search">
+                <NavLink
+                  to="/search"
+                  className="text-xl transition-transform duration-200 hover:scale-110"
+                  title="Search"
+                >
                   <FaSearch />
                 </NavLink>
 
-                <NavLink to={`/profile/${user?.uid}`} title="Profile" className="transition-transform duration-200 hover:scale-110">
+                <NavLink
+                  to={`/profile/${user?.uid}`}
+                  title="Profile"
+                  className="transition-transform duration-200 hover:scale-110"
+                >
                   {userProfile?.profilePicture ? (
-                    <img src={userProfile.profilePicture} alt="Profile" className="w-8 h-8 rounded-full object-cover border border-gray-300" />
+                    <img
+                      src={userProfile.profilePicture}
+                      alt="Profile"
+                      className="w-8 h-8 rounded-full object-cover border border-gray-300"
+                    />
                   ) : (
                     <HiUserCircle className="text-2xl" />
                   )}
                 </NavLink>
 
-                <button onClick={logOut} title="Logout" className="text-xl transition-transform duration-200 hover:rotate-12 hover:text-red-500">
+                <button
+                  onClick={logOut}
+                  title="Logout"
+                  className="text-xl transition-transform duration-200 hover:rotate-12 hover:text-red-500"
+                >
                   <FaSignOutAlt />
                 </button>
               </>
             ) : (
               <>
-                <NavLink to="/login" className="transition-all duration-200 hover:text-[var(--color-accent)]">
+                <NavLink
+                  to="/login"
+                  className="transition-all duration-200 hover:text-[var(--color-accent)]"
+                >
                   Login
                 </NavLink>
-                <NavLink to="/register" className="transition-all duration-200 hover:text-[var(--color-accent)]">
+                <NavLink
+                  to="/register"
+                  className="transition-all duration-200 hover:text-[var(--color-accent)]"
+                >
                   Register
                 </NavLink>
               </>
@@ -100,6 +161,14 @@ export default function Header() {
           </div>
 
           {/* Language Switch Button */}
+          <button
+            onClick={() => setDarkMode((prev) => !prev)}
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--color-btn-submit-bg)] text-[var(--color-text-light)] hover:bg-[var(--color-btn-submit-hover)] transition-transform duration-200 hover:scale-110 text-lg"
+            title="Toggle Theme"
+          >
+            {darkMode ? "🌞" : "🌙"}
+          </button>
+
           <button
             onClick={toggleLanguage}
             className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--color-btn-submit-bg)] text-[var(--color-text-light)] hover:bg-[var(--color-btn-submit-hover)] transition-transform duration-200 hover:scale-110 font-bold"
@@ -128,7 +197,10 @@ export default function Header() {
                   Explore
                 </NavLink>
                 <NavLink to="/messages" onClick={() => setMenuOpen(false)}>
-                  Messages {unreadCount > 0 && <span className="ml-1 text-red-400">({unreadCount})</span>}
+                  Messages{" "}
+                  {unreadCount > 0 && (
+                    <span className="ml-1 text-red-400">({unreadCount})</span>
+                  )}
                 </NavLink>
                 <NavLink to="/search" onClick={() => setMenuOpen(false)}>
                   Search

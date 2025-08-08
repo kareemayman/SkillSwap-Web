@@ -3,6 +3,7 @@ import AppRoutes from "./routes";
 import "./i18n";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { ThemeProvider } from "./contexts/ThemeContext.jsx";
 
 const App = () => {
   const routing = useRoutes(AppRoutes());
@@ -13,7 +14,11 @@ const App = () => {
     document.documentElement.dir = i18n.language === "ar" ? "rtl" : "ltr";
   }, [i18n.language]);
 
-  return routing;
+  return (
+    <>
+      <ThemeProvider> {routing}</ThemeProvider>
+    </>
+  );
 };
 
 export default App;

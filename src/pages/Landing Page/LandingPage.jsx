@@ -25,9 +25,8 @@ export default function LandingPage() {
             </h2>
             <div className="text-center">
             <button 
-              className="relative overflow-hidden px-6 py-3 font-semibold rounded-lg shadow-lg group"
+              className="relative overflow-hidden px-6 py-3 font-semibold rounded-lg shadow-lg group dark:text-[var(--color-text-light)] text-white/100"
               style={{
-                color: 'var(--color-text-light)',
                 backgroundColor: 'var(--color-btn-submit-bg)'
               }}
               onClick={() => navigate('login')}

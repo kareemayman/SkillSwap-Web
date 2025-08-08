@@ -162,7 +162,7 @@ export default function Dashboard() {
             ))}
           </div>
 
-          <div className="w-full rounded-3xl bg-[#382E29] p-3 px-4 flex items-center gap-2 mb-8">
+          <div className="w-full rounded-3xl dark:bg-[#382E29] bg-[var(--input-bg)] p-3 px-4 flex items-center gap-2 mb-8">
             <FontAwesomeIcon
               icon={faMagnifyingGlass}
               className="text-[var(--color-text-primary)] text-2xl"
@@ -187,7 +187,7 @@ export default function Dashboard() {
           <div className="w-full min-h-20 rounded-lg shadow-[#382E29] shadow-md">
             {selectedTab === "users" && (
               <>
-                <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold bg-[#26211c] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+                <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold dark:bg-[#26211c] bg-[var(--color-btn-submit-bg)] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
                   <p className="flex-1">{t("Dashboard.User")}</p>
                   <p className="flex-1">{t("Dashboard.Name")}</p>
                   <p className="flex-1">{t("Dashboard.Skills")}</p>
@@ -228,7 +228,7 @@ export default function Dashboard() {
 
             {selectedTab === "skills" && (
               <>
-                <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold bg-[#26211c] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+                <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold dark:bg-[#26211c] bg-[var(--color-btn-submit-bg)] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
                   <p className="flex-1">{t("Dashboard.SkillName")}</p>
                   <p className="flex-1">{t("Dashboard.Category")}</p>
                   <p className="flex-1">{t("Dashboard.ArabicSkillName")}</p>
@@ -276,7 +276,7 @@ export default function Dashboard() {
 
             {selectedTab === "reviews" && (
               <>
-                <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold bg-[#26211c] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+                <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold dark:bg-[#26211c] bg-[var(--color-btn-submit-bg)] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
                   <p className="flex-1">{t("Dashboard.Reviewer")}</p>
                   <p className="flex-1">{t("Dashboard.ReviewedUser")}</p>
                   <p className="flex-1 pr-6">{t("Dashboard.ReviewText")}</p>

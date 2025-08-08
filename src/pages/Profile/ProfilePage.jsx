@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useAuth } from "../../contexts/Auth/context";
 import useFirestoreGet from "../../hooks/useFirestoreGet";
 import CreateProfile from "./CreateProfile/CreateProfile";
 import ProfileView from "./ProfileView/ProfileView";
 import { Spinner } from "flowbite-react";
 import { hasNullValue } from "../../utils/helpers";
-import img from "../../assets/images/img.svg";
+import darkWave from "../../assets/images/img.svg";
+import lightWave from "../../assets/images/wave8.svg";
+import {ThemeContext} from"../../contexts/ThemeContext.jsx";
 import { useParams } from "react-router-dom";
 
 const ProfilePage = () => {
@@ -16,6 +18,8 @@ const ProfilePage = () => {
   const { data: userProfile, loading, error, request } = useFirestoreGet();
 
   const [displayProfileComponent, setDisplayProfileComponent] = useState("view");
+  const { darkMode } = useContext(ThemeContext);
+  const waveImg = darkMode ? darkWave : lightWave;
 
   useEffect(() => {
     request("users", id);
@@ -53,7 +57,7 @@ const ProfilePage = () => {
   return (
     <div className="min-h-screen relative overflow-hidden ">
       <div className="absolute bottom-0 left-0 w-full z-0">
-        <img src={img} alt="decorative wave" className="w-full h-auto object-cover" style={{ minHeight: "80px" }} />
+        <img src={waveImg} alt="decorative wave" className="w-full h-auto object-cover" style={{ minHeight: "80px" }} />
       </div>
 
       <div className=" container max-w-4xl mx-auto px-5 py-6 ">

@@ -20,8 +20,8 @@ export default function EditSkillForm({ skill, setShowModal, deleteSkill, setAll
   }
 
   return (
-    <div className="top-0 left-0 z-50 fixed bg-[rgba(0,0,0,0.5)] w-full h-full">
-      <div className="top-1/2 left-1/2 fixed bg-[#1e1c1b] p-5 border border-[var(--color-card-border)] rounded-lg min-w-[80%] sm:min-w-[500px] text-[var(--color-text-primary)] -translate-x-1/2 -translate-y-1/2">
+    <div className="top-0 left-0 z-50 fixed dark:bg-[rgba(0,0,0,0.5)]  w-full h-full">
+      <div className="top-1/2 left-1/2 fixed dark:bg-[#1e1c1b] usercard p-5 border border-[var(--color-card-border)] rounded-lg min-w-[80%] sm:min-w-[500px] text-[var(--color-text-primary)] -translate-x-1/2 -translate-y-1/2">
         <div className="flex justify-between items-center mb-6">
           <h1 className="font-bold text-[var(--color-text-light)] text-xl">Edit Skill</h1>
           <FontAwesomeIcon
@@ -42,7 +42,7 @@ export default function EditSkillForm({ skill, setShowModal, deleteSkill, setAll
           onChange={(e) => {
             setSkillName(e.target.value)
           }}
-          className="bg-[#151313f7] mb-6 p-4 py-3 border border-[var(--color-card-border)] focus:border-[var(--main-color)] rounded-md outline-none w-full placeholder-[var(--color-text-placeholder)] text-[var(--color-text-light)] transition-all duration-300"
+          className="dark:bg-[#151313f7] bg-white mb-6 p-4 py-3 border border-[var(--color-card-border)] focus:border-[var(--main-color)] rounded-md outline-none w-full placeholder-[var(--color-text-placeholder)] text-[var(--color-text-light)] transition-all duration-300"
         />
 
         <h2 className="mb-2 font-semibold text-base">Arabic Skill Name</h2>
@@ -54,7 +54,7 @@ export default function EditSkillForm({ skill, setShowModal, deleteSkill, setAll
           onChange={(e) => {
             setSkillNameArabic(e.target.value)
           }}
-          className="bg-[#151313f7] mb-6 p-4 py-3 border border-[var(--color-card-border)] focus:border-[var(--main-color)] rounded-md outline-none w-full placeholder-[var(--color-text-placeholder)] text-[var(--color-text-light)] transition-all duration-300"
+          className="dark:bg-[#151313f7] bg-white mb-6 p-4 py-3 border border-[var(--color-card-border)] focus:border-[var(--main-color)] rounded-md outline-none w-full placeholder-[var(--color-text-placeholder)] text-[var(--color-text-light)] transition-all duration-300"
         />
 
         <h2 className="mb-2 font-semibold text-base">Skill Category</h2>
@@ -66,7 +66,7 @@ export default function EditSkillForm({ skill, setShowModal, deleteSkill, setAll
           onChange={(e) => {
             setCategory(e.target.value)
           }}
-          className="bg-[#151313f7] mb-6 p-4 py-3 border border-[var(--color-card-border)] focus:border-[var(--main-color)] rounded-md outline-none w-full placeholder-[var(--color-text-placeholder)] text-[var(--color-text-light)] transition-all duration-300"
+          className="dark:bg-[#151313f7] bg-white mb-6 p-4 py-3 border border-[var(--color-card-border)] focus:border-[var(--main-color)] rounded-md outline-none w-full placeholder-[var(--color-text-placeholder)] text-[var(--color-text-light)] transition-all duration-300"
         />
 
         <div className="flex flex-col sm:flex-row justify-between gap-4 sm:gap-0 sm:items-center pt-6">
@@ -86,7 +86,7 @@ export default function EditSkillForm({ skill, setShowModal, deleteSkill, setAll
               onClick={() => {
                 setShowModal(false)
               }}
-              className="flex flex-1 sm:flex-initial justify-center items-center gap-1 border border-[var(--color-card-border)] bg-transparent hover:bg-[#252321] px-4 py-3 rounded-md font-bold text-[var(--color-text-primary)] text-base transition-all duration-300 cursor-pointer"
+              className="flex flex-1 sm:flex-initial justify-center items-center gap-1 border border-[var(--color-card-border)] bg-transparent dark:hover:bg-[#252321] hover:bg-[#603f1e]  px-4 py-3 rounded-md font-bold text-[var(--color-text-primary)] text-base transition-all duration-300 cursor-pointer"
             >
               <p>Cancel</p>
             </div>
@@ -95,7 +95,7 @@ export default function EditSkillForm({ skill, setShowModal, deleteSkill, setAll
                 updateSkill()
                 setShowModal(false)
               }}
-              className="flex flex-1 sm:flex-initial justify-center items-center gap-1 border border-[var(--color-card-border)] bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] px-4 py-3 rounded-md font-bold text-[var(--color-text-light)] text-base transition-all duration-300 cursor-pointer"
+              className="flex flex-1 sm:flex-initial justify-center items-center gap-1 border border-[var(--color-card-border)] bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] px-4 py-3 rounded-md font-bold dark:text-[var(--color-text-light)] text-white/80 text-base transition-all duration-300 cursor-pointer"
             >
               <FontAwesomeIcon
                 className="hidden sm:inline-block text-lg"

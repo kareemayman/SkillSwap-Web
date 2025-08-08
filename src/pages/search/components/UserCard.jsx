@@ -16,7 +16,7 @@ export default function UserCard({ user }) {
           className="w-16 h-16 rounded-full object-cover mb-4 ring-2 ring-[var(--color-card-border)]"
         />
         <div>
-          <h3 className="font-semibold text-[var(--color-text-primary)]">
+          <h3 className="font-semibold dark:text-[var(--color-text-primary)] ">
             {user.name}
           </h3>
 
@@ -46,7 +46,7 @@ export default function UserCard({ user }) {
 
       {/* ✅ View Profile Button with Link */}
       <Link to={`/profile/${user.uid}`}>
-        <button className="text-[var(--color-text-light)] bg-[var(--color-btn-submit-bg)] rounded-md shadow-sm hover:bg-[var(--color-btn-submit-hover)] px-4 py-2">
+        <button className="dark:text-[var(--color-text-light)] text-white/80 bg-[var(--color-btn-submit-bg)] rounded-md shadow-sm hover:bg-[var(--color-btn-submit-hover)] px-4 py-2">
           View Profile
         </button>
       </Link>

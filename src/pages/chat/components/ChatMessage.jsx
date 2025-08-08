@@ -1,7 +1,7 @@
 export default function ChatMessage({ message, isCurrentUser, otherUserName }) {
   return (
     <div className={`flex flex-col ${isCurrentUser ? "items-end" : "items-start"}`}>
-      <span className="text-xs text-gray-500 mb-1">
+      <span className="text-xs text-gray-400 mb-1">
         {isCurrentUser ? "You" : otherUserName || "User"}
       </span>
       <div

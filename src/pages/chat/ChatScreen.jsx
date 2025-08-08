@@ -84,9 +84,9 @@ useEffect(() => {
             style={{ backgroundImage: `url(${img})`, backgroundSize: "cover" }}>
 
       {/* Header */}
-      <div className="bg-[var(--input-bg)] px-5 -mx-5 py-4 border-b border-gray-900">
+      <div className="dark:bg-[var(--input-bg)] bg-black px-5 -mx-5 py-4 border-b border-gray-900">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-gray-300">
+          <h1 className="text-2xl font-semibold dark:text-gray-300 text-[var(--input-bg)]">
             {t("chat.chat")} {otherUser.name}
           </h1>
           <button
@@ -94,7 +94,7 @@ useEffect(() => {
             className="flex items-center gap-2 px-4 py-2 text-[var(--color-text-light)] rounded-md shadow-sm  hover:bg-[var(--color-btn-back-hover)] transition"
           >
             <span>🔙</span>
-            <span> {t("chat.Back")}</span>
+            <span className="text-[var(--input-bg)] dark:text-gray-300"> {t("chat.Back")}</span>
           </button>
         </div>
       </div>
