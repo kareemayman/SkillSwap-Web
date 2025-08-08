@@ -154,13 +154,13 @@ export const ScheduleSession = () => {
         <div className="flex flex-wrap-reverse gap-4">
           <button
             onClick={() => navigate(`/chat/${userId}`)}
-            className="bg-[#382f29] hover:bg-[var(--color-btn-submit-hover)] shadow-sm px-5 py-2 rounded-full font-medium text-[var(--color-text-light)] text-sm transition-all duration-300"
+            className="dark:bg-[#382f29] bg-[#f8e0b1] hover:bg-[var(--color-btn-submit-hover)] shadow-sm px-5 py-2 rounded-full font-medium text-[var(--color-text-light)] text-sm transition-all duration-300"
           >
             {t("Message")}
           </button>
           <button
             onClick={() => setProposeTradeToggle(!proposeTradeToggle)}
-            className={`bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] shadow-sm px-5 py-2 rounded-full font-medium text-sm text-[var(--color-text-light)] transition-all duration-300 ${
+            className={`dark:bg-[var(--color-btn-submit-bg)] bg-[var(--color-skill-learn-bg)] hover:bg-[var(--color-btn-submit-hover)] shadow-sm px-5 py-2 rounded-full font-medium text-sm text-[var(--color-text-light)] transition-all duration-300 ${
               !proposeTradeToggle && "opacity-50"
             }`}
           >
@@ -183,7 +183,7 @@ export const ScheduleSession = () => {
               className={`shadow-sm px-5 py-2 border border-[var(--color-btn-submit-hover)] rounded-lg font-medium text-sm transition-all duration-300 ${
                 paymentToggle
                   ? "bg-transparent hover:bg-[var(--color-btn-submit-hover)] text-[var(--color-text-light)]"
-                  : "bg-[var(--color-btn-submit-bg)] text-[var(--color-text-light)] hover:bg-[var(--color-btn-submit-hover)]"
+                  : "dark:bg-[var(--color-btn-submit-bg)] bg-[var(--color-skill-learn-bg)] text-[var(--color-text-light)] hover:bg-[var(--color-btn-submit-hover)]"
               }`}
             >
               {t("Trade a Skill")}
@@ -203,7 +203,7 @@ export const ScheduleSession = () => {
           <select
             name="seekingSkill"
             id="seekingSkill"
-            className="inline-block bg-[#382f29] shadow-sm mb-2 sm:mb-0 px-4 py-2 border border-[var(--color-btn-submit-hover)] rounded-lg outline-none sm:w-[300px] font-medium text-[var(--color-text-light)] transition-all duration-300 cursor-pointer"
+            className="inline-block dark:bg-[#382f29] bg-[var(--color-btn-submit-bg)] shadow-sm mb-2 sm:mb-0 px-4 py-2 border border-[var(--color-btn-submit-hover)] rounded-lg outline-none sm:w-[300px] font-medium dark:text-[var(--color-text-light)] text-white/80 transition-all duration-300 cursor-pointer"
             value={seekingSkill}
             onChange={(e) => {
               setSeekingSkill(e.target.value)
@@ -229,7 +229,7 @@ export const ScheduleSession = () => {
           <select
             name="offeringSkill"
             id="offeringSkill"
-            className={`bg-[#382f29] shadow-sm sm:ml-4 px-4 py-2 border border-[var(--color-btn-submit-hover)] rounded-lg outline-none sm:w-[300px] font-medium text-[var(--color-text-light)] transition-all duration-300 ${
+            className={`dark:bg-[#382f29] bg-[var(--color-btn-submit-bg)] shadow-sm sm:ml-4 px-4 py-2 border border-[var(--color-btn-submit-hover)] rounded-lg outline-none sm:w-[300px] font-medium dark:text-[var(--color-text-light)] text-white/80 transition-all duration-300 ${
               paymentToggle ? "opacity-20 cursor-not-allowed" : "cursor-pointer"
             }`}
             disabled={paymentToggle}

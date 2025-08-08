@@ -29,4 +29,5 @@ export default {
   plugins: [
     require("flowbite/plugin"), // ← add Flowbite plugin
   ],
+   darkMode: 'class',
 };

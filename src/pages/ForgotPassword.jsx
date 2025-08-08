@@ -76,7 +76,7 @@ const ForgotPassword = () => {
             onChange={(e) => {
               setEmail(e.target.value);
             }}
-            className="mx-3 p-3 border-solid rounded-md outline-[#6A8FD9] placeholder:text-[var(--color-text-secondary)] transition-all duration-300  bg-[var(--color-text-primary)] focus:bg-slate-50"
+            className="mx-3 p-3 border-solid rounded-md outline-[#6A8FD9] placeholder:text-[var(--color-text-secondary)] transition-all duration-300 bg-slate-50 dark:bg-[var(--color-text-primary)] focus:bg-slate-50"
           />
 
           <p className="mx-3 mb-6 text-red-500">{emailValidError}</p>

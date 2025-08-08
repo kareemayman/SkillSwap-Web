@@ -203,7 +203,7 @@ export default function Trade() {
                 onClick={() => {
                   isUserA ? navigate(`/chat/${userB.uid}`) : navigate(`/chat/${userA.uid}`)
                 }}
-                className="bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] mt-6 px-6 py-3 rounded-lg text-[var(--color-text-light)] transition-all duration-300"
+                className="bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] mt-6 px-6 py-3 rounded-lg dark:text-[var(--color-text-light)] text-white/80 transition-all duration-300"
               >
                 <FontAwesomeIcon icon={faCommentDots}></FontAwesomeIcon>
                 <p className="capitalize inline ml-2 font-semibold">
