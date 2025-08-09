@@ -36,7 +36,7 @@ export const Tag = ({ children, skillLevel, isEditing = false, onDelete, teachin
       } text-sm font-medium text-[var(--color-text-secondary)] pl-2.5 pr-2 py-1.5 rounded-full transition-all duration-300`}
     >
       {/* Skill Name */}
-      <span className="capitalize font-semibold text-base">{children}</span>
+      <span className="capitalize font-semibold text-sm sm:text-base">{children}</span>
 
       {/* Skill Level Indicator */}
       <span className={`px-2 py-0.5 text-xs font-semibold rounded-full capitalize ${levelStyle}`}>{levelText}</span>

@@ -14,7 +14,7 @@ export default function SkillLevelSelector({ skills = [], onSkillLevelChange }) 
   const [skillSearch, setSkillSearch] = useState("");
   const [showSkillDropdown, setShowSkillDropdown] = useState(false);
   const [showLevelDropdown, setShowLevelDropdown] = useState(false);
-const { t } = useTranslation();
+  const { t } = useTranslation();
 
   // Filter skills based on search
   const filteredSkills = useMemo(() => {
@@ -61,7 +61,7 @@ const { t } = useTranslation();
       <div className="space-y-2">
         <label className="block text-sm font-medium text-[var(--color-text-primary)]">
           <LuBrain className="inline w-4 h-4 mr-1" />
-            {t("selectskill")}
+          {t("selectskill")}
         </label>
 
         <div className="flex flex-col sm:flex-row gap-2">
@@ -70,7 +70,7 @@ const { t } = useTranslation();
             <button
               type="button"
               onClick={() => setShowSkillDropdown(!showSkillDropdown)}
-              className="w-full h-12 px-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-card-border)] focus:border-[var(--color-card-border)] flex items-center justify-between"
+              className="w-full h-10 sm:h-12 px-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-card-border)] focus:border-[var(--color-card-border)] flex items-center justify-between"
             >
               <div className="flex items-center space-x-2">
                 <LuTarget className="w-4 h-4 text-gray-400" />
@@ -127,7 +127,7 @@ const { t } = useTranslation();
               type="button"
               onClick={() => setShowLevelDropdown(!showLevelDropdown)}
               disabled={!selectedSkill}
-              className="w-full h-12 px-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-card-border)] focus:border-[var(--color-card-border)] disabled:bg-gray-100 disabled:cursor-not-allowed flex items-center justify-between"
+              className="w-full h-10 sm:h-12 px-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-card-border)] focus:border-[var(--color-card-border)] disabled:bg-gray-100 disabled:cursor-not-allowed flex items-center justify-between"
             >
               <div className="flex items-center space-x-2">
                 {selectedLevel || currentLevelInfo ? (
@@ -168,7 +168,7 @@ const { t } = useTranslation();
           <div className=" max-h-64 overflow-y-auto">
             <div className="grid gap-2">
               {skills.map((skill) => (
-                <div key={skill.skillId} className="p-3 bg-green-50 rounded-lg border border-green-200">
+                <div key={skill.skillId} className="p-2 sm:p-3 bg-green-50 rounded-lg border border-green-200">
                   <div className="flex items-center justify-between md:gap-2">
                     <div className="flex items-center space-x-2">
                       <LuTarget className="w-4 h-4 text-green-600" />
@@ -184,7 +184,9 @@ const { t } = useTranslation();
                         {skill.skillLevel}
                       </span>
                     ) : (
-                      <span className="px-2 py-1 text-xs rounded-full border bg-gray-50 text-gray-500 border-gray-200 flex-shrink-0">{t("Not set")}</span>
+                      <span className="px-2 py-1 text-xs rounded-full border bg-gray-50 text-gray-500 border-gray-200 flex-shrink-0">
+                        {t("Not set")}
+                      </span>
                     )}
                   </div>
                 </div>

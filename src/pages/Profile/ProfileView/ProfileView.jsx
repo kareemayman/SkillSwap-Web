@@ -73,7 +73,7 @@ export default function ProfileView({ data, isOwnProfile }) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 text-[var(--color-text-primary)] z-20 backdrop-blur-lg relative">
+    <div className="max-w-4xl mx-auto text-[var(--color-text-primary)] z-20 backdrop-blur-lg relative">
       <StatusOverlay status={status} onDismiss={dismissError} />
       {/* Profile Header */}
       <div className="flex flex-col items-center text-center">
@@ -139,7 +139,7 @@ export default function ProfileView({ data, isOwnProfile }) {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-6 py-3 font-semibold text-base border-b-2 transition-colors ${
+            className={`px-3 md:px-6 py-3 font-semibold text-base border-b-2 transition-colors ${
               activeTab === tab
                 ? "border-[--color-btn-submit-bg] text-[--color-btn-submit-bg]"
                 : "border-transparent text-[--color-text-primary] hover:text-[--color-btn-submit-bg]"
@@ -154,7 +154,7 @@ export default function ProfileView({ data, isOwnProfile }) {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-6 py-3 font-semibold text-base border-b-2 transition-colors ${
+              className={`px-3 md:px-6 py-3 font-semibold text-base border-b-2 transition-colors ${
                 activeTab === tab
                   ? "border-[--color-btn-submit-bg] text-[--color-btn-submit-bg]"
                   : "border-transparent text-[--color-text-primary] hover:text-[--color-btn-submit-bg]"
