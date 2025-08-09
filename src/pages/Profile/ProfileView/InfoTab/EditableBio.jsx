@@ -28,7 +28,7 @@ export default function EditableBio({ data, updateUserData, isOwnProfile }) {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold text-[--color-text-primary]">{t("About me")}</h2>
+        <h2 className="sm:text-xl font-semibold text-[--color-text-primary]">{t("About me")}</h2>
 
         <div className="md:w-1/2 flex justify-end">
           {isEditing ? (
@@ -67,7 +67,7 @@ export default function EditableBio({ data, updateUserData, isOwnProfile }) {
           {error && <p className="text-red-500 text-sm">{error}</p>}
         </div>
       ) : (
-        <div className="min-h-16 leading-relaxed backdrop-blur-sm p-4 rounded-lg border-[var(--color-card-border)] usercard text-[var(--color-text-secondary)]">
+        <div className="min-h-16 leading-relaxed backdrop-blur-sm p-4 rounded-lg border-[var(--color-card-border)] usercard text-[var(--color-text-secondary)] text-sm sm:text-base">
           {data}
         </div>
       )}

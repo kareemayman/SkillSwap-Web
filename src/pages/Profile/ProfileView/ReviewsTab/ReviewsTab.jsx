@@ -22,7 +22,7 @@ export default function ReviewsTab({ userAvgRating = {}, reviews = reviewsSample
 
   return (
     <div>
-      <div className="container mx-auto flex justify-center ">
+      <div className="container mx-auto flex flex-col sm:flex-row justify-center">
         <div className="flex flex-col items-center gap-2">
           <p className="text-4xl ">{overAllAvg}</p>
 
@@ -40,7 +40,7 @@ export default function ReviewsTab({ userAvgRating = {}, reviews = reviewsSample
           </p>
         </div>
 
-        <div className="flex flex-col min-w-96 pr-6">
+        <div className="flex flex-col min-w-80 sm:min-w-96 sm:pr-6 ">
           <RatingAdvanced theme={advancedRatingTheme} percentFilled={Math.round((teachingSkillAvg * 100) / 5)} className="p-2 justify-end">
             <p className="text-[--color-text-primary] ">{t("Teaching Skill")}</p>
           </RatingAdvanced>

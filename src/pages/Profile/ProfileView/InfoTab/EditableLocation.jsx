@@ -29,7 +29,7 @@ export default function EditableLocation({ data, updateUserData, isOwnProfile })
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold text-[--color-text-primary]">{t("Location")}</h2>
+        <h2 className="sm:text-xl font-semibold text-[--color-text-primary]">{t("Location")}</h2>
 
         <div className="md:w-1/2 flex justify-end">
           {isEditing ? (
@@ -72,7 +72,7 @@ export default function EditableLocation({ data, updateUserData, isOwnProfile })
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </div>
       ) : (
-        <div className="flex items-center gap-2 text-[--color-text-secondary]">
+        <div className="flex items-center gap-2 text-[--color-text-secondary] text-sm sm:text-base">
           <LuMapPin size={16} />
           <span>{location.city && location.country ? `${location.city}, ${location.country}` : "No location set"}</span>
         </div>

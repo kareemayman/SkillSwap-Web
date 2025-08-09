@@ -41,9 +41,7 @@ export default function EditablePhone({ data, updateUserData, isOwnProfile }) {
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold text-[--color-text-primary]">
-          {t("Phone")}
-        </h2>
+        <h2 className="sm:text-xl font-semibold text-[--color-text-primary]">{t("Phone")}</h2>
 
         <div className="md:w-1/2 flex justify-end">
           {isEditing ? (
@@ -67,29 +65,19 @@ export default function EditablePhone({ data, updateUserData, isOwnProfile }) {
               </button>
             </div>
           ) : (
-            isOwnProfile && (
-              <EditButton
-                title="Edit Phone Number"
-                classes=""
-                onClickHandler={() => setIsEditing(true)}
-              />
-            )
+            isOwnProfile && <EditButton title="Edit Phone Number" classes="" onClickHandler={() => setIsEditing(true)} />
           )}
         </div>
       </div>
 
       {isEditing ? (
         <div>
-          <PhoneNumberInput
-            initialCountryCode={value.countryCode}
-            initialPhoneNumber={value.phoneNumber}
-            onPhoneChange={handlePhoneInputChange}
-          />
+          <PhoneNumberInput initialCountryCode={value.countryCode} initialPhoneNumber={value.phoneNumber} onPhoneChange={handlePhoneInputChange} />
           {/* Error Message Display */}
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </div>
       ) : (
-        <div className="flex items-center gap-2 text-[--color-text-secondary]">
+        <div className="flex items-center gap-2 text-[--color-text-secondary] text-sm sm:text-base">
           <LuPhone size={16} />
           <span>{data || "No phone number set"}</span>
         </div>
