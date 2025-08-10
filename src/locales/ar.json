@@ -189,6 +189,7 @@
   "Please select a seeking skill.": "يرجى اختيار المهارة التي تبحث عنها.",
   "Session scheduled successfully!": "تم جدولة الجلسة بنجاح!",
   "Dashboard": {
+    "Analytics": "التحليلات",
     "Users": "المستخدمين",
     "Skills": "المهارات",
     "Reviews": "المراجعات",
