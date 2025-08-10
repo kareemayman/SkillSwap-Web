@@ -49,7 +49,7 @@ export default function Messages() {
 
   return (
     <div className="container mx-auto py-6 px-4 md:px-16">
-      <h1 className="text-[var(--color-text-primary)] text-3xl font-bold mb-4">
+      <h1 className="text-[var(--main-color)] text-3xl font-bold mb-4">
        {t("messages.Messages")} 📩
       </h1>
       <p className="text-[var(--color-text-secondary)] leading-5 mb-4">

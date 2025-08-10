@@ -6,7 +6,7 @@ export default function UserSidebar({ user }) {
     const { t }= useTranslation();
 
   return (
-    <div className="w-80 p-6 usercard hidden md:block border-l  border-gray-700 ">
+    <div className="w-80 p-6 bg-[--input-bg] hidden md:block border-l  border-gray-700 ">
       <div className="text-center">
       <Link to={`/profile/${user.uid}`}>
         <img
