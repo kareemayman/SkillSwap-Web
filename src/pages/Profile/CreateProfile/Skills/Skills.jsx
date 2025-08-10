@@ -184,7 +184,7 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
 
         <div className="relative">
           <input
-            className="backdrop-blur-sm p-3 mt-1 rounded-lg border border-[var(--color-card-border)] bg-slate-50 text-[var(--color-text-secondary)] placeholder:text-[#4A739C] transition-all duration-300 text-sm"
+            className="backdrop-blur-sm p-3 mt-1 rounded-lg border border-[var(--color-card-border)] bg-slate-50  text-[var(--color-text-secondary)] placeholder:text-[#4A739C] transition-all duration-300 text-sm"
             type="text"
             name="skillsToLearn"
             id="skillsToLearn"
@@ -202,7 +202,7 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
           />
 
           {skillsToLearn.trim() !== "" && (
-            <div className="top-full left-0 z-50 absolute bg-black rounded-md min-w-[30%]">
+            <div className="top-full left-0 z-50 absolute dark:bg-black bg-slate-50 rounded-md min-w-[30%]">
               {filteredSkills.map((skill) => (
                 <div
                   onClick={() => {
