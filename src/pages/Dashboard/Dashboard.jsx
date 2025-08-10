@@ -19,10 +19,11 @@ import { useTranslation } from "react-i18next"
 import { useAuth } from "../../contexts/Auth/context"
 import toast from "react-hot-toast"
 import EditSkillForm from "./components/EditSkillForm"
+import Analytics from "./components/Analytics"
 
 export default function Dashboard() {
   const { t } = useTranslation()
-  const [selectedTab, setSelectedTab] = useState("users")
+  const [selectedTab, setSelectedTab] = useState("analytics")
   const [allUsers, setAllUsers] = useState([])
   const [allSkills, setAllSkills] = useState([])
   const [searchInput, setSearchInput] = useState("")
@@ -145,7 +146,7 @@ export default function Dashboard() {
       {user.email == "skills.swap.app@gmail.com" ? (
         <>
           <div className="flex gap-12 items-center border-b-2 border-[var(--color-card-border)] mb-8">
-            {["users", "skills", "reviews"].map((tab) => (
+            {["analytics", "users", "skills", "reviews"].map((tab) => (
               <p
                 key={tab}
                 className={`pb-4 relative ${
@@ -162,151 +163,159 @@ export default function Dashboard() {
             ))}
           </div>
 
-          <div className="w-full rounded-3xl dark:bg-[#382E29] bg-[var(--input-bg)] p-3 px-4 flex items-center gap-2 mb-8">
-            <FontAwesomeIcon
-              icon={faMagnifyingGlass}
-              className="text-[var(--color-text-primary)] text-2xl"
-            />
-            <input
-              type="text"
-              name="search"
-              id="search"
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              className="flex-1 bg-transparent text-[var(--color-text-primary)] placeholder:text-[var(--color-text-primary)] focus:outline-none border-none"
-              placeholder={
-                selectedTab === "users"
-                  ? t("Dashboard.SearchUsers")
-                  : selectedTab === "skills"
-                  ? t("Dashboard.SearchSkills")
-                  : t("Dashboard.SearchReviews")
-              }
-            />
-          </div>
+          {selectedTab !== "analytics" && (
+            <div className="w-full rounded-3xl dark:bg-[#382E29] bg-[var(--input-bg)] p-3 px-4 flex items-center gap-2 mb-8">
+              <FontAwesomeIcon
+                icon={faMagnifyingGlass}
+                className="text-[var(--color-text-primary)] text-2xl"
+              />
+              <input
+                type="text"
+                name="search"
+                id="search"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                className="flex-1 bg-transparent text-[var(--color-text-primary)] placeholder:text-[var(--color-text-primary)] focus:outline-none border-none"
+                placeholder={
+                  selectedTab === "users"
+                    ? t("Dashboard.SearchUsers")
+                    : selectedTab === "skills"
+                    ? t("Dashboard.SearchSkills")
+                    : t("Dashboard.SearchReviews")
+                }
+              />
+            </div>
+          )}
 
-          <div className="w-full min-h-20 rounded-lg shadow-[#382E29] shadow-md">
-            {selectedTab === "users" && (
-              <>
-                <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold dark:bg-[#26211c] bg-[var(--color-btn-submit-bg)] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
-                  <p className="flex-1">{t("Dashboard.User")}</p>
-                  <p className="flex-1">{t("Dashboard.Name")}</p>
-                  <p className="flex-1">{t("Dashboard.Skills")}</p>
-                  <p className="flex-1">{t("Dashboard.Reviews")}</p>
-                  <p className="flex-1">{t("Dashboard.Actions")}</p>
-                </div>
-                {(searchResults.length > 0 ? searchResults : allUsers).map((user) => (
-                  <div
-                    key={user.uid}
-                    className="flex items-center p-4 text-[var(--color-text-primary)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
-                  >
-                    <div className="flex-1">
-                      <img
-                        src={user.profilePicture || Avat}
-                        alt="avatar"
-                        className="block rounded-full w-12 h-12 object-cover"
-                      />
-                    </div>
-                    <p className="flex-1 capitalize">{user.name}</p>
-                    <p className="flex-1 text-[var(--color-text-primary)] capitalize">
-                      {user.hasSkills?.map(
-                        (s, i) => `${s.skillName}${i < user.hasSkills.length - 1 ? ", " : ""}`
-                      )}
-                    </p>
-                    <p className="flex-1 text-[var(--color-text-primary)]">{user.rating || 0}</p>
-                    <div className="flex-1 text-[var(--color-text-primary)]">
-                      <span
-                        onClick={() => handleDeleteUser(user.uid)}
-                        className="cursor-pointer hover:text-[var(--color-text-light)]"
-                      >
-                        {t("Dashboard.Delete")}
-                      </span>
-                    </div>
+          {selectedTab !== "analytics" && (
+            <div className="w-full min-h-20 rounded-lg shadow-[#382E29] shadow-md">
+              {selectedTab === "users" && (
+                <>
+                  <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold dark:bg-[#26211c] bg-[var(--color-btn-submit-bg)] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+                    <p className="flex-1">{t("Dashboard.User")}</p>
+                    <p className="flex-1">{t("Dashboard.Name")}</p>
+                    <p className="flex-1">{t("Dashboard.Skills")}</p>
+                    <p className="flex-1">{t("Dashboard.Reviews")}</p>
+                    <p className="flex-1">{t("Dashboard.Actions")}</p>
                   </div>
-                ))}
-              </>
-            )}
-
-            {selectedTab === "skills" && (
-              <>
-                <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold dark:bg-[#26211c] bg-[var(--color-btn-submit-bg)] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
-                  <p className="flex-1">{t("Dashboard.SkillName")}</p>
-                  <p className="flex-1">{t("Dashboard.Category")}</p>
-                  <p className="flex-1">{t("Dashboard.ArabicSkillName")}</p>
-                  <p className="flex-1">{t("Dashboard.Actions")}</p>
-                </div>
-                {showEditSkillForm && (
-                  <EditSkillForm
-                    skill={editedSkill}
-                    setShowModal={setShowEditSkillForm}
-                    deleteSkill={handleDeleteSkill}
-                    setAllSkills={setAllSkills}
-                    onClose={() => setShowEditSkillForm(false)}
-                  />
-                )}
-                {(searchResults.length > 0 ? searchResults : allSkills).map((skill) => (
-                  <div
-                    key={skill.id}
-                    className="flex items-center p-4 text-[var(--color-text-primary)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
-                  >
-                    <p className="flex-1">{skill.skillName}</p>
-                    <p className="flex-1">{skill.category}</p>
-                    <p className="flex-1">{skill.skillNameArabic}</p>
-                    <div className="flex-1 text-[var(--color-text-primary)]">
-                      <span
-                        onClick={() => {
-                          setEditedSkill(skill)
-                          setShowEditSkillForm(true)
-                        }}
-                        className="cursor-pointer hover:text-[var(--color-text-light)]"
-                      >
-                        {t("Dashboard.Edit")}
-                      </span>{" "}
-                      |{" "}
-                      <span
-                        onClick={() => handleDeleteSkill(skill.id)}
-                        className="cursor-pointer hover:text-[var(--color-text-light)]"
-                      >
-                        {t("Dashboard.Delete")}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </>
-            )}
-
-            {selectedTab === "reviews" && (
-              <>
-                <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold dark:bg-[#26211c] bg-[var(--color-btn-submit-bg)] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
-                  <p className="flex-1">{t("Dashboard.Reviewer")}</p>
-                  <p className="flex-1">{t("Dashboard.ReviewedUser")}</p>
-                  <p className="flex-1 pr-6">{t("Dashboard.ReviewText")}</p>
-                  <p className="flex-1">{t("Dashboard.Rating")}</p>
-                  <p className="flex-1">{t("Dashboard.Actions")}</p>
-                </div>
-                {(searchResults.length > 0 ? searchResults : allUsers).flatMap((user) =>
-                  user.reviews?.map((review) => (
+                  {(searchResults.length > 0 ? searchResults : allUsers).map((user) => (
                     <div
-                      key={review.reviewId}
+                      key={user.uid}
                       className="flex items-center p-4 text-[var(--color-text-primary)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
                     >
-                      <p className="flex-1">{review.authorName}</p>
-                      <p className="flex-1">{user.name}</p>
-                      <p className="flex-1 pr-6">{review.text}</p>
-                      <p className="flex-1">{review.rating}</p>
                       <div className="flex-1">
+                        <img
+                          src={user.profilePicture || Avat}
+                          alt="avatar"
+                          className="block rounded-full w-12 h-12 object-cover"
+                        />
+                      </div>
+                      <p className="flex-1 capitalize">{user.name}</p>
+                      <p className="flex-1 text-[var(--color-text-primary)] capitalize">
+                        {user.hasSkills?.map(
+                          (s, i) => `${s.skillName}${i < user.hasSkills.length - 1 ? ", " : ""}`
+                        )}
+                      </p>
+                      <p className="flex-1 text-[var(--color-text-primary)]">{user.rating || 0}</p>
+                      <div className="flex-1 text-[var(--color-text-primary)]">
                         <span
-                          onClick={() => handleDeleteReview(user.uid, review.reviewId)}
+                          onClick={() => handleDeleteUser(user.uid)}
                           className="cursor-pointer hover:text-[var(--color-text-light)]"
                         >
                           {t("Dashboard.Delete")}
                         </span>
                       </div>
                     </div>
-                  ))
-                )}
-              </>
-            )}
-          </div>
+                  ))}
+                </>
+              )}
+
+              {selectedTab === "skills" && (
+                <>
+                  <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold dark:bg-[#26211c] bg-[var(--color-btn-submit-bg)] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+                    <p className="flex-1">{t("Dashboard.SkillName")}</p>
+                    <p className="flex-1">{t("Dashboard.Category")}</p>
+                    <p className="flex-1">{t("Dashboard.ArabicSkillName")}</p>
+                    <p className="flex-1">{t("Dashboard.Actions")}</p>
+                  </div>
+                  {showEditSkillForm && (
+                    <EditSkillForm
+                      skill={editedSkill}
+                      setShowModal={setShowEditSkillForm}
+                      deleteSkill={handleDeleteSkill}
+                      setAllSkills={setAllSkills}
+                      onClose={() => setShowEditSkillForm(false)}
+                    />
+                  )}
+                  {(searchResults.length > 0 ? searchResults : allSkills).map((skill) => (
+                    <div
+                      key={skill.id}
+                      className="flex items-center p-4 text-[var(--color-text-primary)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
+                    >
+                      <p className="flex-1">{skill.skillName}</p>
+                      <p className="flex-1">{skill.category}</p>
+                      <p className="flex-1">{skill.skillNameArabic}</p>
+                      <div className="flex-1 text-[var(--color-text-primary)]">
+                        <span
+                          onClick={() => {
+                            setEditedSkill(skill)
+                            setShowEditSkillForm(true)
+                          }}
+                          className="cursor-pointer hover:text-[var(--color-text-light)]"
+                        >
+                          {t("Dashboard.Edit")}
+                        </span>{" "}
+                        |{" "}
+                        <span
+                          onClick={() => handleDeleteSkill(skill.id)}
+                          className="cursor-pointer hover:text-[var(--color-text-light)]"
+                        >
+                          {t("Dashboard.Delete")}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )}
+
+              {selectedTab === "reviews" && (
+                <>
+                  <div className="flex items-center p-4 text-[var(--color-text-light)] font-bold dark:bg-[#26211c] bg-[var(--color-btn-submit-bg)] rounded-lg border-b border-solid border-b-[var(--color-card-border)]">
+                    <p className="flex-1">{t("Dashboard.Reviewer")}</p>
+                    <p className="flex-1">{t("Dashboard.ReviewedUser")}</p>
+                    <p className="flex-1 pr-6">{t("Dashboard.ReviewText")}</p>
+                    <p className="flex-1">{t("Dashboard.Rating")}</p>
+                    <p className="flex-1">{t("Dashboard.Actions")}</p>
+                  </div>
+                  {(searchResults.length > 0 ? searchResults : allUsers).flatMap((user) =>
+                    user.reviews?.map((review) => (
+                      <div
+                        key={review.reviewId}
+                        className="flex items-center p-4 text-[var(--color-text-primary)] font-bold rounded-lg border-b border-solid border-b-[var(--color-card-border)]"
+                      >
+                        <p className="flex-1">{review.authorName}</p>
+                        <p className="flex-1">{user.name}</p>
+                        <p className="flex-1 pr-6">{review.text}</p>
+                        <p className="flex-1">{review.rating}</p>
+                        <div className="flex-1">
+                          <span
+                            onClick={() => handleDeleteReview(user.uid, review.reviewId)}
+                            className="cursor-pointer hover:text-[var(--color-text-light)]"
+                          >
+                            {t("Dashboard.Delete")}
+                          </span>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </>
+              )}
+            </div>
+          )}
+
+          {selectedTab === "analytics" && (
+            <Analytics allSkills={allSkills} allUsers={allUsers} user={user}></Analytics>
+          )}
         </>
       ) : (
         <>

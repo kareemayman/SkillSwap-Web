@@ -298,3 +298,82 @@ ${JSON.stringify(milestones)}
 Your response:
 `
 }
+
+export const calculateAnalyticsPrompt = (allUsers, allSkills) => {
+  return `
+  You are a data extractor for an admin analytics dashboard. 
+Input you will receive:
+- allUsers: an array of user objects. Each user has:
+  - createdAt (ISO-8601 timestamp string)
+  - hasSkills: array of objects with { skillName: string }
+  - needSkills: array of objects with { skillName: string }
+- allSkills: an array of skill objects. Each skill has:
+  - skillName (string)
+  - category (string)
+
+Task:
+Using the input arrays, compute the following analytics for the admin dashboard.
+
+Produce a single JSON object with these fields:
+
+1. mostRequestedSkills — top 5 skills by number of occurrences in users' needSkills.
+   Format: [{"skillName": "<name>", "count": <int> }, ...]
+   Sorted descending by count (ties: alphabetical by skillName). Include up to 5 items.
+
+2. mostRequestedCategories — top 5 categories by total needSkills occurrences for skills in that category.
+   Format: [{ "category": "<category>", "count": <int> }, ...]
+   Sorted descending by count. Include up to 5 items.
+
+3. mostCommonSkills — top 5 skills by total hasSkills occurrences.
+   Format: [{"skillName": "<name>", "count": <int> }, ...]
+   Sorted descending by count. Include up to 5 items.
+
+4. skillPercentages — percentage distribution of needSkills (skill demand) across allSkills.
+   Format: ["skillName": "<name>", "percentage": <number> }]
+   - Percentages sum to 100 (round numbers to 2 decimal places).
+   - Include all skills that appear in needSkills (or 'other' if unmatched). If there are more than 20, return top 20 by percentage and aggregate the rest into an item with skillId:"other_small", skillName:"Other (small)", percentage:<number>.
+
+5. userGrowthLastWeek — daily new user counts for the last 7 days (including today). Use UTC dates (YYYY-MM-DD).
+   Format: [{ "date": "YYYY-MM-DD", "newUsers": <int> }, ...]
+   - If no new users on a date, return newUsers: 0.
+   - Count users by createdAt falling within that UTC date.
+
+Rules & formatting:
+- Return only valid JSON (no explanations, no extra text).
+- All counts must be integers.
+- All skillId values must come from allSkills ids where possible; otherwise use "other".
+- Sort lists by their primary metric descending.
+- Use ISO-8601 date strings for createdAt in calculations; return dates in YYYY-MM-DD (UTC).
+- If input arrays are empty, return empty arrays and zeros in totals accordingly.
+
+Example output structure (values are examples):
+{
+  "mostRequestedSkills": [
+    {"skillName": "JavaScript", "count": 42 },
+    ...
+  ],
+  "mostRequestedCategories": [
+    {"category": "Programming", "count": 68 },
+    ...
+  ],
+  "mostCommonSkills": [
+    {"skillName": "Piano", "count": 30 },
+    ...
+  ],
+  "skillPercentages": [
+    {"skillName": "JavaScript", "percentage": 23.45 },
+    ...
+  ],
+  "userGrowthLastWeek": [
+    { "date": "2025-08-04", "newUsers": 3 },
+    ...
+  ],
+}
+
+Now process the provided allUsers and allSkills and return the JSON described above.
+  allUsers: ${JSON.stringify(allUsers)}
+  allSkills: ${JSON.stringify(allSkills)}
+
+  Your response:
+  `
+}

@@ -13,7 +13,7 @@ import {
   arrayUnion,
   arrayRemove,
 } from "firebase/firestore";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 import { getSkillCategory, translateSkillToArabic } from "./geminiPrompts";
 import { generateFromGemini } from "../api/gemini";
 
@@ -281,5 +281,29 @@ export const updateSkillById = async (skillId, skillData) => {
     await updateDoc(skillDocRef, skillData);
   } catch (error) {
     console.error("Error updating skill:", error);
+  }
+}
+
+export const getSkillTrades = async () => {
+  try {
+    const qSnap = await getDocs(collection(db, "trades"));
+    return qSnap.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    console.error("Error getting skill trades:", error);
+  }
+}
+
+export const getRequests = async () => {
+  try {
+    const qSnap = await getDocs(collection(db, "requests"));
+    return qSnap.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    console.error("Error getting requests:", error);
   }
 }
