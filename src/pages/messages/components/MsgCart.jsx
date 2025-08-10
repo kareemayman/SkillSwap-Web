@@ -4,7 +4,7 @@ export default function MsgCart({ data }) {
   return (
     <div
       className={`flex justify-between  p-4 rounded-lg shadow-md gap-8 flex-wrap w-full items-center 
-        ${data.unread ? "bg-gray-400" : "usercard "} `}
+        ${data.unread ? "dark:bg-gray-400 bg-yellow-900" : "usercard "} `}
     >
       <div className="flex items-center gap-4">
         <div className="w-16 h-16 rounded-full object-cover mb-4 ring-2 ring-[var(--color-card-border)]">
@@ -14,7 +14,7 @@ export default function MsgCart({ data }) {
           <h2
             className={`font-bold ${
               data.unread
-                ? "text-black"
+                ? "dark:text-black text-white"
                 : "text-[var(--color-text-primary)]"
             }`}
           >

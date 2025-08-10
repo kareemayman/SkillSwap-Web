@@ -1,14 +1,14 @@
 export default function ChatMessage({ message, isCurrentUser, otherUserName }) {
   return (
     <div className={`flex flex-col ${isCurrentUser ? "items-end" : "items-start"}`}>
-      <span className="text-xs text-gray-400 mb-1">
+      <span className="text-xs dark:text-gray-400 text-black mb-1">
         {isCurrentUser ? "You" : otherUserName || "User"}
       </span>
       <div
         className={`px-4 py-2 rounded-xl max-w-[70%] shadow ${
           isCurrentUser
-            ? "bg-gray-300 text-black"
-            : "bg-zinc-700 text-white"
+            ? "dark:bg-gray-300 bg-gray-300 text-black"
+            : "dark:bg-zinc-700 bg-[#bc640dd8] text-white"
         }`}
       >
         {message.text}

@@ -255,7 +255,7 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
           />
 
           {skillsToTeach.trim() !== "" && (
-            <div className="top-full left-0 z-50 absolute bg-[#E8EDF5] rounded-md min-w-[30%]">
+            <div className="top-full left-0 z-50 absolute dark:bg-[#E8EDF5] bg-white rounded-md min-w-[30%]">
               {filteredSkills.map((skill) => (
                 <div
                   onClick={() => {
