@@ -305,11 +305,14 @@ export const calculateAnalyticsPrompt = (allUsers, allSkills) => {
 Input you will receive:
 - allUsers: an array of user objects. Each user has:
   - createdAt (ISO-8601 timestamp string)
-  - hasSkills: array of objects with { skillName: string }
-  - needSkills: array of objects with { skillName: string }
+  - hasSkills: array of objects with { skillName: string, skillNameArabic: string, category: string }
+  - needSkills: array of objects with { skillName: string, skillNameArabic: string, category: string }
 - allSkills: an array of skill objects. Each skill has:
   - skillName (string)
+  - skillNameArabic (string)
   - category (string)
+
+  If you can't find skillNameArabic In allUsers hasSkills or needSkills or allSkills array or find it's null, then translate skillName to Arabic and make sure to return it in the output.
 
 Task:
 Using the input arrays, compute the following analytics for the admin dashboard.
@@ -317,7 +320,7 @@ Using the input arrays, compute the following analytics for the admin dashboard.
 Produce a single JSON object with these fields:
 
 1. mostRequestedSkills — top 5 skills by number of occurrences in users' needSkills.
-   Format: [{"skillName": "<name>", "count": <int> }, ...]
+   Format: [{"skillName": "<name>","skillNameArabic": "<name>", "count": <int> }, ...]
    Sorted descending by count (ties: alphabetical by skillName). Include up to 5 items.
 
 2. mostRequestedCategories — top 5 categories by total needSkills occurrences for skills in that category.
@@ -325,11 +328,11 @@ Produce a single JSON object with these fields:
    Sorted descending by count. Include up to 5 items.
 
 3. mostCommonSkills — top 5 skills by total hasSkills occurrences.
-   Format: [{"skillName": "<name>", "count": <int> }, ...]
+   Format: [{"skillName": "<name>","skillNameArabic": "<name>", "count": <int> }, ...]
    Sorted descending by count. Include up to 5 items.
 
 4. skillPercentages — percentage distribution of needSkills (skill demand) across allSkills.
-   Format: ["skillName": "<name>", "percentage": <number> }]
+   Format: ["skillName": "<name>", "skillNameArabic": "<name>", "percentage": <number> }]
    - Percentages sum to 100 (round numbers to 2 decimal places).
    - Include all skills that appear in needSkills (or 'other' if unmatched). If there are more than 20, return top 20 by percentage and aggregate the rest into an item with skillId:"other_small", skillName:"Other (small)", percentage:<number>.
 
@@ -349,7 +352,7 @@ Rules & formatting:
 Example output structure (values are examples):
 {
   "mostRequestedSkills": [
-    {"skillName": "JavaScript", "count": 42 },
+    {"skillName": "JavaScript", "skillNameArabic": "جافاسكريبت", "count": 42 },
     ...
   ],
   "mostRequestedCategories": [
@@ -357,11 +360,11 @@ Example output structure (values are examples):
     ...
   ],
   "mostCommonSkills": [
-    {"skillName": "Piano", "count": 30 },
+    {"skillName": "Piano", "skillNameArabic": "بيانو", "count": 30 },
     ...
   ],
   "skillPercentages": [
-    {"skillName": "JavaScript", "percentage": 23.45 },
+    {"skillName": "JavaScript", "skillNameArabic": "جافاسكريبت", "percentage": 23.45 },
     ...
   ],
   "userGrowthLastWeek": [

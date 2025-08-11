@@ -5,7 +5,20 @@ import { generateFromGemini } from "../../../api/gemini"
 import { calculateAnalyticsPrompt } from "../../../utils/geminiPrompts"
 import LoadingAnimation from "../../../components/LoadingAnimation/LoadingAnimation"
 import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card"
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Bar, BarChart } from "recharts"
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Bar,
+  BarChart,
+} from "recharts"
+import { useTranslation } from "react-i18next"
 
 export default function Analytics({ allUsers, allSkills, user }) {
   const [allTrades, setAllTrades] = useState(null)
@@ -17,6 +30,9 @@ export default function Analytics({ allUsers, allSkills, user }) {
   const [skillPercentages, setSkillPercentages] = useState(null)
   const [userGrowthLastWeek, setUserGrowthLastWeek] = useState(null)
   const [loadingAnalytics, setLoadingAnalytics] = useState(true)
+  const { t, i18n } = useTranslation()
+
+  const isArabic = i18n.language === "ar"
 
   useEffect(() => {
     getSkillTrades().then((res) => setAllTrades(res))
@@ -71,46 +87,64 @@ export default function Analytics({ allUsers, allSkills, user }) {
 
   return (
     <>
-      <h1 className="text-2xl font-bold text-[var(--color-text-light)] mb-6">Key Metrics</h1>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-4 mb-6">
-        <AnalyticsCard title="Total Users" value={allUsers?.length}></AnalyticsCard>
-        <AnalyticsCard title="Total Skills" value={allSkills?.length}></AnalyticsCard>
-        <AnalyticsCard title="Total Skill Trades" value={allTrades?.length || 0}></AnalyticsCard>
-        <AnalyticsCard title="Pending Skill Trades" value={pendingTrades}></AnalyticsCard>
-      </div>
       {loadingAnalytics ? (
         <LoadingAnimation />
       ) : (
         <>
+          <h1 className="text-2xl font-bold text-[var(--color-text-light)] mb-6">
+            {t("Dashboard.metrics")}
+          </h1>
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-4 mb-6">
+            <AnalyticsCard
+              title={t("Dashboard.TotalUsers")}
+              value={allUsers?.length}
+            ></AnalyticsCard>
+            <AnalyticsCard
+              title={t("Dashboard.TotalSkills")}
+              value={allSkills?.length}
+            ></AnalyticsCard>
+            <AnalyticsCard
+              title={t("Dashboard.TotalSkillTrades")}
+              value={allTrades?.length || 0}
+            ></AnalyticsCard>
+            <AnalyticsCard
+              title={t("Dashboard.PendingSkillTrades")}
+              value={pendingTrades}
+            ></AnalyticsCard>
+          </div>
           <div className="rounded-lg border border-[var(--color-card-border)] p-6 w-full mb-6">
             <h3 className="text-2xl font-medium text-[var(--color-text-primary)] mb-4">
-              Top 5 Most Requested Skills
+              {t("Dashboard.Top5MostRequestedSkills")}
             </h3>
             {mostRequestedSkills?.map((skill, i) => (
               <p
                 key={i}
                 className="inline capitalize text-2xl tracking-wide font-bold text-[var(--color-text-light)]"
               >
-                {`${skill.skillName}${i < mostRequestedSkills.length - 1 ? ", " : ""}`}
+                {`${isArabic ? skill.skillNameArabic : skill.skillName}${
+                  i < mostRequestedSkills.length - 1 ? ", " : ""
+                }`}
               </p>
             ))}
           </div>
           <div className="rounded-lg border border-[var(--color-card-border)] p-6 w-full mb-6">
             <h3 className="text-2xl font-medium text-[var(--color-text-primary)] mb-4">
-              Top 5 Most Common Skills
+              {t("Dashboard.Top5MostCommonSkills")}
             </h3>
             {mostCommonSkills?.map((skill, i) => (
               <p
                 key={i}
                 className="inline capitalize text-2xl tracking-wide font-bold text-[var(--color-text-light)]"
               >
-                {`${skill.skillName}${i < mostCommonSkills.length - 1 ? ", " : ""}`}
+                {`${isArabic ? skill.skillNameArabic : skill.skillName}${
+                  i < mostCommonSkills.length - 1 ? ", " : ""
+                }`}
               </p>
             ))}
           </div>
 
           <h1 className="text-2xl font-bold text-[var(--color-text-light)] mb-6">
-            Analytics Overview
+            {t("Dashboard.AnalyticsOverview")}
           </h1>
 
           <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
@@ -118,13 +152,16 @@ export default function Analytics({ allUsers, allSkills, user }) {
               <Card className="rounded-lg border border-[var(--color-card-border)] p-6 w-full mb-6 bg-[var(--color-card-bg)]">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-lg font-medium text-[var(--color-text-primary)]">
-                    User Growth Over Time
+                    {t("Dashboard.UserGrowthOverTime")}
                   </CardTitle>
                   <div className="text-3xl font-bold text-white mt-2">
-                    +{growthPercent}% this week
+                    +{growthPercent}% {t("Dashboard.thisweek")}
                   </div>
                   <div className="text-sm text-green-500 mt-1">
-                    Last 7 Days <span className="font-semibold">+{lastWeekTotal} new users</span>
+                    {t("Dashboard.Last7Days")}{" "}
+                    <span className="font-semibold">
+                      +{lastWeekTotal} {t("Dashboard.newusers")}
+                    </span>
                   </div>
                 </CardHeader>
                 <CardContent className="pt-4">
@@ -166,7 +203,7 @@ export default function Analytics({ allUsers, allSkills, user }) {
               <Card className="rounded-lg border border-[var(--color-card-border)] p-6 w-full mb-6 bg-[var(--color-card-bg)]">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-lg font-medium text-[var(--color-text-primary)]">
-                    Skill Demand Distribution
+                    {t("Dashboard.SkillDemandDistribution")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-4 flex flex-col items-center">
@@ -175,13 +212,15 @@ export default function Analytics({ allUsers, allSkills, user }) {
                       <Pie
                         data={skillPercentages}
                         dataKey="percentage"
-                        nameKey="skillName"
+                        nameKey={isArabic ? "skillNameArabic" : "skillName"}
                         cx="50%"
                         cy="50%"
                         outerRadius={60}
                         innerRadius={35}
                         fill="#bfae9e"
-                        label={({ skillName }) => skillName}
+                        label={({ skillName, skillNameArabic }) =>
+                          isArabic ? skillNameArabic : skillName
+                        }
                         labelLine={false}
                       >
                         {skillPercentages.map((entry, index) => (
@@ -236,7 +275,7 @@ export default function Analytics({ allUsers, allSkills, user }) {
                             ][idx % 8],
                           }}
                         ></span>
-                        {entry.skillName} ({entry.percentage}%)
+                        {isArabic ? entry.skillNameArabic : entry.skillName} ({entry.percentage}%)
                       </span>
                     ))}
                   </div>
@@ -244,15 +283,15 @@ export default function Analytics({ allUsers, allSkills, user }) {
               </Card>
             )}
 
-             {/* Skill Categories Bar Chart */}
+            {/* Skill Categories Bar Chart */}
             {Array.isArray(mostRequestedCategories) && mostRequestedCategories.length > 0 && (
               <Card className="rounded-lg border border-[var(--color-card-border)] p-6 w-full mb-6 bg-[var(--color-card-bg)]">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-lg font-medium text-[var(--color-text-primary)]">
-                    Skill Categories Demand
+                    {t("Dashboard.SkillCategoriesDemand")}
                   </CardTitle>
                   <div className="text-sm text-[var(--color-text-secondary)] mt-1">
-                    Number of requests per category
+                    {t("Dashboard.Numberofrequestspercategory")}
                   </div>
                 </CardHeader>
                 <CardContent className="pt-4 flex flex-col items-center">
@@ -284,12 +323,7 @@ export default function Analytics({ allUsers, allSkills, user }) {
                         labelStyle={{ color: "#e79259" }}
                         formatter={(value, name) => [value, "Requests"]}
                       />
-                      <Bar
-                        dataKey="count"
-                        fill="#e79259"
-                        radius={[8, 8, 0, 0]}
-                        barSize={30}
-                      />
+                      <Bar dataKey="count" fill="#e79259" radius={[8, 8, 0, 0]} barSize={30} />
                     </BarChart>
                   </ResponsiveContainer>
                 </CardContent>
