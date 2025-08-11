@@ -112,40 +112,9 @@ export default function Analytics({ allUsers, allSkills, user }) {
               value={pendingTrades}
             ></AnalyticsCard>
           </div>
-          <div className="rounded-lg border border-[var(--color-card-border)] p-6 w-full mb-6">
-            <h3 className="text-2xl font-medium text-[var(--color-text-primary)] mb-4">
-              {t("Dashboard.Top5MostRequestedSkills")}
-            </h3>
-            {mostRequestedSkills?.map((skill, i) => (
-              <p
-                key={i}
-                className="inline capitalize text-2xl tracking-wide font-bold text-[var(--color-text-light)]"
-              >
-                {`${isArabic ? skill.skillNameArabic : skill.skillName}${
-                  i < mostRequestedSkills.length - 1 ? ", " : ""
-                }`}
-              </p>
-            ))}
-          </div>
-          <div className="rounded-lg border border-[var(--color-card-border)] p-6 w-full mb-6">
-            <h3 className="text-2xl font-medium text-[var(--color-text-primary)] mb-4">
-              {t("Dashboard.Top5MostCommonSkills")}
-            </h3>
-            {mostCommonSkills?.map((skill, i) => (
-              <p
-                key={i}
-                className="inline capitalize text-2xl tracking-wide font-bold text-[var(--color-text-light)]"
-              >
-                {`${isArabic ? skill.skillNameArabic : skill.skillName}${
-                  i < mostCommonSkills.length - 1 ? ", " : ""
-                }`}
-              </p>
-            ))}
-          </div>
-
-          <h1 className="text-2xl font-bold text-[var(--color-text-light)] mb-6">
+          {/* <h1 className="text-2xl font-bold text-[var(--color-text-light)] mb-6">
             {t("Dashboard.AnalyticsOverview")}
-          </h1>
+          </h1> */}
 
           <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
             {chartData.length > 0 && (
@@ -329,6 +298,37 @@ export default function Analytics({ allUsers, allSkills, user }) {
                 </CardContent>
               </Card>
             )}
+          </div>
+
+          <div className="rounded-lg border border-[var(--color-card-border)] p-6 w-full mb-6">
+            <h3 className="text-2xl font-medium text-[var(--color-text-primary)] mb-4">
+              {t("Dashboard.Top5MostRequestedSkills")}
+            </h3>
+            {mostRequestedSkills?.map((skill, i) => (
+              <p
+                key={i}
+                className="inline capitalize text-2xl tracking-wide font-bold text-[var(--color-text-light)]"
+              >
+                {`${isArabic ? skill.skillNameArabic : skill.skillName}${
+                  i < mostRequestedSkills.length - 1 ? ", " : ""
+                }`}
+              </p>
+            ))}
+          </div>
+          <div className="rounded-lg border border-[var(--color-card-border)] p-6 w-full mb-6">
+            <h3 className="text-2xl font-medium text-[var(--color-text-primary)] mb-4">
+              {t("Dashboard.Top5MostCommonSkills")}
+            </h3>
+            {mostCommonSkills?.map((skill, i) => (
+              <p
+                key={i}
+                className="inline capitalize text-2xl tracking-wide font-bold text-[var(--color-text-light)]"
+              >
+                {`${isArabic ? skill.skillNameArabic : skill.skillName}${
+                  i < mostCommonSkills.length - 1 ? ", " : ""
+                }`}
+              </p>
+            ))}
           </div>
         </>
       )}
