@@ -207,7 +207,22 @@
     "Rating": "Rating",
     "Actions": "Actions",
     "Edit": "Edit",
-    "Delete": "Delete"
+    "Delete": "Delete",
+    "metrics": "Key Metrics",
+    "TotalUsers": "Total Users",
+    "TotalSkills": "Total Skills",
+    "TotalSkillTrades": "Total Skill Trades",
+    "PendingSkillTrades": "Pending Skill Trades",
+    "Top5MostRequestedSkills": "Top 5 Most Requested Skills",
+    "Top5MostCommonSkills": "Top 5 Most Common Skills",
+    "AnalyticsOverview": "Analytics Overview",
+    "UserGrowthOverTime": "User Growth Over Time",
+    "thisweek": "this week",
+    "Last7Days": "Last 7 Days",
+    "newusers": "new users",
+    "SkillDemandDistribution": "Skill Demand Distribution",
+    "SkillCategoriesDemand": "Skill Categories Demand",
+    "Numberofrequestspercategory": "Number of requests per category"
   },
   "about": {
     "title": "About Swapoo",

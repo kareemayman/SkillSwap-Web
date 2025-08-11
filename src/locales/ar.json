@@ -207,7 +207,22 @@
     "Rating": "التقييم",
     "Actions": "الإجراءات",
     "Edit": "تعديل",
-    "Delete": "حذف"
+    "Delete": "حذف",
+    "metrics": "المقاييس الرئيسية",
+    "TotalUsers": "إجمالي المستخدمين",
+    "TotalSkills": "إجمالي المهارات",
+    "TotalSkillTrades": "إجمالي تبادلات المهارات",
+    "PendingSkillTrades": "تبادلات المهارات المعلقة",
+    "Top5MostRequestedSkills": "أكثر 5 مهارات مطلوبة",
+    "Top5MostCommonSkills": "أكثر 5 مهارات شائعة",
+    "AnalyticsOverview": "نظرة عامة على التحليلات",
+    "UserGrowthOverTime": "نمو المستخدمين بمرور الوقت",
+    "thisweek": "هذا الأسبوع",
+    "Last7Days": "آخر 7 أيام",
+    "newusers": "مستخدمين جدد",
+    "SkillDemandDistribution": "توزيع طلب المهارات",
+    "SkillCategoriesDemand": "طلب فئات المهارات",
+    "Numberofrequestspercategory": "عدد الطلبات لكل فئة"
   },
   "about": {
     "title": "عن Swapoo",
