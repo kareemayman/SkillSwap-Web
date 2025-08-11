@@ -162,7 +162,7 @@ const RatingPage = ({ userId }) => {
               setRating={(val) => handleStarChange("punctuality", val)}
             />
             <textarea
-              className="usercard mb-6 border-black blur:border-none hover:border-[var(--color-card-border)] pl-4 py-1 rounded-lg shadow-md  w-full text-[var(--color-text-light)]"
+              className="usercard mb-6 border-black blur:border-none hover:border-[var(--color-card-border)] pl-4 py-1 rounded-lg shadow-md  w-full dark:text-[var(--color-text-light)] "
               placeholder="Write your review..."
               value={ratings.reviewText}
               onChange={(e) =>
@@ -175,7 +175,7 @@ const RatingPage = ({ userId }) => {
 
             <button
               type="submit"
-              className={`px-6 py-3 font-semibold rounded-lg text-[var(--color-text-light)] shadow-lg bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] hover:shadow-2xl hover:backdrop-blur-xl w-full ${
+              className={`px-6 py-3 font-semibold rounded-lg dark:text-[var(--color-text-light)] text-white shadow-lg bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] hover:shadow-2xl hover:backdrop-blur-xl w-full ${
                 isSubmitting ? "opacity-50 cursor-not-allowed" : ""
               }`}
               disabled={!ratings.overall || isSubmitting}

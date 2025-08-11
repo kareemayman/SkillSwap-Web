@@ -78,7 +78,7 @@ export default function Register() {
                   name="email"
                   type="email"
                   autoComplete="email"
-                  className="block relative px-3 py-3 bg-slate-50 dark:bg-[var(--color-text-primary)]rounded-md w-full text-black sm:text-sm appearance-none placeholder-gray-500"
+                  className="block relative px-3 py-3 bg-slate-50 dark:bg-[var(--color-text-primary)] rounded-md w-full text-black sm:text-sm appearance-none placeholder-gray-500"
                   placeholder={t("email")}
                   value={formData.email}
                   onChange={handleInputChange}

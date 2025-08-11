@@ -93,5 +93,5 @@ export default {
     require("flowbite/plugin"), // ← add Flowbite plugin
       require("tailwindcss-animate")
 ],
-   darkMode: ['class', "class"],
+darkMode: 'class',
 };

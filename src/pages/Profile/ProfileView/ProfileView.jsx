@@ -110,7 +110,7 @@ export default function ProfileView({ data, isOwnProfile }) {
       {!isOwnProfile && (
         <div className="flex gap-4 justify-center text-sm mb-8">
           <button
-            className="relative overflow-hidden px-5 py-2 font-semibold rounded-full shadow-lg group text-[--color-text-light] bg-[--color-btn-submit-bg]"
+            className="relative overflow-hidden px-5 py-2 font-semibold rounded-full shadow-lg group dark:text-[--color-text-light] text-white bg-[--color-btn-submit-bg]"
             onClick={() => navigate(`/chat/${data.uid}`)}
           >
             <span className="relative z-10 transition duration-1000 group-hover:text-[var(--color-text-dark)]">{t("Message")}</span>
@@ -121,7 +121,7 @@ export default function ProfileView({ data, isOwnProfile }) {
           </button>
 
           <button
-            className="relative overflow-hidden px-5 py-2 font-semibold rounded-full shadow-lg group text-[--color-text-light] bg-[--color-btn-submit-bg]"
+            className="relative overflow-hidden px-5 py-2 font-semibold rounded-full shadow-lg group dark:text-[--color-text-light] text-white bg-[--color-btn-submit-bg]"
             onClick={() => navigate("/trade")}
           >
             <span className="relative z-10 transition duration-1000 group-hover:text-[var(--color-text-dark)]">{t("Start Trading")}</span>

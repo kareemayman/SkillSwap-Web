@@ -65,7 +65,7 @@
   --color-text-dark: #ffffff;
   --input-bg: #ffffff;
 
-  --color-card-border: #dcdcdc;
+  --color-card-border: #a27655;
   --color-card-content-border: #e0e0e0;
   --color-skill-teach-bg: #ffe5b4;
   --color-skill-learn-bg: #bc640dd8;
@@ -296,5 +296,17 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer base {
+  html {
+    font-size: 16px; 
+  }
+
+  @media (max-width: 780px) { 
+    html {
+      font-size: 13px; 
+    }
   }
 }

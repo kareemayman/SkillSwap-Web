@@ -122,7 +122,7 @@ export default function Header() {
 
           <button
             onClick={toggleLanguage}
-            className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--color-btn-submit-bg)] text-[var(--color-text-light)] hover:bg-[var(--color-btn-submit-hover)] transition-transform duration-200 hover:scale-110 font-bold"
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--color-btn-submit-bg)] dark:text-[var(--color-text-light)] text-white hover:bg-[var(--color-btn-submit-hover)] transition-transform duration-200 hover:scale-110 font-bold"
             title="Change Language"
             style={{ fontFamily: "'Amiri', serif", fontWeight: "bold" }}
           >
@@ -141,7 +141,7 @@ export default function Header() {
 
         {/* Mobile Nav Dropdown */}
         {menuOpen && (
-          <div className="absolute top-full left-0 w-full bg-black text-[var(--color-text-primary)] shadow-md p-4 flex flex-col gap-4 sm:hidden z-30">
+          <div className="absolute top-full left-0 w-full bg-white dark:bg-black  text-[var(--color-text-primary)] shadow-md p-4 flex flex-col gap-4 sm:hidden z-30">
             {user ? (
               <>
                 <NavLink to="/explore" onClick={() => setMenuOpen(false)}>

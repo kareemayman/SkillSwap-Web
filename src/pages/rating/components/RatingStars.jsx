@@ -16,7 +16,7 @@ const RatingStars = ({ rating, setRating, label }) => {
             key={star}
             onClick={handleClick(star)}
             type="button" // Important: prevents form submission
-            className={`text-2xl ${star <= rating ? 'text-yellow-500' : 'text-gray-300'}`}
+            className={`text-2xl ${star <= rating ? 'text-yellow-500' : 'dark:text-gray-300 text-white'}`}
             aria-label={`Rate ${star} star`}
           >
             ★
