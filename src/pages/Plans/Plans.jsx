@@ -1,4 +1,4 @@
-import { faAward, faListCheck, faRocket, faStar } from "@fortawesome/free-solid-svg-icons"
+import { faAward, faCheck, faClose, faListCheck, faRocket, faStar } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Feature from "./Components/Feature"
 
@@ -93,6 +93,41 @@ export default function Plans() {
               Upgrade to Pro
             </div>
           </div>
+        </div>
+      </div>
+
+      <h2 className="text-2xl font-semibold text-[var(--color-text-light)] mt-16 mb-6 text-center">Plan Comparison</h2>
+
+      <div className={`rounded-lg border border-[var(--color-card-border)] sm:border-0`}>
+        <div className="flex py-4 text-[var(--color-text-primary)] font-semibold">
+          <p className="pl-4 sm:pl-0 basis-[50%]">Feature</p>
+          <p className="basis-[25%] text-center">Free</p>
+          <p className="basis-[25%] text-center">Pro</p>
+        </div>
+        <div className="flex py-4 text-[var(--color-text-primary)] font-semibold border-t border-t-[var(--color-card-border)]">
+          <p className="pl-4 sm:pl-0 basis-[50%] text-[var(--color-text-light)]">Skills to Learn</p>
+          <p className="basis-[25%] text-center">2</p>
+          <p className="basis-[25%] text-center text-[var(--main-color)]">Unlimited</p>
+        </div>
+        <div className="flex py-4 text-[var(--color-text-primary)] font-semibold border-t border-t-[var(--color-card-border)]">
+          <p className="pl-4 sm:pl-0 basis-[50%] text-[var(--color-text-light)]">Skills to Teach</p>
+          <p className="basis-[25%] text-center">2</p>
+          <p className="basis-[25%] text-center text-[var(--main-color)]">Unlimited</p>
+        </div>
+        <div className="flex py-4 text-[var(--color-text-primary)] font-semibold border-t border-t-[var(--color-card-border)]">
+          <p className="pl-4 sm:pl-0 basis-[50%] text-[var(--color-text-light)]">Comission Rate</p>
+          <p className="basis-[25%] text-center">20%</p>
+          <p className="basis-[25%] text-center text-[var(--main-color)]">0%</p>
+        </div>
+        <div className="flex py-4 text-[var(--color-text-primary)] font-semibold border-t border-t-[var(--color-card-border)]">
+          <p className="pl-4 sm:pl-0 basis-[50%] text-[var(--color-text-light)]">Active Trades</p>
+          <p className="basis-[25%] text-center">1</p>
+          <p className="basis-[25%] text-center text-[var(--main-color)]">Unlimited</p>
+        </div>
+        <div className="flex py-4 text-[var(--color-text-primary)] font-semibold border-t border-t-[var(--color-card-border)]">
+          <p className="pl-4 sm:pl-0 basis-[50%] text-[var(--color-text-light)]">Pro Badge</p>
+          <FontAwesomeIcon icon={faClose} className="basis-[25%] text-center"></FontAwesomeIcon>
+          <FontAwesomeIcon icon={faCheck} className="basis-[25%] text-center text-[var(--main-color)]">Unlimited%</FontAwesomeIcon>
         </div>
       </div>
     </div>
