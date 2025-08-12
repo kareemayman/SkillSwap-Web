@@ -1,10 +1,18 @@
-import { faAward, faCheck, faClose, faListCheck, faRocket, faStar } from "@fortawesome/free-solid-svg-icons"
+import {
+  faAward,
+  faCheck,
+  faClose,
+  faListCheck,
+  faRocket,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Feature from "./Components/Feature"
+import FAQ from "./Components/FAQ"
 
 export default function Plans() {
   return (
-    <div className="mx-auto container py-6 px-4 xl:px-64">
+    <div className="mx-auto container py-8 px-4 xl:px-64">
       <h1 className="text-[var(--color-text-light)] text-4xl font-bold text-center my-2">
         Choose Your Plan
       </h1>
@@ -96,7 +104,9 @@ export default function Plans() {
         </div>
       </div>
 
-      <h2 className="text-2xl font-semibold text-[var(--color-text-light)] mt-16 mb-6 text-center">Plan Comparison</h2>
+      <h2 className="text-2xl font-semibold text-[var(--color-text-light)] mt-16 mb-6 text-center">
+        Plan Comparison
+      </h2>
 
       <div className={`rounded-lg border border-[var(--color-card-border)] sm:border-0`}>
         <div className="flex py-4 text-[var(--color-text-primary)] font-semibold">
@@ -127,9 +137,37 @@ export default function Plans() {
         <div className="flex py-4 text-[var(--color-text-primary)] font-semibold border-t border-t-[var(--color-card-border)]">
           <p className="pl-4 sm:pl-0 basis-[50%] text-[var(--color-text-light)]">Pro Badge</p>
           <FontAwesomeIcon icon={faClose} className="basis-[25%] text-center"></FontAwesomeIcon>
-          <FontAwesomeIcon icon={faCheck} className="basis-[25%] text-center text-[var(--main-color)]">Unlimited%</FontAwesomeIcon>
+          <FontAwesomeIcon
+            icon={faCheck}
+            className="basis-[25%] text-center text-[var(--main-color)]"
+          >
+            Unlimited%
+          </FontAwesomeIcon>
         </div>
       </div>
+
+      <h2 className="text-2xl font-semibold text-[var(--color-text-light)] mt-16 mb-8 text-center">
+        Frequently Asked Questions
+      </h2>
+
+      <FAQ
+        question={"Can I switch between plans?"}
+        answer={
+          "Yes, you can upgrade to Pro or downgrade to Free at any time. When downgrading, you'll maintain access to Pro features until the end of your current billing period."
+        }
+      ></FAQ>
+      <FAQ
+        question={"How are comissions calculated?"}
+        answer={
+          "For Free plan users, a 20% commission is applied to any paid skill trades. For example, if you charge $50 for a session, $10 goes to platform fees. Pro users keep 100% of their earnings."
+        }
+      ></FAQ>
+      <FAQ
+        question={"What happens if I exceed my Free plan limits?"}
+        answer={
+          "You'll need to complete or cancel existing trades before starting new ones, and you won't be able to add more skills beyond your limit. Consider upgrading to Pro for unlimited access."
+        }
+      ></FAQ>
     </div>
   )
 }
