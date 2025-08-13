@@ -202,22 +202,22 @@ const sampleUserProfile = {
     {
       skillName: "Graphic Design",
       skillId: "skill_2n6bu8962",
-      skillLevel: "Intermediate",
+      skillLevel: "intermediate",
     },
     {
       skillName: "Writing",
       skillId: "skill_3n7cu9073",
-      skillLevel: "Beginner",
+      skillLevel: "beginner",
     },
   ],
   needSkills: [
     {
-      skillLevel: "Beginner",
+      skillLevel: "beginner",
       skillId: "skill_29snal0g7",
       skillName: "Spanish",
     },
     {
-      skillLevel: "Intermediate",
+      skillLevel: "intermediate",
       skillId: "skill_30tmal1h8",
       skillName: "Cooking",
     },

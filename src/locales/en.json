@@ -110,6 +110,7 @@
   "ProfileView": {
     "ProfilePictureAlt": "Profile Picture",
     "EditProfilePicture": "Edit Profile Picture",
+    "SkillTradesComingSoon": "Skill Trades content will be implemented here",
     "Tabs": {
       "Profile": "Profile",
       "Skill Trades": "Skill Trades",
@@ -117,7 +118,6 @@
       "Settings": "Settings"
     }
   },
-  "SkillTradesComingSoon": "Skill Trades content will be implemented here",
   "skills": "Skills",
   "Schedule Session": "Schedule Session",
   "SkillTrader": "Skill Trader",

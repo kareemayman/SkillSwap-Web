@@ -64,8 +64,6 @@ export default function SkillSelector({ onSave, onCancel, existingSkills = [], p
         res = res.replace("```json", "").replace("```", "");
         const parsedRes = JSON.parse(res);
 
-        console.log("@ProfilePage ---- @SkillSelector ---- Gemini response:", parsedRes);
-
         const results = parsedRes
           .map((id) => allSkillsList.find((skill) => skill.id === id))
           .filter((skill) => skill && !allCurrentSkillNames.includes(skill.skillName.toLowerCase()));
@@ -94,8 +92,6 @@ export default function SkillSelector({ onSave, onCancel, existingSkills = [], p
       setLoadingMessage("Adding new skill...");
       try {
         const newSkill = await createSkillDoc({ skillName });
-        newSkill.skillId = newSkill.id;
-        delete newSkill.id;
 
         setNewCustomSkills((prev) => [...prev, { ...newSkill, skillLevel: skillType === "hasSkills" ? "intermediate" : "beginner" }]);
         setSearchQuery("");
