@@ -88,8 +88,16 @@ export const ScheduleSession = () => {
         subscribtion: {...currentUser.subscribtion, activeTradeCount: currentUser.subscribtion.activeTradeCount + 1 },
       }
 
+      let userBNewData = {
+        ...user,
+        subscribtion: {...user.subscribtion, activeTradeCount: user.subscribtion.activeTradeCount + 1 },
+      }
+
       await updateUserById(currentUser.uid, newUserData)
       setCurrentUser(newUserData)
+
+      await updateUserById(userId, userBNewData)
+      setUser(userBNewData)
 
       createFirestoreTrade(tradeData).then((tradeId) => {
         toast.success(t("Session scheduled successfully!"))
