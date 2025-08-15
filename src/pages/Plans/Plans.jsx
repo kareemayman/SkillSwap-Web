@@ -12,7 +12,8 @@ import FAQ from "./Components/FAQ"
 import { useTranslation } from "react-i18next"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../contexts/Auth/context"
-import { getUserById } from "../../utils/firestoreUtil"
+import { getUserById, updateUserById } from "../../utils/firestoreUtil"
+import toast from "react-hot-toast"
 
 export default function Plans() {
   const { t, i18n } = useTranslation()
@@ -29,6 +30,44 @@ export default function Plans() {
   async function fetchUser(id) {
     const userData = await getUserById(id)
     setCurrentUser(userData.data())
+  }
+
+  async function upgradeToPro() {
+    if (currentUser && currentUser.subscribtion?.plan === "pro") {
+      toast.error(t("plans.stay_pro"))
+    } else {
+      const newUserData = {
+        ...currentUser,
+        subscribtion: { ...currentUser.subscribtion, plan: "pro" },
+      }
+      try {
+        await updateUserById(currentUser.uid, newUserData)
+        setCurrentUser(newUserData)
+        toast.success(t("plans.upgrade_success"))
+      } catch (error) {
+        console.error("Error upgrading to Pro:", error)
+        toast.error(t("plans.upgrade_error"))
+      }
+    }
+  }
+
+  async function downgradeToFree() {
+    if (currentUser && currentUser.subscribtion?.plan === "free") {
+      toast.error(t("plans.already_free"))
+    } else {
+      const newUserData = {
+        ...currentUser,
+        subscribtion: { ...currentUser.subscribtion, plan: "free" },
+      }
+      try {
+        await updateUserById(currentUser.uid, newUserData)
+        setCurrentUser(newUserData)
+        toast.success(t("plans.downgrade_success"))
+      } catch (error) {
+        console.error("Error downgrading to Free:", error)
+        toast.error(t("plans.downgrade_error"))
+      }
+    }
   }
 
   return (
@@ -83,8 +122,12 @@ export default function Plans() {
               <Feature>{t("plans.free_active")}</Feature>
               <Feature notIncluded={true}>{t("plans.free_badge")}</Feature>
               <div className="mt-12 border-t border-t-[var(--color-card-border)] p-5 flex justify-center items-center">
-                <div className="w-full py-4 text-center rounded-lg bg-[#2b2825] text-[var(--color-text-secondary)] cursor-not-allowed font-bold">
-                  {currentUser.subscribtion?.plan === "free" ? t("plans.stay_free") : t("plans.downgrade_free")}
+                <div 
+                  onClick={downgradeToFree}
+                  className={`w-full py-4 text-center rounded-lg ${currentUser.subscribtion.plan === 'free' ? 'bg-[#2b2825] text-[var(--color-text-secondary)] cursor-not-allowed' : 'bg-[var(--color-btn-submit-bg)] cursor-pointer hover:bg-[var(--color-btn-submit-hover)]'}  font-bold transition-all duration-300`}>
+                  {currentUser.subscribtion?.plan === "free"
+                    ? t("plans.stay_free")
+                    : t("plans.downgrade_free")}
                 </div>
               </div>
             </div>
@@ -136,8 +179,17 @@ export default function Plans() {
                 {t("plans.pro_badge_desc")}
               </Feature>
               <div className="mt-12 border-t border-t-[var(--color-card-border)] p-5 flex justify-center items-center">
-                <div className="w-full py-4 text-center rounded-lg bg-[var(--color-btn-submit-bg)] text-[var(--color-text-light)] cursor-pointer font-bold transition-all duration-300 hover:bg-[var(--color-btn-submit-hover)]">
-                  {t("plans.upgrade_pro")}
+                <div
+                  onClick={upgradeToPro}
+                  className={`w-full py-4 text-center rounded-lg ${
+                    currentUser.subscribtion.plan == "free"
+                      ? "bg-[var(--color-btn-submit-bg)] cursor-pointer hover:bg-[var(--color-btn-submit-hover)] text-[var(--color-text-light)]"
+                      : "bg-[#2b2825] text-[var(--color-text-secondary)] cursor-not-allowed"
+                  } font-bold transition-all duration-300 `}
+                >
+                  {currentUser.subscribtion?.plan === "pro"
+                    ? t("plans.stay_pro")
+                    : t("plans.upgrade_pro")}
                 </div>
               </div>
             </div>
