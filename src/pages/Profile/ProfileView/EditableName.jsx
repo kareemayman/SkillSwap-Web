@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { LuCircleCheck, LuCircleX } from "react-icons/lu";
 import EditButton from "./EditButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCertificate } from "@fortawesome/free-solid-svg-icons";
 
-export default function EditableName({ data, updateUserData, isOwnProfile }) {
+export default function EditableName({ data, updateUserData, isOwnProfile, pro }) {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(data || "");
   const [error, setError] = useState("");
@@ -60,7 +62,7 @@ export default function EditableName({ data, updateUserData, isOwnProfile }) {
         <div className="w-full flex justify-center items-center gap-3 mb-0.5">
           {isOwnProfile && <div className="w-7"></div>}
 
-          <h1 className="text-2xl font-bold">{data}</h1>
+          <h1 className="text-2xl font-bold">{data} {pro && <FontAwesomeIcon icon={faCertificate}></FontAwesomeIcon>}</h1>
 
           {isOwnProfile && (
             <EditButton

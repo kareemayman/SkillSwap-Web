@@ -94,10 +94,10 @@ export default function ProfileView({ data, isOwnProfile }) {
           )}
         </div>
 
-        <EditableName data={updatedProfile.name} updateUserData={updateUserData} isOwnProfile={isOwnProfile} />
+        <EditableName data={updatedProfile.name} updateUserData={updateUserData} isOwnProfile={isOwnProfile} pro={data.subscribtion.plan == 'pro'} />
 
         <div className="flex justify-center items-center gap-1 text-[var(--color-text-secondary)] mb-2">
-          <p className="">{t("SkillTrader")}</p>
+          <p className="">{data.subscribtion.plan == 'free' ? t('SkillTrader') : t('proSkillTrader')}</p>
 
           <Rating size="sm" className="gap-0.5">
             <RatingStar />
