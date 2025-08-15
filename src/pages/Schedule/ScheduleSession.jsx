@@ -57,7 +57,7 @@ export const ScheduleSession = () => {
       toast.error(t("Please select both seeking and offering skills."))
     } else if (paymentToggle === true && seekingSkill.trim() === "") {
       toast.error(t("Please select a seeking skill."))
-    } else if (currentUser.subscribtion.plan === "free" && currentUser.subscribtion.totalTrades > 0) {
+    } else if (currentUser.subscribtion.plan === "free" && currentUser.subscribtion.activeTradeCount > 0) {
       toast.error(t("free_trade_limit_reached"))
     } else {
       setDisabledButton(true)
