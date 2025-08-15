@@ -368,7 +368,8 @@
   "faq2_q": "How are comissions calculated?",
   "faq2_a": "For Free plan users, a 20% commission is applied to any paid skill trades. For example, if you charge $50 for a session, $10 goes to platform fees. Pro users keep 100% of their earnings.",
   "faq3_q": "What happens if I exceed my Free plan limits?",
-  "faq3_a": "You'll need to complete or cancel existing trades before starting new ones, and you won't be able to add more skills beyond your limit. Consider upgrading to Pro for unlimited access."
+  "faq3_a": "You'll need to complete or cancel existing trades before starting new ones, and you won't be able to add more skills beyond your limit. Consider upgrading to Pro for unlimited access.",
+  "downgrade_free": "Downgrade to Free Plan"
 },
   "Overall Rating": "Overall Rating",
   "Overall": "Overall",
