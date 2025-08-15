@@ -2,12 +2,14 @@ import { useEffect, useState } from "react"
 import Avat from "../../assets/images/avat.png"
 import { SkillInfo } from "./components/SkillInfo"
 import { useNavigate, useParams } from "react-router-dom"
-import { createFirestoreTrade, getUserById } from "../../utils/firestoreUtil"
+import { createFirestoreTrade, getUserById, updateUserById } from "../../utils/firestoreUtil"
 import { useAuth } from "../../contexts/Auth/context"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { generateFromGemini } from "../../api/gemini"
 import { generateMilestonesPrompt } from "../../utils/geminiPrompts"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCertificate } from "@fortawesome/free-solid-svg-icons"
 
 export const ScheduleSession = () => {
   const { t } = useTranslation()
@@ -55,6 +57,8 @@ export const ScheduleSession = () => {
       toast.error(t("Please select both seeking and offering skills."))
     } else if (paymentToggle === true && seekingSkill.trim() === "") {
       toast.error(t("Please select a seeking skill."))
+    } else if (currentUser.subscribtion.plan === "free" && currentUser.subscribtion.totalTrades > 0) {
+      toast.error(t("free_trade_limit_reached"))
     } else {
       setDisabledButton(true)
       let milestonesA = await generateFromGemini(
@@ -78,6 +82,14 @@ export const ScheduleSession = () => {
         milestonesA: milestonesA,
         milestonesB: milestonesB,
       }
+
+      let newUserData = {
+        ...currentUser,
+        subscribtion: {...currentUser.subscribtion, totalTrades: currentUser.subscribtion.totalTrades + 1 },
+      }
+
+      await updateUserById(currentUser.uid, newUserData)
+      setCurrentUser(newUserData)
 
       createFirestoreTrade(tradeData).then((tradeId) => {
         toast.success(t("Session scheduled successfully!"))
@@ -103,7 +115,7 @@ export const ScheduleSession = () => {
           />
           <div className="sm:text-left text-center">
             <h2 className="font-medium text-[var(--color-text-primary)] text-2xl capitalize">
-              {user.name}
+              {user.name} {user.subscribtion.plan === 'pro' && <FontAwesomeIcon icon={faCertificate}></FontAwesomeIcon>}
             </h2>
             <p className="font-medium text-[var(--color-text-secondary)]">
               <span className="font-semibold text-[var(--color-text-primary)]">

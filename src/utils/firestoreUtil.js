@@ -321,3 +321,12 @@ export const getRequests = async () => {
     console.error("Error getting requests:", error)
   }
 }
+
+export const updateUserById = async (userId, userData) => {
+  try {
+    const userDocRef = doc(db, "users", userId)
+    await updateDoc(userDocRef, userData)
+  } catch (error) {
+    console.error("Error updating user by ID:", error)
+  }
+}

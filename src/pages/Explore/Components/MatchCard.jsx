@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import Avat from '../../../assets/images/avat.png'
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCertificate } from '@fortawesome/free-solid-svg-icons';
 
 export const MatchCard = ({ user }) => {
   const [userSkills, setUserSkills] = useState([]);
@@ -17,7 +19,7 @@ export const MatchCard = ({ user }) => {
   return (
     user && <div className='p-4 mb-4   rounded-xl w-full usercard flex justify-between md:items-start md:flex-row flex-col'>
       <div className="info">
-        <h3 className='font-medium text-[--color-text-primary] text-lg capitalize'>{user.name}</h3>
+        <h3 className='font-medium text-[--color-text-primary] text-lg capitalize'>{user.name} {user.subscribtion.plan === 'pro' && <FontAwesomeIcon icon={faCertificate}></FontAwesomeIcon>}</h3>
         {userSkills && <p className='font-medium text-[--color-text-secondary] capitalize'>
           {t("skills")}: {
             userSkills.map((skill, index) => {
