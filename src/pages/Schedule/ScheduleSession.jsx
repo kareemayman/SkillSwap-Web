@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Avat from "../../assets/images/avat.png"
 import { SkillInfo } from "./components/SkillInfo"
 import { useNavigate, useParams } from "react-router-dom"
-import { createFirestoreTrade, getUserById } from "../../utils/firestoreUtil"
+import { createFirestoreTrade, getUserById, updateUserById } from "../../utils/firestoreUtil"
 import { useAuth } from "../../contexts/Auth/context"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
@@ -82,6 +82,14 @@ export const ScheduleSession = () => {
         milestonesA: milestonesA,
         milestonesB: milestonesB,
       }
+
+      let newUserData = {
+        ...currentUser,
+        subscribtion: {...currentUser.subscribtion, totalTrades: currentUser.subscribtion.totalTrades + 1 },
+      }
+
+      await updateUserById(currentUser.uid, newUserData)
+      setCurrentUser(newUserData)
 
       createFirestoreTrade(tradeData).then((tradeId) => {
         toast.success(t("Session scheduled successfully!"))
