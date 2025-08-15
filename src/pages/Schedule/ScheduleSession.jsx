@@ -85,7 +85,7 @@ export const ScheduleSession = () => {
 
       let newUserData = {
         ...currentUser,
-        subscribtion: {...currentUser.subscribtion, totalTrades: currentUser.subscribtion.totalTrades + 1 },
+        subscribtion: {...currentUser.subscribtion, activeTradeCount: currentUser.subscribtion.activeTradeCount + 1 },
       }
 
       await updateUserById(currentUser.uid, newUserData)
