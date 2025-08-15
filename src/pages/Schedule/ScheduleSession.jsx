@@ -8,6 +8,8 @@ import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
 import { generateFromGemini } from "../../api/gemini"
 import { generateMilestonesPrompt } from "../../utils/geminiPrompts"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCertificate } from "@fortawesome/free-solid-svg-icons"
 
 export const ScheduleSession = () => {
   const { t } = useTranslation()
@@ -105,7 +107,7 @@ export const ScheduleSession = () => {
           />
           <div className="sm:text-left text-center">
             <h2 className="font-medium text-[var(--color-text-primary)] text-2xl capitalize">
-              {user.name}
+              {user.name} {user.subscribtion.plan === 'pro' && <FontAwesomeIcon icon={faCertificate}></FontAwesomeIcon>}
             </h2>
             <p className="font-medium text-[var(--color-text-secondary)]">
               <span className="font-semibold text-[var(--color-text-primary)]">
