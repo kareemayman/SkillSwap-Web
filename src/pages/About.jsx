@@ -1,7 +1,7 @@
 import React from "react";
 import Cart from "./Landing Page/components/Cart";
 import img1 from "../assets/images/kareem.jpg";
-import img2 from "../assets/images/doaa.jpg";
+import img2 from "../assets/images/dodo.jpg";
 import img3 from "../assets/images/abdelrahman.jpg";
 import img4 from "../assets/images/seif.jpg";
 import img5 from "../assets/images/Screenshot 2025-07-31 141010.png";

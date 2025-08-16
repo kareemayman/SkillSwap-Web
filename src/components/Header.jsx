@@ -61,7 +61,7 @@ export default function Header() {
               <>
                 <NavLink
                   to="/explore"
-                  className="hover:text-[var(--color-btn-submit-hover)] transition-transform duration-200 hover:scale-110 font-medium"
+                  className="hover:text-[var(--main-color)] transition-transform duration-200 hover:scale-110 font-medium"
                 >
                   Explore
                 </NavLink>
@@ -69,7 +69,7 @@ export default function Header() {
                 {user?.email === "skills.swap.app@gmail.com" && (
                   <NavLink
                     to="/dashboard"
-                    className="hover:text-[var(--color-btn-submit-hover)] transition-transform duration-200 hover:scale-110 font-medium"
+                    className="hover:text-[var(--main-color)] transition-transform duration-200 hover:scale-110 font-medium"
                   >
                     Dashboard
                   </NavLink>
@@ -114,7 +114,7 @@ export default function Header() {
           {/* Language Switch Button */}
           <button
             onClick={() => setDarkMode((prev) => !prev)}
-            className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--color-btn-submit-bg)] text-[var(--color-text-light)] hover:bg-[var(--color-btn-submit-hover)] transition-transform duration-200 hover:scale-110 text-lg"
+            className="w-10 h-10 btn-gradient flex items-center justify-center rounded-full bg-[var(--color-btn-submit-bg)] text-[var(--color-text-light)] hover:bg-[var(--color-btn-submit-hover)] transition-transform duration-200 hover:scale-110 text-lg"
             title="Toggle Theme"
           >
             {darkMode ? "🌞" : "🌙"}
@@ -122,7 +122,7 @@ export default function Header() {
 
           <button
             onClick={toggleLanguage}
-            className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--color-btn-submit-bg)] dark:text-[var(--color-text-light)] text-white hover:bg-[var(--color-btn-submit-hover)] transition-transform duration-200 hover:scale-110 font-bold"
+            className="w-10 h-10 flex btn-gradient items-center justify-center rounded-full bg-[var(--color-btn-submit-bg)] dark:text-[var(--color-text-light)] text-white hover:bg-[var(--color-btn-submit-hover)] transition-transform duration-200 hover:scale-110 font-bold"
             title="Change Language"
             style={{ fontFamily: "'Amiri', serif", fontWeight: "bold" }}
           >

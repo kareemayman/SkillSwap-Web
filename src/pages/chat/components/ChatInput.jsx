@@ -25,9 +25,10 @@ export default function ChatInput({ onSend }) {
       />
       <button
         type="submit"
-        className="px-6 py-3 bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] text-white font-medium rounded-xl  transition"
+        className="px-6 btn-gradient py-3 bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] text-white font-medium rounded-xl  transition"
       >
         {t("chat.send")}
+        
       </button>
     </form>
   );
