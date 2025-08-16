@@ -15,6 +15,7 @@ import dark from "../../assets/images/chat.jpg";
 import light from "../../assets/images/lightchat.jpg";
 import { useTranslation } from "react-i18next";
 import {ThemeContext} from"../../contexts/ThemeContext.jsx";
+import notificationSound from "../../assets/audio/mixkit-correct-answer-tone-2870.wav"
 
 export default function ChatScreen() {
   const { user: currentUser } = useAuth();
@@ -68,6 +69,38 @@ useEffect(() => {
 
   markLastMessageAsRead();
 }, [chatId, currentUser?.uid]);
+
+useEffect(() => {
+  if (!currentUser?.uid || !otherUser?.uid) return;
+
+  const init = async () => {
+    const id = await getOrCreateChatRoom(currentUser.uid, otherUser.uid);
+    setChatId(id);
+
+    let prevMessages = [];
+    const unsub = subscribeToMessages(id, (msgs) => {
+      // detect new message
+      if (prevMessages.length && msgs.length > prevMessages.length) {
+        const newMsg = msgs[msgs.length - 1];
+
+        if (
+          newMsg.senderId !== currentUser.uid && 
+          document.visibilityState !== "visible"
+        ) {
+          const audio = new Audio(notificationSound);
+          audio.play().catch((err) => console.log("Sound blocked:", err));
+        }
+      }
+
+      prevMessages = msgs;
+      setMessages(msgs);
+    });
+
+    return () => unsub();
+  };
+
+  init();
+}, [currentUser, otherUser]);
 
 
 

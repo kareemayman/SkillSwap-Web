@@ -12,7 +12,7 @@ export default function FilterBar({ selected, onFilterClick }) {
         <button
           key={filter.label}
           onClick={() => onFilterClick(filter.label)}
-          className={` dark:text-[var(--color-text-light)] text-white/80 rounded-md shadow-sm px-4 py-1 ${
+          className={` dark:text-[var(--color-text-light)] text-white/80 rounded-md shadow-sm px-4 py-1 btn-gradient ${
             selected === filter.label
               ? "bg-[var(--color-btn-submit-hover)]"
               : "bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)]"

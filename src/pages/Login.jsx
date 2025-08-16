@@ -90,7 +90,7 @@ const Login = () => {
               onChange={(e) => {
                 setPassword(e.target.value)
               }}
-              className="mx-3 p-3  rounded-md text-black bg-slate-50 dark:bg-[var(--color-text-primary)] transition-all duration-300 placeholder-gray-500"
+              className="mx-3 p-3   rounded-md text-black bg-slate-50 dark:bg-[var(--color-text-primary)] transition-all duration-300 placeholder-gray-500"
             />
 
             <p className="mx-3 mb-6 text-red-500">{passwordValidError}</p>
@@ -98,7 +98,7 @@ const Login = () => {
             <input
               type="submit"
               value={t("Login.button")}
-              className="bg-[var(--color-btn-submit-bg)]  hover:bg-[var(--color-btn-submit-hover)] hover:shadow-md mx-auto p-3 rounded-md w-[95%] font-medium text-[#F7FAFC] transition-all duration-300 cursor-pointer"
+              className="btn-gradient bg-[var(--color-btn-submit-bg)]  hover:bg-[var(--color-btn-submit-hover)] hover:shadow-md mx-auto p-3 rounded-md w-[95%] font-medium text-[#F7FAFC] transition-all duration-300 cursor-pointer"
             />
           </form>
 
@@ -113,7 +113,7 @@ const Login = () => {
 
           <button
             onClick={handleSignInWithGoogle}
-            className="flex justify-center items-center bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] hover:shadow-md mx-auto mb-6 p-3 rounded-md min-w-[80%] sm:min-w-3/4 lg:min-w-[385px] font-medium text-[var(--color-text-light)] transition-all duration-300 cursor-pointer"
+            className="flex justify-center btn-gradient items-center bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] hover:shadow-md mx-auto mb-6 p-3 rounded-md min-w-[80%] sm:min-w-3/4 lg:min-w-[385px] font-medium dark:text-[var(--color-text-light)] text-white transition-all duration-300 cursor-pointer"
           >
             <svg className="mr-2 w-5 h-5" viewBox="0 0 24 24">
               <path

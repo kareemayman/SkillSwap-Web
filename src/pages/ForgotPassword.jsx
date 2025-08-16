@@ -84,7 +84,7 @@ const ForgotPassword = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`flex items-center justify-center gap-2 bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] hover:shadow-md p-2 rounded-md w-full text-[#F7FAFC] transition-all duration-300 ${
+            className={`flex items-center btn-gradient justify-center gap-2 bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] hover:shadow-md p-2 rounded-md w-full text-[#F7FAFC] transition-all duration-300 ${
               loading ? "opacity-60 cursor-not-allowed" : ""
             }`}
           >

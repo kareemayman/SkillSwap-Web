@@ -102,7 +102,7 @@ export default function Register() {
                 <button
                   type="button"
                   onClick={handleSubmit}
-                  className="group relative flex justify-center bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] active:bg-black px-4 py-3 border border-transparent rounded-md w-full font-bold text-white text-sm active:scale-95 hover:cursor-pointer"
+                  className="group relative flex justify-center bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] btn-gradient btn-gradient  active:bg-black px-4 py-3 border border-transparent rounded-md w-full font-bold text-white text-sm active:scale-95 hover:cursor-pointer"
                 >
                   {t("Register.button")}
                 </button>
@@ -134,7 +134,7 @@ export default function Register() {
                 <button
                   type="button"
                   onClick={handleGoogleSignUp}
-                  className="inline-flex justify-center bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] shadow-sm px-4 py-3   rounded-md w-full font-bold text-[var(--color-text-light)] text-sm hover:cursor-pointer"
+                  className="inline-flex btn-gradient justify-center bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] shadow-sm px-4 py-3   rounded-md w-full font-bold text-[var(--color-text-light)] text-sm hover:cursor-pointer"
                 >
                   <svg className="mr-2 w-5 h-5" viewBox="0 0 24 24">
                     <path
