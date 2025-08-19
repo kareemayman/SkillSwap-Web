@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import heroVideo from "../../assets/videos/3249902-uhd_3840_2160_25fps.mp4";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-
+import { AuthContext } from "../../contexts/Auth/context";
 function HeroSection() {
   const { t } = useTranslation();
   const navigate = useNavigate()
+  const { user } = useContext(AuthContext); // get user state from AuthProvider
+
+  function handleGetStarted() {
+    if (user) {
+      navigate("/explore"); 
+    } else {
+      navigate("/login"); 
+    }
+  }
 
   return (
     <section className="relative w-full h-[550px] overflow-hidden">
@@ -40,7 +49,7 @@ function HeroSection() {
               style={{
                 backgroundColor: 'var(--color-btn-submit-bg)'
               }}
-              onClick={() => navigate('login')}
+              onClick={handleGetStarted}
             >
               <span className="relative z-10 transition duration-1000 dark:group-hover:text-[var(--color-text-dark)] group-hover:text-white">
                 {t("HeroSection.button")}
