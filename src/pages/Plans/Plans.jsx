@@ -14,6 +14,7 @@ import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../contexts/Auth/context"
 import { getUserById, updateUserById } from "../../utils/firestoreUtil"
 import toast from "react-hot-toast"
+import { payWithStripe } from "../../utils/stripeUtil"
 
 export default function Plans() {
   const { t, i18n } = useTranslation()
@@ -36,14 +37,8 @@ export default function Plans() {
     if (currentUser && currentUser.subscribtion?.plan === "pro") {
       toast.error(t("plans.stay_pro"))
     } else {
-      const newUserData = {
-        ...currentUser,
-        subscribtion: { ...currentUser.subscribtion, plan: "pro" },
-      }
       try {
-        await updateUserById(currentUser.uid, newUserData)
-        setCurrentUser(newUserData)
-        toast.success(t("plans.upgrade_success"))
+        await payWithStripe({ paymentType: "subscribtion", userId: currentUser.uid })
       } catch (error) {
         console.error("Error upgrading to Pro:", error)
         toast.error(t("plans.upgrade_error"))
@@ -122,9 +117,14 @@ export default function Plans() {
               <Feature>{t("plans.free_active")}</Feature>
               <Feature notIncluded={true}>{t("plans.free_badge")}</Feature>
               <div className="mt-12 border-t border-t-[var(--color-card-border)] p-5 flex justify-center items-center">
-                <div 
+                <div
                   onClick={downgradeToFree}
-                  className={`w-full py-4 text-center rounded-lg ${currentUser.subscribtion.plan === 'free' ? 'bg-[#2b2825] text-[var(--color-text-secondary)] cursor-not-allowed' : 'bg-[var(--color-btn-submit-bg)] cursor-pointer hover:bg-[var(--color-btn-submit-hover)]'}  font-bold transition-all duration-300`}>
+                  className={`w-full py-4 text-center rounded-lg ${
+                    currentUser.subscribtion.plan === "free"
+                      ? "bg-[#2b2825] text-[var(--color-text-secondary)] cursor-not-allowed"
+                      : "bg-[var(--color-btn-submit-bg)] cursor-pointer hover:bg-[var(--color-btn-submit-hover)]"
+                  }  font-bold transition-all duration-300`}
+                >
                   {currentUser.subscribtion?.plan === "free"
                     ? t("plans.stay_free")
                     : t("plans.downgrade_free")}
