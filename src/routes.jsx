@@ -19,6 +19,8 @@ import Terms from "./pages/Terms";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 import Plans from "./pages/Plans/Plans";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancel from "./pages/PaymentCancel";
 
 const AppRoutes = () => {
   const routes = [
@@ -43,6 +45,8 @@ const AppRoutes = () => {
             { path: "terms", element: <Terms /> },
             { path: "privacy", element: <PrivacyPolicy /> },
             { path: "plans", element: <Plans /> },
+            { path: "payment-success", element: <PaymentSuccess/> },
+            { path: "payment-cancel", element: <PaymentCancel/> },
           ],
         },
         {
