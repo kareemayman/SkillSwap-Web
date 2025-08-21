@@ -379,7 +379,9 @@
     "downgrade_success": "Successfully downgraded to Free plan!",
     "upgrade_error": "An error occurred while upgrading. Please try again.",
     "downgrade_error": "An error occurred while downgrading to Free plan. Please try again.",
-    "already_free": "You are already on Free plan"
+    "already_free": "You are already on Free plan",
+    "processing": "Processing...",
+    "no_user": "No user found."
   },
   "Overall Rating": "Overall Rating",
   "Overall": "Overall",
