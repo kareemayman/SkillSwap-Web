@@ -25,6 +25,7 @@ export const ScheduleSession = () => {
   const { user: currentUserFromAuth } = useAuth();
   const [currentUser, setCurrentUser] = useState();
   const [disabledButton, setDisabledButton] = useState(false);
+  const [offer, setOffer] = useState(null);
 
   const { userId } = useParams();
   const navigate = useNavigate();
@@ -79,6 +80,8 @@ export const ScheduleSession = () => {
       toast.error(t("Please select both seeking and offering skills."));
     } else if (paymentToggle === true && seekingSkill.trim() === "") {
       toast.error(t("Please select a seeking skill."));
+    } else if (paymentToggle === true && (!offer || offer < 5)) {
+      toast.error(t("Offer a valid price"));
     } else if (currentUser.subscribtion.plan === "free" && currentUser.subscribtion.activeTradeCount > 0) {
       toast.error(t("free_trade_limit_reached"));
     } else {
@@ -263,15 +266,16 @@ export const ScheduleSession = () => {
           <div className={`${!paymentToggle && "opacity-50"} relative`}>
             {!paymentToggle && <div className="absolute inset-0 bg-[var(--color-card-bg)] opacity-50 rounded-lg"></div>}
             <h3 className="mt-10 mb-4 font-medium text-[var(--main-color)] text-xl">{t("Payment")}</h3>
-            <p className="text-[var(--color-text-primary)]">{t("Olivia charges $30 per session. Select a payment method:")}</p>
-            <div className="flex flex-wrap gap-4 my-4">
-              <button className="bg-transparent hover:bg-[var(--color-btn-submit-hover)] shadow-sm px-5 py-2 border border-[var(--color-btn-submit-hover)] rounded-lg font-medium text-[var(--color-text-light)] text-sm transition-all duration-300">
-                {t("Credit Card")}
-              </button>
-              <button className="bg-transparent hover:bg-[var(--color-btn-submit-hover)] shadow-sm px-5 py-2 border border-[var(--color-btn-submit-hover)] rounded-lg font-medium text-[var(--color-text-light)] text-sm transition-all duration-300">
-                {t("PayPal")}
-              </button>
-            </div>
+            <p className="text-[var(--color-text-primary)]">{t("Propose offer for") + " " + user.name}</p>
+            <input
+              type="number"
+              name="offer"
+              id="offer"
+              value={offer}
+              onChange={(e) => setOffer(e.target.value)}
+              placeholder={t("Offer a price")}
+              className="bg-[var(--color-card-bg)] rounded-lg mt-4 border border-[var(--color-card-border)] outline-none focus:border-[var(--color-card-border)] no-spinner placeholder:text-[var(--color-text-primary)]"
+            />
           </div>
 
           <button

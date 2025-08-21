@@ -189,6 +189,9 @@
   "Please select both seeking and offering skills.": "يرجى اختيار كل من المهارة التي تبحث عنها والتي تقدمها.",
   "Please select a seeking skill.": "يرجى اختيار المهارة التي تبحث عنها.",
   "Session scheduled successfully!": "تم جدولة الجلسة بنجاح!",
+  "Propose offer for": "اقترح عرضًا لـ",
+  "Offer a price": "قدم سعرًا",
+  "Offer a valid price": "يرجى تقديم سعر صالح أكبر من 5 دولارات",
   "Dashboard": {
     "Analytics": "التحليلات",
     "Users": "المستخدمين",

@@ -189,6 +189,9 @@
   "Please select both seeking and offering skills.": "Please select both seeking and offering skills.",
   "Please select a seeking skill.": "Please select a seeking skill.",
   "Session scheduled successfully!": "Session scheduled successfully!",
+  "Propose offer for": "Propose offer for",
+  "Offer a price": "Offer a price",
+  "Offer a valid price": "Please offer a valid price greater than $5",
   "Dashboard": {
     "Analytics": "Analytics",
     "Users": "Users",

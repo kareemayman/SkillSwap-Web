@@ -325,3 +325,12 @@ body {
 .animate-gradientMove {
   animation: gradientMove 4s ease infinite;
 } */
+
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+  @apply appearance-none m-0;
+}
+
+.no-spinner[type=number] {
+  -moz-appearance: textfield; /* Firefox */
+}

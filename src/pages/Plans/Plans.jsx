@@ -38,7 +38,7 @@ export default function Plans() {
       toast.error(t("plans.stay_pro"))
     } else {
       try {
-        await payWithStripe({ paymentType: "subscribtion", userId: currentUser.uid })
+        await payWithStripe({ paymentType: "subscribtion", userId: currentUser.uid, price: "9.99" })
       } catch (error) {
         console.error("Error upgrading to Pro:", error)
         toast.error(t("plans.upgrade_error"))
