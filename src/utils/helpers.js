@@ -1,5 +1,18 @@
-export function hasNullValue(obj) {
+export function hasNullValue(obj, parentKey = "") {
   if (obj == null) return true;
+
   if (typeof obj !== "object") return false;
-  return Object.values(obj).some((value) => value === null || (typeof value === "object" && hasNullValue(value)));
+
+  return Object.entries(obj).some(([key, value]) => {
+    // ✅ Skip null check inside subscription
+    if (parentKey === "subscribtion") return false;
+
+    if (value === null) return true;
+
+    if (typeof value === "object") {
+      return hasNullValue(value, key);
+    }
+
+    return false;
+  });
 }
