@@ -1,67 +1,65 @@
-import { getUserById, updateUserById } from "../utils/firestoreUtil"
-import { useEffect, useState } from "react"
-import toast from "react-hot-toast"
+// src/pages/PaymentSuccess.jsx
+import React, { useEffect, useState } from "react";
 
 export default function PaymentSuccess() {
-  const [sessionId, setSessionId] = useState("")
-  const [paymentType, setPaymentType] = useState("")
-  const [userId, setUserId] = useState("")
-  const [currentUser, setCurrentUser] = useState(null)
+  const [loading, setLoading] = useState(true);
+  const [sessionInfo, setSessionInfo] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const p = new URLSearchParams(window.location.search)
-    setSessionId(p.get("session_id") || "")
-    const type = p.get("paymentType") || ""
-    const userI = p.get("userId") || ""
-    setUserId(userI)
-    setPaymentType(type)
+    async function verify() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const session_id = params.get("session_id");
 
-    if (userI.trim() !== "") {
-      getUserById(userI)
-        .then((user) => {
-          setCurrentUser(user.data())
-        })
-        .catch((error) => {
-          console.error("Error fetching user:", error)
-          toast.error("Failed to fetch user details.")
-        })
-    }
-  }, [])
-
-  useEffect(() => {
-    if (currentUser) {
-      // Show toast depending on payment type
-      if (paymentType === "subscribtion") {
-        const newUserData = {
-          ...currentUser,
-          subscribtion: { ...currentUser.subscribtion, plan: "pro" },
+        if (!session_id) {
+          setError("Missing session_id in URL");
+          setLoading(false);
+          return;
         }
-        console.log(currentUser, "upgrading to Pro")
-        updateUserById(userId, newUserData).then(() => {
-          toast.success("Your account has been upgraded to Pro!")
-        })
-      } else if (type === "trade") {
-        toast.success("Trade payment successful!")
-      } else {
-        toast.success("Payment successful!")
+
+        // Call our server to retrieve the session
+        const res = await fetch(`http://localhost:4242/api/verify-session?session_id=${encodeURIComponent(session_id)}`);
+        const data = await res.json();
+
+        if (res.ok) {
+          setSessionInfo(data);
+        } else {
+          setError(data.error || "Failed to verify session");
+        }
+      } catch (err) {
+        console.error("Verify session error:", err);
+        setError("Network error verifying payment.");
+      } finally {
+        setLoading(false);
       }
     }
-  }, [currentUser])
 
+    verify();
+  }, []);
+
+  if (loading) return <div className="p-6 text-white">Checking payment status...</div>;
+  if (error) return <div className="p-6 text-white">Error: {error}</div>;
+
+  // sessionInfo.payment_status will be 'paid' if the payment went through
   return (
     <div className="p-6 text-white">
-      <h1 className="text-2xl font-bold mb-2">Payment Success ✅</h1>
-      <p>
-        {paymentType === "subscription"
-          ? "Thanks! Your Pro subscription is now active."
-          : paymentType === "trade"
-          ? "Thanks! Your trade payment was completed."
-          : "Thanks! Your payment was completed."}
-      </p>
-      {sessionId && <p className="mt-2 text-sm opacity-80">Session ID: {sessionId}</p>}
-      <p className="mt-4">
-        We’ll confirm on the server via webhook and update your account or trade.
-      </p>
+      <h1 className="text-2xl font-bold mb-2">Payment Result</h1>
+
+      {sessionInfo.payment_status === "paid" ? (
+        <>
+          <p>Payment confirmed ✅</p>
+          <p className="mt-2">Amount: {(sessionInfo.amount_total / 100).toFixed(2)} {sessionInfo.currency?.toUpperCase()}</p>
+          <p className="mt-2">Trade ID: {sessionInfo.metadata?.tradeId || "N/A"}</p>
+          <p className="mt-2">Session ID: {sessionInfo.sessionId}</p>
+          <p className="mt-4 text-sm opacity-80">We also update the server (webhook) and Firestore; this page is just a quick confirmation.</p>
+        </>
+      ) : (
+        <>
+          <p>Payment not completed. Status: {sessionInfo.payment_status}</p>
+          <p>If you were charged, give it a minute — the server webhook will process it.</p>
+        </>
+      )}
     </div>
-  )
+  );
 }
