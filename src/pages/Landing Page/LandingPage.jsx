@@ -4,10 +4,21 @@ import SuccessStories from "./SuccessStories";
 import LandingFooter from "./Footer";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/Auth/context";
 export default function LandingPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+    const { user } = useContext(AuthContext); 
+  
+    function handleGetStarted() {
+      if (user) {
+        navigate("/explore"); 
+      } else {
+        navigate("/login"); 
+      }
+    }
+  
 
   return (
     <div className="relative">
@@ -29,7 +40,7 @@ export default function LandingPage() {
               style={{
                 backgroundColor: 'var(--color-btn-submit-bg)'
               }}
-              onClick={() => navigate('login')}
+              onClick={handleGetStarted}
             >
               <span className="relative z-10 transition duration-1000 group-hover:text-[var(--color-text-dark)]">
                 {t("HeroSection.button")}
