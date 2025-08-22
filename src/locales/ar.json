@@ -398,5 +398,10 @@
   "message_user": "أرسل رسالة إلى {{name}}",
   "add_new_milestone": "أضف مهمة جديدة",
   "generate_with_ai": "توليد مهمة باستخدام الذكاء الاصطناعي",
-  "free_trade_limit_reached": "لقد وصلت إلى حد التبادل المجاني. يرجى الترقية إلى Pro للاستمرار في التبادل."
+  "free_trade_limit_reached": "لقد وصلت إلى حد التبادل المجاني. يرجى الترقية إلى Pro للاستمرار في التبادل.",
+  "Subscription": "الاشتراك",
+  "Pro Plan": "خطة Pro",
+  "Free Plan": "الخطة المجانية",
+  "Renew on": "التجديد في",
+  "Manage Subscription": "إدارة الاشتراك"
 }

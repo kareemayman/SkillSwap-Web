@@ -400,5 +400,10 @@
   "message_user": "Message {{name}}",
   "add_new_milestone": "Add New Milestone",
   "generate_with_ai": "Generate With AI",
-  "free_trade_limit_reached": "You have reached your free trade limit. Please upgrade to Pro to continue trading."
+  "free_trade_limit_reached": "You have reached your free trade limit. Please upgrade to Pro to continue trading.",
+  "Subscription": "Subscription",
+  "Pro Plan": "Pro Plan",
+  "Free Plan": "Free Plan",
+  "Renew on": "Renew on",
+  "Manage Subscription": "Manage Subscription"
 }
