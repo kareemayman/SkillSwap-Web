@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Avat from "../../assets/images/avat.png"
 import ExpTag from "./Components/ExpTag"
-import { faCommentDots, faPlus, faRobot } from "@fortawesome/free-solid-svg-icons"
+import { faClipboardList, faCommentDots, faPenToSquare, faPlus, faRobot } from "@fortawesome/free-solid-svg-icons"
 import Milestone from "./Components/Milestone"
 import Progress from "./Components/Progress"
 import { useNavigate, useParams } from "react-router-dom"
@@ -199,17 +199,25 @@ export default function Trade() {
                 </div>
               </div>
 
-              <button
-                onClick={() => {
-                  isUserA ? navigate(`/chat/${userB.uid}`) : navigate(`/chat/${userA.uid}`)
-                }}
-                className="bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] mt-6 px-6 py-3 rounded-lg dark:text-[var(--color-text-light)] text-white/80 transition-all duration-300"
-              >
-                <FontAwesomeIcon icon={faCommentDots}></FontAwesomeIcon>
-                <p className="capitalize inline ml-2 font-semibold">
-                  {t("message_user", { name: isUserA ? userB.name : userA.name })}
-                </p>
-              </button>
+              <div className="flex justify-between items-center flex-wrap">
+                <button
+                  onClick={() => {
+                    isUserA ? navigate(`/chat/${userB.uid}`) : navigate(`/chat/${userA.uid}`)
+                  }}
+                  className="bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] mt-6 px-6 py-3 rounded-lg dark:text-[var(--color-text-light)] text-white/80 transition-all duration-300"
+                >
+                  <FontAwesomeIcon icon={faCommentDots}></FontAwesomeIcon>
+                  <p className="capitalize inline ml-2 font-semibold">
+                    {t("message_user", { name: isUserA ? userB.name : userA.name })}
+                  </p>
+                </button>
+
+                <div 
+                  onClick={() => navigate(`/rate/${isUserA ? userB.uid : userA.uid}`)}
+                  className="bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] mt-6 px-6 py-3 rounded-lg dark:text-[var(--color-text-light)] text-[var(--color-text-light)] transition-all duration-300 flex justify-center items-center cursor-pointer text-xl">
+                  <FontAwesomeIcon icon={faClipboardList}></FontAwesomeIcon>
+                </div>
+              </div>
             </div>
 
             <div className="flex lg:flex-row flex-col gap-6">
