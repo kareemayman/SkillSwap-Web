@@ -16,7 +16,7 @@ import NotificationDropdown from "./NotificationDropdown";
 
 export default function Header() {
   const { user, logOut } = useAuth();
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const { data: userProfile, loading, error, request } = useFirestoreGet();
@@ -54,7 +54,7 @@ export default function Header() {
         <Link to="/">
           <div className="flex items-end gap-1">
             <img src={logo} alt="logo" className="w-8 h-8" />
-            <h1 className="font-bold text-2xl text-[var(--main-color)] ">Swapoo</h1>
+            <h1 className="font-bold text-2xl text-[var(--main-color)] ">{t("Swapoo")}</h1>
           </div>
         </Link>
 

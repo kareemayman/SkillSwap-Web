@@ -462,6 +462,7 @@
   "ratePartner": "Rate Partner",
   "viewTransaction": "View Transaction",
 
-  "tradeRequestCreated": "Trade request created and notification sent!\n\nWe will notify you once {{name}} answers!"
+  "tradeRequestCreated": "Trade request created and notification sent!\n\nWe will notify you once {{name}} answers!",
+  "Swapoo": "Swapoo"
 
 }
