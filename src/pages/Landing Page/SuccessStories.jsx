@@ -52,42 +52,46 @@ export default function SuccessStories() {
   ];
 
   return (
-    <section className="text-[var(--main-color)] flex flex-col gap-10 px-4 py-10" style={{ paddingTop: "7rem" }}>
-      <div className="flex flex-col gap-4">
-        <h2 className="text-4xl font-extrabold">
-          {t("SuccessStoriesSection.title")}
-        </h2>
-        <p className="text-[var(--color-text-secondary)] max-w-[720px]">
-          {t("SuccessStoriesSection.description")}
-        </p>
-      </div>
+    <section
+      className="text-[var(--main-color)] flex flex-col gap-10 px-4 pt-10 pb-20   "
+    >
+      <div className="container max-w-[1300px] mx-auto">
+        <div className="flex flex-col gap-4"> 
+          <h2 className="text-4xl font-extrabold">
+            {t("SuccessStoriesSection.title")}
+          </h2>
+          <p className="text-[var(--color-text-secondary)] max-w-[720px]">
+            {t("SuccessStoriesSection.description")}
+          </p>
+        </div>
 
-      <div className="w-full">
-        <Swiper
-          key={i18n.language} // 💡 forces remount on language change
-          className="!h-auto custom-swiper-nav"
-          modules={[Navigation, Autoplay]}
-          slidesPerView={1}
-          breakpoints={{
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
-          spaceBetween={20}
-          navigation
-          autoplay={{ delay: 4000, disableOnInteraction: false }}
-          loop={true}
-        >
-          {stories.map((story, index) => (
-            <SwiperSlide key={index} className="h-auto">
-              <Cart
-                imgSrc={story.imgSrc}
-                imgAlt={`img ${index + 1}`}
-                title={story.title}
-                desc={story.desc}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <div className="w-full mt-5">
+          <Swiper
+            key={i18n.language} // 💡 forces remount on language change
+            className="!h-auto custom-swiper-nav"
+            modules={[Navigation, Autoplay]}
+            slidesPerView={1}
+            breakpoints={{
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+            }}
+            spaceBetween={20}
+            navigation
+            autoplay={{ delay: 4000, disableOnInteraction: false }}
+            loop={true}
+          >
+            {stories.map((story, index) => (
+              <SwiperSlide key={index} className="h-auto">
+                <Cart
+                  imgSrc={story.imgSrc}
+                  imgAlt={`img ${index + 1}`}
+                  title={story.title}
+                  desc={story.desc}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
     </section>
   );

@@ -1,20 +1,8 @@
 /* buttons.css */
-@keyframes gradientMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
 
 .btn-gradient {
   background: linear-gradient(to right, #8b6f5a, #d4a373, #8b6f5a);
   background-size: 200% 200%;
-  animation: gradientMove 4s ease infinite;
   transition: all 3s ease-in-out;
   cursor: pointer;
 }

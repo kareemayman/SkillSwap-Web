@@ -35,17 +35,17 @@ function HeroSection() {
         >
           <div className="max-w-4xl mx-auto">
             <h1 
-              className="text-[36px] md:text-[48px] leading-[60px] tracking-[-2px] mb-4 dark:text-[var(--color-text-primary)] text-white/50"
+              className="text-[36px] md:text-[48px] leading-[60px] tracking-[-2px] mb-4 dark:text-[var(--color-text-primary)] text-white"
             >
               {t("HeroSection.title")}
             </h1>
             <p 
-              className="text-[16px] leading-[24px] mb-6 mx-auto dark:text-[var(--color-text-secondary)] text-white/50"
+              className="text-[16px] leading-[24px] mb-6 mx-auto dark:text-[var(--color-text-secondary)] text-white/85"
             >
               {t("HeroSection.description")}
             </p>
             <button 
-              className="relative overflow-hidden px-6 py-3 font-semibold rounded-lg shadow-lg group dark:text-[var(--color-text-light)] text-white/100"
+              className="relative overflow-hidden px-6 py-3 font-semibold rounded-lg shadow-lg group  text-white"
               style={{
                 backgroundColor: 'var(--color-btn-submit-bg)'
               }}

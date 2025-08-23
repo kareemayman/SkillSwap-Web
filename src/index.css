@@ -77,8 +77,8 @@
 .dark {
   /* DARK THEME */
   --main-color: #fe7843;
-  --color-text-primary: #b4afa8;
-  --color-text-secondary: #7c7c7c;
+  --color-text-primary: #f4f2ee;
+  --color-text-secondary: #f4f2eece;
   --color-text-light: #ffffff;
   --color-text-dark: #000000cc;
   --input-bg: rgba(21, 19, 19, 0.968);
@@ -88,8 +88,8 @@
   --color-skill-teach-bg: #ffe5b4;
   --color-skill-learn-bg: #bc640dd8;
 
-  --color-btn-submit-bg: #8b6f5a;
-  --color-btn-submit-hover: #635041;
+  --color-btn-submit-bg: #b88e6e;
+  --color-btn-submit-hover: #8e6b51;
 }
 
 /* card in landing page */

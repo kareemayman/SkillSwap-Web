@@ -11,20 +11,21 @@ export default function Cart({
   return (
     <div
       className={`
-        rounded-[18px] p-6 w-full h-full flex flex-col gap-6
-        ${!withoutBorder ? "border border-[var(--color-card-border)]" : ""}
+        rounded-[18px] p-6 w-full h-full flex flex-col gap-6  glass-card
+        ${!withoutBorder ? "" : ""}
         backdrop-blur-md
-        shadow-lg
-        glass-card
+       shadow-[0_0_10px_0_rgba(0,0,0,0.2)]
+       hover:scale-95 transition-transform duration-300 border border-[var(--color-card-border)]
+       
+       
       `}
-      style={{ backgroundColor: 'var(--color-card-content-bg)' }}
     >
       {isIcon ? (
-        <div className="p-3  rounded-full w-12 h-12 flex items-center justify-center dark:bg-[var(--color-btn-submit-bg)] bg-transparent">
+        <div className="p-3  rounded-full w-12 h-12 flex items-center justify-center dark:bg-[var(--color-btn-submit-bg)] bg-transparent ">
           <img
             src={imgSrc}
             alt={imgAlt}
-            className="w-6 h-6"
+            className="w-6 h-6 text-red-500"
           />
         </div>
       ) : (
@@ -41,7 +42,7 @@ export default function Cart({
       </p>
 
       <div className="mt-auto pt-4">
-        <button className="px-4 py-2 bg-[var(--color-btn-submit-bg)] dark:text-[var(--color-text-light)] text-white/100 font-medium rounded-lg hover:shadow hover:bg-[var(--color-btn-submit-hover)] transition duration-200 text-sm p-2">
+        <button className="px-4 py-2 bg-[var(--color-btn-submit-bg)]  text-white font-medium rounded-lg hover:shadow hover:bg-[var(--color-btn-submit-hover)] transition duration-200 text-sm p-2">
           Learn More
         </button>
       </div>

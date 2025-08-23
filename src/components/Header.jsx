@@ -61,7 +61,7 @@ export default function Header() {
               <>
                 <NavLink
                   to="/explore"
-                  className="hover:text-[var(--main-color)] transition-transform duration-200 hover:scale-110 font-medium"
+                  className="hover:text-[var(--main-color)] font-bold transition-transform duration-200 hover:scale-110"
                 >
                   Explore
                 </NavLink>
@@ -69,13 +69,13 @@ export default function Header() {
                 {user?.email === "skills.swap.app@gmail.com" && (
                   <NavLink
                     to="/dashboard"
-                    className="hover:text-[var(--main-color)] transition-transform duration-200 hover:scale-110 font-medium"
+                    className="hover:text-[var(--main-color)] transition-transform duration-200 hover:scale-110 font-bold"
                   >
                     Dashboard
                   </NavLink>
                 )}
 
-                <NavLink to="/messages" className="relative text-xl transition-transform duration-200 hover:scale-110" title="Messages">
+                <NavLink to="/messages" className="relative text-xl transition-transform duration-200 hover:scale-110 hover:text-[var(--main-color)]" title="Messages">
                   <FaComments />
                   {unreadCount > 0 && (
                     <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
@@ -83,11 +83,11 @@ export default function Header() {
                     </span>
                   )}
                 </NavLink>
-                <NavLink to="/search" className="text-xl transition-transform duration-200 hover:scale-110" title="Search">
+                <NavLink to="/search" className="text-xl transition-transform duration-200 hover:scale-110 hover:text-[var(--main-color)]" title="Search">
                   <FaSearch />
                 </NavLink>
 
-                <NavLink to={`/profile/${user?.uid}`} title="Profile" className="transition-transform duration-200 hover:scale-110">
+                <NavLink to={`/profile/${user?.uid}`} title="Profile" className="transition-transform duration-200 hover:scale-110 hover:text-[var(--main-color)]">
                   {userProfile?.profilePicture ? (
                     <img src={userProfile.profilePicture} alt="Profile" className="w-8 h-8 rounded-full object-cover border border-gray-300" />
                   ) : (
@@ -101,10 +101,10 @@ export default function Header() {
               </>
             ) : (
               <>
-                <NavLink to="/login" className="transition-all duration-200 hover:text-[var(--color-accent)]">
+                <NavLink to="/login" className="transition-all duration-200 hover:text-[var(--main-color)]">
                   Login
                 </NavLink>
-                <NavLink to="/register" className="transition-all duration-200 hover:text-[var(--color-accent)]">
+                <NavLink to="/register" className="transition-all duration-200 hover:text-[var(--main-color)]">
                   Register
                 </NavLink>
               </>
@@ -114,7 +114,7 @@ export default function Header() {
           {/* Language Switch Button */}
           <button
             onClick={() => setDarkMode((prev) => !prev)}
-            className="w-10 h-10 btn-gradient flex items-center justify-center rounded-full bg-[var(--color-btn-submit-bg)] text-[var(--color-text-light)] hover:bg-[var(--color-btn-submit-hover)] transition-transform duration-200 hover:scale-110 text-lg"
+            className="w-10 h-10 btn-gradient flex items-center  justify-center rounded-full bg-[var(--color-btn-submit-bg)] text-[var(--color-text-light)]  transition-transform duration-200 hover:shadow-lg text-lg"
             title="Toggle Theme"
           >
             {darkMode ? "🌞" : "🌙"}

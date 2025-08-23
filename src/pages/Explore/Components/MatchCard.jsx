@@ -29,7 +29,7 @@ export const MatchCard = ({ user }) => {
         </p>}
         <div 
           onClick={() => {navigate(`/schedule/${user.uid}`)}}
-          className='flex justify-center items-center bg-[--color-btn-submit-bg] p-2 py-1 my-3 rounded-md w-fit dark:text-[--color-text-light] text-white/80 font-medium transition-all duration-300 cursor-pointer hover:bg-[--color-btn-submit-hover]'>
+          className='flex justify-center items-center bg-[--color-btn-submit-bg] p-2 py-1 my-3 rounded-md w-fit  text-white font-medium transition-all duration-300 cursor-pointer hover:bg-[--color-btn-submit-hover]'>
           {t("Schedule Session")}
         </div>
       </div>

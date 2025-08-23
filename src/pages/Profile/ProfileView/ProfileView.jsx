@@ -81,7 +81,7 @@ export default function ProfileView({ data, isOwnProfile }) {
           <img
             src={updatedProfile.profilePicture}
             alt={t("ProfileView.ProfilePictureAlt")}
-            className="w-32 h-32 rounded-full object-cover border-4 border-[var(--color-text-primary)] shadow-lg"
+            className="w-32 h-32 rounded-full object-cover border-4 border-[var(--color-text-primary)] shadow-lg transition-transform duration-200 hover:scale-110"
           />
           {isOwnProfile && (
             <EditButton

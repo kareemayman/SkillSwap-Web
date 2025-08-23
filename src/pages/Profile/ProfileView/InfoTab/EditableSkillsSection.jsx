@@ -68,7 +68,7 @@ export default function EditableSkillsSection({ title, data = [], skillType, upd
           <div className="flex items-center gap-2">
             <button
               title="Add Skills"
-              className="p-1 rounded-full shadow-lg bg-[--color-btn-submit-bg] text-[--color-text-light] hover:bg-[--color-text-light] hover:text-[--color-btn-submit-bg] transition-colors"
+              className="p-1 rounded-full shadow-lg bg-[--main-color] text-[--color-text-light] hover:bg-[--color-text-light] hover:text-[--color-btn-submit-bg] transition-colors"
               onClick={() => setIsAdding(true)}
             >
               <LuCirclePlus size={20} />
