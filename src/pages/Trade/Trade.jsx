@@ -1,17 +1,23 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Avat from "../../assets/images/avat.png"
 import ExpTag from "./Components/ExpTag"
-import { faClipboardList, faCommentDots, faPenToSquare, faPlus, faRobot } from "@fortawesome/free-solid-svg-icons"
+import {
+  faClipboardList,
+  faCommentDots,
+  faPenToSquare,
+  faPlus,
+  faRobot,
+} from "@fortawesome/free-solid-svg-icons"
 import Milestone from "./Components/Milestone"
 import Progress from "./Components/Progress"
 import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { getTradeById, getUserById, updateTrade } from "../../utils/firestoreUtil"
+import { getTradeById, getUserById, updateTrade, updateUserById } from "../../utils/firestoreUtil"
 import { useAuth } from "../../contexts/Auth/context"
 import { generateFromGemini } from "../../api/gemini"
 import { generateNewMilestonePrompt } from "../../utils/geminiPrompts"
 import MilestoneModal from "./Components/MilestoneModal"
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next"
 
 export default function Trade() {
   const { id } = useParams()
@@ -27,8 +33,8 @@ export default function Trade() {
   const navigate = useNavigate()
   const [showMilestoneModal, setShowMilestoneModal] = useState(false)
   const [myMilestone, setMyMilestone] = useState(null) // for generating new milestones
-   const {t}= useTranslation();
- 
+  const { t } = useTranslation()
+
   useEffect(() => {
     if (myMilestone) {
       generateMilestoneFromScratch()
@@ -59,6 +65,20 @@ export default function Trade() {
     if (!trade) return
     calculateMilestoneProgress()
   }, [trade])
+
+  // Check if trade is completed
+  useEffect(() => {
+    if (totalMilestonesA == 0 && totalMilestonesB == 0) return
+    if (milestonesACompleted == totalMilestonesA && milestonesBCompleted == totalMilestonesB && trade.status !== "completed") {
+      const newTrade = { ...trade, status: "completed" }
+      setTrade(newTrade)
+      updateTrade(id, newTrade)
+      const newUserA = { ...userA, subscribtion: {...userA.subscribtion, activeTradeCount: userA.subscribtion.activeTradeCount - 1} }
+      const newUserB = { ...userB, subscribtion: {...userB.subscribtion, activeTradeCount: userB.subscribtion.activeTradeCount - 1} }
+      updateUserById(userA.uid, newUserA)
+      updateUserById(userB.uid, newUserB)
+    }
+  }, [milestonesACompleted, milestonesBCompleted, totalMilestonesA, totalMilestonesB])
 
   function calculateMilestoneProgress() {
     if (trade.milestonesA && trade.milestonesB) {
@@ -122,7 +142,6 @@ export default function Trade() {
     setMyMilestone(null)
   }
 
-
   return (
     <>
       {showMilestoneModal && (
@@ -139,11 +158,7 @@ export default function Trade() {
               <div className="flex lg:flex-row flex-col lg:justify-between items-start lg:items-center gap-6 lg:gap-0 pb-6 border-[var(--color-card-border)] border-b">
                 <div className="flex md:flex-row flex-col flex-1 justify-center md:justify-start items-start md:gap-3">
                   <img
-                    src={
-                      isUserA
-                        ? userA.profilePicture || Avat
-                        : userB.profilePicture || Avat
-                    }
+                    src={isUserA ? userA.profilePicture || Avat : userB.profilePicture || Avat}
                     alt="userAvatar"
                     className="rounded-full w-16 h-16 object-cover"
                   />
@@ -169,11 +184,7 @@ export default function Trade() {
                 </div>
                 <div className="flex md:flex-row flex-col flex-1 justify-center md:justify-start items-start md:gap-3">
                   <img
-                    src={
-                      isUserA
-                        ? userB.profilePicture || Avat
-                        : userA.profilePicture || Avat
-                    }
+                    src={isUserA ? userB.profilePicture || Avat : userA.profilePicture || Avat}
                     alt="userAvatar"
                     className="rounded-full w-16 h-16 object-cover"
                   />
@@ -212,15 +223,19 @@ export default function Trade() {
                   </p>
                 </button>
 
-                <div 
+                <div
                   onClick={() => navigate(`/rate/${isUserA ? userB.uid : userA.uid}`)}
-                  className="bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] mt-6 px-6 py-3 rounded-lg dark:text-[var(--color-text-light)] text-[var(--color-text-light)] transition-all duration-300 flex justify-center items-center cursor-pointer text-xl">
+                  className="bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] mt-6 px-6 py-3 rounded-lg dark:text-[var(--color-text-light)] text-white/80 transition-all duration-300 flex justify-center items-center cursor-pointer text-xl"
+                >
                   <FontAwesomeIcon icon={faClipboardList}></FontAwesomeIcon>
                 </div>
               </div>
             </div>
 
-            <div className="flex lg:flex-row flex-col gap-6">
+            <div className="flex lg:flex-row flex-col gap-6 relative">
+              {trade.status === 'completed' && <div className="cursor-not-allowed z-50 absolute top-0 left-0 w-full h-full bg-black opacity-70 rounded-lg flex justify-center items-center">
+                <h1 className="text-4xl font-bold dark:text-[var(--color-text-light)] text-white/80">{t("trade_completed")}</h1>
+                </div>}
               <div className="flex-1 py-6 border-[var(--color-card-border)] border-2 rounded-lg">
                 <div className="px-6 pb-6 border-[var(--color-card-border)] border-b">
                   <h1 className="font-bold text-[var(--color-text-light)] text-xl capitalize">
@@ -233,12 +248,7 @@ export default function Trade() {
 
                 <div className="p-6 pb-0">
                   {(isUserA ? trade.milestonesB : trade.milestonesA)?.map((m) => (
-                    <Milestone
-                      key={m.id}
-                      milestone={m}
-                      tradeId={id}
-                      isUserA={isUserA}
-                    />
+                    <Milestone key={m.id} milestone={m} tradeId={id} isUserA={isUserA} />
                   ))}
 
                   <Progress
@@ -302,5 +312,5 @@ export default function Trade() {
         )}
       </div>
     </>
-  );
-};
+  )
+}

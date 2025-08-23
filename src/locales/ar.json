@@ -461,6 +461,7 @@
   "viewTransaction": "عرض المعاملة",
 
   "tradeRequestCreated": "تم إنشاء طلب التبادل وإرسال الإشعار!\n\nسنخبرك عندما يرد {{name}}!",
-  "Swapoo": "سوابو"
+  "Swapoo": "سوابو",
+  "trade_completed": "هذا التبادل مكتمل"
 
 }
