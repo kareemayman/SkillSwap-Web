@@ -18,7 +18,7 @@ const {t}=useTranslation();
         rating: 0,
         totalSessions: 0,
         isAvailableForTrade: true,
-        isAvailableForPaid: false,
+        isAvailableForPaid: true,
         reviews: [],
         availability: true,
       };
