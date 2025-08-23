@@ -6,7 +6,7 @@ export default function UserSidebar({ user }) {
     const { t }= useTranslation();
 
   return (
-    <div className="w-80 p-6 bg-[--input-bg] hidden md:block border-l  border-gray-700 ">
+    <div className="w-80 p-6  hidden md:block border-l   overflow-y-auto h-screen">
       <div className="text-center">
       <Link to={`/profile/${user.uid}`}>
         <img
@@ -15,7 +15,7 @@ export default function UserSidebar({ user }) {
           className="w-24 h-24 rounded-full mx-auto object-cover border shadow "
         />
       </Link>
-        <h2 className="text-xl font-semibold mt-3 text-[var(--color-btn-submit-bg)] dark:text-[var(--main-color)]">{user?.name}</h2>
+        <h2 className="text-xl font-semibold mt-3 text-[var(--main-color)]">{user?.name}</h2>
         <p className="text-sm text-gray-500">{user?.title || "Skill User"}</p>
       </div>
 

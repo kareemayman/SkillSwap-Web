@@ -274,7 +274,7 @@ export default function NotificationDropdown({ iconOrText = "icon", userProfile 
         <button
           ref={buttonRef}
           onClick={() => setIsOpen(!isOpen)}
-          className="relative text-xl p-2 rounded-full transition-transform duration-200 hover:scale-110 "
+          className="relative text-xl p-2 rounded-full transition-transform duration-200 hover:scale-110  hover:text-[var(--main-color)]"
           title="Notifications"
         >
           <FaBell size={20} className="" />

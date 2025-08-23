@@ -82,7 +82,7 @@ export default function SkillTradesTab({ updatedProfile }) {
             </div>
           </div>
 
-          <FontAwesomeIcon icon={faArrowRightArrowLeft} className="text-2xl flex-1"></FontAwesomeIcon>
+          <FontAwesomeIcon icon={faArrowRightArrowLeft} className="text-2xl flex-1 text-[var(--main-color)]"></FontAwesomeIcon>
 
           <div className="flex items-center gap-4 flex-0.5">
             <img

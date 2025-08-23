@@ -133,11 +133,11 @@ export default function SkillSelector({ onSave, onCancel, existingSkills = [], p
   };
 
   return (
-    <div className="p-4 mt-4 border rounded-lg bg-gray-50/50 border-gray-300 space-y-4">
+    <div className="p-4 mt-4 border rounded-lg dark:bg-[#1a1a17] bg-gray-50/50 border-gray-300 dark:border-[var(--color-btn-submit-bg)] space-y-4">
       <div className="relative">
         <LuSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
         <input
-          className="w-full pl-10 p-3 rounded-lg border border-[var(--color-card-border)] bg-slate-50 text-[var(--color-text-secondary)] placeholder:text-[#4A739C]"
+          className="w-full pl-10 p-3 rounded-lg border border-[var(--color-card-border)] bg-slate-50 dark:bg-[#20201c] text-black dark:text-white dark:placeholder:text-white/55 placeholder:text-[#4A739C]"
           type="text"
           placeholder={placeholder}
           value={searchQuery}

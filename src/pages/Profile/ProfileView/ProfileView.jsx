@@ -142,8 +142,8 @@ export default function ProfileView({ data, isOwnProfile }) {
             onClick={() => setActiveTab(tab)}
             className={`px-3 md:px-6 py-3 font-semibold text-base border-b-2 transition-colors ${
               activeTab === tab
-                ? "border-[--color-btn-submit-bg] text-[--color-btn-submit-bg]"
-                : "border-transparent text-[--color-text-primary] hover:text-[--color-btn-submit-bg]"
+                ? "border-[--main-color]  text-[--main-color]"
+                : "border-transparent  hover:text-[--color-btn-submit-bg] text-[--color-text-primary]"
             }`}
           >
             {t(`ProfileView.Tabs.${tab}`)}
@@ -157,8 +157,8 @@ export default function ProfileView({ data, isOwnProfile }) {
               onClick={() => setActiveTab(tab)}
               className={`px-3 md:px-6 py-3 font-semibold text-base border-b-2 transition-colors ${
                 activeTab === tab
-                  ? "border-[--color-btn-submit-bg] text-[--color-btn-submit-bg]"
-                  : "border-transparent text-[--color-text-primary] hover:text-[--color-btn-submit-bg]"
+                ? "border-[--main-color]  text-[--main-color]"
+                : "border-transparent  hover:text-[--color-btn-submit-bg] text-[--color-text-primary]"
               }`}
             >
               {t(`ProfileView.Tabs.${tab}`)}

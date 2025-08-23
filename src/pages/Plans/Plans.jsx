@@ -120,7 +120,7 @@ export default function Plans() {
                 <h2 className="text-[var(--color-text-light)] text-2xl font-bold">
                   {t("plans.free")}
                 </h2>
-                <p className="py-1 px-5 text-sm font-semibold rounded-full bg-[#2a2724] text-[var(--color-text-primary)]">
+                <p className="py-1 px-5 text-sm font-semibold rounded-full dark:bg-[#2a2724] bg-[#4f4944] dark:text-[var(--color-text-primary)] text-white">
                   {t("plans.default")}
                 </p>
               </div>
@@ -160,7 +160,7 @@ export default function Plans() {
                   onClick={downgradeToFree}
                   className={`w-full py-4 text-center rounded-lg ${
                     currentUser.subscribtion.plan === "free"
-                      ? "bg-[#2b2825] text-[var(--color-text-secondary)] cursor-not-allowed"
+                      ? "dark:bg-[#2b2825] bg-[#4f4944] dark:text-[var(--color-text-secondary)] text-white cursor-not-allowed"
                       : "bg-[var(--color-btn-submit-bg)] cursor-pointer hover:bg-[var(--color-btn-submit-hover)]"
                   }  font-bold transition-all duration-300`}
                 >
@@ -224,8 +224,8 @@ export default function Plans() {
                   onClick={upgradeToPro}
                   className={`w-full py-4 text-center rounded-lg ${
                     currentUser.subscribtion.plan == "free"
-                      ? "bg-[var(--color-btn-submit-bg)] cursor-pointer hover:bg-[var(--color-btn-submit-hover)] text-[var(--color-text-light)]"
-                      : "bg-[#2b2825] text-[var(--color-text-secondary)] cursor-not-allowed"
+                      ? "dark:bg-[var(--color-btn-submit-bg)] bg-[var(--color-btn-submit-hover)] cursor-pointer hover:bg-[var(--color-btn-submit-hover)] text-white"
+                      : "dark:bg-[#2b2825] bg-[#4f4944] dark:text-[var(--color-text-secondary)] text-white cursor-not-allowed"
                   } font-bold transition-all duration-300 `}
                 >
                   {loadingUpgrade

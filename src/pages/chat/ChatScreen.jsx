@@ -117,12 +117,12 @@ useEffect(() => {
   return (
     
 <div className="w-full chat-box overflow-y-scroll  ">
-  <div className="flex h-[100vh] bg-black backdrop-blur-xl  shadow-xl overflow-hidden">
+  <div className="flex h-[100vh]  backdrop-blur-xl  shadow-xl overflow-hidden">
     <div className="flex-1 flex flex-col px-5 overflow-hidden"
             style={{ backgroundImage: `url(${chatImg})`, backgroundSize: "cover" }}>
 
       {/* Header */}
-      <div className="dark:bg-[var(--input-bg)] bg-[var(--input-bg)] px-5 -mx-5 py-4 border-b border-gray-900">
+      <div className="dark:bg-[var(--bg-color1)]  px-5 -mx-5 py-4 border-b border-gray-700">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-semibold dark:text-gray-300 text-[var(--color-text-primary)]">
             {t("chat.chat")} {otherUser.name}

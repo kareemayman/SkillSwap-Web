@@ -7,7 +7,7 @@ export default function EditButton({ title, onClickHandler, classes = "" }) {
       title={title}
       className={
         classes +
-        " p-1.5 rounded-full shadow-lg bg-[--main-color] text-[--color-text-light] hover:bg-[--color-text-light] hover:text-[--color-btn-submit-bg] transition-colors"
+        " p-1.5 rounded-full shadow-lg bg-[--main-color] text-[--color-text-light] dark:hover:bg-[--color-text-light] hover:bg-white hover:text-[--color-btn-submit-bg] transition-colors"
       }
       onClick={onClickHandler}
     >
