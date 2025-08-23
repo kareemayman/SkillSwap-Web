@@ -170,11 +170,17 @@ export const getSkillCategories = async () => {
 
 export const createFirestoreTrade = async (tradeData) => {
   try {
-    const tradeDocRef = await addDoc(collection(db, "trades"), {
+    const tradeDocRef = doc(collection(db, "trades"));
+
+    const trade = {
       ...tradeData,
+      id: tradeDocRef.id,
       createdAt: serverTimestamp(),
-    });
-    return tradeDocRef.id;
+    };
+
+    await setDoc(tradeDocRef, trade);
+
+    return trade;
   } catch (error) {
     console.error("Error creating trade document:", error);
     throw error;

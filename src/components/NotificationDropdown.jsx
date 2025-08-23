@@ -7,6 +7,7 @@ import { FaBell, FaTimes, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { TbArrowsExchange } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { handleNotificationAction } from "../utils/notificationActions";
+import toast from "react-hot-toast";
 
 // Sample notification data
 // const sampleNotifications = [
@@ -110,7 +111,7 @@ import { handleNotificationAction } from "../utils/notificationActions";
 
 const sampleNotifications = [];
 
-export default function NotificationDropdown({ iconOrText = "icon" }) {
+export default function NotificationDropdown({ iconOrText = "icon", userProfile }) {
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState(sampleNotifications);
   const [loading, setLoading] = useState(true);
@@ -118,17 +119,17 @@ export default function NotificationDropdown({ iconOrText = "icon" }) {
   const buttonRef = useRef(null);
 
   const { t } = useTranslation();
-  const { user } = useAuth();
+  const { user: authUser } = useAuth();
   const navigate = useNavigate();
 
   // Real-time notifications listener
   useEffect(() => {
-    if (!user?.uid) {
+    if (!authUser?.uid) {
       setLoading(false);
       return;
     }
 
-    const q = query(collection(db, "notifications"), where("recipientId", "==", user.uid), orderBy("createdAt", "desc"));
+    const q = query(collection(db, "notifications"), where("recipientId", "==", authUser.uid), orderBy("createdAt", "desc"));
 
     const unsubscribe = onSnapshot(
       q,
@@ -150,38 +151,29 @@ export default function NotificationDropdown({ iconOrText = "icon" }) {
     );
 
     return () => unsubscribe();
-  }, [user?.uid]);
+  }, [authUser?.uid]);
 
-  // Close dropdown when clicking outside
+  // Combined effect for closing dropdown on outside click and escape key
   useEffect(() => {
+    if (!isOpen) return;
+
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target) && !buttonRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     }
 
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
-
-  // Close dropdown on escape key
-  useEffect(() => {
     function handleEscape(event) {
       if (event.key === "Escape") {
         setIsOpen(false);
       }
     }
 
-    if (isOpen) {
-      document.addEventListener("keydown", handleEscape);
-    }
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
 
     return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleEscape);
     };
   }, [isOpen]);
@@ -189,7 +181,7 @@ export default function NotificationDropdown({ iconOrText = "icon" }) {
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
   const markAsRead = async (id) => {
-    if (!user?.uid) return; // Don't call API if no user
+    if (!authUser?.uid) return; // Don't call API if no authUser
 
     try {
       const notificationRef = doc(db, "notifications", id);
@@ -203,7 +195,7 @@ export default function NotificationDropdown({ iconOrText = "icon" }) {
   };
 
   const markAsUnread = async (id) => {
-    if (!user?.uid) return; // Don't call API if no user
+    if (!authUser?.uid) return; // Don't call API if no authUser
     console.log("Marking as unread:", id);
 
     try {
@@ -218,7 +210,7 @@ export default function NotificationDropdown({ iconOrText = "icon" }) {
   };
 
   const markAllAsRead = async () => {
-    if (!user?.uid) return; // Don't call API if no user
+    if (!authUser?.uid) return; // Don't call API if no authUser
 
     try {
       const unreadNotifications = notifications.filter((n) => !n.isRead);
@@ -233,15 +225,21 @@ export default function NotificationDropdown({ iconOrText = "icon" }) {
   };
 
   const handleAction = async (notificationId, action) => {
+    let toastId;
+
     try {
-      if (user?.uid) {
-        await handleNotificationAction(notificationId, action, user.uid, navigate, user);
-      } else {
+      if (!authUser?.uid) {
         console.log(`Demo action: ${action} for notification: ${notificationId}`);
+        return;
       }
+
+      toastId = toast.loading("Processing...");
+
+      await handleNotificationAction(notificationId, action, navigate, userProfile, { fn: toast, args: { id: toastId } });
     } catch (error) {
       console.error("Error handling action:", error);
       // You might want to show a toast notification here
+      toast.error("Action failed. Please try again.", { id: toastId });
     }
   };
 

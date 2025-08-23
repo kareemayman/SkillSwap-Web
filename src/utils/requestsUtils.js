@@ -7,7 +7,9 @@ export const createRequest = async (request, user, otherUser) => {
     const newRequest = {
       requestId: docRef.id,
       requestedSkill: request.requestedSkill,
+      requestedSkillLevel: request.requestedSkillLevel,
       offeredSkill: request.offeredSkill || null,
+      offeredSkillLevel: request.offeredSkillLevel || null,
       payment: request.payment || null,
       requestStatus: "pending",
       requestedUser: {
@@ -22,6 +24,7 @@ export const createRequest = async (request, user, otherUser) => {
       },
       notes: request.notes || null,
     };
+
     await setDoc(docRef, newRequest);
     return newRequest;
   } catch (error) {

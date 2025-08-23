@@ -45,7 +45,7 @@ export default function Header() {
     return () => {
       unsub();
     };
-  }, [user?.uid]);
+  }, [user?.uid, request]);
 
   return (
     <header className="shadow-md dark:shadow-[var(--color-card-border)] shadow-[#68482f91]">
@@ -98,7 +98,7 @@ export default function Header() {
                   </div>
                 </Notifications> */}
 
-                <NotificationDropdown />
+                <NotificationDropdown userProfile={userProfile} />
 
                 <NavLink to="/search" className="text-xl transition-transform duration-200 hover:scale-110" title="Search">
                   <FaSearch />

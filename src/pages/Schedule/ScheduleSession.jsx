@@ -10,7 +10,8 @@ import { generateFromGemini } from "../../api/gemini";
 import { generateMilestonesPrompt } from "../../utils/geminiPrompts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCertificate } from "@fortawesome/free-solid-svg-icons";
-import { useTradeRequest } from "../../hooks/useTradeRequest";
+import { createRequest } from "../../utils/requestsUtils";
+import { createNotification } from "../../utils/notificationService";
 
 export const ScheduleSession = () => {
   const { t } = useTranslation();
@@ -29,7 +30,6 @@ export const ScheduleSession = () => {
 
   const { userId } = useParams();
   const navigate = useNavigate();
-  const { sendTradeRequest, loading, error } = useTradeRequest();
 
   useEffect(() => {
     if (userId) {
@@ -56,76 +56,65 @@ export const ScheduleSession = () => {
   }, [currentUserFromAuth]);
 
   async function createTrade() {
-    // // create trade request
-    // sendTradeRequest({});
-    // // create notification for other user
-
-    // // requestedSkill: request.requestedSkill,
-    // // offeredSkill: request.offeredSkill || null,
-    // // payment: request.payment || null,
-    // // requestStatus: "pending",
-    // // requestedUser: {
-    // //   uid: otherUser.uid,
-    // //   name: otherUser.name,
-    // //   profilePicture: otherUser.profilePicture,
-    // // },
-    // // requestingUser: {
-    // //   uid: user.uid,
-    // //   name: user.name,
-    // //   profilePicture: user.profilePicture,
-    // // },
-    // // notes: request.notes || null,
+    const toastId = toast.loading("Processing...");
 
     if (paymentToggle === false && (seekingSkill.trim() === "" || offeringSkill.trim() === "")) {
-      toast.error(t("Please select both seeking and offering skills."));
-    } else if (paymentToggle === true && seekingSkill.trim() === "") {
-      toast.error(t("Please select a seeking skill."));
-    } else if (paymentToggle === true && (!offer || offer < 5)) {
-      toast.error(t("Offer a valid price"));
-    } else if (currentUser.subscribtion.plan === "free" && currentUser.subscribtion.activeTradeCount > 0) {
-      toast.error(t("free_trade_limit_reached"));
-    } else {
+      toast.error(t("Please select both seeking and offering skills."), { id: toastId });
+      return;
+    }
+    if (paymentToggle === true && seekingSkill.trim() === "") {
+      toast.error(t("Please select a seeking skill."), { id: toastId });
+      return;
+    }
+    if (paymentToggle === true && (!offer || offer < 5)) {
+      toast.error(t("Offer a valid price"), { id: toastId });
+      return;
+    }
+    if (currentUser.subscribtion.plan === "free" && currentUser.subscribtion.activeTradeCount > 0) {
+      toast.error(t("free_trade_limit_reached"), { id: toastId });
+      return;
+    }
+
+    // create trade request
+    try {
       setDisabledButton(true);
-      let milestonesA = await generateFromGemini(generateMilestonesPrompt(offeringSkill, offeringSkillLevel));
-      milestonesA = milestonesA.replace("```json", "").replace("```", "");
-      milestonesA = JSON.parse(milestonesA);
-      let milestonesB = await generateFromGemini(generateMilestonesPrompt(seekingSkill, seekingSkillLevel));
-      milestonesB = milestonesB.replace("```json", "").replace("```", "");
-      milestonesB = JSON.parse(milestonesB);
+      toast.loading("Creating trade request...", { id: toastId });
 
-      const tradeData = {
-        id: docRef.id,
-        userA: currentUser.uid,
-        userB: userId,
-        skillA: paymentToggle ? "PAYMENT" : offeringSkill,
-        skillB: seekingSkill,
-        skillALevel: paymentToggle ? "PAYMENT" : offeringSkillLevel,
-        skillBLevel: seekingSkillLevel,
-        milestonesA: milestonesA,
-        milestonesB: milestonesB,
-      };
+      const newRequest = await createRequest(
+        {
+          requestedSkill: seekingSkill,
+          requestedSkillLevel: seekingSkillLevel,
+          offeredSkill: paymentToggle ? null : offeringSkill,
+          offeredSkillLevel: paymentToggle ? null : offeringSkillLevel,
+          payment: paymentToggle ? offer : null,
+          notes: "",
+        },
+        currentUser,
+        user
+      );
 
-      let newUserData = {
-        ...currentUser,
-        subscribtion: { ...currentUser.subscribtion, activeTradeCount: currentUser.subscribtion.activeTradeCount + 1 },
-      };
+      toast.loading("Sending notification...", { id: toastId });
 
-      let userBNewData = {
-        ...user,
-        subscribtion: { ...user.subscribtion, activeTradeCount: user.subscribtion.activeTradeCount + 1 },
-      };
-
-      await updateUserById(currentUser.uid, newUserData);
-      setCurrentUser(newUserData);
-
-      await updateUserById(userId, userBNewData);
-      setUser(userBNewData);
-
-      createFirestoreTrade(tradeData).then((tradeId) => {
-        toast.success(t("Session scheduled successfully!"));
-        navigate(`/trade/${tradeId}`);
-        setDisabledButton(false);
+      // create notification for other user
+      await createNotification("TRADE_REQUEST", {
+        recipientId: user.uid,
+        senderId: currentUser.uid,
+        senderName: currentUser.name,
+        senderProfilePicture: currentUser.profilePicture,
+        requestId: newRequest.requestId,
+        requestedSkill: newRequest.requestedSkill,
+        offeredSkill: newRequest.offeredSkill,
+        payment: newRequest.payment,
+        notes: newRequest.notes,
       });
+
+      toast.success(t("tradeRequestCreated", { name: user.name }), { id: toastId, duration: 4000 });
+    } catch (error) {
+      toast.error("An error occurred. Please try again.", { id: toastId });
+      console.error("Error creating trade request or notification:", error);
+    } finally {
+      setDisabledButton(false);
+      // toast.dismiss(toastId);
     }
   }
 

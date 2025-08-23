@@ -459,5 +459,7 @@
   "viewBalance": "View Balance",
   "withdraw": "Withdraw",
   "ratePartner": "Rate Partner",
-  "viewTransaction": "View Transaction"
+  "viewTransaction": "View Transaction",
+
+  "tradeRequestCreated": "Trade request created and notification sent!\n\nWe will notify you once {{name}} answers!"
 }

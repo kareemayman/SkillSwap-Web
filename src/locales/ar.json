@@ -457,5 +457,7 @@
   "viewBalance": "عرض الرصيد",
   "withdraw": "سحب",
   "ratePartner": "تقييم الشريك",
-  "viewTransaction": "عرض المعاملة"
+  "viewTransaction": "عرض المعاملة",
+
+  "tradeRequestCreated": "تم إنشاء طلب التبادل وإرسال الإشعار!\n\nسنخبرك عندما يرد {{name}}!"
 }
