@@ -14,12 +14,16 @@ import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../contexts/Auth/context"
 import { getUserById, updateUserById } from "../../utils/firestoreUtil"
 import toast from "react-hot-toast"
+// <- updated imports: use the new helpers
+import { subscribeToPro, openBillingPortal } from "../../utils/stripeUtil"
 
 export default function Plans() {
   const { t, i18n } = useTranslation()
   const isArabic = i18n.language === "ar"
   const { user } = useContext(AuthContext)
   const [currentUser, setCurrentUser] = useState(null)
+  const [loadingUpgrade, setLoadingUpgrade] = useState(false)
+  const [loadingDowngrade, setLoadingDowngrade] = useState(false)
 
   useEffect(() => {
     if (user) {
@@ -33,40 +37,70 @@ export default function Plans() {
   }
 
   async function upgradeToPro() {
-    if (currentUser && currentUser.subscribtion?.plan === "pro") {
+    if (!currentUser) {
+      toast.error(t("plans.no_user"))
+      return
+    }
+
+    if (currentUser.subscribtion?.plan === "pro") {
       toast.error(t("plans.stay_pro"))
-    } else {
-      const newUserData = {
-        ...currentUser,
-        subscribtion: { ...currentUser.subscribtion, plan: "pro" },
-      }
-      try {
-        await updateUserById(currentUser.uid, newUserData)
-        setCurrentUser(newUserData)
-        toast.success(t("plans.upgrade_success"))
-      } catch (error) {
-        console.error("Error upgrading to Pro:", error)
-        toast.error(t("plans.upgrade_error"))
-      }
+      return
+    }
+
+    setLoadingUpgrade(true)
+    try {
+      // If we already stored stripeCustomerId for the user, pass it to reuse the customer
+      const customerId = currentUser.subscribtion?.stripeCustomerId || null
+      // subscribeToPro will redirect the browser to Stripe Checkout (it handles the redirect)
+      await subscribeToPro({ userId: currentUser.uid, email: currentUser.email, customerId })
+      // NOTE: subscribeToPro redirects away from the page. If it returns (no redirect), it means an error was thrown.
+      // The webhook on the server will update Firestore when the subscription is confirmed.
+    } catch (error) {
+      console.error("Error upgrading to Pro:", error)
+      toast.error(t("plans.upgrade_error"))
+    } finally {
+      setLoadingUpgrade(false)
     }
   }
 
   async function downgradeToFree() {
-    if (currentUser && currentUser.subscribtion?.plan === "free") {
+    if (!currentUser) {
+      toast.error(t("plans.no_user"))
+      return
+    }
+
+    if (currentUser.subscribtion?.plan === "free") {
       toast.error(t("plans.already_free"))
-    } else {
+      return
+    }
+
+    setLoadingDowngrade(true)
+    try {
+      const stripeCustomerId = currentUser.subscribtion?.stripeCustomerId
+
+      if (stripeCustomerId) {
+        // Best practice: open Stripe Billing Portal so the user cancels their recurring subscription
+        // Billing Portal handles cancellations, proration settings, etc., and is safer than trying to cancel from the client.
+        await openBillingPortal(stripeCustomerId)
+        // openBillingPortal will redirect the browser to Stripe's portal.
+        // After they cancel, the webhook (customer.subscription.deleted or updated) will update Firestore.
+        return
+      }
+
+      // Fallback: No stripeCustomerId found — do a direct Firestore update to mark the user's plan as free.
+      // This is a local fallback only — if there is an actual subscription in Stripe it will not be cancelled.
       const newUserData = {
         ...currentUser,
-        subscribtion: { ...currentUser.subscribtion, plan: "free" },
+        subscribtion: { ...currentUser.subscribtion, plan: "free", status: "canceled", subscriptionId: null },
       }
-      try {
-        await updateUserById(currentUser.uid, newUserData)
-        setCurrentUser(newUserData)
-        toast.success(t("plans.downgrade_success"))
-      } catch (error) {
-        console.error("Error downgrading to Free:", error)
-        toast.error(t("plans.downgrade_error"))
-      }
+      await updateUserById(currentUser.uid, newUserData)
+      setCurrentUser(newUserData)
+      toast.success(t("plans.downgrade_success"))
+    } catch (error) {
+      console.error("Error downgrading to Free:", error)
+      toast.error(t("plans.downgrade_error"))
+    } finally {
+      setLoadingDowngrade(false)
     }
   }
 
@@ -122,10 +156,17 @@ export default function Plans() {
               <Feature>{t("plans.free_active")}</Feature>
               <Feature notIncluded={true}>{t("plans.free_badge")}</Feature>
               <div className="mt-12 border-t border-t-[var(--color-card-border)] p-5 flex justify-center items-center">
-                <div 
+                <div
                   onClick={downgradeToFree}
-                  className={`w-full py-4 text-center rounded-lg ${currentUser.subscribtion.plan === 'free' ? 'bg-[#2b2825] text-[var(--color-text-secondary)] cursor-not-allowed' : 'bg-[var(--color-btn-submit-bg)] cursor-pointer hover:bg-[var(--color-btn-submit-hover)]'}  font-bold transition-all duration-300`}>
-                  {currentUser.subscribtion?.plan === "free"
+                  className={`w-full py-4 text-center rounded-lg ${
+                    currentUser.subscribtion.plan === "free"
+                      ? "bg-[#2b2825] text-[var(--color-text-secondary)] cursor-not-allowed"
+                      : "bg-[var(--color-btn-submit-bg)] cursor-pointer hover:bg-[var(--color-btn-submit-hover)]"
+                  }  font-bold transition-all duration-300`}
+                >
+                  {loadingDowngrade
+                    ? t("plans.processing")
+                    : currentUser.subscribtion?.plan === "free"
                     ? t("plans.stay_free")
                     : t("plans.downgrade_free")}
                 </div>
@@ -187,13 +228,16 @@ export default function Plans() {
                       : "bg-[#2b2825] text-[var(--color-text-secondary)] cursor-not-allowed"
                   } font-bold transition-all duration-300 `}
                 >
-                  {currentUser.subscribtion?.plan === "pro"
+                  {loadingUpgrade
+                    ? t("plans.processing")
+                    : currentUser.subscribtion?.plan === "pro"
                     ? t("plans.stay_pro")
                     : t("plans.upgrade_pro")}
                 </div>
               </div>
             </div>
           </div>
+          {/* ... rest of the component unchanged ... */}
           <h2 className="text-2xl font-semibold text-[var(--color-text-light)] mt-16 mb-6 text-center">
             {t("plans.comparison")}
           </h2>

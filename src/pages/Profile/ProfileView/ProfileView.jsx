@@ -94,10 +94,10 @@ export default function ProfileView({ data, isOwnProfile }) {
           )}
         </div>
 
-        <EditableName data={updatedProfile.name} updateUserData={updateUserData} isOwnProfile={isOwnProfile} pro={data.subscribtion.plan == 'pro'} />
+        <EditableName data={updatedProfile.name} updateUserData={updateUserData} isOwnProfile={isOwnProfile} pro={data.subscribtion.plan == "pro"} />
 
         <div className="flex justify-center items-center gap-1 text-[var(--color-text-secondary)] mb-2">
-          <p className="">{data.subscribtion.plan == 'free' ? t('SkillTrader') : t('proSkillTrader')}</p>
+          <p className="">{data.subscribtion.plan == "free" ? t("SkillTrader") : t("proSkillTrader")}</p>
 
           <Rating size="sm" className="gap-0.5">
             <RatingStar />
@@ -122,7 +122,7 @@ export default function ProfileView({ data, isOwnProfile }) {
 
           <button
             className="relative overflow-hidden px-5 py-2 font-semibold rounded-full shadow-lg group dark:text-[--color-text-light] text-white bg-[--color-btn-submit-bg]"
-            onClick={() => navigate("/trade")}
+            onClick={() => navigate(`/schedule/${data.uid}`)}
           >
             <span className="relative z-10 transition duration-1000 group-hover:text-[var(--color-text-dark)]">{t("Start Trading")}</span>
             <span
@@ -202,22 +202,22 @@ const sampleUserProfile = {
     {
       skillName: "Graphic Design",
       skillId: "skill_2n6bu8962",
-      skillLevel: "Intermediate",
+      skillLevel: "intermediate",
     },
     {
       skillName: "Writing",
       skillId: "skill_3n7cu9073",
-      skillLevel: "Beginner",
+      skillLevel: "beginner",
     },
   ],
   needSkills: [
     {
-      skillLevel: "Beginner",
+      skillLevel: "beginner",
       skillId: "skill_29snal0g7",
       skillName: "Spanish",
     },
     {
-      skillLevel: "Intermediate",
+      skillLevel: "intermediate",
       skillId: "skill_30tmal1h8",
       skillName: "Cooking",
     },

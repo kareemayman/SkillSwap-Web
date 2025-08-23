@@ -1,7 +1,7 @@
 {
   "HeroSection": {
-    "title": "افتح إمكانياتك من خلال مشاركة المهارات",
-    "description": "تواصل مع مجتمع حيوي من المتعلمين والخبراء. شارك مهاراتك وتعلم مهارات جديدة ونمو معًا.",
+    "title": "أطلق قدراتك عبر تبادل المهارات",
+    "description": "تواصل مع مجتمع حيوي من المتعلمين والخبراء. شارك مهاراتك وتعلم مهارات جديدة وانمُ معًا.",
     "button": "ابدأ الآن"
   },
   "SuccessStoriesSection": {
@@ -35,7 +35,7 @@
     }
   },
   "HowWorkSection": {
-    "title": "كيف تعمل Swapoo",
+    "title": "كيف تعمل سوابو؟",
     "description": "منصتنا تربط بين الأفراد الذين يرغبون في مشاركة خبرتهم مع أولئك الذين يرغبون في التعلم. إنها تبادل مجتمعي حيث يتم تقدير المهارات ومشاركتها بحرية."
   },
   "HowWorksCards": {
@@ -189,6 +189,9 @@
   "Please select both seeking and offering skills.": "يرجى اختيار كل من المهارة التي تبحث عنها والتي تقدمها.",
   "Please select a seeking skill.": "يرجى اختيار المهارة التي تبحث عنها.",
   "Session scheduled successfully!": "تم جدولة الجلسة بنجاح!",
+  "Propose offer for": "اقترح عرضًا لـ",
+  "Offer a price": "قدم سعرًا",
+  "Offer a valid price": "يرجى تقديم سعر صالح أكبر من 5 دولارات",
   "Dashboard": {
     "Analytics": "التحليلات",
     "Users": "المستخدمين",
@@ -375,7 +378,9 @@
     "downgrade_success": "تم العودة إلى الخطة المجانية بنجاح!",
     "upgrade_error": "حدث خطأ أثناء الترقية. يرجى المحاولة مرة أخرى.",
     "downgrade_error": "حدث خطأ أثناء العودة إلى الخطة المجانية. يرجى المحاولة مرة أخرى.",
-    "already_free": "أنت بالفعل على الخطة المجانية"
+    "already_free": "أنت بالفعل على الخطة المجانية",
+    "processing": "جارٍ المعالجة...",
+    "no_user": "لم يتم العثور على مستخدم."
   },
   "Overall Rating": "التقييم العام",
   "Overall": "التقييم العام",
@@ -393,5 +398,70 @@
   "message_user": "أرسل رسالة إلى {{name}}",
   "add_new_milestone": "أضف مهمة جديدة",
   "generate_with_ai": "توليد مهمة باستخدام الذكاء الاصطناعي",
-  "free_trade_limit_reached": "لقد وصلت إلى حد التبادل المجاني. يرجى الترقية إلى Pro للاستمرار في التبادل."
+  "free_trade_limit_reached": "لقد وصلت إلى حد التبادل المجاني. يرجى الترقية إلى Pro للاستمرار في التبادل.",
+  "Subscription": "الاشتراك",
+  "Pro Plan": "خطة Pro",
+  "Free Plan": "الخطة المجانية",
+  "Renew on": "التجديد في",
+
+  "Manage Subscription": "إدارة الاشتراك",
+
+  "learnMore": "اعرف أكثر",
+  "view": "عرض",
+
+  "justNow": "الآن",
+  "minute": "دقيقة",
+  "minutes": "دقائق",
+  "minutesAgo": "دقائق مضت",
+  "hour": "ساعة",
+  "hours": "ساعات",
+  "hoursAgo": "ساعات مضت",
+  "day": "يوم",
+  "days": "أيام",
+  "daysAgo": "أيام مضت",
+  "ago": "مضت",
+
+  "notifications": "الإشعارات",
+  "unread": "غير مقروء",
+  "markAll": "تحديد الكل",
+  "asRead": "كمقروء",
+  "noNotifications": "لا توجد إشعارات",
+
+  "newSkillExchangeRequest": "طلب تبادل مهارات جديد",
+  "paymentReceived": "تم استلام الدفعة",
+  "profileUpdated": "تم تحديث الملف الشخصي",
+  "tradeCompleted": "تم إكمال التبادل",
+  "milestoneCompleted": "تم إنجاز المرحلة",
+  "withdrawalApproved": "تم الموافقة على السحب",
+  "tradeRequestAccepted": "تم قبول طلب التبادل",
+  "tradeRequestDeclined": "تم رفض طلب التبادل",
+  "paymentSent": "تم إرسال الدفعة",
+  "systemNotification": "إشعار النظام",
+  "notification": "إشعار",
+
+  "wantsToTrade": "يريد تبادل المهارات معك",
+  "receivedPaymentFrom": "استلمت دفعة من",
+  "profileSuccessfullyUpdated": "تم تحديث ملفك الشخصي بنجاح",
+  "tradeCompletedWith": "أكمل بنجاح تبادلاً معك",
+  "completedMilestone": "أكمل المرحلة:",
+  "withdrawalRequestApproved": "تم الموافقة على طلب السحب الخاص بك",
+  "acceptedYourTradeRequest": "قبل طلب التبادل الخاص بك",
+  "declinedYourTradeRequest": "رفض طلب التبادل الخاص بك",
+  "sentPaymentTo": "أرسلت دفعة إلى",
+  "systemUpdate": "تحديث النظام متاح",
+  "newNotification": "لديك إشعار جديد",
+
+  "accept": "قبول",
+  "decline": "رفض",
+  "viewTrade": "عرض التبادل",
+  "reviewMilestone": "مراجعة المرحلة",
+  "viewBalance": "عرض الرصيد",
+  "withdraw": "سحب",
+  "ratePartner": "تقييم الشريك",
+  "viewTransaction": "عرض المعاملة",
+
+  "tradeRequestCreated": "تم إنشاء طلب التبادل وإرسال الإشعار!\n\nسنخبرك عندما يرد {{name}}!",
+  "Swapoo": "سوابو",
+  "trade_completed": "هذا التبادل مكتمل"
+
 }

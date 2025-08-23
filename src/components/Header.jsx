@@ -2,16 +2,21 @@ import logo from "../assets/images/logo.png";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/Auth/context";
 import { useTranslation } from "react-i18next";
-import { FaBars, FaTimes, FaComments, FaSearch, FaSignOutAlt } from "react-icons/fa";
+import { FaBars, FaTimes, FaComments, FaSearch, FaSignOutAlt, FaBell } from "react-icons/fa";
 import { HiUserCircle } from "react-icons/hi2";
-import { use, useEffect, useState } from "react";
+import { Children, use, useEffect, useState } from "react";
 import { subscribeToUserChats } from "../utils/chatUtil";
 import useFirestoreGet from "../hooks/useFirestoreGet";
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext.jsx";
+import { createTheme, Dropdown, DropdownItem } from "flowbite-react";
+import { TbArrowsExchange } from "react-icons/tb";
+import { RiExchangeBoxFill, RiExchangeBoxLine, RiExchangeLine, RiExchangeFill } from "react-icons/ri";
+import NotificationDropdown from "./NotificationDropdown";
+
 export default function Header() {
   const { user, logOut } = useAuth();
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const { data: userProfile, loading, error, request } = useFirestoreGet();
@@ -25,6 +30,10 @@ export default function Header() {
   useEffect(() => {
     if (!user?.uid) return;
 
+    request("users", user.uid);
+
+    // subscribe to notifications
+
     const unsub = subscribeToUserChats(user.uid, (chats) => {
       const count = chats.filter((chat) => {
         const msg = chat.lastMessage;
@@ -33,14 +42,10 @@ export default function Header() {
       setUnreadCount(count);
     });
 
-    return () => unsub();
-  }, [user?.uid]);
-
-  useEffect(() => {
-    if (user?.uid) {
-      request("users", user.uid);
-    }
-  }, [user?.uid]);
+    return () => {
+      unsub();
+    };
+  }, [user?.uid, request]);
 
   return (
     <header className="shadow-md dark:shadow-[var(--color-card-border)] shadow-[#68482f91]">
@@ -49,24 +54,27 @@ export default function Header() {
         <Link to="/">
           <div className="flex items-end gap-1">
             <img src={logo} alt="logo" className="w-8 h-8" />
-            <h1 className="font-bold text-2xl text-[var(--main-color)] ">Swapoo</h1>
+            <h1 className="font-bold text-2xl text-[var(--main-color)] ">{t("Swapoo")}</h1>
           </div>
         </Link>
 
         {/* Navigation & Actions */}
-        <div className="flex items-center gap-3   pl-4 ml-4">
+        <div className="flex items-center gap-3 pl-4 ml-4">
           {/* Desktop Nav */}
           <div className="hidden sm:flex gap-3 items-center text-[var(--color-text-primary)]">
             {user ? (
               <>
+
                 <NavLink
                   to="/explore"
                   className="hover:text-[var(--main-color)] font-bold transition-transform duration-200 hover:scale-110"
                 >
+
                   Explore
                 </NavLink>
 
                 {user?.email === "skills.swap.app@gmail.com" && (
+
                   <NavLink
                     to="/dashboard"
                     className="hover:text-[var(--main-color)] transition-transform duration-200 hover:scale-110 font-bold"
@@ -83,7 +91,29 @@ export default function Header() {
                     </span>
                   )}
                 </NavLink>
+
                 <NavLink to="/search" className="text-xl transition-transform duration-200 hover:scale-110 hover:text-[var(--main-color)]" title="Search">
+
+
+                {/* <button className="text-xl transition-transform duration-200 hover:scale-110" title="Search">
+                  <FaBell />
+                </button> */}
+
+                {/* <Notifications>
+                  <div className="relative text-xl transition-transform duration-200 hover:scale-110" title="Notifications">
+                    <FaBell size={20} />
+
+                    <span class="sr-only">Notifications</span>
+                    <div class="absolute inline-flex items-center justify-center w-4 h-4 text-[10px] font-semibold text-white bg-red-500 rounded-full -top-2 -end-2 z-40">
+                      20
+                    </div>
+                  </div>
+                </Notifications> */}
+
+                <NotificationDropdown userProfile={userProfile} />
+
+                <NavLink to="/search" className="text-xl transition-transform duration-200 hover:scale-110" title="Search">
+
                   <FaSearch />
                 </NavLink>
 
@@ -150,6 +180,18 @@ export default function Header() {
                 <NavLink to="/messages" onClick={() => setMenuOpen(false)}>
                   Messages {unreadCount > 0 && <span className="ml-1 text-red-400">({unreadCount})</span>}
                 </NavLink>
+
+                {/* <Notifications>
+                  <button>
+                    Notifications
+                    <span class="inline-flex items-center justify-center w-5 h-5 ms-2 text-xs font-semibold text-white bg-red-500 rounded-full ">
+                      2
+                    </span>
+                  </button>
+                </Notifications> */}
+
+                <NotificationDropdown iconOrText="text" />
+
                 <NavLink to="/search" onClick={() => setMenuOpen(false)}>
                   Search
                 </NavLink>
@@ -182,3 +224,93 @@ export default function Header() {
     </header>
   );
 }
+
+// function Notifications({ children }) {
+//   const t = createTheme({
+//     arrowIcon: "ml-2 h-4 w-4",
+//     content: "py-1 focus:outline-none",
+//     floating: {
+//       animation: "transition-opacity",
+//       arrow: {
+//         base: "absolute z-10 h-2 w-2 rotate-45",
+//         style: {
+//           dark: "bg-gray-900",
+//           light: "bg-white",
+//           auto: "bg-white",
+//         },
+//         placement: "-4px",
+//       },
+//       base: "z-30 w-fit divide-y divide-gray-100 rounded shadow focus:outline-none",
+//       content: "py-1 text-sm ",
+//       divider: "my-1 w-full h-0.5 bg-[--color-text-primary]",
+//       header: "block px-4 py-2 text-sm ",
+//       hidden: "invisible opacity-0",
+//       item: {
+//         container: "",
+//         base: "flex w-full cursor-pointer items-center justify-start px-4 py-2 text-sm md:text-base hover:bg-[#c9ae93] hover:text-[--dropdown-bg] focus:bg-[--color-text-primary] focus:outline-none",
+//         icon: "mr-2 h-4 w-4",
+//       },
+//       style: {
+//         dark: "bg-[--dropdown-bg] text-[--color-text-primary]",
+//         light: "bg-[--dropdown-bg] text-[--color-text-primary]",
+//         auto: "bg-[--dropdown-bg] text-[--color-text-primary] ",
+//       },
+//       target: "w-fit",
+//     },
+//     inlineWrapper: "flex items-center",
+//   });
+
+//   return (
+//     <Dropdown
+//       label={<>{children}</>}
+//       dismissOnClick={false}
+//       inline={true}
+//       placement="bottom-end"
+//       // className="z-30 w-60"
+//       theme={t}
+//       applyTheme={{ arrowIcon: "replace", content: "replace", floating: "replace", inlineWrapper: "replace" }}
+//       // style={{ minWidth: "200px", backgroundColor: "cyan" }}
+//       arrowIcon={false}
+//       // trigger="hover"
+//     >
+//       <DropdownItem>
+//         <div className="w-full flex flex-col gap-2">
+//           <div className="flex items-center justify-between">
+//             <div className="flex gap-2">
+//               <p>notification title</p>
+//               <p>time</p>
+//             </div>
+
+//             <button>mark as read</button>
+//           </div>
+
+//           <p className="text-start">someone sent you a request to start trading skills with you</p>
+
+//           <div className="flex items-center justify-between">
+//             <div className="flex items-center gap-2">
+//               <p>your skill</p>
+//               <TbArrowsExchange size={26} />
+//               <p>their skill</p>
+//             </div>
+
+//             <div>
+//               <button>Accept</button>
+//               <button>Decline</button>
+//             </div>
+//           </div>
+//         </div>
+//       </DropdownItem>
+//       <DropdownItem
+//       // icon={() => (
+//       //   <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+//       //     <path d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z" />
+//       //   </svg>
+//       // )}
+//       >
+//         Settings
+//       </DropdownItem>
+//       <DropdownItem>Earnings</DropdownItem>
+//       <DropdownItem>Sign out</DropdownItem>
+//     </Dropdown>
+//   );
+// }

@@ -19,6 +19,8 @@ import Terms from "./pages/Terms";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 import Plans from "./pages/Plans/Plans";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancel from "./pages/PaymentCancel";
 
 const AppRoutes = () => {
   const routes = [
@@ -35,17 +37,15 @@ const AppRoutes = () => {
             { path: "rate/:userId", element: <RateExperience /> },
             { path: "search", element: <SearchScreen /> },
             { path: "chat/:userId", element: <ChatScreen /> },
-            {
-              path: "schedule/:userId",
-              element: <ScheduleSession></ScheduleSession>,
-            },
+            { path: "schedule/:userId", element: <ScheduleSession /> },
             { path: "dashboard", element: <Dashboard /> },
-            { path: "rate/:id", element: <RateExperience /> },
             { path: "trade/:id", element: <Trade /> },
             { path: "about", element: <About /> },
             { path: "terms", element: <Terms /> },
             { path: "privacy", element: <PrivacyPolicy /> },
             { path: "plans", element: <Plans /> },
+            { path: "payment-success", element: <PaymentSuccess/> },
+            { path: "payment-cancel", element: <PaymentCancel/> },
           ],
         },
         {
