@@ -16,6 +16,7 @@ import { createNotification } from "../../utils/notificationService";
 export const ScheduleSession = () => {
   const { t } = useTranslation();
 
+
   const [proposeTradeToggle, setProposeTradeToggle] = useState(true);
   const [paymentToggle, setPaymentToggle] = useState(false);
   const [seekingSkill, setSeekingSkill] = useState("");
@@ -56,6 +57,7 @@ export const ScheduleSession = () => {
   }, [currentUserFromAuth]);
 
   async function createTrade() {
+
     const toastId = toast.loading("Processing...");
 
     if (paymentToggle === false && (seekingSkill.trim() === "" || offeringSkill.trim() === "")) {
@@ -253,6 +255,7 @@ export const ScheduleSession = () => {
           </select>
 
           <div className={`${!paymentToggle && "opacity-50"} relative`}>
+
             {!paymentToggle && <div className="absolute inset-0 bg-[var(--color-card-bg)] opacity-50 rounded-lg"></div>}
             <h3 className="mt-10 mb-4 font-medium text-[var(--main-color)] text-xl">{t("Payment")}</h3>
             <p className="text-[var(--color-text-primary)]">{t("Propose offer for") + " " + user.name}</p>

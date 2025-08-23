@@ -405,6 +405,7 @@
   "Pro Plan": "Pro Plan",
   "Free Plan": "Free Plan",
   "Renew on": "Renew on",
+
   "Manage Subscription": "Manage Subscription",
 
   "learnMore": "Learn More",
@@ -462,4 +463,5 @@
   "viewTransaction": "View Transaction",
 
   "tradeRequestCreated": "Trade request created and notification sent!\n\nWe will notify you once {{name}} answers!"
+
 }

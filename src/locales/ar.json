@@ -403,6 +403,7 @@
   "Pro Plan": "خطة Pro",
   "Free Plan": "الخطة المجانية",
   "Renew on": "التجديد في",
+
   "Manage Subscription": "إدارة الاشتراك",
 
   "learnMore": "اعرف أكثر",
@@ -460,4 +461,5 @@
   "viewTransaction": "عرض المعاملة",
 
   "tradeRequestCreated": "تم إنشاء طلب التبادل وإرسال الإشعار!\n\nسنخبرك عندما يرد {{name}}!"
+
 }
