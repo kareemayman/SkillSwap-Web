@@ -64,8 +64,6 @@ export default function SkillSelector({ onSave, onCancel, existingSkills = [], p
         res = res.replace("```json", "").replace("```", "");
         const parsedRes = JSON.parse(res);
 
-        console.log("@ProfilePage ---- @SkillSelector ---- Gemini response:", parsedRes);
-
         const results = parsedRes
           .map((id) => allSkillsList.find((skill) => skill.id === id))
           .filter((skill) => skill && !allCurrentSkillNames.includes(skill.skillName.toLowerCase()));
@@ -84,7 +82,7 @@ export default function SkillSelector({ onSave, onCancel, existingSkills = [], p
   }, [debouncedQuery, allSkillsList, existingSkills, selectedSkills, newCustomSkills]);
 
   const handleSelectSkill = (skill) => {
-    setSelectedSkills((prev) => [...prev, { ...skill, skillLevel: "beginner" }]);
+    setSelectedSkills((prev) => [...prev, { ...skill, skillLevel: skillType === "hasSkills" ? "intermediate" : "beginner" }]);
     setSearchQuery("");
     setFilteredResults([]);
   };
@@ -94,11 +92,12 @@ export default function SkillSelector({ onSave, onCancel, existingSkills = [], p
       setLoadingMessage("Adding new skill...");
       try {
         const newSkill = await createSkillDoc({ skillName });
-        newSkill.skillId = newSkill.id;
-        delete newSkill.id;
 
         setNewCustomSkills((prev) => [...prev, { ...newSkill, skillLevel: skillType === "hasSkills" ? "intermediate" : "beginner" }]);
+
         setSearchQuery("");
+
+        setAllSkillsList((prev) => [...prev, newSkill]);
       } catch (error) {
         console.error("Error creating new skill with Gemini:\n", error);
         setError("Adding new skill failed. Please try again.");
@@ -111,7 +110,7 @@ export default function SkillSelector({ onSave, onCancel, existingSkills = [], p
   const handleSave = () => {
     const newSkillsToAdd = [
       ...selectedSkills.map((skill) => {
-        const newSkill = { ...skill, skillId: newSkill.id, skillLevel: skillType === "hasSkills" ? "intermediate" : "beginner" };
+        const newSkill = { ...skill, skillId: skill.id, skillLevel: skillType === "hasSkills" ? "intermediate" : "beginner" };
         delete newSkill.id;
 
         return newSkill;
@@ -120,6 +119,17 @@ export default function SkillSelector({ onSave, onCancel, existingSkills = [], p
       ...newCustomSkills,
     ];
     onSave(newSkillsToAdd);
+    setSelectedSkills([]);
+    setNewCustomSkills([]);
+  };
+
+  const handleCancel = () => {
+    setSelectedSkills([]);
+    setNewCustomSkills([]);
+    setSearchQuery("");
+    setFilteredResults([]);
+    setError(null);
+    onCancel();
   };
 
   return (
@@ -198,7 +208,7 @@ export default function SkillSelector({ onSave, onCancel, existingSkills = [], p
         <button
           aria-label="Cancel adding skills"
           className="p-2 rounded-full bg-red-100 text-red-700 transition-colors hover:bg-red-700 hover:text-red-100"
-          onClick={onCancel}
+          onClick={handleCancel}
         >
           <LuCircleX size={22} />
         </button>

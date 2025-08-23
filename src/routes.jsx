@@ -37,10 +37,7 @@ const AppRoutes = () => {
             { path: "rate/:userId", element: <RateExperience /> },
             { path: "search", element: <SearchScreen /> },
             { path: "chat/:userId", element: <ChatScreen /> },
-            {
-              path: "schedule/:userId",
-              element: <ScheduleSession></ScheduleSession>,
-            },
+            { path: "schedule/:userId", element: <ScheduleSession /> },
             { path: "dashboard", element: <Dashboard /> },
             { path: "rate/:id", element: <RateExperience /> },
             { path: "trade/:id", element: <Trade /> },

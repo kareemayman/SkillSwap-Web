@@ -110,6 +110,7 @@
   "ProfileView": {
     "ProfilePictureAlt": "Profile Picture",
     "EditProfilePicture": "Edit Profile Picture",
+    "SkillTradesComingSoon": "Skill Trades content will be implemented here",
     "Tabs": {
       "Profile": "Profile",
       "Skill Trades": "Skill Trades",
@@ -117,7 +118,6 @@
       "Settings": "Settings"
     }
   },
-  "SkillTradesComingSoon": "Skill Trades content will be implemented here",
   "skills": "Skills",
   "Schedule Session": "Schedule Session",
   "SkillTrader": "Skill Trader",
@@ -405,5 +405,63 @@
   "Pro Plan": "Pro Plan",
   "Free Plan": "Free Plan",
   "Renew on": "Renew on",
-  "Manage Subscription": "Manage Subscription"
+
+  "Manage Subscription": "Manage Subscription",
+
+  "learnMore": "Learn More",
+  "view": "View",
+
+  "justNow": "Just now",
+  "minute": "minute",
+  "minutes": "minutes",
+  "minutesAgo": "minutes ago",
+  "hour": "hour",
+  "hours": "hours",
+  "hoursAgo": "hours ago",
+  "day": "day",
+  "days": "days",
+  "daysAgo": "days ago",
+  "ago": "ago",
+
+  "notifications": "Notifications",
+  "unread": "unread",
+  "markAll": "Mark all",
+  "asRead": "as read",
+  "noNotifications": "No notifications",
+
+  "newSkillExchangeRequest": "New Skill Exchange Request",
+  "paymentReceived": "Payment Received",
+  "profileUpdated": "Profile Updated",
+  "tradeCompleted": "Trade Completed",
+  "milestoneCompleted": "Milestone Completed",
+  "withdrawalApproved": "Withdrawal Approved",
+  "tradeRequestAccepted": "Trade Request Accepted",
+  "tradeRequestDeclined": "Trade Request Declined",
+  "paymentSent": "Payment Sent",
+  "systemNotification": "System Notification",
+  "notification": "Notification",
+
+  "wantsToTrade": "wants to trade skills with you",
+  "receivedPaymentFrom": "You received payment from",
+  "profileSuccessfullyUpdated": "Your profile has been successfully updated",
+  "tradeCompletedWith": "successfully completed a trade with you",
+  "completedMilestone": "completed milestone:",
+  "withdrawalRequestApproved": "Your withdrawal request has been approved",
+  "acceptedYourTradeRequest": "accepted your trade request",
+  "declinedYourTradeRequest": "declined your trade request",
+  "sentPaymentTo": "You sent payment to",
+  "systemUpdate": "System update available",
+  "newNotification": "You have a new notification",
+
+  "accept": "Accept",
+  "decline": "Decline",
+  "viewTrade": "View Trade",
+  "reviewMilestone": "Review",
+  "viewBalance": "View Balance",
+  "withdraw": "Withdraw",
+  "ratePartner": "Rate Partner",
+  "viewTransaction": "View Transaction",
+
+  "tradeRequestCreated": "Trade request created and notification sent!\n\nWe will notify you once {{name}} answers!"
+
 }
