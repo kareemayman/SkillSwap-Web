@@ -58,7 +58,7 @@
 } */
 :root {
   /* LIGHT THEME */
-  --main-color: #e0541d;
+  --main-color: #d7501a;
   --color-text-primary: #4d2608;
   --color-text-secondary: #4a4745;
   --color-text-light: #000000;
@@ -70,8 +70,8 @@
   --color-skill-teach-bg: #ffe5b4;
   --color-skill-learn-bg: #bc640dd8;
 
-  --color-btn-submit-bg: #68482f;
-  --color-btn-submit-hover: #a27655;
+  --color-btn-submit-bg: #a27655;
+  --color-btn-submit-hover: #68482f;
 
   --dropdown-bg: rgba(245, 237, 232, 0.95);
   --dropdown-text: #3b2f2a;
@@ -133,7 +133,7 @@
 }
 
 .usercard {
-  background: radial-gradient(at bottom, #f9e7d7 0%, #c9ae93 40%, #b49c88 100%);
+  background: radial-gradient(at top left, #f6e7da 0%, #e5cdb4 40%, #d0b49f 100%);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(120, 72, 28, 0.15);

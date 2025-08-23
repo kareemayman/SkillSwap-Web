@@ -18,7 +18,7 @@ export default function ChatInput({ onSend }) {
     <form onSubmit={handleSubmit} className="flex mt-4 gap-3 border-t border-gray-700 pt-4">
       <input
         type="text"
-      className='w-full border-neutral-950 focus:border-[var(--color-card-content-border)] bg-[var(--input-bg)] text-[var(--color-text-primary)] rounded-md shadow-sm   '
+      className='w-full border-neutral-950 focus:border-[var(--color-card-content-border)] bg-[var(--bg-color1)] dark:bg-[#1c1d1d] text-[var(--color-text-primary)] rounded-md shadow-sm   '
         placeholder={t("chat.placeholder")}
         value={text}
         onChange={(e) => setText(e.target.value)}

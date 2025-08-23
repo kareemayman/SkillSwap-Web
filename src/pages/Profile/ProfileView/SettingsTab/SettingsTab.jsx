@@ -38,7 +38,7 @@ export default function SettingsTab({ updatedProfile, updateUserData, isOwnProfi
             id="availability"
             checked={updatedProfile.availability}
             onChange={(e) => updateUserData("availability", e.target.checked)}
-            className="rounded w-4 h-4 text-[--color-btn-submit-bg] hover:cursor-pointer"
+            className="rounded w-4 h-4 text-[--main-color] hover:cursor-pointer"
           />
           <label
             htmlFor="availability"
@@ -61,7 +61,7 @@ export default function SettingsTab({ updatedProfile, updateUserData, isOwnProfi
               id="availableForTrade"
               checked={updatedProfile.isAvailableForTrade}
               onChange={(e) => updateUserData("isAvailableForTrade", e.target.checked)}
-              className="rounded w-4 h-4 text-[--color-btn-submit-bg] hover:cursor-pointer"
+              className="rounded w-4 h-4 text-[--main-color] hover:cursor-pointer"
             />
             <label
               htmlFor="availableForTrade"
@@ -77,7 +77,7 @@ export default function SettingsTab({ updatedProfile, updateUserData, isOwnProfi
               id="availableForPaid"
               checked={updatedProfile.isAvailableForPaid}
               onChange={(e) => updateUserData("isAvailableForPaid", e.target.checked)}
-              className="rounded w-4 h-4 text-[--color-btn-submit-bg] hover:cursor-pointer"
+              className="rounded w-4 h-4 text-[--main-color] hover:cursor-pointer"
             />
             <label
               htmlFor="availableForPaid"
@@ -106,7 +106,7 @@ export default function SettingsTab({ updatedProfile, updateUserData, isOwnProfi
 
           <div 
             onClick={() => navigate('/plans')}
-            className="text-sm sm:text-base flex justify-center items-center bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] px-4 py-2 rounded-lg font-bold text-[var(--color-text-light)] transition-all duration-300 cursor-pointer">
+            className="text-sm sm:text-base flex justify-center items-center bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] px-4 py-2 rounded-lg font-bold text-white transition-all duration-300 cursor-pointer">
             {t("Manage Subscription")}
           </div>
         </div>

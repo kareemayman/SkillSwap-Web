@@ -68,7 +68,7 @@ export default function EditableSkillsSection({ title, data = [], skillType, upd
           <div className="flex items-center gap-2">
             <button
               title="Add Skills"
-              className="p-1 rounded-full shadow-lg bg-[--main-color] text-[--color-text-light] hover:bg-[--color-text-light] hover:text-[--color-btn-submit-bg] transition-colors"
+              className="p-1 rounded-full shadow-lg bg-[--main-color] text-[--color-text-light] hover:bg-white hover:text-[--color-btn-submit-bg] transition-colors"
               onClick={() => setIsAdding(true)}
             >
               <LuCirclePlus size={20} />
@@ -116,13 +116,13 @@ export default function EditableSkillsSection({ title, data = [], skillType, upd
       )}
 
       {isEditing && (
-        <div className="p-4 mt-4 border rounded-lg bg-gray-50/50 border-gray-300 space-y-4">
+        <div className="p-4 mt-4 border rounded-lg bg-gray-50/50 dark:bg-[#1a1a17] border-gray-300 dark:border-[--color-btn-submit-bg] space-y-4">
           <SkillLevelSelector skills={skillsData} onSkillLevelChange={handleSkillLevelChange} />
 
           <div className="flex items-center gap-2">
             <button
               aria-label="Save edited Skills"
-              className="p-1 rounded-full bg-green-100 text-green-700 transition-colors hover:bg-green-700 hover:text-green-100"
+              className="p-1 rounded-full bg-green-100 text-green-700  transition-colors hover:bg-green-700 hover:text-green-100"
               title="Save Changes"
               onClick={handleSaveEditing}
             >
