@@ -1,7 +1,3 @@
-// src/lib/stripeUtil.js
-// Simple helper functions to start checkout flows and verify sessions.
-// Uses environment variables defined in your Vite .env (see below).
-
 /**
  * Start a one-time trade payment.
  * Backend endpoint expected: POST /api/create-checkout-session
