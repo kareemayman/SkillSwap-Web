@@ -98,6 +98,25 @@ export default function Header() {
                   )}
                 </NavLink>
 
+                <NavLink to="/search" className="text-xl transition-transform duration-200 hover:scale-110 hover:text-[var(--main-color)]" title="Search"></NavLink>
+
+
+                {/* <button className="text-xl transition-transform duration-200 hover:scale-110" title="Search">
+                  <FaBell />
+                </button> */}
+
+                {/* <Notifications>
+                  <div className="relative text-xl transition-transform duration-200 hover:scale-110" title="Notifications">
+                    <FaBell size={20} />
+
+                    <span class="sr-only">Notifications</span>
+                    <div class="absolute inline-flex items-center justify-center w-4 h-4 text-[10px] font-semibold text-white bg-red-500 rounded-full -top-2 -end-2 z-40">
+                      20
+                    </div>
+                  </div>
+                </Notifications> */}
+
+
                 <NotificationDropdown userProfile={userProfile} />
 
                 <NavLink
