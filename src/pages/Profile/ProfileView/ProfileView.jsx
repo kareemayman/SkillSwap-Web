@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import ReviewsTab from "./ReviewsTab/ReviewsTab";
 import { Rating, RatingStar } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
+import SkillTradesTab from "./SkillTradesTab/SkillTradesTab";
 
 export default function ProfileView({ data, isOwnProfile }) {
   const { t } = useTranslation();
@@ -168,9 +169,7 @@ export default function ProfileView({ data, isOwnProfile }) {
       {activeTab === "Profile" && <InfoTab updatedProfile={updatedProfile} updateUserData={updateUserData} isOwnProfile={isOwnProfile} />}
 
       {activeTab === "Skill Trades" && isOwnProfile && (
-        <div className="text-center py-12">
-          <p className="text-gray-500">{t("ProfileView.SkillTradesComingSoon")}</p>
-        </div>
+        <SkillTradesTab updatedProfile={updatedProfile}/>
       )}
       {activeTab === "Reviews" && <ReviewsTab reviews={data?.reviews} userAvgRating={avgRatings} />}
       {activeTab === "Settings" && isOwnProfile && (
