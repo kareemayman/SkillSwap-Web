@@ -3,7 +3,8 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import darkWave from "../../assets/images/img.svg";
 import lightWave from "../../assets/images/wave8.svg";
-import {ThemeContext} from"../../contexts/ThemeContext.jsx";
+import { ThemeContext } from "../../contexts/ThemeContext.jsx";
+// import img from "../../assets/images/bg_banner1.jpg";
 
 export default function LandingFooter() {
   const { t } = useTranslation();
@@ -11,39 +12,33 @@ export default function LandingFooter() {
   const { darkMode } = useContext(ThemeContext);
   const waveImg = darkMode ? darkWave : lightWave;
 
-  
-
   return (
-    <div className="relative w-full  mt-20">
+    <div className="relative w-full py-10 mt-20">
+      
+
       <div className="relative z-10 max-w-[1000px] mx-auto px-5 py-12">
-        <div className="flex flex-wrap justify-center gap-8 mb-6 text-[var(--color-text-secondary)]">
+        <div className="flex flex-wrap justify-center gap-20 mb-6 text-[var(--color-text-secondary)]">
           <Link
             to="/about"
-            className="text-base min-w-[160px] text-center hover:text-[var(--color-text-primary)] transition-colors"
+            className="text-base min-w-[160px] text-center hover:text-white  text-[var(--color-text-primary)] transition-colors"
           >
             {t("Footer.about")}
           </Link>
-          {/* <Link
-            to="#"
-            className="text-base min-w-[160px] text-center hover:text-[var(--color-text-primary)] transition-colors"
-          >
-            {t("Footer.contact")}
-          </Link> */}
           <Link
             to="/terms"
-            className="text-base min-w-[160px] text-center hover:text-[var(--color-text-primary)] transition-colors"
+            className="text-base min-w-[160px] text-center hover:text-white  text-[var(--color-text-primary)] transition-colors"
           >
             {t("Footer.terms")}
           </Link>
           <Link
             to="/privacy"
-            className="text-base min-w-[160px] text-center hover:text-[var(--color-text-primary)] transition-colors"
+            className="text-base min-w-[160px] text-center hover:text-white  text-[var(--color-text-primary)] transition-colors"
           >
             {t("Footer.privacy")}
           </Link>
         </div>
 
-        <p className="text-center text-[var(--color-text-secondary)]">
+        <p className="text-center   text-[var(--color-text-primary)]">
           {t("Footer.copyright", { year: currentYear })}
         </p>
       </div>
