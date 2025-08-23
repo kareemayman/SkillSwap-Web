@@ -463,6 +463,7 @@
   "viewTransaction": "View Transaction",
 
   "tradeRequestCreated": "Trade request created and notification sent!\n\nWe will notify you once {{name}} answers!",
-  "Swapoo": "Swapoo"
+  "Swapoo": "Swapoo",
+  "trade_completed": "This Trade Is Completed"
 
 }
