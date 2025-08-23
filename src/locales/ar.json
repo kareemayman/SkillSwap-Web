@@ -467,5 +467,17 @@
   "The user is not available for trade. Please try again later.": "المستخدم غير متاح للتبادل. يرجى المحاولة مرة أخرى لاحقًا.",
   "user is not available for paid sessions. Please try again later.": "المستخدم غير متاح للجلسات المدفوعة. يرجى المحاولة مرة أخرى لاحقًا.",
   "The user cannot accept more trades. Please try again later.": "المستخدم لا يمكنه قبول المزيد من التبادلات. يرجى المحاولة مرة أخرى لاحقًا.",
-  "No trades available.": "لا توجد تبادلات متاحة."
+  "No trades available.": "لا توجد تبادلات متاحة.",
+  "stats": {
+    "activeUsers": "المستخدمين النشطين",
+    "skillsTraded": "المهارات المتبادلة",
+    "countries": "الدول",
+    "verifiedInstructors": "المدربين المعتمدين",
+    "location": {
+      "global": "عالمي",
+      "worldwide": "حول العالم",
+      "acrossWorld": "في كل الدول",
+      "regions": "مناطق مختلفة"
+    }
+  }
 }

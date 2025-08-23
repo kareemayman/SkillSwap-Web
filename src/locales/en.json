@@ -469,5 +469,17 @@
   "The user is not available for trade. Please try again later.": "The user is not available for trade. Please try again later.",
   "user is not available for paid sessions. Please try again later.": "user is not available for paid sessions. Please try again later.",
   "The user cannot accept more trades. Please try again later.": "The user cannot accept more trades. Please try again later.",
-  "No trades available.": "No trades available."
+  "No trades available.": "No trades available.",
+  "stats": {
+    "activeUsers": "Active Users",
+    "skillsTraded": "Skills Traded",
+    "countries": "Countries",
+    "verifiedInstructors": "Verified Instructors",
+    "location": {
+      "global": "Global",
+      "worldwide": "Worldwide",
+      "acrossWorld": "Across the world",
+      "regions": "Different Regions"
+    }
+  }
 }

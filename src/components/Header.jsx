@@ -98,9 +98,6 @@ export default function Header() {
                   )}
                 </NavLink>
 
-                <NavLink to="/search" className="text-xl transition-transform duration-200 hover:scale-110 hover:text-[var(--main-color)]" title="Search"></NavLink>
-
-
                 {/* <button className="text-xl transition-transform duration-200 hover:scale-110" title="Search">
                   <FaBell />
                 </button> */}
