@@ -96,6 +96,6 @@ export default function SkillTradesTab({ updatedProfile }) {
           </div>
         </div>
       )
-    })
+    }) || (<div className="text-[var(--color-text-light)]">No trades available.</div>)
   )
 }
