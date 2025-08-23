@@ -1,51 +1,56 @@
-import logo from "../assets/images/logo.png";
-import { Link, NavLink } from "react-router-dom";
-import { useAuth } from "../contexts/Auth/context";
-import { useTranslation } from "react-i18next";
-import { FaBars, FaTimes, FaComments, FaSearch, FaSignOutAlt, FaBell } from "react-icons/fa";
-import { HiUserCircle } from "react-icons/hi2";
-import { Children, use, useEffect, useState } from "react";
-import { subscribeToUserChats } from "../utils/chatUtil";
-import useFirestoreGet from "../hooks/useFirestoreGet";
-import { useContext } from "react";
-import { ThemeContext } from "../contexts/ThemeContext.jsx";
-import { createTheme, Dropdown, DropdownItem } from "flowbite-react";
-import { TbArrowsExchange } from "react-icons/tb";
-import { RiExchangeBoxFill, RiExchangeBoxLine, RiExchangeLine, RiExchangeFill } from "react-icons/ri";
-import NotificationDropdown from "./NotificationDropdown";
+import logo from "../assets/images/logo.png"
+import { Link, NavLink } from "react-router-dom"
+import { useAuth } from "../contexts/Auth/context"
+import { useTranslation } from "react-i18next"
+import { FaBars, FaTimes, FaComments, FaSearch, FaSignOutAlt, FaBell } from "react-icons/fa"
+import { HiUserCircle } from "react-icons/hi2"
+import { Children, use, useEffect, useState } from "react"
+import { subscribeToUserChats } from "../utils/chatUtil"
+import useFirestoreGet from "../hooks/useFirestoreGet"
+import { useContext } from "react"
+import { ThemeContext } from "../contexts/ThemeContext.jsx"
+import { createTheme, Dropdown, DropdownItem } from "flowbite-react"
+import { TbArrowsExchange } from "react-icons/tb"
+import {
+  RiExchangeBoxFill,
+  RiExchangeBoxLine,
+  RiExchangeLine,
+  RiExchangeFill,
+} from "react-icons/ri"
+import NotificationDropdown from "./NotificationDropdown"
 
 export default function Header() {
-  const { user, logOut } = useAuth();
-  const { i18n, t } = useTranslation();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [unreadCount, setUnreadCount] = useState(0);
-  const { data: userProfile, loading, error, request } = useFirestoreGet();
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
+  const { user, logOut } = useAuth()
+  const { i18n, t } = useTranslation()
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [unreadCount, setUnreadCount] = useState(0)
+  const { data: userProfile, loading, error, request } = useFirestoreGet()
+  const { darkMode, setDarkMode } = useContext(ThemeContext)
 
   const toggleLanguage = () => {
-    const newLang = i18n.language === "en" ? "ar" : "en";
-    i18n.changeLanguage(newLang);
-  };
+    const newLang = i18n.language === "en" ? "ar" : "en"
+    i18n.changeLanguage(newLang)
+  }
 
   useEffect(() => {
-    if (!user?.uid) return;
+    if (!user?.uid) return
 
-    request("users", user.uid);
+    request("users", user.uid)
 
     // subscribe to notifications
 
     const unsub = subscribeToUserChats(user.uid, (chats) => {
       const count = chats.filter((chat) => {
-        const msg = chat.lastMessage;
-        return msg && msg.senderId !== user.uid && (!msg.readBy || !msg.readBy.includes(user.uid));
-      }).length;
-      setUnreadCount(count);
-    });
+        const msg = chat.lastMessage
+        return msg && msg.senderId !== user.uid && (!msg.readBy || !msg.readBy.includes(user.uid))
+      }).length
+      setUnreadCount(count)
+    })
 
     return () => {
-      unsub();
-    };
-  }, [user?.uid, request]);
+      unsub()
+    }
+  }, [user?.uid, request])
 
   return (
     <header className="shadow-md dark:shadow-[var(--color-card-border)] shadow-[#68482f91]">
@@ -64,17 +69,14 @@ export default function Header() {
           <div className="hidden sm:flex gap-3 items-center text-[var(--color-text-primary)]">
             {user ? (
               <>
-
                 <NavLink
                   to="/explore"
                   className="hover:text-[var(--main-color)] font-bold transition-transform duration-200 hover:scale-110"
                 >
-
                   Explore
                 </NavLink>
 
                 {user?.email === "skills.swap.app@gmail.com" && (
-
                   <NavLink
                     to="/dashboard"
                     className="hover:text-[var(--main-color)] transition-transform duration-200 hover:scale-110 font-bold"
@@ -83,7 +85,11 @@ export default function Header() {
                   </NavLink>
                 )}
 
-                <NavLink to="/messages" className="relative text-xl transition-transform duration-200 hover:scale-110 hover:text-[var(--main-color)]" title="Messages">
+                <NavLink
+                  to="/messages"
+                  className="relative text-xl transition-transform duration-200 hover:scale-110 hover:text-[var(--main-color)]"
+                  title="Messages"
+                >
                   <FaComments />
                   {unreadCount > 0 && (
                     <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
@@ -110,31 +116,53 @@ export default function Header() {
                   </div>
                 </Notifications> */}
 
+
                 <NotificationDropdown userProfile={userProfile} />
 
-                <NavLink to="/search" className="text-xl transition-transform duration-200 hover:scale-110" title="Search">
-
+                <NavLink
+                  to="/search"
+                  className="text-xl transition-transform duration-200 hover:scale-110 hover:text-[var(--main-color)]"
+                  title="Search"
+                >
                   <FaSearch />
                 </NavLink>
 
-                <NavLink to={`/profile/${user?.uid}`} title="Profile" className="transition-transform duration-200 hover:scale-110 hover:text-[var(--main-color)]">
+                <NavLink
+                  to={`/profile/${user?.uid}`}
+                  title="Profile"
+                  className="transition-transform duration-200 hover:scale-110 hover:text-[var(--main-color)]"
+                >
                   {userProfile?.profilePicture ? (
-                    <img src={userProfile.profilePicture} alt="Profile" className="w-8 h-8 rounded-full object-cover border border-gray-300" />
+                    <img
+                      src={userProfile.profilePicture}
+                      alt="Profile"
+                      className="w-8 h-8 rounded-full object-cover border border-gray-300"
+                    />
                   ) : (
                     <HiUserCircle className="text-2xl" />
                   )}
                 </NavLink>
 
-                <button onClick={logOut} title="Logout" className="text-xl transition-transform duration-200 hover:rotate-12 hover:text-red-500">
+                <button
+                  onClick={logOut}
+                  title="Logout"
+                  className="text-xl transition-transform duration-200 hover:rotate-12 hover:text-red-500"
+                >
                   <FaSignOutAlt />
                 </button>
               </>
             ) : (
               <>
-                <NavLink to="/login" className="transition-all duration-200 hover:text-[var(--main-color)]">
+                <NavLink
+                  to="/login"
+                  className="transition-all duration-200 hover:text-[var(--main-color)]"
+                >
                   Login
                 </NavLink>
-                <NavLink to="/register" className="transition-all duration-200 hover:text-[var(--main-color)]">
+                <NavLink
+                  to="/register"
+                  className="transition-all duration-200 hover:text-[var(--main-color)]"
+                >
                   Register
                 </NavLink>
               </>
@@ -178,17 +206,9 @@ export default function Header() {
                   Explore
                 </NavLink>
                 <NavLink to="/messages" onClick={() => setMenuOpen(false)}>
-                  Messages {unreadCount > 0 && <span className="ml-1 text-red-400">({unreadCount})</span>}
+                  Messages{" "}
+                  {unreadCount > 0 && <span className="ml-1 text-red-400">({unreadCount})</span>}
                 </NavLink>
-
-                {/* <Notifications>
-                  <button>
-                    Notifications
-                    <span class="inline-flex items-center justify-center w-5 h-5 ms-2 text-xs font-semibold text-white bg-red-500 rounded-full ">
-                      2
-                    </span>
-                  </button>
-                </Notifications> */}
 
                 <NotificationDropdown iconOrText="text" />
 
@@ -200,8 +220,8 @@ export default function Header() {
                 </NavLink>
                 <button
                   onClick={() => {
-                    logOut();
-                    setMenuOpen(false);
+                    logOut()
+                    setMenuOpen(false)
                   }}
                   className="text-left"
                 >
@@ -222,7 +242,7 @@ export default function Header() {
         )}
       </div>
     </header>
-  );
+  )
 }
 
 // function Notifications({ children }) {

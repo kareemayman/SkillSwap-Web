@@ -464,6 +464,10 @@
 
   "tradeRequestCreated": "Trade request created and notification sent!\n\nWe will notify you once {{name}} answers!",
   "Swapoo": "Swapoo",
-  "trade_completed": "This Trade Is Completed"
-
+  "trade_completed": "This Trade Is Completed",
+  "You are not available for trade. Please update your availability in your profile.": "You are not available for trade. Please update your availability in your profile.",
+  "The user is not available for trade. Please try again later.": "The user is not available for trade. Please try again later.",
+  "user is not available for paid sessions. Please try again later.": "user is not available for paid sessions. Please try again later.",
+  "The user cannot accept more trades. Please try again later.": "The user cannot accept more trades. Please try again later.",
+  "No trades available.": "No trades available."
 }

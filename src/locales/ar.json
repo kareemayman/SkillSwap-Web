@@ -462,6 +462,10 @@
 
   "tradeRequestCreated": "تم إنشاء طلب التبادل وإرسال الإشعار!\n\nسنخبرك عندما يرد {{name}}!",
   "Swapoo": "سوابو",
-  "trade_completed": "هذا التبادل مكتمل"
-
+  "trade_completed": "هذا التبادل مكتمل",
+  "You are not available for trade. Please update your availability in your profile.": "أنت غير متاح للتبادل. يرجى تحديث توافرك في ملفك الشخصي.",
+  "The user is not available for trade. Please try again later.": "المستخدم غير متاح للتبادل. يرجى المحاولة مرة أخرى لاحقًا.",
+  "user is not available for paid sessions. Please try again later.": "المستخدم غير متاح للجلسات المدفوعة. يرجى المحاولة مرة أخرى لاحقًا.",
+  "The user cannot accept more trades. Please try again later.": "المستخدم لا يمكنه قبول المزيد من التبادلات. يرجى المحاولة مرة أخرى لاحقًا.",
+  "No trades available.": "لا توجد تبادلات متاحة."
 }
