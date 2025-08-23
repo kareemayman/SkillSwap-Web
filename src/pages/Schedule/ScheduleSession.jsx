@@ -58,27 +58,42 @@ export const ScheduleSession = () => {
 
   async function createTrade() {
 
-    const toastId = toast.loading("Processing...");
-
+    if (currentUser.isAvailableForTrade === false) {
+      toast.error(t("You are not available for trade. Please update your availability in your profile."))
+      return;
+    }
+    if (user.isAvailableForTrade === false) {
+      toast.error(t("The user is not available for trade. Please try again later."))
+      return;
+    }
     if (paymentToggle === false && (seekingSkill.trim() === "" || offeringSkill.trim() === "")) {
-      toast.error(t("Please select both seeking and offering skills."), { id: toastId });
+      toast.error(t("Please select both seeking and offering skills."));
       return;
     }
     if (paymentToggle === true && seekingSkill.trim() === "") {
-      toast.error(t("Please select a seeking skill."), { id: toastId });
+      toast.error(t("Please select a seeking skill."));
       return;
     }
     if (paymentToggle === true && (!offer || offer < 5)) {
-      toast.error(t("Offer a valid price"), { id: toastId });
+      toast.error(t("Offer a valid price"));
+      return;
+    }
+    if (paymentToggle === true && user.isAvailableForPaid === false) {
+      toast.error(t(`user is not available for paid sessions. Please try again later.`));
       return;
     }
     if (currentUser.subscribtion.plan === "free" && currentUser.subscribtion.activeTradeCount > 0) {
-      toast.error(t("free_trade_limit_reached"), { id: toastId });
+      toast.error(t("free_trade_limit_reached"));
+      return;
+    }
+    if (user.subscribtion.plan === "free" && user.subscribtion.activeTradeCount > 0) {
+      toast.error(t("The user cannot accept more trades. Please try again later."));
       return;
     }
 
     // create trade request
     try {
+      const toastId = toast.loading("Processing...");
       setDisabledButton(true);
       toast.loading("Creating trade request...", { id: toastId });
 
