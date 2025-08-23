@@ -3,11 +3,13 @@ import { getAllTradesByUserId, getUserById } from "../../../../utils/firestoreUt
 import { useEffect, useState } from "react"
 import { faArrowRightArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from "react-router-dom"
+import { useTranslation } from "react-i18next"
 
 export default function SkillTradesTab({ updatedProfile }) {
   const [trades, setTrades] = useState([])
   const [tradesWithImgs, setTradesWithImgs] = useState([])
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (updatedProfile) {
@@ -96,6 +98,6 @@ export default function SkillTradesTab({ updatedProfile }) {
           </div>
         </div>
       )
-    }) || (<div className="text-[var(--color-text-light)]">No trades available.</div>)
+    }) || (<div className="text-[var(--color-text-light)]">{t("No trades available.")}</div>)
   )
 }
