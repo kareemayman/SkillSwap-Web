@@ -1,5 +1,5 @@
 // utils/notificationActions.js
-import { doc, updateDoc, getDoc, increment, runTransaction, serverTimestamp } from "firebase/firestore";
+import { doc, updateDoc, getDoc, runTransaction, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
 import { createNotification } from "./notificationService";
 import { generateFromGemini } from "../api/gemini";
@@ -29,7 +29,7 @@ export const handleNotificationAction = async (
     const notification = notificationDoc.data();
 
     // Mark notification as read
-    await updateDoc(notificationRef, { isRead: true });
+    await updateDoc(notificationRef, { isRead: true, actions: ["viewTrade"] });
 
     switch (action) {
       case "accept":
