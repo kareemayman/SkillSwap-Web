@@ -145,7 +145,9 @@
     "TeachTitle": "المهارات التي أستطيع تعليمها",
     "PlaceholderLearn": "ابحث عن المهارات لتعلمها",
     "PlaceholderTeach": "ابحث عن المهارات لتعليمها",
-    "SuccessMessage": "رائع! تم تحديث مهاراتك بنجاح."
+    "SuccessMessage": "رائع! تم تحديث مهاراتك بنجاح.",
+    "NoTeachSkillsYet": "لم تقم بإضافة أي مهارات لتعليمها بعد.",
+    "NoLearnSkillsYet": "لم تقم بإضافة أي مهارات لتعلمها بعد."
   },
   "Common": {
     "Back": "رجوع",
