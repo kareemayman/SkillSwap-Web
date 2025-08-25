@@ -231,6 +231,7 @@ export default function NotificationDropdown({ iconOrText = "icon", userProfile 
       toastId = toast.loading("Processing...");
 
       await handleNotificationAction(notificationId, action, navigate, userProfile, { fn: toast, args: { id: toastId } });
+      toastId && toast.dismiss(toastId);
     } catch (error) {
       console.error("Error handling action:", error);
       // You might want to show a toast notification here
