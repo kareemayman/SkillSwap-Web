@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 export default function ProfileReview({ updateStep, userId, initialData, onComplete }) {
   const navigate = useNavigate();
   const [userProfile, setUserProfile] = useState(initialData); // For testing purposes, using static data
-const {t}=useTranslation();
+  const { t } = useTranslation();
   async function handleSubmit() {
     try {
       // Final update object
@@ -31,7 +31,7 @@ const {t}=useTranslation();
       onComplete(finalUpdateObj);
 
       // Show success message or handle navigation
-      navigate("/");
+      navigate("/explore");
     } catch (error) {
       console.error("Error finalizing profile:", error);
     }
@@ -62,10 +62,7 @@ const {t}=useTranslation();
         <h3 className="text-xl font-bold mb-2 text-[var(--color-text-primary)]">{t("Skills I want to learn")}</h3>
         <div className="flex flex-wrap gap-2">
           {userProfile?.needSkills?.map((skill, index) => (
-            <span
-              key={index}
-              className="px-4 py-2 rounded-full text-sm font-medium shadow-sm bg-[var(--color-skill-learn-bg)] text-white/800"
-            >
+            <span key={index} className="px-4 py-2 rounded-full text-sm font-medium shadow-sm bg-[var(--color-skill-learn-bg)] text-white/800">
               {skill?.skillName}
             </span>
           ))}
@@ -76,10 +73,7 @@ const {t}=useTranslation();
         <h3 className="text-xl font-bold mb-2 text-[var(--color-text-primary)]">{t("Skills I can teach")}</h3>
         <div className="flex flex-wrap gap-2">
           {userProfile?.hasSkills?.map((skill, index) => (
-            <span
-              key={index}
-              className="px-4 py-2 rounded-full text-sm font-medium shadow-sm bg-[var(--color-skill-teach-bg)] text-black"
-            >
+            <span key={index} className="px-4 py-2 rounded-full text-sm font-medium shadow-sm bg-[var(--color-skill-teach-bg)] text-black">
               {skill?.skillName}
             </span>
           ))}

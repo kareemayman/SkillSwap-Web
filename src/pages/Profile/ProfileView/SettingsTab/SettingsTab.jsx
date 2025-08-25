@@ -19,6 +19,9 @@ export default function SettingsTab({ updatedProfile, updateUserData, isOwnProfi
     return formatted;
   }
 
+  console.log("Updated Profile in SettingsTab:", updatedProfile);
+  console.log("UupdatedProfile.subscription?.plan:", updatedProfile.subscription?.plan);
+
   return (
     <div className="space-y-8">
       <EditablePhone data={updatedProfile.phone} updateUserData={updateUserData} isOwnProfile={isOwnProfile} />

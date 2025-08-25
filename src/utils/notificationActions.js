@@ -147,11 +147,22 @@ const handleAcceptRequest = async (notification, currentUser, navigate, callBack
     milestonesA = milestonesA.replace("```json", "").replace("```", "");
     milestonesA = JSON.parse(milestonesA);
 
-    let milestonesB = null;
+    let milestonesB;
     if (offeredSkill && offeredSkillLevel) {
       milestonesB = await generateFromGemini(generateMilestonesPrompt(offeredSkill, offeredSkillLevel));
       milestonesB = milestonesB.replace("```json", "").replace("```", "");
       milestonesB = JSON.parse(milestonesB);
+    } else {
+      // if payment, only one milestone which is paying the full amount that was offered
+      milestonesB = [
+        {
+          id: "paymentMilestone1",
+          title: "Payment",
+          description: `Pay the agreed amount of $${payment} to ${requestedUser.name}.`,
+          isCompleted: false,
+          price: payment,
+        },
+      ];
     }
 
     callBack.fn?.success("Milestones created successfully", callBack?.args);

@@ -12,6 +12,8 @@ import { generateFromGemini } from "../../api/gemini";
 import { generateNewMilestonePrompt } from "../../utils/geminiPrompts";
 import MilestoneModal from "./Components/MilestoneModal";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
+import { FaCreditCard } from "react-icons/fa";
 
 export default function Trade() {
   const { id } = useParams();
@@ -27,6 +29,7 @@ export default function Trade() {
   const navigate = useNavigate();
   const [showMilestoneModal, setShowMilestoneModal] = useState(false);
   const [myMilestone, setMyMilestone] = useState(null); // for generating new milestones
+  const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -131,6 +134,53 @@ export default function Trade() {
     }
     setMyMilestone(null);
   }
+
+  console.log("trade info:", trade);
+  console.log("userA info:", userA);
+  console.log("userB info:", userB);
+  console.log("isUserA:", isUserA);
+  console.log("!trade?.milestonesB[0]:", !trade);
+
+  const showPaymentControls = trade.skillB === "PAYMENT" && !isUserA && !trade?.milestonesB[0]?.isCompleted;
+
+  const handlePayment = async () => {
+    try {
+      setLoading(true);
+
+      const response = await fetch("/api/pay", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          tradeId,
+          milestoneId: milestone.id,
+          amount: milestone.price,
+          payerId: trade.userB, // UserB is always the payer
+          recipientId: trade.userA, // UserA is always the recipient
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      // Update milestone status
+      const updatedTrade = {
+        ...trade,
+        milestonesB: trade.milestonesB.map((m) => (m.id === milestone.id ? { ...m, isCompleted: true } : m)),
+      };
+
+      setTrade(updatedTrade);
+      await updateTrade(tradeId, updatedTrade);
+      toast.success(t("Payment.success"));
+    } catch (error) {
+      console.error("Payment error:", error);
+      toast.error(t("Payment.error"));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -237,29 +287,65 @@ export default function Trade() {
                   </h2>
                 </div>
 
-                <div className="p-6 pb-0">
-                  {(isUserA ? trade.milestonesA : trade.milestonesB)?.map((m) => (
-                    <Milestone key={m.id} milestone={m} controls={true} tradeId={id} setTrade={setTrade} trade={trade} isUserA={isUserA} />
-                  ))}
+                {trade.skillB == "PAYMENT" ? (
+                  <div className="mb-6 p-4 border border-[var(--color-card-border)] rounded-lg">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <h3 className="font-bold text-[var(--color-text-light)]">{trade?.milestonesB[0]?.title}</h3>
+                        <p className="text-[var(--color-text-secondary)] mt-2">{trade?.milestonesB[0]?.description}</p>
+                      </div>
+                      <span className="text-[var(--main-color)] font-bold text-xl">${trade?.milestonesB[0]?.price}</span>
+                    </div>
 
-                  <Progress completed={isUserA ? milestonesACompleted : milestonesBCompleted} outOf={isUserA ? totalMilestonesA : totalMilestonesB} />
+                    {showPaymentControls && (
+                      <button
+                        onClick={handlePayment}
+                        disabled={loading}
+                        className="w-full mt-4 bg-[var(--main-color)] text-white py-2 px-4 rounded-lg hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2"
+                      >
+                        {loading ? (
+                          <span className="loading loading-spinner"></span>
+                        ) : (
+                          <>
+                            {/* <FontAwesomeIcon icon={FaCreditCard} /> */}
+                            {t("Pay Now")}
+                          </>
+                        )}
+                      </button>
+                    )}
 
-                  <div
-                    onClick={() => setShowMilestoneModal(true)}
-                    className="flex justify-center items-center mb-6 py-3 border border-[var(--color-card-border)] hover:border-[var(--main-color)] border-dashed rounded-lg w-full font-bold text-[var(--color-text-primary)] hover:text-[var(--color-text-light)] transition-all duration-300 cursor-pointer"
-                  >
-                    <FontAwesomeIcon icon={faPlus} />
-                    <p className="ml-2">{t("add_new_milestone")}</p>
+                    {trade?.milestonesB[0]?.isCompleted && (
+                      <div className="mt-4 text-green-500 text-center font-medium">{t("Payment.completed")}</div>
+                    )}
                   </div>
+                ) : (
+                  <div className="p-6 pb-0">
+                    {(isUserA ? trade.milestonesA : trade.milestonesB)?.map((m) => (
+                      <Milestone key={m.id} milestone={m} controls={true} tradeId={id} setTrade={setTrade} trade={trade} isUserA={isUserA} />
+                    ))}
 
-                  <div
-                    onClick={generateMilestone}
-                    className="bg-[#31292a] flex justify-center items-center mb-6 py-3 border border-transparent hover:border-[var(--main-color)] rounded-lg w-full font-bold text-[var(--main-color)] transition-all duration-300 cursor-pointer"
-                  >
-                    <FontAwesomeIcon icon={faRobot} />
-                    <p className="ml-2">{t("generate_with_ai")}</p>
+                    <Progress
+                      completed={isUserA ? milestonesACompleted : milestonesBCompleted}
+                      outOf={isUserA ? totalMilestonesA : totalMilestonesB}
+                    />
+
+                    <div
+                      onClick={() => setShowMilestoneModal(true)}
+                      className="flex justify-center items-center mb-6 py-3 border border-[var(--color-card-border)] hover:border-[var(--main-color)] border-dashed rounded-lg w-full font-bold text-[var(--color-text-primary)] hover:text-[var(--color-text-light)] transition-all duration-300 cursor-pointer"
+                    >
+                      <FontAwesomeIcon icon={faPlus} />
+                      <p className="ml-2">{t("add_new_milestone")}</p>
+                    </div>
+
+                    <div
+                      onClick={generateMilestone}
+                      className="bg-[#31292a] flex justify-center items-center mb-6 py-3 border border-transparent hover:border-[var(--main-color)] rounded-lg w-full font-bold text-[var(--main-color)] transition-all duration-300 cursor-pointer"
+                    >
+                      <FontAwesomeIcon icon={faRobot} />
+                      <p className="ml-2">{t("generate_with_ai")}</p>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </>
