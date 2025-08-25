@@ -69,7 +69,9 @@
     "footer": "Already have an account?",
     "link": "Sign In",
     "alternative": "or continue with",
-    "google": "Continue with Google"
+    "google": "Continue with Google",
+    "success": "Welcome {{name}}! Your account has been created successfully",
+    "error": "Registration error, please try again later"
   },
   "Login": {
     "title": "Welcome to Swapoo 👋",

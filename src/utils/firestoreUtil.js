@@ -49,35 +49,41 @@ export const createUserDoc = async (user) => {
     const userDocRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userDocRef);
 
-    if (!userSnap.exists()) {
-      await setDoc(userDocRef, {
-        uid: user.uid,
-        name: user.displayName,
-        email: user.email,
-        createdAt: user.createdAt || serverTimestamp(),
-        profilePicture: null, // string with url
-        bio: null, // string
-        phone: null, // string
-        location: {
-          city: null, // string
-          country: null, // string
-        },
-        availability: null, // ["Mon 6-8pm", "Fri 3-5pm"],
-        isAvailableForTrade: null, //boolean
-        isAvailableForPaid: null, //boolean
-        rating: null, //number
-        totalSessions: null, // number
-        hasSkills: null, // array of skill objects [{ id: "skillId", name: "skillName", skillLevel: "beginner" }]
-        needSkills: null, // array of skill objects [{ id: "skillId", name: "skillName", skillLevel: "beginner" }]
-        reviews: [], // array of review objects [{ id: "reviewId", reviewerId: "userId", reviewText: "Great session!", rating: 5 }]
-        subscription: {
-          plan: "free", // string, can be "free" or "pro"
-          activeTradeCount: 0, // number of active trades
-        },
-      });
+    const defaultUserData = {
+      uid: user.uid,
+      name: user.displayName,
+      email: user.email,
+      createdAt: user.createdAt || serverTimestamp(),
+      profilePicture: null, // string with url
+      bio: null, // string
+      phone: null, // string
+      location: {
+        city: null, // string
+        country: null, // string
+      },
+      availability: null, // ["Mon 6-8pm", "Fri 3-5pm"],
+      isAvailableForTrade: null, //boolean
+      isAvailableForPaid: null, //boolean
+      rating: null, //number
+      totalSessions: null, // number
+      hasSkills: null, // array of skill objects [{ id: "skillId", name: "skillName", skillLevel: "beginner" }]
+      needSkills: null, // array of skill objects [{ id: "skillId", name: "skillName", skillLevel: "beginner" }]
+      reviews: [], // array of review objects [{ id: "reviewId", reviewerId: "userId", reviewText: "Great session!", rating: 5 }]
+      subscription: {
+        plan: "free", // string, can be "free" or "pro"
+        activeTradeCount: 0, // number of active trades
+      },
+    };
+
+    if (userSnap.exists()) {
+      return userSnap.data();
     }
+
+    await setDoc(userDocRef, defaultUserData);
+    return defaultUserData;
   } catch (error) {
     console.error("Error creating user document:", error);
+    throw error; // Propagate error to caller
   }
 };
 

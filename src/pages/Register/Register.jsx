@@ -3,6 +3,8 @@ import { useAuth } from "../../contexts/Auth/context";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import left from "../../assets/videos/hands .gif";
+import { hasNullValue } from "../../utils/helpers";
+import toast from "react-hot-toast";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -33,14 +35,31 @@ export default function Register() {
 
   const handleSubmit = (e) => {
     // console.log("@handleSubmit ---- Sign up data:", formData)
-    signUp(formData.email, formData.password, formData.name);
+    signUp(formData.email, formData.password, formData.name).then((user) => {
+      if (!user) {
+        toast.error(t("Register.error"));
+        return;
+      }
+      if (hasNullValue(user)) {
+        navigate(`/profile/${user.uid}`);
+        return;
+      }
+      navigate("/");
+    });
   };
 
   const handleGoogleSignUp = () => {
     // console.log("@handleGoogleSignUp ---- clicked");
     signInWithGoogle().then((user) => {
-      console.log("Signed Up as " + user.displayName + " / " + user);
-      navigate(`/profile/${user.uid}`);
+      if (!user) {
+        toast.error(t("Register.error"));
+        return;
+      }
+      if (hasNullValue(user)) {
+        navigate(`/profile/${user.uid}`);
+        return;
+      }
+      navigate("/");
     });
   };
   return (

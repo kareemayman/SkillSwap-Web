@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { validateEmail, validatePassword } from "../utils/validation";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, signInWithGoogle } from "../firebase";
+import { auth } from "../firebase";
 import left from "../assets/videos/hands .gif";
 import { useTranslation } from "react-i18next";
 import { createUserDoc } from "../utils/firestoreUtil";
 import toast from "react-hot-toast";
+import { useAuth } from "../contexts/Auth/context";
+import { hasNullValue } from "../utils/helpers";
+import useFirestoreGet from "../hooks/useFirestoreGet";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,7 +17,12 @@ const Login = () => {
   const [emailValidError, setEmailValidError] = useState("");
   const [passwordValidError, setPasswordValidError] = useState("");
   const [triedSubmit, setTriedSubmit] = useState(false);
+
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const { data: userData, request, error: userDataError } = useFirestoreGet();
+  const { user, error, loading, signInWithGoogle } = useAuth();
 
   useEffect(() => {
     if (triedSubmit) {
@@ -23,9 +31,36 @@ const Login = () => {
     }
   }, [email, password, triedSubmit]);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     setTriedSubmit(true);
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      toast.success(t("Login.success", { name: user.displayName || user.email }));
+
+      await request("users", user.uid);
+
+      if (userDataError) {
+        console.error(userDataError);
+        toast.error(t("Login.error", { error: userDataError.message }));
+        return;
+      }
+
+      if (hasNullValue(userData)) {
+        navigate(`/profile/${user.uid}`);
+        return;
+      }
+
+      navigate("/");
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(errorCode, errorMessage);
+      toast.error(t("Login.error", { error: errorMessage }));
+    }
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -42,18 +77,30 @@ const Login = () => {
       });
   }
 
-  function handleSignInWithGoogle() {
-    signInWithGoogle()
-      .then((res) => {
-        const user = res.user;
-        // console.log("Signed In as " + user.displayName)
-        createUserDoc(user);
-        toast.success(t("Login.success", { name: user.displayName || user.email }));
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error(t("Login.error", { error: error.message }));
-      });
+  async function handleSignInWithGoogle() {
+    try {
+      const userData = await signInWithGoogle();
+
+      if (!userData) {
+        toast.error(t("Login.error"));
+        return;
+      }
+
+      console.log("Google sign in successful, userData:", userData);
+
+      // Check if profile needs completion
+      if (hasNullValue(userData)) {
+        console.log("Redirecting to profile completion");
+        navigate(`/profile/${userData.uid}`);
+        return;
+      }
+
+      // Profile complete, go to home
+      navigate("/");
+    } catch (error) {
+      console.error("Google sign in failed:", error);
+      toast.error(t("Login.error", { error: error.message }));
+    }
   }
 
   return (

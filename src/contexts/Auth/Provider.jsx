@@ -12,11 +12,13 @@ import { auth } from "../../firebase";
 import { AuthContext } from "./context";
 import { createUserDoc } from "../../utils/firestoreUtil";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -45,9 +47,12 @@ export default function AuthProvider({ children }) {
       const { user } = userCredentials;
       await setDisplayName(user, name);
 
-      await createUserDoc(user);
+      const userData = await createUserDoc(user);
+
+      toast.success(t("Register.success", { name: userData.name || user.displayName || user.email }));
       // setUser(user);
       // setUser((({ user:user } = userCredentials), user));
+      return userData;
     } catch (error) {
       // console.log("@signUp() @AuthProvider ---- sign up failure ---- error.code =", error.code, "---- error.message =", error.message);
       // console.log("@signUp() @AuthProvider ---- sign up failure ---- error =", error);
@@ -66,6 +71,7 @@ export default function AuthProvider({ children }) {
       // console.log("@logIn() @AuthProvider ---- log in success ---- userCredentials =", userCredentials);
       // setUser(userCredentials.user);
       // setUser((({ user:loggedUser } = userCredentials), loggedUser));
+      return userCredentials.uid;
     } catch (error) {
       // console.log("@logIn() @AuthProvider ---- log in failure ---- error.code =", error.code, "---- error.message =", error.message);
       // console.log("@logIn() @AuthProvider ---- log in failure ---- error =", error);
@@ -103,13 +109,17 @@ export default function AuthProvider({ children }) {
       const result = await signInWithPopup(auth, googleProvider);
       const { user } = result;
       // console.log("@signInWithGoogle ---- signin with google success ---- result =", result);
-      await createUserDoc(user);
+      const userData = await createUserDoc(user);
       // await setDisplayName(result.user, name);
       // setUser(result.user
       console.log("@signInWithGoogle ---- signin with google success ---- user =", user);
-      return user;
+
+      toast.success(t("Login.success", { name: userData.name || user.displayName || user.email }));
+
+      return userData;
     } catch (error) {
-      // console.log("@signInWithGoogle ---- signin with google failed ---- error =", error);
+      console.error("@signInWithGoogle ---- signin with google failed ---- error =", error);
+      toast.error(t("Login.error", { error: error.message }));
       setError(getErrorMessage(error.code));
     } finally {
       setLoading(false);
