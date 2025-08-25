@@ -38,17 +38,17 @@ export default function Step3({ updateStep, userId, initialData, onComplete }) {
 
   const handleLocationChange = (country, city) => {
     setLocation({ country, city });
-    console.log("Location changed:", { country, city });
+    // console.log("Location changed:", { country, city });
   };
 
   const handlePhoneChange = (countryCode, phoneNumber) => {
     setPhoneData({ countryCode, phoneNumber });
-    console.log("Phone changed:", { countryCode, phoneNumber });
+    // console.log("Phone changed:", { countryCode, phoneNumber });
   };
 
   const handleSkillLevelChange = (skillId, newLevel) => {
     setSkillsData((prevSkills) => prevSkills.map((skill) => (skill.skillId === skillId ? { ...skill, skillLevel: newLevel } : skill)));
-    console.log("Skill level updated:", { skillId, newLevel });
+    // console.log("Skill level updated:", { skillId, newLevel });
   };
 
   function dismissOverlay() {

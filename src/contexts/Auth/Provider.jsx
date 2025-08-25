@@ -103,10 +103,11 @@ export default function AuthProvider({ children }) {
       const result = await signInWithPopup(auth, googleProvider);
       const { user } = result;
       // console.log("@signInWithGoogle ---- signin with google success ---- result =", result);
-      // console.log("@signInWithGoogle ---- signin with google success ---- user =", user);
       await createUserDoc(user);
       // await setDisplayName(result.user, name);
-      // setUser(result.user);
+      // setUser(result.user
+      console.log("@signInWithGoogle ---- signin with google success ---- user =", user);
+      return user;
     } catch (error) {
       // console.log("@signInWithGoogle ---- signin with google failed ---- error =", error);
       setError(getErrorMessage(error.code));

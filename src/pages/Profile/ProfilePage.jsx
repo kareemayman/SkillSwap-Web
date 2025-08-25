@@ -7,7 +7,7 @@ import { Spinner } from "flowbite-react";
 import { hasNullValue } from "../../utils/helpers";
 import darkWave from "../../assets/images/img.svg";
 import lightWave from "../../assets/images/wave8.svg";
-import {ThemeContext} from"../../contexts/ThemeContext.jsx";
+import { ThemeContext } from "../../contexts/ThemeContext.jsx";
 import { useParams } from "react-router-dom";
 
 const ProfilePage = () => {
@@ -27,11 +27,11 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (isOwnProfile && (error?.message === "Document not found" || (userProfile && hasNullValue(userProfile)))) {
-      console.log(
-        `@ProfilePage ---- will render crate profile isOwnProfile = ${isOwnProfile} ---- error?.message = ${
-          error?.message
-        } ---- !!userProfile = ${!!userProfile} ---- hasNullValue(userProfile) = ${hasNullValue(userProfile)}`
-      );
+      // console.log(
+      //   `@ProfilePage ---- will render crate profile isOwnProfile = ${isOwnProfile} ---- error?.message = ${
+      //     error?.message
+      //   } ---- !!userProfile = ${!!userProfile} ---- hasNullValue(userProfile) = ${hasNullValue(userProfile)}`
+      // );
       setDisplayProfileComponent("create");
     }
   }, [error, userProfile, isOwnProfile]);
@@ -44,7 +44,7 @@ const ProfilePage = () => {
     );
   }
 
-  console.log("@ProfilePage ---- error =", error);
+  // console.log("@ProfilePage ---- error =", error);
 
   if (error && error?.message !== "Document not found") {
     return (

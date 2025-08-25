@@ -73,6 +73,8 @@ export default function ProfileView({ data, isOwnProfile }) {
     setStatus((prev) => ({ ...prev, error: null }));
   };
 
+  console.log("data in profile view", data);
+
   return (
     <div className="max-w-4xl mx-auto text-[var(--color-text-primary)] z-20 backdrop-blur-lg relative">
       <StatusOverlay status={status} onDismiss={dismissError} />
@@ -95,10 +97,10 @@ export default function ProfileView({ data, isOwnProfile }) {
           )}
         </div>
 
-        <EditableName data={updatedProfile.name} updateUserData={updateUserData} isOwnProfile={isOwnProfile} pro={data.subscribtion.plan == "pro"} />
+        <EditableName data={updatedProfile.name} updateUserData={updateUserData} isOwnProfile={isOwnProfile} pro={data.subscription.plan == "pro"} />
 
         <div className="flex justify-center items-center gap-1 text-[var(--color-text-secondary)] mb-2">
-          <p className="">{data.subscribtion.plan == "free" ? t("SkillTrader") : t("proSkillTrader")}</p>
+          <p className="">{data.subscription.plan == "free" ? t("SkillTrader") : t("proSkillTrader")}</p>
 
           <Rating size="sm" className="gap-0.5">
             <RatingStar />
@@ -157,8 +159,8 @@ export default function ProfileView({ data, isOwnProfile }) {
               onClick={() => setActiveTab(tab)}
               className={`px-3 md:px-6 py-3 font-semibold text-base border-b-2 transition-colors ${
                 activeTab === tab
-                ? "border-[--main-color]  text-[--main-color]"
-                : "border-transparent  hover:text-[--color-btn-submit-bg] text-[--color-text-primary]"
+                  ? "border-[--main-color]  text-[--main-color]"
+                  : "border-transparent  hover:text-[--color-btn-submit-bg] text-[--color-text-primary]"
               }`}
             >
               {t(`ProfileView.Tabs.${tab}`)}
@@ -168,9 +170,7 @@ export default function ProfileView({ data, isOwnProfile }) {
       {/* Tab Content */}
       {activeTab === "Profile" && <InfoTab updatedProfile={updatedProfile} updateUserData={updateUserData} isOwnProfile={isOwnProfile} />}
 
-      {activeTab === "Skill Trades" && isOwnProfile && (
-        <SkillTradesTab updatedProfile={updatedProfile}/>
-      )}
+      {activeTab === "Skill Trades" && isOwnProfile && <SkillTradesTab updatedProfile={updatedProfile} />}
       {activeTab === "Reviews" && <ReviewsTab reviews={data?.reviews} userAvgRating={avgRatings} />}
       {activeTab === "Settings" && isOwnProfile && (
         <SettingsTab updatedProfile={updatedProfile} updateUserData={updateUserData} isOwnProfile={isOwnProfile} />

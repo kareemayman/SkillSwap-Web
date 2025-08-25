@@ -1,155 +1,141 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Avat from "../../assets/images/avat.png"
-import ExpTag from "./Components/ExpTag"
-import {
-  faClipboardList,
-  faCommentDots,
-  faPenToSquare,
-  faPlus,
-  faRobot,
-} from "@fortawesome/free-solid-svg-icons"
-import Milestone from "./Components/Milestone"
-import Progress from "./Components/Progress"
-import { useNavigate, useParams } from "react-router-dom"
-import { useEffect, useState } from "react"
-import { getTradeById, getUserById, updateTrade, updateUserById } from "../../utils/firestoreUtil"
-import { useAuth } from "../../contexts/Auth/context"
-import { generateFromGemini } from "../../api/gemini"
-import { generateNewMilestonePrompt } from "../../utils/geminiPrompts"
-import MilestoneModal from "./Components/MilestoneModal"
-import { useTranslation } from "react-i18next"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Avat from "../../assets/images/avat.png";
+import ExpTag from "./Components/ExpTag";
+import { faClipboardList, faCommentDots, faPenToSquare, faPlus, faRobot } from "@fortawesome/free-solid-svg-icons";
+import Milestone from "./Components/Milestone";
+import Progress from "./Components/Progress";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getTradeById, getUserById, updateTrade, updateUserById } from "../../utils/firestoreUtil";
+import { useAuth } from "../../contexts/Auth/context";
+import { generateFromGemini } from "../../api/gemini";
+import { generateNewMilestonePrompt } from "../../utils/geminiPrompts";
+import MilestoneModal from "./Components/MilestoneModal";
+import { useTranslation } from "react-i18next";
 
 export default function Trade() {
-  const { id } = useParams()
-  const [trade, setTrade] = useState([])
-  const [userA, setUserA] = useState([])
-  const [userB, setUserB] = useState([])
-  const [milestonesACompleted, setMilestonesACompleted] = useState(0)
-  const [milestonesBCompleted, setMilestonesBCompleted] = useState(0)
-  const [totalMilestonesA, setTotalMilestonesA] = useState(0)
-  const [totalMilestonesB, setTotalMilestonesB] = useState(0)
-  const { user } = useAuth()
-  const [isUserA, setIsUserA] = useState(false)
-  const navigate = useNavigate()
-  const [showMilestoneModal, setShowMilestoneModal] = useState(false)
-  const [myMilestone, setMyMilestone] = useState(null) // for generating new milestones
-  const { t } = useTranslation()
+  const { id } = useParams();
+  const [trade, setTrade] = useState([]);
+  const [userA, setUserA] = useState([]);
+  const [userB, setUserB] = useState([]);
+  const [milestonesACompleted, setMilestonesACompleted] = useState(0);
+  const [milestonesBCompleted, setMilestonesBCompleted] = useState(0);
+  const [totalMilestonesA, setTotalMilestonesA] = useState(0);
+  const [totalMilestonesB, setTotalMilestonesB] = useState(0);
+  const { user } = useAuth();
+  const [isUserA, setIsUserA] = useState(false);
+  const navigate = useNavigate();
+  const [showMilestoneModal, setShowMilestoneModal] = useState(false);
+  const [myMilestone, setMyMilestone] = useState(null); // for generating new milestones
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (myMilestone) {
-      generateMilestoneFromScratch()
+      generateMilestoneFromScratch();
     }
-  }, [myMilestone])
+  }, [myMilestone]);
 
   useEffect(() => {
     async function fetchAllData() {
-      if (!id) return
-      const tradeData = await getTradeById(id)
-      setTrade(tradeData)
-      if (user.uid == tradeData.userA) setIsUserA(true)
+      if (!id) return;
+      const tradeData = await getTradeById(id);
+      setTrade(tradeData);
+      if (user.uid == tradeData.userA) setIsUserA(true);
 
       if (tradeData) {
-        const userADataSnap = await getUserById(tradeData.userA)
-        const userAData = userADataSnap.data()
-        setUserA(userAData)
+        const userADataSnap = await getUserById(tradeData.userA);
+        const userAData = userADataSnap.data();
+        setUserA(userAData);
 
-        const userBDataSnap = await getUserById(tradeData.userB)
-        const userBData = userBDataSnap.data()
-        setUserB(userBData)
+        const userBDataSnap = await getUserById(tradeData.userB);
+        const userBData = userBDataSnap.data();
+        setUserB(userBData);
       }
     }
-    fetchAllData()
-  }, [id])
+    fetchAllData();
+  }, [id]);
 
   useEffect(() => {
-    if (!trade) return
-    calculateMilestoneProgress()
-  }, [trade])
+    if (!trade) return;
+    calculateMilestoneProgress();
+  }, [trade]);
 
   // Check if trade is completed
   useEffect(() => {
-    if (totalMilestonesA == 0 && totalMilestonesB == 0) return
+    if (totalMilestonesA == 0 && totalMilestonesB == 0) return;
     if (milestonesACompleted == totalMilestonesA && milestonesBCompleted == totalMilestonesB && trade.status !== "completed") {
-      const newTrade = { ...trade, status: "completed" }
-      setTrade(newTrade)
-      updateTrade(id, newTrade)
-      const newUserA = { ...userA, subscribtion: {...userA.subscribtion, activeTradeCount: userA.subscribtion.activeTradeCount - 1} }
-      const newUserB = { ...userB, subscribtion: {...userB.subscribtion, activeTradeCount: userB.subscribtion.activeTradeCount - 1} }
-      updateUserById(userA.uid, newUserA)
-      updateUserById(userB.uid, newUserB)
+      const newTrade = { ...trade, status: "completed" };
+      setTrade(newTrade);
+      updateTrade(id, newTrade);
+      const newUserA = { ...userA, subscription: { ...userA.subscription, activeTradeCount: userA.subscription.activeTradeCount - 1 } };
+      const newUserB = { ...userB, subscription: { ...userB.subscription, activeTradeCount: userB.subscription.activeTradeCount - 1 } };
+      updateUserById(userA.uid, newUserA);
+      updateUserById(userB.uid, newUserB);
     }
-  }, [milestonesACompleted, milestonesBCompleted, totalMilestonesA, totalMilestonesB])
+  }, [milestonesACompleted, milestonesBCompleted, totalMilestonesA, totalMilestonesB]);
 
   function calculateMilestoneProgress() {
     if (trade.milestonesA && trade.milestonesB) {
-      setTotalMilestonesA(trade.milestonesA.length)
-      setTotalMilestonesB(trade.milestonesB.length)
+      setTotalMilestonesA(trade.milestonesA.length);
+      setTotalMilestonesB(trade.milestonesB.length);
 
-      let milestonesACompleted = 0
-      let milestonesBCompleted = 0
+      let milestonesACompleted = 0;
+      let milestonesBCompleted = 0;
       trade.milestonesA.forEach((milestone) => {
-        if (milestone.isCompleted) milestonesACompleted++
-      })
+        if (milestone.isCompleted) milestonesACompleted++;
+      });
       trade.milestonesB.forEach((milestone) => {
-        if (milestone.isCompleted) milestonesBCompleted++
-      })
-      setMilestonesACompleted(milestonesACompleted)
-      setMilestonesBCompleted(milestonesBCompleted)
+        if (milestone.isCompleted) milestonesBCompleted++;
+      });
+      setMilestonesACompleted(milestonesACompleted);
+      setMilestonesBCompleted(milestonesBCompleted);
     }
   }
 
   // Generate a new milestone with AI
   async function generateMilestone() {
     if (isUserA) {
-      let milestone = await generateFromGemini(
-        generateNewMilestonePrompt(trade.skillA, trade.skillALevel, trade.milestonesA)
-      )
-      milestone = milestone.replace("```json", "").replace("```", "")
-      milestone = JSON.parse(milestone)
+      let milestone = await generateFromGemini(generateNewMilestonePrompt(trade.skillA, trade.skillALevel, trade.milestonesA));
+      milestone = milestone.replace("```json", "").replace("```", "");
+      milestone = JSON.parse(milestone);
 
-      const newMilestonesA = [...trade.milestonesA, milestone]
-      const newTrade = { ...trade, milestonesA: newMilestonesA }
-      setTrade(newTrade)
-      updateTrade(id, newTrade)
+      const newMilestonesA = [...trade.milestonesA, milestone];
+      const newTrade = { ...trade, milestonesA: newMilestonesA };
+      setTrade(newTrade);
+      updateTrade(id, newTrade);
     } else {
-      let milestone = await generateFromGemini(
-        generateNewMilestonePrompt(trade.skillB, trade.skillBLevel, trade.milestonesB)
-      )
-      milestone = milestone.replace("```json", "").replace("```", "")
-      milestone = JSON.parse(milestone)
+      let milestone = await generateFromGemini(generateNewMilestonePrompt(trade.skillB, trade.skillBLevel, trade.milestonesB));
+      milestone = milestone.replace("```json", "").replace("```", "");
+      milestone = JSON.parse(milestone);
 
-      const newMilestonesB = [...trade.milestonesB, milestone]
-      const newTrade = { ...trade, milestonesB: newMilestonesB }
-      setTrade(newTrade)
-      updateTrade(id, newTrade)
+      const newMilestonesB = [...trade.milestonesB, milestone];
+      const newTrade = { ...trade, milestonesB: newMilestonesB };
+      setTrade(newTrade);
+      updateTrade(id, newTrade);
     }
   }
 
   // Generate a new milestones without AI
   function generateMilestoneFromScratch() {
-    let m = { ...myMilestone, AI: false, id: crypto.randomUUID(), price: 0 }
+    let m = { ...myMilestone, AI: false, id: crypto.randomUUID(), price: 0 };
     if (isUserA && trade && trade.milestonesA) {
-      const newMilestonesA = [...trade.milestonesA, m]
-      const newTrade = { ...trade, milestonesA: newMilestonesA }
-      setTrade(newTrade)
-      updateTrade(id, newTrade)
+      const newMilestonesA = [...trade.milestonesA, m];
+      const newTrade = { ...trade, milestonesA: newMilestonesA };
+      setTrade(newTrade);
+      updateTrade(id, newTrade);
     } else if (!isUserA && trade && trade.milestonesB) {
-      const newMilestonesB = [...trade.milestonesB, m]
-      const newTrade = { ...trade, milestonesB: newMilestonesB }
-      setTrade(newTrade)
-      updateTrade(id, newTrade)
+      const newMilestonesB = [...trade.milestonesB, m];
+      const newTrade = { ...trade, milestonesB: newMilestonesB };
+      setTrade(newTrade);
+      updateTrade(id, newTrade);
     }
-    setMyMilestone(null)
+    setMyMilestone(null);
   }
 
   return (
     <>
       {showMilestoneModal && (
-        <MilestoneModal
-          setShowModal={setShowMilestoneModal}
-          newMilestone={true}
-          setMyMilestone={setMyMilestone}
-        ></MilestoneModal>
+        <MilestoneModal setShowModal={setShowMilestoneModal} newMilestone={true} setMyMilestone={setMyMilestone}></MilestoneModal>
       )}
       <div className="mx-auto px-4 md:px-24 py-6 container">
         {trade && userA && userB && (user.uid == trade.userA || user.uid == trade.userB) ? (
@@ -167,17 +153,11 @@ export default function Trade() {
                       {isUserA ? userA.name : userB.name}
                     </h1>
                     <h2 className="capitalize relative my-2 w-fit font-bold text-[var(--color-text-light)] text-base">
-                      <span className="capitalize text-[var(--color-text-primary)]">
-                        {t("teaching")}:
-                      </span>{" "}
-                      {isUserA ? trade.skillA : trade.skillB}
+                      <span className="capitalize text-[var(--color-text-primary)]">{t("teaching")}:</span> {isUserA ? trade.skillA : trade.skillB}
                       <ExpTag expLevel={isUserA ? trade.skillALevel : trade.skillBLevel}></ExpTag>
                     </h2>
                     <h2 className="capitalize relative my-2 w-fit font-bold text-[var(--color-text-light)] text-base">
-                      <span className="capitalize text-[var(--color-text-primary)]">
-                        {t("learning")}:{" "}
-                      </span>{" "}
-                      {isUserA ? trade.skillB : trade.skillA}
+                      <span className="capitalize text-[var(--color-text-primary)]">{t("learning")}: </span> {isUserA ? trade.skillB : trade.skillA}
                       <ExpTag expLevel={isUserA ? trade.skillBLevel : trade.skillALevel}></ExpTag>
                     </h2>
                   </div>
@@ -189,21 +169,13 @@ export default function Trade() {
                     className="rounded-full w-16 h-16 object-cover"
                   />
                   <div>
-                    <h1 className="capitalize w-fit font-bold text-[var(--color-text-light)] text-xl">
-                      {isUserA ? userB.name : userA.name}
-                    </h1>
+                    <h1 className="capitalize w-fit font-bold text-[var(--color-text-light)] text-xl">{isUserA ? userB.name : userA.name}</h1>
                     <h2 className="capitalize relative my-2 w-fit font-bold text-[var(--color-text-light)] text-base">
-                      <span className="capitalize text-[var(--color-text-primary)]">
-                        {t("teaching")}:
-                      </span>{" "}
-                      {isUserA ? trade.skillB : trade.skillA}
+                      <span className="capitalize text-[var(--color-text-primary)]">{t("teaching")}:</span> {isUserA ? trade.skillB : trade.skillA}
                       <ExpTag expLevel={isUserA ? trade.skillBLevel : trade.skillALevel}></ExpTag>
                     </h2>
                     <h2 className="capitalize relative my-2 w-fit font-bold text-[var(--color-text-light)] text-base">
-                      <span className="capitalize text-[var(--color-text-primary)]">
-                        {t("learning")}:
-                      </span>{" "}
-                      {isUserA ? trade.skillA : trade.skillB}
+                      <span className="capitalize text-[var(--color-text-primary)]">{t("learning")}:</span> {isUserA ? trade.skillA : trade.skillB}
                       <ExpTag expLevel={isUserA ? trade.skillALevel : trade.skillBLevel}></ExpTag>
                     </h2>
                   </div>
@@ -213,14 +185,12 @@ export default function Trade() {
               <div className="flex justify-between items-center flex-wrap">
                 <button
                   onClick={() => {
-                    isUserA ? navigate(`/chat/${userB.uid}`) : navigate(`/chat/${userA.uid}`)
+                    isUserA ? navigate(`/chat/${userB.uid}`) : navigate(`/chat/${userA.uid}`);
                   }}
                   className="bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] mt-6 px-6 py-3 rounded-lg dark:text-[var(--color-text-light)] text-white/80 transition-all duration-300"
                 >
                   <FontAwesomeIcon icon={faCommentDots}></FontAwesomeIcon>
-                  <p className="capitalize inline ml-2 font-semibold">
-                    {t("message_user", { name: isUserA ? userB.name : userA.name })}
-                  </p>
+                  <p className="capitalize inline ml-2 font-semibold">{t("message_user", { name: isUserA ? userB.name : userA.name })}</p>
                 </button>
 
                 <div
@@ -233,9 +203,11 @@ export default function Trade() {
             </div>
 
             <div className="flex lg:flex-row flex-col gap-6 relative">
-              {trade.status === 'completed' && <div className="cursor-not-allowed z-50 absolute top-0 left-0 w-full h-full bg-black opacity-70 rounded-lg flex justify-center items-center">
-                <h1 className="text-4xl font-bold dark:text-[var(--color-text-light)] text-white/80">{t("trade_completed")}</h1>
-                </div>}
+              {trade.status === "completed" && (
+                <div className="cursor-not-allowed z-50 absolute top-0 left-0 w-full h-full bg-black opacity-70 rounded-lg flex justify-center items-center">
+                  <h1 className="text-4xl font-bold dark:text-[var(--color-text-light)] text-white/80">{t("trade_completed")}</h1>
+                </div>
+              )}
               <div className="flex-1 py-6 border-[var(--color-card-border)] border-2 rounded-lg">
                 <div className="px-6 pb-6 border-[var(--color-card-border)] border-b">
                   <h1 className="font-bold text-[var(--color-text-light)] text-xl capitalize">
@@ -251,10 +223,7 @@ export default function Trade() {
                     <Milestone key={m.id} milestone={m} tradeId={id} isUserA={isUserA} />
                   ))}
 
-                  <Progress
-                    completed={isUserA ? milestonesBCompleted : milestonesACompleted}
-                    outOf={isUserA ? totalMilestonesB : totalMilestonesA}
-                  />
+                  <Progress completed={isUserA ? milestonesBCompleted : milestonesACompleted} outOf={isUserA ? totalMilestonesB : totalMilestonesA} />
                 </div>
               </div>
 
@@ -270,21 +239,10 @@ export default function Trade() {
 
                 <div className="p-6 pb-0">
                   {(isUserA ? trade.milestonesA : trade.milestonesB)?.map((m) => (
-                    <Milestone
-                      key={m.id}
-                      milestone={m}
-                      controls={true}
-                      tradeId={id}
-                      setTrade={setTrade}
-                      trade={trade}
-                      isUserA={isUserA}
-                    />
+                    <Milestone key={m.id} milestone={m} controls={true} tradeId={id} setTrade={setTrade} trade={trade} isUserA={isUserA} />
                   ))}
 
-                  <Progress
-                    completed={isUserA ? milestonesACompleted : milestonesBCompleted}
-                    outOf={isUserA ? totalMilestonesA : totalMilestonesB}
-                  />
+                  <Progress completed={isUserA ? milestonesACompleted : milestonesBCompleted} outOf={isUserA ? totalMilestonesA : totalMilestonesB} />
 
                   <div
                     onClick={() => setShowMilestoneModal(true)}
@@ -306,11 +264,9 @@ export default function Trade() {
             </div>
           </>
         ) : (
-          <h1 className="text-2xl font-bold text-[var(--color-text-primary)]">
-            {t("not_part_of_trade")}
-          </h1>
+          <h1 className="text-2xl font-bold text-[var(--color-text-primary)]">{t("not_part_of_trade")}</h1>
         )}
       </div>
     </>
-  )
+  );
 }

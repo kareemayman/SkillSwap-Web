@@ -12,7 +12,7 @@ export default function EditableSkillsSection({ title, data = [], skillType, upd
   const [error, setError] = useState(null);
   const [skillsData, setSkillsData] = useState(data);
   const { t, i18n } = useTranslation();
-  console.log("@EditableSkillsSection ---- i18n =", i18n);
+  // console.log("@EditableSkillsSection ---- i18n =", i18n);
 
   // This function receives the new skills from the SkillSelector
   const handleAddNewSkills = (newSkills) => {
@@ -55,7 +55,7 @@ export default function EditableSkillsSection({ title, data = [], skillType, upd
 
   const handleSkillLevelChange = (skillId, newLevel) => {
     setSkillsData((prevSkills) => prevSkills.map((skill) => (skill.skillId === skillId ? { ...skill, skillLevel: newLevel } : skill)));
-    console.log("Skill level updated:", { skillId, newLevel });
+    // console.log("Skill level updated:", { skillId, newLevel });
   };
 
   return (

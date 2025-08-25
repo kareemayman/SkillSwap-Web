@@ -364,7 +364,7 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
   });
 
   // Check if user is on free plan
-  const isFreeUser = initialData?.subscribtion?.plan === "free";
+  const isFreeUser = initialData?.subscription?.plan === "free";
   const SKILL_LIMIT = 2;
 
   // console.log("@Skills ---- initialData =", initialData);
@@ -374,7 +374,7 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
   }
 
   const handleAddTeachSkills = (newSkills) => {
-    console.log("@handleAddTeachSkills ---- isFreeUser =", isFreeUser);
+    // console.log("@handleAddTeachSkills ---- isFreeUser =", isFreeUser);
     if (isFreeUser) {
       const totalSkillsAfterAdd = skillsData.hasSkills.length + newSkills.length;
       if (totalSkillsAfterAdd > SKILL_LIMIT) {

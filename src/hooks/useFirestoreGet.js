@@ -25,9 +25,9 @@ export default function useFirestoreGet({ initialLoading = false } = {}) {
 
   // The main request function, wrapped in useCallback for performance
   const request = useCallback(async (collectionName, docId = null, queryOptions = null) => {
-    console.log(
-      `@useFirestoreGet @request ---- request function called with args ---- collectionName = ${collectionName} ---- docId = ${docId} ---- queryOptions = ${queryOptions}`
-    );
+    // console.log(
+    //   `@useFirestoreGet @request ---- request function called with args ---- collectionName = ${collectionName} ---- docId = ${docId} ---- queryOptions = ${queryOptions}`
+    // );
 
     if (!collectionName) {
       if (isMountedRef.current) {
@@ -50,19 +50,19 @@ export default function useFirestoreGet({ initialLoading = false } = {}) {
         const docRef = doc(db, collectionName, docId);
         const docSnap = await getDoc(docRef);
 
-        console.log(
-          `@useFirestoreGet @request ---- there is docId = ${docId} ---- docSnap.exists() = ${docSnap.exists()} ---- docRef = `,
-          docRef,
-          " ---- docSnap =",
-          docSnap
-        );
+        // console.log(
+        //   `@useFirestoreGet @request ---- there is docId = ${docId} ---- docSnap.exists() = ${docSnap.exists()} ---- docRef = `,
+        //   docRef,
+        //   " ---- docSnap =",
+        //   docSnap
+        // );
 
         if (docSnap.exists()) {
           result = { id: docSnap.id, ...docSnap.data() };
 
           // console.log(`@useFirestoreGet @request ---- docSnap.exists() = ${docSnap.exists()} ---- result = `, JSON.stringify(result));
         } else {
-          console.log(`@useFirestoreGet @request ---- will throw new Error("Document not found")`);
+          console.error(`@useFirestoreGet @request ---- will throw new Error("Document not found")`);
           throw new Error("Document not found");
         }
       } else if (queryOptions) {
@@ -82,7 +82,7 @@ export default function useFirestoreGet({ initialLoading = false } = {}) {
         setLoading(false);
       }
     } catch (err) {
-      console.log(
+      console.error(
         `@useFirestoreGet @request ---- error was caught in try/catch block ---- err = `,
         err,
         " ---- isMountedRef.current =",
@@ -100,7 +100,7 @@ export default function useFirestoreGet({ initialLoading = false } = {}) {
   useEffect(() => {
     isMountedRef.current = true;
     return () => {
-      console.log("@useFirestoreGet ---- cleanup function was called");
+      // console.log("@useFirestoreGet ---- cleanup function was called");
       isMountedRef.current = false;
     };
   }, []);

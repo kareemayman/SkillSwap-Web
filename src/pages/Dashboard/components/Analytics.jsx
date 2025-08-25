@@ -50,7 +50,7 @@ export default function Analytics({ allUsers, allSkills, user }) {
           let res = await generateFromGemini(calculateAnalyticsPrompt(allUsers, allSkills))
           res = res.replace("```json", "").replace("```", "")
           const analytics = JSON.parse(res)
-          console.log("Analytics response:", analytics)
+          // console.log("Analytics response:", analytics)
           setMostRequestedSkills(analytics.mostRequestedSkills)
           setMostCommonSkills(analytics.mostCommonSkills)
           setMostRequestedCategories(analytics.mostRequestedCategories)

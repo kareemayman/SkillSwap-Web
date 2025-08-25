@@ -16,7 +16,6 @@ import { createNotification } from "../../utils/notificationService";
 export const ScheduleSession = () => {
   const { t } = useTranslation();
 
-
   const [proposeTradeToggle, setProposeTradeToggle] = useState(true);
   const [paymentToggle, setPaymentToggle] = useState(false);
   const [seekingSkill, setSeekingSkill] = useState("");
@@ -57,13 +56,12 @@ export const ScheduleSession = () => {
   }, [currentUserFromAuth]);
 
   async function createTrade() {
-
     if (currentUser.isAvailableForTrade === false) {
-      toast.error(t("You are not available for trade. Please update your availability in your profile."))
+      toast.error(t("You are not available for trade. Please update your availability in your profile."));
       return;
     }
     if (user.isAvailableForTrade === false) {
-      toast.error(t("The user is not available for trade. Please try again later."))
+      toast.error(t("The user is not available for trade. Please try again later."));
       return;
     }
     if (paymentToggle === false && (seekingSkill.trim() === "" || offeringSkill.trim() === "")) {
@@ -82,11 +80,11 @@ export const ScheduleSession = () => {
       toast.error(t(`user is not available for paid sessions. Please try again later.`));
       return;
     }
-    if (currentUser.subscribtion.plan === "free" && currentUser.subscribtion.activeTradeCount > 0) {
+    if (currentUser.subscription.plan === "free" && currentUser.subscription.activeTradeCount > 0) {
       toast.error(t("free_trade_limit_reached"));
       return;
     }
-    if (user.subscribtion.plan === "free" && user.subscribtion.activeTradeCount > 0) {
+    if (user.subscription.plan === "free" && user.subscription.activeTradeCount > 0) {
       toast.error(t("The user cannot accept more trades. Please try again later."));
       return;
     }
@@ -147,7 +145,7 @@ export const ScheduleSession = () => {
           <img src={user.profilePicture || Avat} alt="avatar" className="rounded-full w-32 h-32 object-cover" />
           <div className="sm:text-left text-center">
             <h2 className="font-medium text-[var(--color-text-primary)] text-2xl capitalize">
-              {user.name} {user.subscribtion.plan === "pro" && <FontAwesomeIcon icon={faCertificate}></FontAwesomeIcon>}
+              {user.name} {user.subscription.plan === "pro" && <FontAwesomeIcon icon={faCertificate}></FontAwesomeIcon>}
             </h2>
             <p className="font-medium text-[var(--color-text-secondary)]">
               <span className="font-semibold text-[var(--color-text-primary)]">{t("Offering")}: </span>
@@ -270,7 +268,6 @@ export const ScheduleSession = () => {
           </select>
 
           <div className={`${!paymentToggle && "opacity-50"} relative`}>
-
             {!paymentToggle && <div className="absolute inset-0 bg-[var(--color-card-bg)] opacity-50 rounded-lg"></div>}
             <h3 className="mt-10 mb-4 font-medium text-[var(--main-color)] text-xl">{t("Payment")}</h3>
             <p className="text-[var(--color-text-primary)]">{t("Propose offer for") + " " + user.name}</p>

@@ -107,15 +107,17 @@ const handleAcceptRequest = async (notification, currentUser, navigate, callBack
 
     await runTransaction(db, async (transaction) => {
       // Helper: determine plan
-      const isPro = (user) => user.subscribtion?.plan === "pro";
+      const isPro = (user) => user.subscription?.plan === "pro";
 
       // Current counts
-      const skillTradesCountUserA = userAData.subscribtion?.activeTradeCount || 0;
-      const skillTradesCountUserB = userBData.subscribtion?.activeTradeCount || 0;
+      const skillTradesCountUserA = userAData.subscription?.activeTradeCount || 0;
+      const skillTradesCountUserB = userBData.subscription?.activeTradeCount || 0;
 
       // Check the accepter
       if (!isPro(userAData) && skillTradesCountUserA >= 1) {
-        throw new Error("Free users can only have 1 active skill-for-skill trade at a time.");
+        throw new Error(
+          "Free users can only have 1 active skill-for-skill trade at a time. Please upgrade to Pro or complete an existing trade first."
+        );
       }
 
       // Check the other user (the one who sent the request)
@@ -124,10 +126,10 @@ const handleAcceptRequest = async (notification, currentUser, navigate, callBack
       }
 
       transaction.update(userARef, {
-        "subscribtion.activeTradeCount": skillTradesCountUserA + 1,
+        "subscription.activeTradeCount": skillTradesCountUserA + 1,
       });
       transaction.update(userBRef, {
-        "subscribtion.activeTradeCount": skillTradesCountUserB + 1,
+        "subscription.activeTradeCount": skillTradesCountUserB + 1,
       });
 
       transaction.update(requestRef, {

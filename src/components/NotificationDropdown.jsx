@@ -196,7 +196,7 @@ export default function NotificationDropdown({ iconOrText = "icon", userProfile 
 
   const markAsUnread = async (id) => {
     if (!authUser?.uid) return; // Don't call API if no authUser
-    console.log("Marking as unread:", id);
+    // console.log("Marking as unread:", id);
 
     try {
       const notificationRef = doc(db, "notifications", id);
@@ -228,11 +228,6 @@ export default function NotificationDropdown({ iconOrText = "icon", userProfile 
     let toastId;
 
     try {
-      if (!authUser?.uid) {
-        console.log(`Demo action: ${action} for notification: ${notificationId}`);
-        return;
-      }
-
       toastId = toast.loading("Processing...");
 
       await handleNotificationAction(notificationId, action, navigate, userProfile, { fn: toast, args: { id: toastId } });

@@ -1,58 +1,59 @@
-import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-import { validateEmail, validatePassword } from "../utils/validation"
-import { signInWithEmailAndPassword } from "firebase/auth"
-import { auth, signInWithGoogle } from "../firebase"
-import left from "../assets/videos/hands .gif"
-import { useTranslation } from "react-i18next"
-import { createUserDoc } from "../utils/firestoreUtil"
-import toast from "react-hot-toast"
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { validateEmail, validatePassword } from "../utils/validation";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, signInWithGoogle } from "../firebase";
+import left from "../assets/videos/hands .gif";
+import { useTranslation } from "react-i18next";
+import { createUserDoc } from "../utils/firestoreUtil";
+import toast from "react-hot-toast";
 
 const Login = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [emailValidError, setEmailValidError] = useState("")
-  const [passwordValidError, setPasswordValidError] = useState("")
-  const [triedSubmit, setTriedSubmit] = useState(false)
-  const { t } = useTranslation()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailValidError, setEmailValidError] = useState("");
+  const [passwordValidError, setPasswordValidError] = useState("");
+  const [triedSubmit, setTriedSubmit] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (triedSubmit) {
-      setEmailValidError(validateEmail(email))
-      setPasswordValidError(validatePassword(password))
+      setEmailValidError(validateEmail(email));
+      setPasswordValidError(validatePassword(password));
     }
-  }, [email, password, triedSubmit])
+  }, [email, password, triedSubmit]);
 
   function handleSubmit(e) {
-    e.preventDefault()
-    setTriedSubmit(true)
+    e.preventDefault();
+    setTriedSubmit(true);
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user
+        const user = userCredential.user;
         // ...
-        toast.success(t("Login.success", { name: user.displayName || user.email }))
+        toast.success(t("Login.success", { name: user.displayName || user.email }));
       })
       .catch((error) => {
-        const errorCode = error.code
-        const errorMessage = error.message
-        toast.error(t("Login.error", { error: errorMessage }))
-      })
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(errorCode, errorMessage);
+        toast.error(t("Login.error", { error: errorMessage }));
+      });
   }
 
   function handleSignInWithGoogle() {
     signInWithGoogle()
       .then((res) => {
-        const user = res.user
-        console.log("Signed In as " + user.displayName)
-        toast.success(t("Login.success", { name: user.displayName || user.email }))
-        createUserDoc(user)
+        const user = res.user;
+        // console.log("Signed In as " + user.displayName)
+        createUserDoc(user);
+        toast.success(t("Login.success", { name: user.displayName || user.email }));
       })
       .catch((error) => {
-        console.log(error)
-        toast.error(t("Login.error", { error: error.message }))
-      })
+        console.error(error);
+        toast.error(t("Login.error", { error: error.message }));
+      });
   }
 
   return (
@@ -67,18 +68,15 @@ const Login = () => {
         <main className="flex flex-col justify-center items-center mx-auto pt-16 container">
           <h1 className="font-normal text-3xl text-center text-[var(--main-color)]">{t("Login.title")}</h1>
 
-          <form
-            className="flex flex-col mt-8 mb-6 min-w-[80%] sm:min-w-3/4 lg:min-w-[400px]"
-            onSubmit={(e) => handleSubmit(e)}
-          >
+          <form className="flex flex-col mt-8 mb-6 min-w-[80%] sm:min-w-3/4 lg:min-w-[400px]" onSubmit={(e) => handleSubmit(e)}>
             <input
               type="email"
               placeholder={t("email")}
               value={email}
               onChange={(e) => {
-                setEmail(e.target.value)
+                setEmail(e.target.value);
               }}
-              className="mx-3 p-3  rounded-md text-black transition-all duration-300 placeholder-gray-500 bg-slate-50 dark:bg-[var(--color-text-primary)]"
+              className="mx-3 p-3 rounded-md text-black transition-all duration-300 placeholder-gray-500 bg-slate-50 dark:bg-[var(--color-text-primary)]"
             />
 
             <p className="mx-3 mb-6 text-red-500">{emailValidError}</p>
@@ -88,7 +86,7 @@ const Login = () => {
               placeholder={t("password")}
               value={password}
               onChange={(e) => {
-                setPassword(e.target.value)
+                setPassword(e.target.value);
               }}
               className="mx-3 p-3   rounded-md text-black bg-slate-50 dark:bg-[var(--color-text-primary)] transition-all duration-300 placeholder-gray-500"
             />
@@ -102,14 +100,11 @@ const Login = () => {
             />
           </form>
 
-          <Link
-            to="/resetPassword"
-            className="mb-3 text-[var(--color-text-secondary)] hover:text-[#0D80F2] underline transition-all duration-300"
-          >
+          <Link to="/resetPassword" className="mb-3 text-[var(--color-text-secondary)] hover:text-[#0D80F2] underline transition-all duration-300">
             {t("Login.forget")}
           </Link>
 
-          <p className="mb-6 text-gray-600">{t("Login.alternative")}</p>
+          <p className="mb-6 text-gray-500">{t("Login.alternative")}</p>
 
           <button
             onClick={handleSignInWithGoogle}
@@ -136,16 +131,13 @@ const Login = () => {
             {t("Login.google")}
           </button>
 
-          <Link
-            to="/register"
-            className="mb-3 text-[var(--color-text-primary)] hover:text-[#0D80F2] underline transition-all duration-300"
-          >
+          <Link to="/register" className="mb-3 text-[var(--color-text-secondary)] hover:text-[#0D80F2] underline transition-all duration-300">
             {t("Login.footer")} {t("Login.link")}
           </Link>
         </main>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

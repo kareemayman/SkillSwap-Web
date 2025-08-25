@@ -44,7 +44,9 @@ export default function CreateProfile({ userData }) {
     <div className="flex flex-col items-center text-start container max-w-3xl mx-auto">
       <div className="w-full px-4 ">
         <div className=" flex flex-col  text-center items-center md:text-start justify-start md:items-baseline w-full gap-2 text-2xl font-semibold text-[var(--color-text-primary)]">
-          <p>Welcome <span className="text-[var(--main-color)]">{userData.name}</span>! 👋</p>
+          <p>
+            Welcome <span className="text-[var(--main-color)]">{userData.name}</span>! 👋
+          </p>
           <p className="text-xl font-medium md:ms-4 text-[var(--color-text-secondary)]">Please complete your profile</p>
         </div>
 
@@ -61,37 +63,20 @@ export default function CreateProfile({ userData }) {
 }
 
 function getInitialStep(userData) {
-  console.log("@getInitialStep ---- userData =", userData);
+  // console.log("@getInitialStep ---- userData =", userData);
   if (!userData.bio || !userData.profilePicture) {
-    console.log(`@getInitialStep ---- Step 1: Personal Info ---- bio = ${userData.bio}, profilePicture = ${userData.profilePicture}`);
+    // console.log(`@getInitialStep ---- Step 1: Personal Info ---- bio = ${userData.bio}, profilePicture = ${userData.profilePicture}`);
     return 1; // Step 1: Personal Info
   }
   if (hasNullValue(userData.hasSkills) || hasNullValue(userData.needSkills)) {
-    console.log("@getInitialStep ---- Step 2: Skills ---- will return 2");
+    // console.log("@getInitialStep ---- Step 2: Skills ---- will return 2");
     return 2; // Step 2: Skills
   }
   if (hasNullValue(userData.phone) || hasNullValue(userData.location)) {
-    console.log("@getInitialStep ---- Step 3: Availability and Location ---- will return 3");
+    // console.log("@getInitialStep ---- Step 3: Availability and Location ---- will return 3");
     return 3; // Step 3: Availability and Location
   }
-  console.log("@getInitialStep ---- Step 4: Review and Submit ---- will return 4");
+  // console.log("@getInitialStep ---- Step 4: Review and Submit ---- will return 4");
   return 4; // Step 4: Review and Submit
 }
 
-//   user: {
-//     _redirectEventId: undefined,
-//     apiKey: "AIzaSyAJ5O4QvWjLEu9HpBmDT90ZnycOcyKAv-E",
-//     appName: "[DEFAULT]",
-//     createdAt: "1752331499349",
-//     displayName: undefined,
-//     email: "mo.abdelfatah9292@gmail.com",
-//     emailVerified: false,
-//     isAnonymous: false,
-//     lastLoginAt: "1752331968859",
-//     phoneNumber: undefined,
-//     photoURL: undefined,
-//     providerData: [Array],
-//     stsTokenManager: [Object],
-//     tenantId: undefined,
-//     uid: "mCNownDznKXGYSJruC37LmajlPq1",
-//   },

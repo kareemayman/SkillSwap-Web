@@ -1,106 +1,99 @@
-import {
-  faAward,
-  faCheck,
-  faClose,
-  faListCheck,
-  faRocket,
-  faStar,
-} from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Feature from "./Components/Feature"
-import FAQ from "./Components/FAQ"
-import { useTranslation } from "react-i18next"
-import { useContext, useEffect, useState } from "react"
-import { AuthContext } from "../../contexts/Auth/context"
-import { getUserById, updateUserById } from "../../utils/firestoreUtil"
-import toast from "react-hot-toast"
+import { faAward, faCheck, faClose, faListCheck, faRocket, faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Feature from "./Components/Feature";
+import FAQ from "./Components/FAQ";
+import { useTranslation } from "react-i18next";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../contexts/Auth/context";
+import { getUserById, updateUserById } from "../../utils/firestoreUtil";
+import toast from "react-hot-toast";
 // <- updated imports: use the new helpers
-import { subscribeToPro, openBillingPortal } from "../../utils/stripeUtil"
+import { subscribeToPro, openBillingPortal } from "../../utils/stripeUtil";
 
 export default function Plans() {
-  const { t, i18n } = useTranslation()
-  const isArabic = i18n.language === "ar"
-  const { user } = useContext(AuthContext)
-  const [currentUser, setCurrentUser] = useState(null)
-  const [loadingUpgrade, setLoadingUpgrade] = useState(false)
-  const [loadingDowngrade, setLoadingDowngrade] = useState(false)
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === "ar";
+  const { user } = useContext(AuthContext);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loadingUpgrade, setLoadingUpgrade] = useState(false);
+  const [loadingDowngrade, setLoadingDowngrade] = useState(false);
 
   useEffect(() => {
     if (user) {
-      fetchUser(user.uid)
+      fetchUser(user.uid);
     }
-  }, [user])
+  }, [user]);
 
   async function fetchUser(id) {
-    const userData = await getUserById(id)
-    setCurrentUser(userData.data())
+    const userData = await getUserById(id);
+    setCurrentUser(userData.data());
   }
 
   async function upgradeToPro() {
     if (!currentUser) {
-      toast.error(t("plans.no_user"))
-      return
+      toast.error(t("plans.no_user"));
+      return;
     }
 
-    if (currentUser.subscribtion?.plan === "pro") {
-      toast.error(t("plans.stay_pro"))
-      return
+    if (currentUser.subscription?.plan === "pro") {
+      toast.error(t("plans.stay_pro"));
+      return;
     }
 
-    setLoadingUpgrade(true)
+    setLoadingUpgrade(true);
     try {
       // If we already stored stripeCustomerId for the user, pass it to reuse the customer
-      const customerId = currentUser.subscribtion?.stripeCustomerId || null
+      const customerId = currentUser.subscription?.stripeCustomerId || null;
       // subscribeToPro will redirect the browser to Stripe Checkout (it handles the redirect)
-      await subscribeToPro({ userId: currentUser.uid, email: currentUser.email, customerId })
+      await subscribeToPro({ userId: currentUser.uid, email: currentUser.email, customerId });
       // NOTE: subscribeToPro redirects away from the page. If it returns (no redirect), it means an error was thrown.
       // The webhook on the server will update Firestore when the subscription is confirmed.
     } catch (error) {
-      console.error("Error upgrading to Pro:", error)
-      toast.error(t("plans.upgrade_error"))
+      console.error("Error upgrading to Pro:", error);
+      toast.error(t("plans.upgrade_error"));
     } finally {
-      setLoadingUpgrade(false)
+      setLoadingUpgrade(false);
     }
   }
 
   async function downgradeToFree() {
     if (!currentUser) {
-      toast.error(t("plans.no_user"))
-      return
+      toast.error(t("plans.no_user"));
+      return;
     }
 
-    if (currentUser.subscribtion?.plan === "free") {
-      toast.error(t("plans.already_free"))
-      return
+    if (currentUser.subscription?.plan === "free") {
+      toast.error(t("plans.already_free"));
+      return;
     }
 
-    setLoadingDowngrade(true)
+    setLoadingDowngrade(true);
     try {
-      const stripeCustomerId = currentUser.subscribtion?.stripeCustomerId
+      const stripeCustomerId = currentUser.subscription?.stripeCustomerId;
 
       if (stripeCustomerId) {
         // Best practice: open Stripe Billing Portal so the user cancels their recurring subscription
         // Billing Portal handles cancellations, proration settings, etc., and is safer than trying to cancel from the client.
-        await openBillingPortal(stripeCustomerId)
+        await openBillingPortal(stripeCustomerId);
         // openBillingPortal will redirect the browser to Stripe's portal.
         // After they cancel, the webhook (customer.subscription.deleted or updated) will update Firestore.
-        return
+        return;
       }
 
       // Fallback: No stripeCustomerId found — do a direct Firestore update to mark the user's plan as free.
       // This is a local fallback only — if there is an actual subscription in Stripe it will not be cancelled.
       const newUserData = {
         ...currentUser,
-        subscribtion: { ...currentUser.subscribtion, plan: "free", status: "canceled", subscriptionId: null },
-      }
-      await updateUserById(currentUser.uid, newUserData)
-      setCurrentUser(newUserData)
-      toast.success(t("plans.downgrade_success"))
+        subscription: { ...currentUser.subscription, plan: "free", status: "canceled", subscriptionId: null },
+      };
+      await updateUserById(currentUser.uid, newUserData);
+      setCurrentUser(newUserData);
+      toast.success(t("plans.downgrade_success"));
     } catch (error) {
-      console.error("Error downgrading to Free:", error)
-      toast.error(t("plans.downgrade_error"))
+      console.error("Error downgrading to Free:", error);
+      toast.error(t("plans.downgrade_error"));
     } finally {
-      setLoadingDowngrade(false)
+      setLoadingDowngrade(false);
     }
   }
 
@@ -108,31 +101,19 @@ export default function Plans() {
     currentUser && (
       <>
         <div className="mx-auto container py-8 px-4 xl:px-64">
-          <h1 className="text-[var(--color-text-light)] text-4xl font-bold text-center my-2">
-            {t("plans.title")}
-          </h1>
-          <p className="text-[var(--color-text-primary)] text-lg text-center font-semibold">
-            {t("plans.subtitle")}
-          </p>
+          <h1 className="text-[var(--color-text-light)] text-4xl font-bold text-center my-2">{t("plans.title")}</h1>
+          <p className="text-[var(--color-text-primary)] text-lg text-center font-semibold">{t("plans.subtitle")}</p>
           <div className="flex gap-8 my-10 flex-col md:flex-row">
             <div className="border border-[var(--color-card-border)] rounded-lg  flex-1">
               <div className="flex justify-between items-center p-5">
-                <h2 className="text-[var(--color-text-light)] text-2xl font-bold">
-                  {t("plans.free")}
-                </h2>
+                <h2 className="text-[var(--color-text-light)] text-2xl font-bold">{t("plans.free")}</h2>
                 <p className="py-1 px-5 text-sm font-semibold rounded-full dark:bg-[#2a2724] bg-[#4f4944] dark:text-[var(--color-text-primary)] text-white">
                   {t("plans.default")}
                 </p>
               </div>
-              <h2
-                className={`text-[var(--color-text-light)] text-4xl font-bold pb-5 ${
-                  isArabic ? "pr-5" : "pl-5"
-                }`}
-              >
+              <h2 className={`text-[var(--color-text-light)] text-4xl font-bold pb-5 ${isArabic ? "pr-5" : "pl-5"}`}>
                 {t("plans.free_price")}
-                <span className="text-base font-medium text-[var(--color-text-primary)]">
-                  {t("plans.per_month")}
-                </span>
+                <span className="text-base font-medium text-[var(--color-text-primary)]">{t("plans.per_month")}</span>
               </h2>
               <p
                 className={`text-[var(--color-text-primary)] font-semibold pb-5 mb-5 ${
@@ -142,13 +123,8 @@ export default function Plans() {
                 {t("plans.free_desc")}
               </p>
               <div className="flex gap-2 items-center px-5 mb-5 pt-0">
-                <FontAwesomeIcon
-                  icon={faListCheck}
-                  className="text-[var(--main-color)]"
-                ></FontAwesomeIcon>
-                <p className="font-bold text-[var(--color-text-light)] text-base">
-                  {t("plans.features")}
-                </p>
+                <FontAwesomeIcon icon={faListCheck} className="text-[var(--main-color)]"></FontAwesomeIcon>
+                <p className="font-bold text-[var(--color-text-light)] text-base">{t("plans.features")}</p>
               </div>
               <Feature>{t("plans.free_learn")}</Feature>
               <Feature>{t("plans.free_teach")}</Feature>
@@ -159,14 +135,14 @@ export default function Plans() {
                 <div
                   onClick={downgradeToFree}
                   className={`w-full py-4 text-center rounded-lg ${
-                    currentUser.subscribtion.plan === "free"
+                    currentUser.subscription.plan === "free"
                       ? "dark:bg-[#2b2825] bg-[#4f4944] dark:text-[var(--color-text-secondary)] text-white cursor-not-allowed"
                       : "bg-[var(--color-btn-submit-bg)] cursor-pointer hover:bg-[var(--color-btn-submit-hover)]"
                   }  font-bold transition-all duration-300`}
                 >
                   {loadingDowngrade
                     ? t("plans.processing")
-                    : currentUser.subscribtion?.plan === "free"
+                    : currentUser.subscription?.plan === "free"
                     ? t("plans.stay_free")
                     : t("plans.downgrade_free")}
                 </div>
@@ -176,25 +152,16 @@ export default function Plans() {
               <div className="flex justify-between items-center p-5">
                 <div className="text-[var(--color-text-light)] text-2xl font-bold flex items-center gap-1">
                   {t("plans.pro")}
-                  <FontAwesomeIcon
-                    icon={faStar}
-                    className="text-[#ffc107] text-base mt-1"
-                  ></FontAwesomeIcon>
+                  <FontAwesomeIcon icon={faStar} className="text-[#ffc107] text-base mt-1"></FontAwesomeIcon>
                 </div>
                 <div className="flex gap-1 items-center py-1 px-5 text-sm font-bold rounded-full bg-[#ffc107] text-[var(--color-text-dark)]">
                   <FontAwesomeIcon icon={faAward} className="text-sm"></FontAwesomeIcon>
                   {t("plans.best_value")}
                 </div>
               </div>
-              <h2
-                className={`text-[var(--color-text-light)] text-4xl font-bold pb-5 ${
-                  isArabic ? "pr-5" : "pl-5"
-                }`}
-              >
+              <h2 className={`text-[var(--color-text-light)] text-4xl font-bold pb-5 ${isArabic ? "pr-5" : "pl-5"}`}>
                 {t("plans.pro_price")}
-                <span className="text-base font-medium text-[var(--color-text-primary)]">
-                  {t("plans.per_month")}
-                </span>
+                <span className="text-base font-medium text-[var(--color-text-primary)]">{t("plans.per_month")}</span>
               </h2>
               <p
                 className={`text-[var(--color-text-primary)] font-semibold pb-5 mb-5 ${
@@ -204,13 +171,8 @@ export default function Plans() {
                 {t("plans.pro_desc")}
               </p>
               <div className="flex gap-2 items-center px-5 mb-5 pt-0">
-                <FontAwesomeIcon
-                  icon={faRocket}
-                  className="text-[var(--main-color)]"
-                ></FontAwesomeIcon>
-                <p className="font-bold text-[var(--color-text-light)] text-base">
-                  {t("plans.pro_features")}
-                </p>
+                <FontAwesomeIcon icon={faRocket} className="text-[var(--main-color)]"></FontAwesomeIcon>
+                <p className="font-bold text-[var(--color-text-light)] text-base">{t("plans.pro_features")}</p>
               </div>
               <Feature bold={t("plans.bold_unlimited")}>{t("plans.pro_learn")}</Feature>
               <Feature bold={t("plans.bold_unlimited")}>{t("plans.pro_teach")}</Feature>
@@ -223,109 +185,60 @@ export default function Plans() {
                 <div
                   onClick={upgradeToPro}
                   className={`w-full py-4 text-center rounded-lg ${
-                    currentUser.subscribtion.plan == "free"
+                    currentUser.subscription.plan == "free"
                       ? "dark:bg-[var(--color-btn-submit-bg)] bg-[var(--color-btn-submit-hover)] cursor-pointer hover:bg-[var(--color-btn-submit-hover)] text-white"
                       : "dark:bg-[#2b2825] bg-[#4f4944] dark:text-[var(--color-text-secondary)] text-white cursor-not-allowed"
                   } font-bold transition-all duration-300 `}
                 >
-                  {loadingUpgrade
-                    ? t("plans.processing")
-                    : currentUser.subscribtion?.plan === "pro"
-                    ? t("plans.stay_pro")
-                    : t("plans.upgrade_pro")}
+                  {loadingUpgrade ? t("plans.processing") : currentUser.subscription?.plan === "pro" ? t("plans.stay_pro") : t("plans.upgrade_pro")}
                 </div>
               </div>
             </div>
           </div>
           {/* ... rest of the component unchanged ... */}
-          <h2 className="text-2xl font-semibold text-[var(--color-text-light)] mt-16 mb-6 text-center">
-            {t("plans.comparison")}
-          </h2>
+          <h2 className="text-2xl font-semibold text-[var(--color-text-light)] mt-16 mb-6 text-center">{t("plans.comparison")}</h2>
           <div className={`rounded-lg border border-[var(--color-card-border)] sm:border-0`}>
             <div className="flex py-4 text-[var(--color-text-primary)] font-semibold">
-              <p className={`${isArabic ? "pr-4 sm:pr-0" : "pl-4 sm:pl-0"} basis-[50%]`}>
-                {t("plans.feature")}
-              </p>
+              <p className={`${isArabic ? "pr-4 sm:pr-0" : "pl-4 sm:pl-0"} basis-[50%]`}>{t("plans.feature")}</p>
               <p className="basis-[25%] text-center">{t("plans.free")}</p>
               <p className="basis-[25%] text-center">{t("plans.pro")}</p>
             </div>
             <div className="flex py-4 text-[var(--color-text-primary)] font-semibold border-t border-t-[var(--color-card-border)]">
-              <p
-                className={`${
-                  isArabic ? "pr-4 sm:pr-0" : "pl-4 sm:pl-0"
-                } basis-[50%] text-[var(--color-text-light)]`}
-              >
-                {t("plans.skills_learn")}
-              </p>
+              <p className={`${isArabic ? "pr-4 sm:pr-0" : "pl-4 sm:pl-0"} basis-[50%] text-[var(--color-text-light)]`}>{t("plans.skills_learn")}</p>
               <p className="basis-[25%] text-center">{t("plans.free_learn_num")}</p>
-              <p className="basis-[25%] text-center text-[var(--main-color)]">
-                {t("plans.pro_learn_num")}
-              </p>
+              <p className="basis-[25%] text-center text-[var(--main-color)]">{t("plans.pro_learn_num")}</p>
             </div>
             <div className="flex py-4 text-[var(--color-text-primary)] font-semibold border-t border-t-[var(--color-card-border)]">
-              <p
-                className={`${
-                  isArabic ? "pr-4 sm:pr-0" : "pl-4 sm:pl-0"
-                } basis-[50%] text-[var(--color-text-light)]`}
-              >
-                {t("plans.skills_teach")}
-              </p>
+              <p className={`${isArabic ? "pr-4 sm:pr-0" : "pl-4 sm:pl-0"} basis-[50%] text-[var(--color-text-light)]`}>{t("plans.skills_teach")}</p>
               <p className="basis-[25%] text-center">{t("plans.free_teach_num")}</p>
-              <p className="basis-[25%] text-center text-[var(--main-color)]">
-                {t("plans.pro_teach_num")}
-              </p>
+              <p className="basis-[25%] text-center text-[var(--main-color)]">{t("plans.pro_teach_num")}</p>
             </div>
             <div className="flex py-4 text-[var(--color-text-primary)] font-semibold border-t border-t-[var(--color-card-border)]">
-              <p
-                className={`${
-                  isArabic ? "pr-4 sm:pr-0" : "pl-4 sm:pl-0"
-                } basis-[50%] text-[var(--color-text-light)]`}
-              >
+              <p className={`${isArabic ? "pr-4 sm:pr-0" : "pl-4 sm:pl-0"} basis-[50%] text-[var(--color-text-light)]`}>
                 {t("plans.commission_rate")}
               </p>
               <p className="basis-[25%] text-center">{t("plans.free_commission_num")}</p>
-              <p className="basis-[25%] text-center text-[var(--main-color)]">
-                {t("plans.pro_commission_num")}
-              </p>
+              <p className="basis-[25%] text-center text-[var(--main-color)]">{t("plans.pro_commission_num")}</p>
             </div>
             <div className="flex py-4 text-[var(--color-text-primary)] font-semibold border-t border-t-[var(--color-card-border)]">
-              <p
-                className={`${
-                  isArabic ? "pr-4 sm:pr-0" : "pl-4 sm:pl-0"
-                } basis-[50%] text-[var(--color-text-light)]`}
-              >
-                {t("plans.active_trades")}
-              </p>
+              <p className={`${isArabic ? "pr-4 sm:pr-0" : "pl-4 sm:pl-0"} basis-[50%] text-[var(--color-text-light)]`}>{t("plans.active_trades")}</p>
               <p className="basis-[25%] text-center">{t("plans.free_active_num")}</p>
-              <p className="basis-[25%] text-center text-[var(--main-color)]">
-                {t("plans.pro_active_num")}
-              </p>
+              <p className="basis-[25%] text-center text-[var(--main-color)]">{t("plans.pro_active_num")}</p>
             </div>
             <div className="flex py-4 text-[var(--color-text-primary)] font-semibold border-t border-t-[var(--color-card-border)]">
-              <p
-                className={`${
-                  isArabic ? "pr-4 sm:pr-0" : "pl-4 sm:pl-0"
-                } basis-[50%] text-[var(--color-text-light)]`}
-              >
-                {t("plans.pro_badge")}
-              </p>
+              <p className={`${isArabic ? "pr-4 sm:pr-0" : "pl-4 sm:pl-0"} basis-[50%] text-[var(--color-text-light)]`}>{t("plans.pro_badge")}</p>
               <FontAwesomeIcon icon={faClose} className="basis-[25%] text-center"></FontAwesomeIcon>
-              <FontAwesomeIcon
-                icon={faCheck}
-                className="basis-[25%] text-center text-[var(--main-color)]"
-              >
+              <FontAwesomeIcon icon={faCheck} className="basis-[25%] text-center text-[var(--main-color)]">
                 Unlimited%
               </FontAwesomeIcon>
             </div>
           </div>
-          <h2 className="text-2xl font-semibold text-[var(--color-text-light)] mt-16 mb-8 text-center">
-            {t("plans.faq_title")}
-          </h2>
+          <h2 className="text-2xl font-semibold text-[var(--color-text-light)] mt-16 mb-8 text-center">{t("plans.faq_title")}</h2>
           <FAQ question={t("plans.faq1_q")} answer={t("plans.faq1_a")}></FAQ>
           <FAQ question={t("plans.faq2_q")} answer={t("plans.faq2_a")}></FAQ>
           <FAQ question={t("plans.faq3_q")} answer={t("plans.faq3_a")}></FAQ>
         </div>
       </>
     )
-  )
+  );
 }

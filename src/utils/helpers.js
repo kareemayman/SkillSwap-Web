@@ -5,7 +5,7 @@ export function hasNullValue(obj, parentKey = "") {
 
   return Object.entries(obj).some(([key, value]) => {
     // ✅ Skip null check inside subscription
-    if (parentKey === "subscribtion") return false;
+    if (parentKey === "subscription") return false;
 
     if (value === null) return true;
 
