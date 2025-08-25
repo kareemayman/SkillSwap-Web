@@ -35,7 +35,7 @@ export default function Plans() {
       return;
     }
 
-    if (currentUser.subscription?.plan === "pro") {
+    if (currentUser.subscribtion?.plan === "pro") {
       toast.error(t("plans.stay_pro"));
       return;
     }
@@ -43,11 +43,11 @@ export default function Plans() {
     setLoadingUpgrade(true);
     try {
       // If we already stored stripeCustomerId for the user, pass it to reuse the customer
-      const customerId = currentUser.subscription?.stripeCustomerId || null;
+      const customerId = currentUser.subscribtion?.stripeCustomerId || null;
       // subscribeToPro will redirect the browser to Stripe Checkout (it handles the redirect)
       await subscribeToPro({ userId: currentUser.uid, email: currentUser.email, customerId });
       // NOTE: subscribeToPro redirects away from the page. If it returns (no redirect), it means an error was thrown.
-      // The webhook on the server will update Firestore when the subscription is confirmed.
+      // The webhook on the server will update Firestore when the subscribtion is confirmed.
     } catch (error) {
       console.error("Error upgrading to Pro:", error);
       toast.error(t("plans.upgrade_error"));
@@ -62,29 +62,29 @@ export default function Plans() {
       return;
     }
 
-    if (currentUser.subscription?.plan === "free") {
+    if (currentUser.subscribtion?.plan === "free") {
       toast.error(t("plans.already_free"));
       return;
     }
 
     setLoadingDowngrade(true);
     try {
-      const stripeCustomerId = currentUser.subscription?.stripeCustomerId;
+      const stripeCustomerId = currentUser.subscribtion?.stripeCustomerId;
 
       if (stripeCustomerId) {
-        // Best practice: open Stripe Billing Portal so the user cancels their recurring subscription
+        // Best practice: open Stripe Billing Portal so the user cancels their recurring subscribtion
         // Billing Portal handles cancellations, proration settings, etc., and is safer than trying to cancel from the client.
         await openBillingPortal(stripeCustomerId);
         // openBillingPortal will redirect the browser to Stripe's portal.
-        // After they cancel, the webhook (customer.subscription.deleted or updated) will update Firestore.
+        // After they cancel, the webhook (customer.subscribtion.deleted or updated) will update Firestore.
         return;
       }
 
       // Fallback: No stripeCustomerId found — do a direct Firestore update to mark the user's plan as free.
-      // This is a local fallback only — if there is an actual subscription in Stripe it will not be cancelled.
+      // This is a local fallback only — if there is an actual subscribtion in Stripe it will not be cancelled.
       const newUserData = {
         ...currentUser,
-        subscription: { ...currentUser.subscription, plan: "free", status: "canceled", subscriptionId: null },
+        subscribtion: { ...currentUser.subscribtion, plan: "free", status: "canceled", subscribtionId: null },
       };
       await updateUserById(currentUser.uid, newUserData);
       setCurrentUser(newUserData);
@@ -135,14 +135,14 @@ export default function Plans() {
                 <div
                   onClick={downgradeToFree}
                   className={`w-full py-4 text-center rounded-lg ${
-                    currentUser.subscription.plan === "free"
+                    currentUser.subscribtion.plan === "free"
                       ? "dark:bg-[#2b2825] bg-[#4f4944] dark:text-[var(--color-text-secondary)] text-white cursor-not-allowed"
                       : "bg-[var(--color-btn-submit-bg)] cursor-pointer hover:bg-[var(--color-btn-submit-hover)]"
                   }  font-bold transition-all duration-300`}
                 >
                   {loadingDowngrade
                     ? t("plans.processing")
-                    : currentUser.subscription?.plan === "free"
+                    : currentUser.subscribtion?.plan === "free"
                     ? t("plans.stay_free")
                     : t("plans.downgrade_free")}
                 </div>
@@ -185,12 +185,12 @@ export default function Plans() {
                 <div
                   onClick={upgradeToPro}
                   className={`w-full py-4 text-center rounded-lg ${
-                    currentUser.subscription.plan == "free"
+                    currentUser.subscribtion.plan == "free"
                       ? "dark:bg-[var(--color-btn-submit-bg)] bg-[var(--color-btn-submit-hover)] cursor-pointer hover:bg-[var(--color-btn-submit-hover)] text-white"
                       : "dark:bg-[#2b2825] bg-[#4f4944] dark:text-[var(--color-text-secondary)] text-white cursor-not-allowed"
                   } font-bold transition-all duration-300 `}
                 >
-                  {loadingUpgrade ? t("plans.processing") : currentUser.subscription?.plan === "pro" ? t("plans.stay_pro") : t("plans.upgrade_pro")}
+                  {loadingUpgrade ? t("plans.processing") : currentUser.subscribtion?.plan === "pro" ? t("plans.stay_pro") : t("plans.upgrade_pro")}
                 </div>
               </div>
             </div>

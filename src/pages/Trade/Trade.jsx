@@ -70,8 +70,8 @@ export default function Trade() {
       const newTrade = { ...trade, status: "completed" };
       setTrade(newTrade);
       updateTrade(id, newTrade);
-      const newUserA = { ...userA, subscription: { ...userA.subscription, activeTradeCount: userA.subscription.activeTradeCount - 1 } };
-      const newUserB = { ...userB, subscription: { ...userB.subscription, activeTradeCount: userB.subscription.activeTradeCount - 1 } };
+      const newUserA = { ...userA, subscribtion: { ...userA.subscribtion, activeTradeCount: userA.subscribtion.activeTradeCount - 1 } };
+      const newUserB = { ...userB, subscribtion: { ...userB.subscribtion, activeTradeCount: userB.subscribtion.activeTradeCount - 1 } };
       updateUserById(userA.uid, newUserA);
       updateUserById(userB.uid, newUserB);
     }

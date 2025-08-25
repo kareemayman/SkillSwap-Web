@@ -21,7 +21,7 @@ export const MatchCard = ({ user }) => {
       <div className="p-4 mb-4   rounded-xl w-full glass-card flex justify-between md:items-start md:flex-row flex-col">
         <div className="info">
           <h3 className="font-medium text-[--color-text-primary] text-lg capitalize">
-            {user.name} {user.subscription.plan === "pro" && <FontAwesomeIcon icon={faCertificate}></FontAwesomeIcon>}
+            {user.name} {user.subscribtion.plan === "pro" && <FontAwesomeIcon icon={faCertificate}></FontAwesomeIcon>}
           </h3>
           {userSkills && (
             <p className="font-medium text-[--color-text-secondary] capitalize">

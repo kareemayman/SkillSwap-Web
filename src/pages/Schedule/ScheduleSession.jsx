@@ -80,11 +80,11 @@ export const ScheduleSession = () => {
       toast.error(t(`user is not available for paid sessions. Please try again later.`));
       return;
     }
-    if (currentUser.subscription.plan === "free" && currentUser.subscription.activeTradeCount > 0) {
+    if (currentUser.subscribtion.plan === "free" && currentUser.subscribtion.activeTradeCount > 0) {
       toast.error(t("free_trade_limit_reached"));
       return;
     }
-    if (user.subscription.plan === "free" && user.subscription.activeTradeCount > 0) {
+    if (user.subscribtion.plan === "free" && user.subscribtion.activeTradeCount > 0) {
       toast.error(t("The user cannot accept more trades. Please try again later."));
       return;
     }
@@ -145,7 +145,7 @@ export const ScheduleSession = () => {
           <img src={user.profilePicture || Avat} alt="avatar" className="rounded-full w-32 h-32 object-cover" />
           <div className="sm:text-left text-center">
             <h2 className="font-medium text-[var(--color-text-primary)] text-2xl capitalize">
-              {user.name} {user.subscription.plan === "pro" && <FontAwesomeIcon icon={faCertificate}></FontAwesomeIcon>}
+              {user.name} {user.subscribtion.plan === "pro" && <FontAwesomeIcon icon={faCertificate}></FontAwesomeIcon>}
             </h2>
             <p className="font-medium text-[var(--color-text-secondary)]">
               <span className="font-semibold text-[var(--color-text-primary)]">{t("Offering")}: </span>

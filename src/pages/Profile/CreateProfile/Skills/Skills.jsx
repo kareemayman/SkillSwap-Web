@@ -364,7 +364,7 @@ export const Skills = ({ updateStep, userId, initialData, onComplete }) => {
   });
 
   // Check if user is on free plan
-  const isFreeUser = initialData?.subscription?.plan === "free";
+  const isFreeUser = initialData?.subscribtion?.plan === "free";
   const SKILL_LIMIT = 2;
 
   // console.log("@Skills ---- initialData =", initialData);

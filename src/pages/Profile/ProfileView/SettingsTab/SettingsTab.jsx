@@ -20,7 +20,7 @@ export default function SettingsTab({ updatedProfile, updateUserData, isOwnProfi
   }
 
   console.log("Updated Profile in SettingsTab:", updatedProfile);
-  console.log("UupdatedProfile.subscription?.plan:", updatedProfile.subscription?.plan);
+  console.log("UupdatedProfile.subscribtion?.plan:", updatedProfile.subscribtion?.plan);
 
   return (
     <div className="space-y-8">
@@ -76,14 +76,14 @@ export default function SettingsTab({ updatedProfile, updateUserData, isOwnProfi
       </div>
 
       <div className="space-y-4">
-        <h2 className="font-semibold text-[--color-text-primary] sm:text-xl">{t("Subscription")}</h2>
+        <h2 className="font-semibold text-[--color-text-primary] sm:text-xl">{t("subscribtion")}</h2>
         <div className="flex justify-between items-center p-6 border border-[var(--color-card-border)] rounded-lg">
           <div className="flex flex-col justify-between">
             <h3 className="font-semibold text-[--main-color] sm:text-xl">
-              {updatedProfile.subscription?.plan === "pro" ? t("Pro Plan") : t("Free Plan")}
+              {updatedProfile.subscribtion?.plan === "pro" ? t("Pro Plan") : t("Free Plan")}
             </h3>
             <p className="font-semibold text-[--color-text-secondary] text-sm sm:text-base">
-              {updatedProfile.subscription?.plan === "pro" && `${t("Renew on")} ${formatDate(updatedProfile.subscription?.currentPeriodEnd)}`}
+              {updatedProfile.subscribtion?.plan === "pro" && `${t("Renew on")} ${formatDate(updatedProfile.subscribtion?.currentPeriodEnd)}`}
             </p>
           </div>
 
@@ -91,7 +91,7 @@ export default function SettingsTab({ updatedProfile, updateUserData, isOwnProfi
             onClick={() => navigate("/plans")}
             className="text-sm sm:text-base flex justify-center items-center bg-[var(--color-btn-submit-bg)] hover:bg-[var(--color-btn-submit-hover)] px-4 py-2 rounded-lg font-bold text-white transition-all duration-300 cursor-pointer"
           >
-            {t("Manage Subscription")}
+            {t("Manage subscribtion")}
           </div>
         </div>
       </div>

@@ -69,7 +69,7 @@ export const createUserDoc = async (user) => {
       hasSkills: null, // array of skill objects [{ id: "skillId", name: "skillName", skillLevel: "beginner" }]
       needSkills: null, // array of skill objects [{ id: "skillId", name: "skillName", skillLevel: "beginner" }]
       reviews: [], // array of review objects [{ id: "reviewId", reviewerId: "userId", reviewText: "Great session!", rating: 5 }]
-      subscription: {
+      subscribtion: {
         plan: "free", // string, can be "free" or "pro"
         activeTradeCount: 0, // number of active trades
       },

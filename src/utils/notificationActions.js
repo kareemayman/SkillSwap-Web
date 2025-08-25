@@ -107,11 +107,11 @@ const handleAcceptRequest = async (notification, currentUser, navigate, callBack
 
     await runTransaction(db, async (transaction) => {
       // Helper: determine plan
-      const isPro = (user) => user.subscription?.plan === "pro";
+      const isPro = (user) => user.subscribtion?.plan === "pro";
 
       // Current counts
-      const skillTradesCountUserA = userAData.subscription?.activeTradeCount || 0;
-      const skillTradesCountUserB = userBData.subscription?.activeTradeCount || 0;
+      const skillTradesCountUserA = userAData.subscribtion?.activeTradeCount || 0;
+      const skillTradesCountUserB = userBData.subscribtion?.activeTradeCount || 0;
 
       // Check the accepter
       if (!isPro(userAData) && skillTradesCountUserA >= 1) {
@@ -126,10 +126,10 @@ const handleAcceptRequest = async (notification, currentUser, navigate, callBack
       }
 
       transaction.update(userARef, {
-        "subscription.activeTradeCount": skillTradesCountUserA + 1,
+        "subscribtion.activeTradeCount": skillTradesCountUserA + 1,
       });
       transaction.update(userBRef, {
-        "subscription.activeTradeCount": skillTradesCountUserB + 1,
+        "subscribtion.activeTradeCount": skillTradesCountUserB + 1,
       });
 
       transaction.update(requestRef, {

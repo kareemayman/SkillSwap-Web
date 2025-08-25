@@ -31,7 +31,7 @@ export async function payForTrade({ price = "10.00", tradeId = "", userId = "" }
 }
 
 /**
- * Start a Pro subscription checkout (recurring).
+ * Start a Pro subscribtion checkout (recurring).
  * Backend endpoint expected: POST /api/create-pro-checkout
  * Body: { userId, email?, customerId? }
  */
@@ -57,7 +57,7 @@ export async function subscribeToPro({ userId, email, customerId } = {}) {
     window.location.href = data.url;
   } catch (err) {
     console.error("subscribeToPro error:", err);
-    alert("Could not start Pro subscription. Check console.");
+    alert("Could not start Pro subscribtion. Check console.");
   }
 }
 
