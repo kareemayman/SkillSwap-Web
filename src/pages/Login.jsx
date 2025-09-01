@@ -91,6 +91,7 @@ const Login = () => {
       // Check if profile needs completion
       if (hasNullValue(userData)) {
         console.log("Redirecting to profile completion");
+        // toast.success("Redirecting to profile completion");
         navigate(`/profile/${userData.uid}`);
         return;
       }

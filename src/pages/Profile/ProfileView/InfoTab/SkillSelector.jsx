@@ -150,7 +150,7 @@ export default function SkillSelector({ onSave, onCancel, existingSkills = [], p
           }}
         />
         {searchQuery.trim() !== "" && (
-          <div className="top-full left-0 mt-1 z-50 absolute bg-black rounded-md w-full shadow-lg">
+          <div className="top-full left-0 mt-1 z-50 absolute bg-gray-200 dark:bg-black rounded-md w-full shadow-lg">
             {loadingMessage && <div className="p-3 text-center text-gray-500">{loadingMessage}</div>}
             {!loadingMessage &&
               filteredResults.map((skill) => (
