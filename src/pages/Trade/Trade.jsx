@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Avat from "../../assets/images/avat.png";
+import Avat from "/images/avat.png";
 import ExpTag from "./Components/ExpTag";
 import { faClipboardList, faCommentDots, faPenToSquare, faPlus, faRobot } from "@fortawesome/free-solid-svg-icons";
 import Milestone from "./Components/Milestone";

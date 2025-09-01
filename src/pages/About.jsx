@@ -1,10 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
-import img1 from "/src/assets/images/kareem.jpg";
-import img2 from "/src/assets/images/doa.jpg";
-import img3 from "/src/assets/images/abdelrahman.jpg";
-import img4 from "/src/assets/images/seif.jpg";
-import img6 from "/src/assets/images/kareem.jpg";
+import img1 from "/images/kareem.jpg";
+import img2 from "/images/doa.jpg";
+import img3 from "/images/abdelrahman.jpg";
+import img4 from "/images/seif.jpg";
+import img6 from "/images/kareem.jpg";
 import { useTranslation } from "react-i18next";
 
 export default function About() {

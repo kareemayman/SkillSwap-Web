@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import darkWave from "../../assets/images/img.svg";
-import lightWave from "../../assets/images/wave8.svg";
+import darkWave from "/images/img.svg";
+import lightWave from "/images/wave8.svg";
 import { ThemeContext } from "../../contexts/ThemeContext.jsx";
-// import img from "../../assets/images/bg_banner1.jpg";
 
 export default function LandingFooter() {
   const { t } = useTranslation();

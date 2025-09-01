@@ -1,8 +1,8 @@
 import React from "react";
 import Cart from "./components/Cart";
-import icon1 from "../../assets/images/icon-1.svg";
-import icon2 from "../../assets/images/icon-2.svg";
-import icon3 from "../../assets/images/icon-3.svg";
+import icon1 from "/images/icon-1.svg";
+import icon2 from "/images/icon-2.svg";
+import icon3 from "/images/icon-3.svg";
 import { useTranslation } from "react-i18next";
 export default function HowWorkSection() {
   const { t } = useTranslation();

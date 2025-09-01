@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CustomButton from "../../../../components/Button";
 import { useNavigate } from "react-router-dom";
-import img from "../../../../assets/images/avat.png";
+import img from "/images/avat.png";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../firebase";
 import { avatarTheme } from "flowbite-react";

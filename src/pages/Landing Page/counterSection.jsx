@@ -1,5 +1,5 @@
 import AnimatedCounter from "./AnimatedCounter";
-import img from "/src/assets/images/bg_banner1.jpg";
+import img from "/images/bg_banner1.jpg";
 import { useTranslation } from "react-i18next";
 
 const CounterSection = () => {

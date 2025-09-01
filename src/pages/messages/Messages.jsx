@@ -6,7 +6,7 @@ import { subscribeToUserChats } from "../../utils/chatUtil";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
-import img from "../../assets/images/profile.png";
+import img from "/images/profile.png";
 import { useTranslation } from "react-i18next";
 
 export default function Messages() {

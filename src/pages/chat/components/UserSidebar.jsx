@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import img from "../../../assets/images/profile.png";
+import img from "/images/profile.png";
 import { Link } from "react-router-dom"; 
 
 export default function UserSidebar({ user }) {

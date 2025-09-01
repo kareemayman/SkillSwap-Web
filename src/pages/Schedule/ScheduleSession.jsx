@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Avat from "../../assets/images/avat.png";
+import Avat from "/images/avat.png";
 import { SkillInfo } from "./components/SkillInfo";
 import { useNavigate, useParams } from "react-router-dom";
 import { createFirestoreTrade, getUserById, updateUserById } from "../../utils/firestoreUtil";

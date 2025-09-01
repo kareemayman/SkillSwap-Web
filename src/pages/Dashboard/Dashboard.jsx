@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import Avat from "../../assets/images/avat.png"
+import Avat from "/images/avat.png"
 import {
   deleteDocById,
   deleteReview,

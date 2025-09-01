@@ -1,4 +1,4 @@
-import logo from "../assets/images/logo.png"
+import logo from "/images/logo.png"
 import { Link, NavLink } from "react-router-dom"
 import { useAuth } from "../contexts/Auth/context"
 import { useTranslation } from "react-i18next"

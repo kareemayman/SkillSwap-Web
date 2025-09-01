@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { validateEmail, validatePassword } from "../utils/validation";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import left from "../assets/videos/hands .gif";
+import left from "/videos/hands .gif";
 import { useTranslation } from "react-i18next";
 import { createUserDoc } from "../utils/firestoreUtil";
 import toast from "react-hot-toast";

@@ -5,8 +5,8 @@ import CreateProfile from "./CreateProfile/CreateProfile";
 import ProfileView from "./ProfileView/ProfileView";
 import { Spinner } from "flowbite-react";
 import { hasNullValue } from "../../utils/helpers";
-import darkWave from "../../assets/images/img.svg";
-import lightWave from "../../assets/images/wave8.svg";
+import darkWave from "/images/img.svg";
+import lightWave from "/images/wave8.svg";
 import { ThemeContext } from "../../contexts/ThemeContext.jsx";
 import { useParams } from "react-router-dom";
 

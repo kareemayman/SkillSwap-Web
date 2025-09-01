@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/Auth/context";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import left from "../../assets/videos/hands .gif";
+import left from "/videos/hands .gif";
 import { hasNullValue } from "../../utils/helpers";
 import toast from "react-hot-toast";
 
