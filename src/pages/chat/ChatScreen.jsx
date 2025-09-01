@@ -11,8 +11,8 @@ import {
 import UserSidebar from "./components/UserSidebar";
 import ChatInput from "./components/ChatInput";
 import ChatMessage from "./components/ChatMessage";
-import dark from "../../assets/images/chat.jpg";
-import light from "../../assets/images/lightchat.jpg";
+import dark from "/src/assets/images/chat.jpg";
+import light from "/src/assets/images/lightchat.jpg";
 import { useTranslation } from "react-i18next";
 import {ThemeContext} from"../../contexts/ThemeContext.jsx";
 import notificationSound from "../../assets/audio/mixkit-correct-answer-tone-2870.wav"
