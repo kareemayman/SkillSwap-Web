@@ -6,12 +6,12 @@ import "swiper/css/autoplay";
 import { Navigation, Autoplay } from "swiper/modules";
 
 import Cart from "./components/Cart";
-import img1 from "../../assets/images/card-1.png";
-import img2 from "../../assets/images/card-2.png";
-import img3 from "../../assets/images/card-3.png";
-import img4 from "../../assets/images/img4.jpg";
-import img5 from "../../assets/images/img6.jpg";
-import img6 from "../../assets/images/img5.jpg";
+import img1 from "/src/assets/images/card-1.png";
+import img2 from "/src/assets/images/card-2.png";
+import img3 from "/src/assets/images/card-3.png";
+import img4 from "/src/assets/images/img4.jpg";
+import img5 from "/src/assets/images/img6.jpg";
+import img6 from "/src/assets/images/img5.jpg";
 
 import { useTranslation } from "react-i18next";
 

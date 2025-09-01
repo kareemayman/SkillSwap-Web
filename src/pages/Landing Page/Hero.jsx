@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import heroVideo from "../../assets/videos/3249902-uhd_3840_2160_25fps.mp4";
+import heroVideo from "/src/assets/videos/3249902-uhd_3840_2160_25fps.mp4";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/Auth/context";
