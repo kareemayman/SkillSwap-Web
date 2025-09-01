@@ -1,12 +1,55 @@
-# React + Vite
+# Swapoo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Swapoo is a **skill trading and learning platform** where users can teach and learn from each other.  
+Our goal is to make learning more accessible by allowing users to **exchange skills** or pay for private sessions.  
 
-Currently, two official plugins are available:
+We built **both a web app and a cross-platform mobile app**, so users can access Swapoo from anywhere.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ✨ Main Idea
+Swapoo connects people who want to **learn** with people who want to **teach**.  
+Using AI, users are matched based on their skills, interests, and even location.  
+Learners also get **AI-generated roadmaps (milestones)** to make the learning process smoother and more structured.  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+In short: **Swapoo is a place to trade knowledge, not just money.**
+
+---
+
+## 🛠️ Tech Stack
+We used a modern full-stack approach to bring Swapoo to life:
+
+- **Frontend (Web)**:  
+  - [Vite](https://vitejs.dev/) + [React](https://react.dev/)  
+  - [Tailwind CSS](https://tailwindcss.com/)  
+  - [React Router](https://reactrouter.com/)  
+  - [Shadcn](https://ui.shadcn.com/)  
+  - [Flowbite](https://flowbite.com/)  
+
+- **Frontend (Mobile)**:  
+  - [Expo](https://expo.dev/) + [React Native](https://reactnative.dev/)  
+
+- **Backend & Services**:  
+  - [Node.js](https://nodejs.org/) + [Express](https://expressjs.com/)  
+  - [Firebase](https://firebase.google.com/) (Auth, Firestore, Notifications, Hosting)  
+  - [Stripe](https://stripe.com/) (Payments & Subscriptions)  
+  - [Google Gemini](https://deepmind.google/technologies/gemini/) (AI features)  
+
+- **Collaboration**:  
+  - [Git](https://git-scm.com/) + [GitHub](https://github.com/)  
+
+---
+
+## 🎥 Demo
+Check out the live demo here 👉 [Swapoo Web App](https://skill-swap-web-one.vercel.app/)  
+
+⚠️ **Note:** Payment functionality isn’t available in the demo, since our Node.js Stripe server is not deployed.  
+
+---
+
+## 👥 Contributors
+- Kareem Mohamed Ayman  
+- Seif Amr Ghazy  
+- Abdelrahman Ali  
+- Mohamed Abdelfattah  
+- Doaa Mohamed Tawfik  
